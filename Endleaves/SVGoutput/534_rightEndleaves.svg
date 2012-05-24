@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="297mm"
+     height="210mm"
+     viewBox="0 0 297 210"
+     preserveAspectRatio="xMinYMin meet">
+   <desc>Right endleaves of book: 534.71</desc>
+   <defs xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="outermostGL" fill="none" stroke="#000000" stroke-width="1">
+            <desc>Outermost gathering Left</desc>
+            <path d="M 141,1 L 11,1 A 10,10 0 0,0 11,21 L 141,21 z"/>
+        </g>
+        <g id="outermostGR" fill="none" stroke="#000000" stroke-width="1">
+            <desc>Outermost gathering Right</desc>
+            <path d="M 0,0 L 130,0 A 10,10 0 0,1 130,20 L 0,20 z"/>
+        </g>
+        <pattern id="gluedPattern" patternUnits="userSpaceOnUse" x="2" y="0" width="5"
+               height="10"
+               viewBox="0 0 10 10"
+               xlink:type="simple"
+               xlink:show="other"
+               xlink:actuate="onLoad"
+               preserveAspectRatio="xMidYMid meet">
+            <desc>Glue pattern</desc>
+            <path d="M 0,5 L 3,0 " stroke="blue" stroke-width="1"/>
+        </pattern>
+        <g id="pastedown" fill="none" stroke="#000000" stroke-width="1">
+            <desc>pastedown</desc>
+            <path d="M 1,1 L 131,1"/>
+            <rect width="130" height="5" fill="url(#gluedPattern)" stroke-opacity="0.0"/>
+        </g>
+        <g id="flyleaf" fill="none" stroke="#000000" stroke-width="1">
+            <desc>single flyleaf</desc>
+            <path d="M 1,1 L 131,1"/>
+        </g>
+        <g id="foldedFlyleaf" fill="none" stroke="#000000" stroke-width="1">
+            <desc>Folded flyleaves</desc>
+            <path d="M 141,1 L 11,1 A 5,5 0 0,0 11,11 L 141,11"/>
+        </g>
+        <g id="thread" fill="none" stroke="#000000" stroke-width="0.5">
+            <path d="M 0,0 L 20,0"/>
+        </g>
+    </defs>
+   <g transform="scale(-1 1)">
+      <desc>Right endleaves</desc>
+      <svg x="-305" y="0">
+         <g>
+            <svg x="155" y="90">
+               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#outermostGL"/>
+            </svg>
+         </g>
+         <desc>Separate endleaves</desc>
+         <desc>Unit N. 1</desc>
+         <desc>Component N. 1</desc>
+         <desc>Pastedown</desc>
+         <g>
+            <svg x="10" y="78">
+               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pastedown"/>
+            </svg>
+         </g>
+         <desc>Type single leaf</desc>
+      </svg>
+   </g>
+</svg>

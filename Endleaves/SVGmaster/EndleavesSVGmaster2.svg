@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%"
+    height="100%">
+    <defs>
+        <g id="outermostGL" fill="none" stroke="#000000" stroke-width="1">
+            <desc content="structured text">Outermost gathering Left</desc>
+            <path d="M 141,1 L 11,1 A 10,10 0 0,0 11,21 L 141,21 z"/>
+        </g>
+        <g id="outermostGR" fill="none" stroke="#000000" stroke-width="1">
+            <desc content="structured text">Outermost gathering Right</desc>
+            <path d="M 0,0 L 130,0 A 10,10 0 0,1 130,20 L 0,20 z"/>
+        </g>
+        <pattern id="gluedPattern" patternUnits="userSpaceOnUse" x="2" y="0" width="5"
+            height="10"
+            viewBox="0 0 10 10"
+            xlink:type="simple"
+            xlink:show="other"
+            xlink:actuate="onLoad"
+            preserveAspectRatio="xMidYMid meet">
+            <desc content="structured text">Glue pattern</desc>
+            <path d="M 0,5 L 3,0 " stroke="blue" stroke-width="1"/>
+        </pattern>
+        <g id="pastedown" fill="none" stroke="#000000" stroke-width="1">
+            <desc content="structured text">pastedown</desc>
+            <path d="M 1,1 L 131,1"/>
+            <rect width="130" height="5" fill="url(#gluedPattern)" stroke-opacity="0.0"/>
+        </g>
+        <g id="flyleaf" fill="none" stroke="#000000" stroke-width="1">
+            <desc content="structured text">single flyleaf</desc>
+            <path d="M 1,1 L 131,1"/>
+        </g>
+        <g id="foldedFlyleaf" fill="none" stroke="#000000" stroke-width="1">
+            <desc content="structured text">Folded flyleaves</desc>
+            <path d="M 141,1 L 11,1 A 5,5 0 0,0 11,11 L 141,11"/>
+        </g>
+        <g id="thread" fill="none" stroke="#000000" stroke-width="0.5">
+            <path d="M 0,0 L 20,0"/>
+        </g>
+    </defs>
+    
+    <!-- Call the definitions above inside the groups below by <use  xlink:href="[#+ID here]", use the X and Y attributes of the nested SVG node to move the components around -->
+
+    
+</svg>

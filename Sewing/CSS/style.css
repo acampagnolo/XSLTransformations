@@ -1,0 +1,14 @@
+/* style.css */
+ 
+/*
+ *    GENERAL   *
+ * 
+ * stroke=#000000; stroke-width=1; fill=none;
+ */
+
+.line {stroke: #000000; stroke-width: 1; fill: none;}
+
+.dot {fill: #000000; stroke: #000000}
+
+.text_va {font-family: courier; font-style: normal; font-variant: normal; font-weight: bold; font-size: 8px; fill:#000000; dominant-baseline: central;}
+

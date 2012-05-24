@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
+    width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="xMinYMin meet" version="1.1">
+    <desc>Sewing pattern SVG Master</desc>
+    <defs>
+        <pattern id="fillDottedPattern" patternUnits="userSpaceOnUse" x="0" y="0" width="1"
+            height="1" viewBox="0 0 6 6" preserveAspectRatio="xMidYMid meet">
+            <desc>Fill Dotted Pattern</desc>
+            <circle r="0.5" stroke="#000000" stroke-width="0.5"/>
+        </pattern>
+        <marker id="arrowSymbol" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3" orient="auto">
+            <path d="M 0,0 L 10,5 L 0,10 z"/>
+        </marker>
+        <g id="sewingCoreRound" stroke="#000000" stroke-width="1">
+            <circle r="5" cx="6" cy="6" fill="url(#fillDottedPattern)"/>
+        </g>
+<!--        <g id="sewingCoreSquare" stroke="#000000" stroke-width="1" fill="none">
+            <rect width="5" height="5"/>
+        </g>
+        <g id="sewingCoreTape" stroke="#000000" stroke-width="1" fill="none">
+            <rect width="10" height="2.5"/>
+        </g>-->
+        <g id="loop" stroke="#000000" stroke-width="1" fill="none" stroke-linejoin="miter"
+            marker-end="url(#arrowSymbol)">
+            <path d="M 1,23 Q 7,22 10,20 Q 17,16 18,9"/>
+            <path d="M 18,9 A 8,8 0 0,0 2,9"/>
+            <path d="M 2,9 Q 3,16 10,20 Q 13,22 19,23"/>
+        </g>
+        <g id="sewingSupport-Loop">
+            <svg x="0" y="0">
+                <svg x="4" y="4">
+                    <use xlink:href="#sewingCoreRound"/>
+                </svg>
+                <svg x="0" y="1">
+                    <use xlink:href="#loop"/>
+                </svg>
+            </svg>
+        </g>
+    </defs>
+
+<!-- Definitions are called here -->
+    
+</svg>
