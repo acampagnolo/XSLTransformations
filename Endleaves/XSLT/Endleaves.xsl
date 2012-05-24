@@ -18,19 +18,19 @@
         select="concat('../../Transformations/Endleaves/SVGoutput/', $fileref[1], '_', 'rightEndleaves', '.svg')"/>
 
     <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
-    <xsl:param name="referenceXvalue" select="0"/>
+    <xsl:param name="Ox" select="0"/>
     <!-- N.B.: The reference value for Y is the same as the reference value for X -->
-    <xsl:param name="referenceYvalue" select="$referenceXvalue"/>
+    <xsl:param name="Oy" select="$Ox"/>
 
     <!-- X and Y values to place the outermost gathering for both left and right endleaves -->
-    <xsl:variable name="XoutermostG" select="$referenceXvalue + 155"/>
-    <xsl:variable name="YoutermostG" select="$referenceYvalue + 90"/>
+    <xsl:variable name="Ax" select="$Ox + 155"/>
+    <xsl:variable name="Ay" select="$Oy + 90"/>
 
     <!-- Value to determine the Y value of distance between the different components of the endleaves-->
-    <xsl:variable name="deltaFlyleaves" select="6"/>
-    
+    <xsl:variable name="delta" select="6"/>
+
     <!-- X value of F1 -->
-    <xsl:variable name="XsewnComponent" select="$XoutermostG + ($deltaFlyleaves * 1.5)"/>
+    <xsl:variable name="F1x" select="$Ax + ($delta * 1.5)"/>
 
     <xsl:template name="main" match="/">
         <xsl:for-each select="book/endleaves/left">
@@ -40,43 +40,21 @@
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                     version="1.1" x="0" y="0" width="297mm" height="210mm" viewBox="0 0 297 210"
                     preserveAspectRatio="xMidYMid meet">
-                    <desc>Left endleaves of book: <xsl:value-of select="$shelfmark"/></desc>
+                    <title>Left endleaves of book: <xsl:value-of select="$shelfmark"/></title>
                     <xsl:copy-of
                         select="document('../SVGmaster/EndleavesSVGmaster.svg')/svg:svg/svg:defs"
                         xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>
                     <desc xmlns="http://www.w3.org/2000/svg">Left endleaves</desc>
                     <svg>
                         <xsl:attribute name="x">
-                            <xsl:value-of select="$referenceXvalue"/>
+                            <xsl:value-of select="$Ox"/>
                         </xsl:attribute>
                         <xsl:attribute name="y">
-                            <xsl:value-of select="$referenceYvalue"/>
+                            <xsl:value-of select="$Oy"/>
                         </xsl:attribute>
                         <xsl:call-template name="leftEndleaves"/>
                     </svg>
                 </svg>
-                <!--                <xsl:element name="svg" xpath-default-namespace="http://www.w3.org/2000/svg">
-                    <xsl:attribute name="width">100%</xsl:attribute>
-                    <xsl:attribute name="height">100%</xsl:attribute>
-                    <xsl:element name="desc">
-                        <xsl:text>Left endleaves of book: </xsl:text>
-                        <xsl:value-of select="$shelfmark"/>
-                    </xsl:element>
-                    <xsl:copy-of
-                        select="document('../SVGmaster/EndleavesSVGmaster.svg')/svg:svg/svg:defs"
-                        xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>
-                    <desc>Left endleaves</desc>
-                    <svg>
-                        <xsl:attribute name="x">
-                            <xsl:value-of select="$referenceXvalue"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="y">
-                            <xsl:value-of select="$referenceYvalue"/>
-                        </xsl:attribute>
-                        <xsl:call-template name="leftEndleaves"/>
-                    </svg>
-                </xsl:element>
--->
             </xsl:result-document>
         </xsl:for-each>
         <xsl:for-each select="book/endleaves/right">
@@ -86,7 +64,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                     version="1.1" x="0" y="0" width="297mm" height="210mm" viewBox="0 0 297 210"
                     preserveAspectRatio="xMidYMid meet">
-                    <desc>Right endleaves of book: <xsl:value-of select="$shelfmark"/></desc>
+                    <title>Right endleaves of book: <xsl:value-of select="$shelfmark"/></title>
                     <xsl:copy-of
                         select="document('../SVGmaster/EndleavesSVGmaster.svg')/svg:svg/svg:defs"
                         xpath-default-namespace="http://www.w3.org/2000/svg"/>
@@ -94,10 +72,10 @@
                         <desc>Right endleaves</desc>
                         <svg>
                             <xsl:attribute name="x">
-                                <xsl:value-of select="$referenceXvalue - 305"/>
+                                <xsl:value-of select="$Ox - 305"/>
                             </xsl:attribute>
                             <xsl:attribute name="y">
-                                <xsl:value-of select="$referenceYvalue"/>
+                                <xsl:value-of select="$Oy"/>
                             </xsl:attribute>
                             <xsl:call-template name="leftEndleaves"/>
                         </svg>
@@ -113,10 +91,10 @@
                 <g xmlns="http://www.w3.org/2000/svg">
                     <use xlink:href="#outermostGL">
                         <xsl:attribute name="x">
-                            <xsl:value-of select="$XoutermostG"/>
+                            <xsl:value-of select="$Ax"/>
                         </xsl:attribute>
                         <xsl:attribute name="y">
-                            <xsl:value-of select="$YoutermostG"/>
+                            <xsl:value-of select="$Ay"/>
                         </xsl:attribute>
                     </use>
                 </g>
@@ -133,21 +111,9 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
-            <!--            <xsl:when test="book/endleaves/left[no]">
-                <g xmlns="http://www.w3.org/2000/svg">
-                    <svg>
-                        <!-\- TODO: select a good value for X and Y coordinates -\->
-                        <xsl:attribute name="x">
-                            <xsl:value-of select="100"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="y">
-                            <xsl:value-of select="100"/>
-                        </xsl:attribute>
-                        <use xlink:href="#outermostGL"/>
-                    </svg>
-                </g>
-            </xsl:when>-->
-            <xsl:otherwise/>
+            <xsl:otherwise>
+                <!-- NB: is there an otherwise?? -->
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
@@ -228,7 +194,7 @@
         <xsl:choose>
             <xsl:when test="$countComponents = 1">
                 <!-- TODO -->
-                <!-- TODO: Call modified folded flyleaves to be as long as outemost gathering -->
+                <!-- TODO: Call modified folded flyleaves to be as long as outermost gathering -->
                 <!-- TODO  -->
                 <desc xmlns="http://www.w3.org/2000/svg">Folded flyleaves</desc>
             </xsl:when>
@@ -237,16 +203,15 @@
                 <g xmlns="http://www.w3.org/2000/svg">
                     <use xlink:href="#foldedFlyleaf">
                         <xsl:attribute name="x">
-                            <xsl:value-of select="$XoutermostG"/>
+                            <xsl:value-of select="$Ax"/>
                         </xsl:attribute>
                         <xsl:attribute name="y">
-                            <xsl:value-of
-                                select="$YoutermostG - ($deltaFlyleaves * $currentComponent) - 10"/>
+                            <xsl:value-of select="$Ay - ($delta * $currentComponent) - 10"/>
                         </xsl:attribute>
                     </use>
                 </g>
                 <xsl:call-template name="componentAttachment">
-                    <xsl:with-param name="CountComponents" select="$countComponents"/>
+                    <xsl:with-param name="countComponents" select="$countComponents"/>
                 </xsl:call-template>
             </xsl:when>
         </xsl:choose>
@@ -254,16 +219,15 @@
 
     <xsl:template name="leftEndleavesSeparatePastedown">
         <xsl:param name="countComponents"/>
-        <xsl:variable name="pastedownRegistrationX" select="$XoutermostG - 145"/>
-        <xsl:variable name="pastedownRegistrationY"
-            select="$YoutermostG - ($deltaFlyleaves * ($countComponents * 2))"/>
+        <xsl:variable name="B1x" select="$Ax - 145"/>
+        <xsl:variable name="B1y" select="$Ay - ($delta * ($countComponents * 2))"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#pastedown">
                 <xsl:attribute name="x">
-                    <xsl:value-of select="$pastedownRegistrationX"/>
+                    <xsl:value-of select="$B1x"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
-                    <xsl:value-of select="$pastedownRegistrationY"/>
+                    <xsl:value-of select="$B1y"/>
                 </xsl:attribute>
             </use>
         </g>
@@ -271,8 +235,8 @@
             <xsl:when test="./type[fold]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type fold</desc>
                 <xsl:call-template name="leftEndleavesSeparatePastedown-Fold">
-                    <xsl:with-param name="pastedownRegistrationX" select="$pastedownRegistrationX"/>
-                    <xsl:with-param name="pastedownRegistrationY" select="$pastedownRegistrationY"/>
+                    <xsl:with-param name="B1x" select="$B1x"/>
+                    <xsl:with-param name="B1y" select="$B1y"/>
                     <xsl:with-param name="countComponents" select="$countComponents"/>
                 </xsl:call-template>
             </xsl:when>
@@ -297,19 +261,18 @@
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparatePastedown-Fold">
-        <xsl:param name="pastedownRegistrationX"/>
-        <xsl:param name="pastedownRegistrationY"/>
+        <xsl:param name="B1x"/>
+        <xsl:param name="B1y"/>
         <xsl:param name="countComponents"/>
-        <xsl:variable name="folioRegistrationX" select="$XoutermostG + 10"/>
-        <xsl:variable name="folioRegistrationY" select="$YoutermostG - $deltaFlyleaves"/>
-        <xsl:variable name="deltaQBcurve" select="$deltaFlyleaves * 2"/>
+        <xsl:variable name="Dx" select="$Ax + 10"/>
+        <xsl:variable name="Dy" select="$Ay - $delta"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#flyleaf">
                 <xsl:attribute name="x">
-                    <xsl:value-of select="$folioRegistrationX"/>
+                    <xsl:value-of select="$Dx"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
-                    <xsl:value-of select="$folioRegistrationY"/>
+                    <xsl:value-of select="$Dy"/>
                 </xsl:attribute>
             </use>
         </g>
@@ -318,47 +281,47 @@
             <path>
                 <xsl:attribute name="d">
                     <xsl:text>M&#32;</xsl:text>
-                    <xsl:value-of select="$folioRegistrationX"/>
+                    <xsl:value-of select="$Dx"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$folioRegistrationY"/>
+                    <xsl:value-of select="$Dy"/>
                     <xsl:text>&#32;Q&#32;</xsl:text>
-                    <xsl:value-of select="$folioRegistrationX - $deltaQBcurve"/>
+                    <xsl:value-of select="$Dx - ($delta * 2)"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$folioRegistrationY"/>
+                    <xsl:value-of select="$Dy"/>
                     <xsl:text>&#32;</xsl:text>
-                    <xsl:value-of select="$folioRegistrationX - $deltaQBcurve"/>
+                    <xsl:value-of select="$Dx - ($delta * 2)"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$folioRegistrationY - $deltaQBcurve"/>
+                    <xsl:value-of select="$Dy - ($delta * 2)"/>
                     <!-- CHECK -->
                     <!-- CHECK: is the Line element in path necessary to allow for multiple components?? -->
                     <!-- CHECK -->
                     <xsl:text>&#32;L&#32;</xsl:text>
-                    <xsl:value-of select="$folioRegistrationX - $deltaQBcurve"/>
+                    <xsl:value-of select="$Dx - ($delta * 2)"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$folioRegistrationY - $deltaQBcurve"/>
+                    <xsl:value-of select="$Dy - ($delta * 2)"/>
                     <xsl:text>&#32;Q&#32;</xsl:text>
-                    <xsl:value-of select="$folioRegistrationX - $deltaQBcurve"/>
+                    <xsl:value-of select="$Dx - ($delta * 2)"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$pastedownRegistrationY"/>
+                    <xsl:value-of select="$B1y"/>
                     <xsl:text>&#32;</xsl:text>
-                    <xsl:value-of select="$pastedownRegistrationX + 130"/>
+                    <xsl:value-of select="$B1x + 130"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$pastedownRegistrationY"/>
+                    <xsl:value-of select="$B1y"/>
                 </xsl:attribute>
             </path>
         </g>
         <xsl:call-template name="componentAttachment">
-            <xsl:with-param name="CountComponents" select="$countComponents"/>
+            <xsl:with-param name="countComponents" select="$countComponents"/>
         </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="componentAttachment">
-        <xsl:param name="CountComponents"/>
+        <xsl:param name="countComponents"/>
         <xsl:choose>
             <xsl:when test="./attachment[sewn]">
                 <desc xmlns="http://www.w3.org/2000/svg">Sewn component</desc>
                 <xsl:call-template name="sewnComponent">
-                    <xsl:with-param name="CountComponents" select="$CountComponents"/>
+                    <xsl:with-param name="countComponents" select="$countComponents"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="./attachment[glued]">
@@ -372,28 +335,21 @@
     </xsl:template>
 
     <xsl:template name="sewnComponent">
-        <xsl:param name="CountComponents"/>
+        <xsl:param name="countComponents"/>
         <g stroke="#000000" stroke-width="0.5" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path>
                 <xsl:attribute name="d">
                     <xsl:text>M&#32;</xsl:text>
-                    <xsl:value-of select="$XsewnComponent"/>
+                    <xsl:value-of select="$F1x"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of
-                        select="$YoutermostG - ($deltaFlyleaves * $CountComponents) - 5"/>
+                    <xsl:value-of select="$Ay - ($delta * $countComponents) - 5"/>
                     <xsl:text>&#32;L&#32;</xsl:text>
-                    <xsl:value-of
-                        select="$XsewnComponent - ($deltaFlyleaves * ($CountComponents +1))"/>
+                    <xsl:value-of select="$F1x - ($delta * ($countComponents +1))"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of
-                        select="$YoutermostG - ($deltaFlyleaves * $CountComponents) - 5"/>
+                    <xsl:value-of select="$Ay - ($delta * $countComponents) - 5"/>
                 </xsl:attribute>
             </path>
         </g>
     </xsl:template>
-
-    <!--    <xsl:template name="rightEndleaves" match="/book/endleaves[right]">
-        <desc>Right endleaves</desc>
-    </xsl:template>-->
 
 </xsl:stylesheet>

@@ -178,17 +178,17 @@
                 <desc>Parametric path describing the fold from the flyleaf to the pastedown</desc>
                 <path d="M 166,85 Q 154,85 154,73 L 154,73 Q 154,67 141,67"/>
             </g>
-            <path d="M 166,85 L 154,85" stroke="#FF6600" stroke-width="0.5"
-                stroke-dasharray="0.5 1" stroke-linecap="round"/>
+            <path d="M 166,85 L 154,85" stroke="#FF6600" stroke-width="0.5" stroke-dasharray="0.5 1"
+                stroke-linecap="round"/>
             <circle r="1" cx="154" cy="85" fill="#FF6600"/>
-            <path d="M 154,85 L154,73" stroke="#FF6600" stroke-width="0.5"
-                stroke-dasharray="0.5 1" stroke-linecap="round"/>
+            <path d="M 154,85 L154,73" stroke="#FF6600" stroke-width="0.5" stroke-dasharray="0.5 1"
+                stroke-linecap="round"/>
             <circle r="1" cx="154" cy="73" fill="#FF6600"/>
-            <path d="M 154,73 L154,67" stroke="#FF6600" stroke-width="0.5"
-                stroke-dasharray="0.5 1" stroke-linecap="round"/>
+            <path d="M 154,73 L154,67" stroke="#FF6600" stroke-width="0.5" stroke-dasharray="0.5 1"
+                stroke-linecap="round"/>
             <circle r="1" cx="154" cy="67" fill="#FF6600"/>
-            <path d="M 154,67 L141,67" stroke="#FF6600" stroke-width="0.5"
-                stroke-dasharray="0.5 1" stroke-linecap="round"/>
+            <path d="M 154,67 L141,67" stroke="#FF6600" stroke-width="0.5" stroke-dasharray="0.5 1"
+                stroke-linecap="round"/>
             <text dx="151.5" dy="89" fill="FF6600" font-family="serif" font-style="normal"
                 font-variant="normal" font-weight="bold" font-size="4">Q1</text>
             <text dx="147" dy="72.8" fill="FF6600" font-family="serif" font-style="normal"
@@ -254,14 +254,14 @@
         <text x="5" y="-4" fill="blue" font-family="serif" font-style="normal" font-variant="normal"
             font-weight="bold" font-size="4">
             <tspan x="5" dy="10" fill="FF0099">nC<tspan x="18">=</tspan><tspan x="24"
-                    font-style="italic">Variable counting the N. of components</tspan></tspan>
+                font-style="italic">Variable <tspan font-style="normal">'$countComponents'</tspan> in XSLT</tspan></tspan>
             <tspan x="5" dy="5" fill="FF0099">cC<tspan x="18">=</tspan><tspan x="24"
-                    font-style="italic">Counter variable for current component</tspan></tspan>
+                font-style="italic">Variable <tspan font-style="normal">'$currentComponent'</tspan> in XSLT</tspan></tspan>
             <tspan x="5" dy="7">O<tspan baseline-shift="sub" font-style="italic" font-size="3"
-                >(x,y)</tspan><tspan x="18">=</tspan><tspan x="24"
-                font-style="italic">the origin (usually x = 0 and y = 0)</tspan></tspan>
+                    >(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic">the
+                    origin (usually x = 0 and y = 0)</tspan></tspan>
             <tspan x="5" dy="7" font-style="italic">&#916;<tspan x="18">=</tspan><tspan x="24"
-                font-style="italic">6 units</tspan></tspan>
+                    font-style="italic">6 units</tspan></tspan>
             <tspan x="5" dy="7">A<tspan baseline-shift="sub" font-style="italic" font-size="3"
                     >(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic"
                     >O</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3"
@@ -307,12 +307,24 @@
                     >(x)</tspan><tspan font-style="italic">- (&#916; * (<tspan fill="#FF0099"
                         >$nC</tspan> + 1))</tspan><tspan x="70" font-style="italic">F1</tspan><tspan
                     baseline-shift="sub" font-style="italic" font-size="3">(y)</tspan></tspan>
-            
-            <tspan x="5" dy="10">Q1<tspan baseline-shift="sub" font-style="italic" font-size="3">(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3">(x)</tspan><tspan font-style="italic">- (&#916; * 2)</tspan><tspan x="70" font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3">(y)</tspan></tspan>
-            
-            <tspan x="5" dy="10">Q2<tspan baseline-shift="sub" font-style="italic" font-size="3">(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3">(x)</tspan><tspan font-style="italic">- (&#916; * 2)</tspan><tspan x="70" font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3">(y)</tspan><tspan>- (&#916; * 2)</tspan></tspan>
-            
-            <tspan x="5" dy="10">Q2<tspan baseline-shift="sub" font-style="italic" font-size="3">(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3">(x)</tspan><tspan font-style="italic">- (&#916; * 2)</tspan><tspan x="70" font-style="italic">B1</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3">(y)</tspan></tspan>
+            <tspan x="5" dy="10">Q1<tspan baseline-shift="sub" font-style="italic" font-size="3"
+                    >(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic"
+                    >D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3"
+                    >(x)</tspan><tspan font-style="italic">- (&#916; * 2)</tspan><tspan x="70"
+                    font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic"
+                    font-size="3">(y)</tspan></tspan>
+            <tspan x="5" dy="10">Q2<tspan baseline-shift="sub" font-style="italic" font-size="3"
+                    >(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic"
+                    >D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3"
+                    >(x)</tspan><tspan font-style="italic">- (&#916; * 2)</tspan><tspan x="70"
+                    font-style="italic">D</tspan><tspan baseline-shift="sub" font-style="italic"
+                    font-size="3">(y)</tspan><tspan>- (&#916; * 2)</tspan></tspan>
+            <tspan x="5" dy="10">Q2<tspan baseline-shift="sub" font-style="italic" font-size="3"
+                    >(x,y)</tspan><tspan x="18">=</tspan><tspan x="24" font-style="italic"
+                    >D</tspan><tspan baseline-shift="sub" font-style="italic" font-size="3"
+                    >(x)</tspan><tspan font-style="italic">- (&#916; * 2)</tspan><tspan x="70"
+                    font-style="italic">B1</tspan><tspan baseline-shift="sub" font-style="italic"
+                    font-size="3">(y)</tspan></tspan>
         </text>
     </svg>
 
