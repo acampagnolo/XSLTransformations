@@ -191,15 +191,14 @@
     or is instead an unsupported kettlestitch, in which case no sewing support is generated -->
     <xsl:template name="sewingLoop">
         <xsl:if test="./type[not (unsupported/kettleStitch)]">
-            <svg xmlns="http://www.w3.org/2000/svg">
+            <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingSupport-Loop">
                 <xsl:attribute name="x">
                     <xsl:value-of select="(./measurement + $xG) - 10"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
                     <xsl:value-of select="$yg2 - 1"/>
                 </xsl:attribute>
-                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingSupport-Loop"/>
-            </svg>
+            </use>
         </xsl:if>
     </xsl:template>
 
