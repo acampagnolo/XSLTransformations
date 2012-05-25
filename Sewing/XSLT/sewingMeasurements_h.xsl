@@ -14,18 +14,18 @@
         select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '_', 'sewingMeasurements', '.svg')"/>
 
     <!-- X and Y reference values of the Origin - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved  NB: in SVG the origin is the top left corner of the screen area -->
-    <xsl:param name="xO" select="0"/>
+    <xsl:param name="Ox" select="0"/>
     <!-- N.B.: The reference value for Y is the same as the reference value for X -->
-    <xsl:param name="yO" select="$xO"/>
+    <xsl:param name="Oy" select="$Ox"/>
 
     <!-- Variable to indicate the X value of the gathering's fold-edge diagram -->
-    <xsl:variable name="xG" select="$xO + 20"/>
+    <xsl:variable name="Gx" select="$Ox + 20"/>
     <!-- Variable to indicate the Y value of the gathering's fold-edge diagram -->
-    <xsl:variable name="yG" select="$yO + ($xG * 2)"/>
+    <xsl:variable name="Gy" select="$Oy + ($Gx * 2)"/>
     <!-- Variable to indicate the Y value of the gathering's head/tail edge portion of the diagram relative to the fold-edge -->
-    <xsl:variable name="yg2" select="$xG"/>
+    <xsl:variable name="g2y" select="$Gx"/>
     <!-- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -->
-    <xsl:variable name="ym" select="5"/>
+    <xsl:variable name="my" select="5"/>
 
     <!-- Value in mm of the width and height of an A4 sheet in landscape position -->
     <xsl:variable name="A4w_l" select="297"/>
@@ -37,10 +37,10 @@
             doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
                 <xsl:attribute name="x">
-                    <xsl:value-of select="$xO"/>
+                    <xsl:value-of select="$Ox"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
-                    <xsl:value-of select="$yO"/>
+                    <xsl:value-of select="$Oy"/>
                 </xsl:attribute>
                 <xsl:attribute name="width">
                     <xsl:value-of select="concat($A4w_l,'mm')"/>
@@ -50,7 +50,7 @@
                 </xsl:attribute>
                 <xsl:attribute name="viewBox">
                     <xsl:value-of
-                        select="concat($xO,' ',$yO,' ', $A4w_l,' ',$A4h_l)"/>
+                        select="concat($Ox,' ',$Oy,' ', $A4w_l,' ',$A4h_l)"/>
                 </xsl:attribute>
                 <xsl:attribute name="preserveAspectRatio">
                     <xsl:value-of select="concat('xMinYMin ','meet')"/>
@@ -64,10 +64,10 @@
                     xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>-->
                 <svg xmlns="http://www.w3.org/2000/svg">
                     <xsl:attribute name="x">
-                        <xsl:value-of select="$xO"/>
+                        <xsl:value-of select="$Ox"/>
                     </xsl:attribute>
                     <xsl:attribute name="y">
-                        <xsl:value-of select="$yO"/>
+                        <xsl:value-of select="$Oy"/>
                     </xsl:attribute>
                     <xsl:apply-templates/>
                 </svg>
@@ -128,21 +128,21 @@
         <path xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="$xO + $xG"/>
+                <xsl:value-of select="$Ox + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG + $yg2"/>
+                <xsl:value-of select="$Gy + $g2y"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="$xO + $xG"/>
+                <xsl:value-of select="$Ox + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $xG"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $xG"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG + $ym"/>
+                <xsl:value-of select="$Gy + $my"/>
             </xsl:attribute>
         </path>
         <xsl:call-template name="measurement"/>
@@ -153,17 +153,17 @@
         <path xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $xG"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $xG"/>
+                <xsl:value-of select="following-sibling::maxLength[1] + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $xG"/>
+                <xsl:value-of select="following-sibling::maxLength[1] + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG + $yg2"/>
+                <xsl:value-of select="$Gy + $g2y"/>
             </xsl:attribute>
         </path>
     </xsl:template>
@@ -172,17 +172,17 @@
         <path xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="preceding-sibling::station[1]/measurement + $xG"/>
+                <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $xG"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $xG"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$yG + $ym"/>
+                <xsl:value-of select="$Gy + $my"/>
             </xsl:attribute>
         </path>
         <xsl:call-template name="measurement"/>
@@ -191,10 +191,10 @@
     <xsl:template name="measurement">
         <text xmlns="http://www.w3.org/2000/svg"  text-anchor="middle" font-family="courier" font-size="8" font-weight="bold">
             <xsl:attribute name="dx">
-                <xsl:value-of select="./measurement + $xG"/>
+                <xsl:value-of select="./measurement + $Gx"/>
             </xsl:attribute>
             <xsl:attribute name="dy">
-                <xsl:value-of select="$yG + ($ym * 3)"/>
+                <xsl:value-of select="$Gy + ($my * 3)"/>
             </xsl:attribute>
             <xsl:value-of select="./measurement"/>
         </text>
