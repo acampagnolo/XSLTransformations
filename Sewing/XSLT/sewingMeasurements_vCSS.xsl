@@ -27,18 +27,56 @@
     <!--    <!-\- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -\->
     <xsl:variable name="my" select="5"/>-->
 
-    <!-- Value in mm of the width and height of an A4 sheet in Portrait position -->
-    <xsl:variable name="A4w_p" select="210"/>
-    <xsl:variable name="A4h_p" select="297"/>
-
+    <!-- Value in mm of the width and height of a paper sheet selected according to the height of the book -->
+    <xsl:variable name="maxLength" as="xs:integer">
+        <xsl:value-of select="/book/sewing/stations/maxLength"/>
+    </xsl:variable>
+    <xsl:variable name="pageDims">
+        <xsl:choose>
+            <xsl:when test="$maxLength le 287">
+                <!-- A4 -->
+                <xsl:value-of select="'297,210,A4'"/>
+            </xsl:when>
+            <xsl:when test="$maxLength gt 287 and $maxLength le 410">
+                <!-- A3 -->
+                <xsl:value-of select="'420,297,A3'"/>
+            </xsl:when>
+            <xsl:when test="$maxLength gt 410">
+                <!-- A2 -->
+                <xsl:value-of select="'594,420,A2'"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- A0 -->
+                <xsl:value-of select="'1189,841,A0'"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="heigth" select="tokenize($pageDims, ',')[1]"/>
+    <xsl:variable name="width" select="tokenize($pageDims, ',')[2]"/>
+    <xsl:variable name="paperSize" select="tokenize($pageDims, ',')[3]"/>
+    
+    
+    <!--<xsl:variable name="pageHeigth" select="if (/book/sewing/stations/maxLength < 297) then "></xsl:variable>
+    <xsl:variable name="pageWidth"></xsl:variable>
+-->
     <xsl:template match="/">
         <xsl:result-document href="{$filenameMeasurements}" method="xml" indent="yes"
             encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
             doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
             <xsl:processing-instruction name="xml-stylesheet">
-                <xsl:text>href="../CSS/style.css"&#32;</xsl:text>
+                <xsl:text>href="../../../GitHub/Transformations/Sewing/CSS/style.css"&#32;</xsl:text>
                 <xsl:text>type="text/css"</xsl:text>
             </xsl:processing-instruction>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:comment>
+                    <xsl:text>SVG file generated on: </xsl:text>
+                    <xsl:value-of select="format-dateTime(current-dateTime(), '[D] [MNn] [Y] at [H]:[m]:[s]')"/>
+                    <xsl:text> using </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-name')"/>
+                    <xsl:text> version </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-version')"/>
+                </xsl:comment>
+            <xsl:text>&#10;</xsl:text>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 version="1.1">
                 <xsl:attribute name="x">
@@ -48,24 +86,29 @@
                     <xsl:value-of select="$Oy"/>
                 </xsl:attribute>
                 <xsl:attribute name="width">
-                    <xsl:value-of select="concat($A4w_p,'mm')"/>
+                    <xsl:value-of select="concat($width,'mm')"/>
                 </xsl:attribute>
                 <xsl:attribute name="height">
-                    <xsl:value-of select="concat($A4h_p,'mm')"/>
+                    <xsl:value-of select="concat($heigth,'mm')"/>
                 </xsl:attribute>
                 <xsl:attribute name="viewBox">
-                    <xsl:value-of select="concat($Ox,' ',$Oy,' ', $A4w_p,' ',$A4h_p)"/>
+                    <xsl:value-of select="concat($Ox,' ',$Oy,' ', $width,' ',$heigth)"/>
                 </xsl:attribute>
                 <xsl:attribute name="preserveAspectRatio">
                     <xsl:value-of select="concat('xMinYMin ','meet')"/>
                 </xsl:attribute>
-                <xsl:element name="desc">
+                <xsl:text>&#10;</xsl:text>
+                <xsl:comment>
+                    <xsl:text>To be printed on </xsl:text>
+                    <xsl:value-of select="$paperSize"/>
+                    <xsl:text> size paper</xsl:text>
+                </xsl:comment>
+                <xsl:text>&#10;</xsl:text>
+                <xsl:element name="title">
                     <xsl:text>Sewing stations of book: </xsl:text>
                     <xsl:value-of select="$shelfmark"/>
                 </xsl:element>
-                <!--                <!-\- The following copies the definitions from the Master SVG file for sewing paths -\->
-                <xsl:copy-of select="document('../SVGmaster/sewingSVGmaster.svg')/svg:svg/svg:defs"
-                    xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>-->
+                <xsl:text>&#10;</xsl:text>
                 <svg xmlns="http://www.w3.org/2000/svg">
                     <xsl:attribute name="x">
                         <xsl:value-of select="$Ox"/>
@@ -73,7 +116,7 @@
                     <xsl:attribute name="y">
                         <xsl:value-of select="$Oy"/>
                     </xsl:attribute>
-                    <xsl:apply-templates/>
+                     <xsl:apply-templates/>
                 </svg>
             </svg>
         </xsl:result-document>

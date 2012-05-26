@@ -17,23 +17,20 @@
             xlink:actuate="onLoad"
             preserveAspectRatio="xMidYMid meet">
             <desc>Glue pattern</desc>
-            <path d="M 0,5 L 3,0 " stroke="blue" stroke-width="1"/>
+            <path d="M 0,5 L 3,0 " class="glued"/>
         </pattern>
-        <g id="pastedown" fill="none" stroke="#000000" stroke-width="1">
+        <g id="pastedown" class="line">
             <desc>pastedown</desc>
             <path d="M 0,0 L 130,0"/>
             <rect width="130" height="5" fill="url(#gluedPattern)" stroke-opacity="0.0"/>
         </g>
-        <g id="flyleaf" fill="none" stroke="#000000" stroke-width="1">
+        <g id="flyleaf" class="line" >
             <desc>single flyleaf</desc>
             <path d="M 0,0 L 130,0"/>
         </g>
-        <g id="foldedFlyleaf" fill="none" stroke="#000000" stroke-width="1">
+        <g id="foldedFlyleaf" class="line">
             <desc>Folded flyleaves</desc>
             <path d="M 140,0 L 10,0 A 5,5 0 0,0 10,10 L 140,10"/>
-        </g>
-        <g id="thread" fill="none" stroke="#000000" stroke-width="0.5">
-            <path d="M 0,0 L 20,0"/>
         </g>
     </defs>
     

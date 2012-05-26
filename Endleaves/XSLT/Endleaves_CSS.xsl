@@ -37,6 +37,10 @@
             <xsl:result-document href="{$filenameLeft}" method="xml" indent="yes" encoding="utf-8"
                 doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                <xsl:processing-instruction name="xml-stylesheet">
+                    <xsl:text>href="../../../GitHub/Transformations/Endleaves/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>type="text/css"</xsl:text>
+                </xsl:processing-instruction>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment>
                     <xsl:text>SVG file generated on: </xsl:text>
@@ -71,6 +75,10 @@
             <xsl:result-document href="{$filenameRight}" method="xml" indent="yes" encoding="utf-8"
                 doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                <xsl:processing-instruction name="xml-stylesheet">
+                    <xsl:text>href="../../../GitHub/Transformations/Endleaves/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>type="text/css"</xsl:text>
+                </xsl:processing-instruction>
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                     version="1.1" x="0" y="0" width="297mm" height="210mm" viewBox="0 0 297 210"
                     preserveAspectRatio="xMidYMid meet">
@@ -286,9 +294,12 @@
                 </xsl:attribute>
             </use>
         </g>
-        <g stroke="#000000" stroke-width="1" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g xmlns="http://www.w3.org/2000/svg">
             <desc>Parametric path describing the fold from the flyleaf to the pastedown</desc>
             <path>
+                <xsl:attribute name="class">
+                    <xsl:text>line</xsl:text>
+                </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M&#32;</xsl:text>
                     <xsl:value-of select="$Dx"/>
@@ -346,8 +357,11 @@
 
     <xsl:template name="sewnComponent">
         <xsl:param name="countComponents"/>
-        <g stroke="#000000" stroke-width="0.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g xmlns="http://www.w3.org/2000/svg">
             <path>
+                <xsl:attribute name="class">
+                    <xsl:text>thread</xsl:text>
+                </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M&#32;</xsl:text>
                     <xsl:value-of select="$F1x"/>

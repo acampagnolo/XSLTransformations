@@ -10,17 +10,30 @@
     <desc>Sewing Pattern and Stations: registration and reference points for master and paramentric
         elements</desc>
     <defs>
-        <pattern id="fillDottedPattern" patternUnits="userSpaceOnUse" x="0" y="0" width="1"
-            height="1" viewBox="0 0 6 6" preserveAspectRatio="xMidYMid meet">
+        <pattern xmlns:xlink="http://www.w3.org/1999/xlink" id="fillDottedPattern"
+            patternUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="1"
+            height="1"
+            viewBox="0 0 6 6"
+            preserveAspectRatio="xMidYMid meet"
+            xlink:type="simple"
+            xlink:show="other"
+            xlink:actuate="onLoad">
             <desc>Fill Dotted Pattern</desc>
-            <circle r="2" stroke="yellow" stroke-width="2"/>
+            <circle r="0.5" stroke="#000000" stroke-width="0.5"/>
         </pattern>
-        <marker id="arrowSymbol" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="strokeWidth"
-            markerWidth="4" markerHeight="3" orient="auto">
-            <path d="M 0,0 L 10,5 L 0,10 z"/>
+        <marker id="arrowSymbol" viewBox="0 0 10 10" refX="0" refY="4"
+            markerUnits="strokeWidth"
+            markerWidth="4"
+            markerHeight="3"
+            orient="auto"
+            preserveAspectRatio="xMidYMid meet">
+            <path d="M 0,0 L 8,4 L 0,8 z"/>
         </marker>
-        <g id="sewingCoreRound" stroke="#000000" stroke-width="1">
-            <circle r="5" cx="6" cy="6" fill="url(#fillDottedPattern)"/>
+        <g id="sewingCoreRound" stroke="#000000" stroke-width="0.5">
+            <circle r="2.5" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
         <!--        <g id="sewingCoreSquare" stroke="#000000" stroke-width="1" fill="none">
             <rect width="5" height="5"/>
@@ -30,54 +43,55 @@
         </g>-->
         <g id="loop" stroke="#000000" stroke-width="1" fill="none" stroke-linejoin="miter"
             marker-end="url(#arrowSymbol)">
-            <path d="M 1,23 Q 7,22 10,20 Q 17,16 18,9"/>
-            <path d="M 18,9 A 8,8 0 0,0 2,9"/>
-            <path d="M 2,9 Q 3,16 10,20 Q 13,22 19,23"/>
+            <path d="M 1,23 Q 7,22 10,20 Q 14,17 14,15"/>
+            <path d="M 14,15 A 4,4 0 0,0 6,15"/>
+            <path d="M 6,15 Q 6,17 10,20 Q 13,22 19,23"/>
         </g>
         <g id="sewingSupport-Loop">
-            <svg x="0" y="0">
-                <svg x="4" y="4">
-                    <use xlink:href="#sewingCoreRound"/>
-                </svg>
-                <svg x="0" y="1">
-                    <use xlink:href="#loop"/>
-                </svg>
-            </svg>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sewingCoreRound" x="10"
+                y="16"
+                xlink:type="simple"
+                xlink:show="embed"
+                xlink:actuate="onLoad"/>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#loop" x="0" y="1"
+                xlink:type="simple"
+                xlink:show="embed"
+                xlink:actuate="onLoad"/>
         </g>
     </defs>
     
     <svg x="-10" y="0">
-        <use xlink:href="#sewingCoreRound" x="45" y="30"/>
+        <use xlink:href="#sewingCoreRound" x="51" y="36"/>
         <circle r="1" cx="51" cy="36" fill="blue"/>
         <text font-family="serif" font-style="normal" font-variant="normal" font-weight="lighter"
-            font-size="6" x="51" y="28" text-anchor="middle">sewingCoreRound</text>
+            font-size="6" x="51" y="31" text-anchor="middle">sewingCoreRound</text>
         <text font-family="serif" font-style="normal" font-variant="normal" font-weight="bold"
-            font-size="6" x="40" y="43" fill="blue">P</text>
+            font-size="6" x="43" y="43" fill="blue">P</text>
 
-        <use xlink:href="#loop" x="41" y="58"/>
-        <circle r="1" cx="42" cy="81" fill="blue"/>
-        <circle r="1" cx="60" cy="81" fill="blue"/>
+        <use xlink:href="#loop" x="41" y="48"/>
+        <circle r="1" cx="42" cy="71" fill="blue"/>
+        <circle r="1" cx="60" cy="71" fill="blue"/>
         <text font-family="serif" font-style="normal" font-variant="normal" font-weight="lighter"
             font-size="6" dx="51" dy="56" text-anchor="middle">loop</text>
         <text font-family="serif" font-style="normal" font-variant="normal" font-weight="bold"
-            font-size="6" x="32" y="84" fill="blue">L1</text>
+            font-size="6" x="32" y="74" fill="blue">T1</text>
         <text font-family="serif" font-style="normal" font-variant="normal" font-weight="bold"
-            font-size="6" x="65" y="84" fill="blue">L2</text>
+            font-size="6" x="65" y="74" fill="blue">T2</text>
 
         <svg x="5">
-            <use xlink:href="#sewingSupport-Loop" x="100" y="43"/>
-            <circle r="1" cx="102" cy="67" fill="blue"/>
-            <circle r="1" cx="120" cy="67" fill="blue"/>
+            <use xlink:href="#sewingSupport-Loop" x="100" y="35"/>
+            <circle r="1" cx="102" cy="59" fill="blue"/>
+            <circle r="1" cx="120" cy="59" fill="blue"/>
             <text font-family="serif" font-style="normal" font-variant="normal"
-                font-weight="lighter" font-size="6" dx="111" dy="41" text-anchor="middle"
+                font-weight="lighter" font-size="6" dx="111" dy="44" text-anchor="middle"
                 >sewingSupport-Loop</text>
             <text font-family="serif" font-style="normal" font-variant="normal" font-weight="bold"
-                font-size="6" x="92" y="70" fill="blue">L1</text>
+                font-size="6" x="92" y="62" fill="blue">T1</text>
             <text font-family="serif" font-style="normal" font-variant="normal" font-weight="bold"
-                font-size="6" x="124" y="70" fill="blue">L2</text>
+                font-size="6" x="124" y="62" fill="blue">T2</text>
         </svg>
 
-        <text font-family="serif" font-weight="100" font-size="60" x="68" y="72">}</text>
+        <text font-family="serif" font-weight="100" font-size="46" x="68" y="65">}</text>
 
         <svg x="140" y="-15">
             <g stroke="#000000" stroke-width="1" fill="none">
@@ -126,9 +140,9 @@
                 font-size="6" x="14" y="85" fill="blue">F</text>
             <circle r="1" cx="20" cy="80" fill="blue"/>
         </svg>
-        <circle r="1" cx="29" cy="92" fill="blue"/>
+        <circle r="1" cx="29" cy="97" fill="blue"/>
         <text font-family="serif" font-style="normal" font-variant="normal" font-weight="bold"
-            font-size="6" x="24" y="90" fill="blue">O</text>
+            font-size="6" x="24" y="95" fill="blue">O</text>
 
 
         <svg x="21">
@@ -137,53 +151,56 @@
                 <tspan dy="6" x="12"><tspan fill="red" font-weight="bold">(a)</tspan> Sewing path
                     with sewing supports and thread.</tspan>
                 <tspan dy="6" x="12"><tspan fill="red" font-weight="bold">(b)</tspan> Sewing
-                    stations measurements (horizontal chart).</tspan>
+                    stations measurements (horizontal diagram).</tspan>
                 <tspan dy="6" x="12"><tspan fill="red" font-weight="bold">(c)</tspan> Sewing
-                    stations measurements (vertical chart, scaled down by 30%).</tspan>
+                    stations measurements (vertical diagram, scaled down by 30%).</tspan>
             </text>
 
-            <text x="222" y="138" font-size="8" font-weight="bold" fill="red" font-family="serif"
+            <text x="222" y="128" font-size="8" font-weight="bold" fill="red" font-family="serif"
                 >(a)</text>
-            <text x="222" y="168" font-size="8" font-weight="bold" fill="red" font-family="serif"
+            <text x="222" y="163" font-size="8" font-weight="bold" fill="red" font-family="serif"
                 >(b)</text>
-            <text x="256" y="168" font-size="8" font-weight="bold" fill="red" font-family="serif"
+            <text x="256" y="163" font-size="8" font-weight="bold" fill="red" font-family="serif"
                 >(c)</text>
 
             <path stroke="#000000" stroke-width="0.5" fill="none" stroke-dasharray="0.5"
-                d="M 8,92 L 243,92 243,10 268,10 268,180 8,180z"/>
+                d="M 8,97 L 243,97 243,15 268,15 268,175 8,175z"/>
 
-            <svg x="0" y="80">
+            <svg x="0" y="70">
                 <g stroke="#000000" stroke-width="1" fill="none">
+                    <desc>Station N.1(kettlestitch)</desc>
                     <path d="M 20,60 L 20,40 42,40"/>
+                    <path stroke-linecap="square" marker-start="url(#arrowSymbol)"
+                        marker-end="url(#arrowSymbol)"
+                        d="M 33,37 Q 39,38 42,40 Q 45,42 51,43 Q 55,44 59,43"/>
+                    <desc>Station N.2(supported)</desc>
                     <path d="M 42,40 L 68,40"/>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sewingSupport-Loop"
+                        x="58"
+                        y="19"/>
+                    <path stroke-linecap="square" marker-end="url(#arrowSymbol)"
+                        d="M 77,43 Q 97,44 111,43"/>
+                    <desc>Station N.3(supported)</desc>
                     <path d="M 68,40 L 120,40"/>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sewingSupport-Loop"
+                        x="110"
+                        y="19"/>
+                    <path stroke-linecap="square" marker-end="url(#arrowSymbol)"
+                        d="M 129,43 Q 149,44 170,43"/>
+                    <desc>Station N.4(supported)</desc>
                     <path d="M 120,40 L 179,40"/>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sewingSupport-Loop"
+                        x="169"
+                        y="19"/>
+                    <desc>Station N.5(kettlestitch)</desc>
                     <path d="M 179,40 L 205,40"/>
                     <path d="M 205,40 L 236,40 236,60"/>
+                    <path stroke-linecap="square" marker-start="url(#arrowSymbol)"
+                        marker-end="url(#arrowSymbol)"
+                        d="M 188,43 Q 192,44 196,43 Q 202,42 205,40 Q 208,38 214,37"/>
                 </g>
 
-                <svg x="58" y="19">
-                    <use xlink:href="#sewingSupport-Loop"/>
-                </svg>
-                <svg x="110" y="19">
-                    <use xlink:href="#sewingSupport-Loop"/>
-                </svg>
-                <svg x="169" y="19">
-                    <use xlink:href="#sewingSupport-Loop"/>
-                </svg>
-
-                <path d="M 77,43 Q 96,44 111,43" stroke="#000000" stroke-width="1" fill="none"
-                    stroke-linecap="square" marker-end="url(#arrowSymbol)"/>
-                <path d="M 129,43 Q 149.5,44 170,43" stroke="#000000" stroke-width="1" fill="none"
-                    stroke-linecap="square" marker-end="url(#arrowSymbol)"/>
-                <path d="M 33,37 Q 39,38 42,40 Q 45,42 51,43 Q 55,43.5  59,43" stroke="#000000"
-                    stroke-width="1" fill="none" marker-start="url(#arrowSymbol)"
-                    marker-end="url(#arrowSymbol)"/>
-                <path d="M 188,43 Q 190,43.5 196,43 Q 202,42 205,40 Q 208,38 214,37"
-                    stroke="#000000" stroke-width="1" fill="none" stroke-linecap="square"
-                    marker-end="url(#arrowSymbol)"/>
-
-                <svg x="0" y="30">
+                <svg x="0" y="35">
                     <g stroke="#000000" stroke-width="1" fill="none">
                         <path d="M 20,60 L 20,40 42,40 42,45"/>
                         <path d="M 42,40 L 68,40 68,45"/>

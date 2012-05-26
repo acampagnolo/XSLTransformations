@@ -10,8 +10,8 @@
 
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
     <xsl:variable name="fileref" select="tokenize($shelfmark, '\.')"/>
-    <xsl:variable name="filenameMeasurements"
-        select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '_', 'sewingMeasurements_v', '.svg')"/>
+    <xsl:variable name="filenamePath"
+        select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '_', 'sewingPath', '.svg')"/>
 
     <!-- X and Y reference values of the Origin - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved  NB: in SVG the origin is the top left corner of the screen area -->
     <xsl:param name="Ox" select="0"/>
@@ -19,13 +19,13 @@
     <xsl:param name="Oy" select="$Ox"/>
 
     <!-- Variable to indicate the X value of the gathering's fold-edge diagram -->
-    <xsl:variable name="Fx" select="$Ox + 20"/>
+    <xsl:variable name="Gx" select="$Ox + 20"/>
     <!-- Variable to indicate the Y value of the gathering's fold-edge diagram -->
-    <xsl:variable name="Fy" select="$Oy + 20"/>
-    <!-- Variable to indicate the X value of the gathering's head/tail edge portions of the diagram relative to the fold-edge -->
-    <xsl:variable name="f2x" select="$Oy + 8"/>
-    <!--    <!-\- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -\->
-    <xsl:variable name="my" select="5"/>-->
+    <xsl:variable name="Gy" select="$Oy + ($Gx * 2)"/>
+    <!-- Variable to indicate the Y value of the gathering's head/tail edge portion of the diagram relative to the fold-edge -->
+    <xsl:variable name="g2y" select="$Gx"/>
+    <!-- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -->
+    <xsl:variable name="ym" select="5"/>
 
     <!-- Value in mm of the width and height of a paper sheet selected according to the height of the book -->
     <xsl:variable name="maxLength" as="xs:integer">
@@ -51,14 +51,18 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="heigth" select="tokenize($pageDims, ',')[1]"/>
-    <xsl:variable name="width" select="tokenize($pageDims, ',')[2]"/>
+    <xsl:variable name="heigth" select="tokenize($pageDims, ',')[2]"/>
+    <xsl:variable name="width" select="tokenize($pageDims, ',')[1]"/>
     <xsl:variable name="paperSize" select="tokenize($pageDims, ',')[3]"/>
 
     <xsl:template match="/">
-        <xsl:result-document href="{$filenameMeasurements}" method="xml" indent="yes"
-            encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
+        <xsl:result-document href="{$filenamePath}" method="xml" indent="yes" encoding="utf-8"
+            doctype-public="-//W3C//DTD SVG 1.1//EN"
             doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+            <xsl:processing-instruction name="xml-stylesheet">
+                <xsl:text>href="../../../GitHub/Transformations/Sewing/CSS/style.css"&#32;</xsl:text>
+                <xsl:text>type="text/css"</xsl:text>
+            </xsl:processing-instruction>
             <xsl:text>&#10;</xsl:text>
             <xsl:comment>
                     <xsl:text>SVG file generated on: </xsl:text>
@@ -84,7 +88,8 @@
                     <xsl:value-of select="concat($heigth,'mm')"/>
                 </xsl:attribute>
                 <xsl:attribute name="viewBox">
-                    <xsl:value-of select="concat($Ox,' ',$Oy,' ', $width,' ',$heigth)"/>
+                    <xsl:value-of
+                        select="concat($Ox,' ',$Oy,' ', $width,' ',$heigth)"/>
                 </xsl:attribute>
                 <xsl:attribute name="preserveAspectRatio">
                     <xsl:value-of select="concat('xMinYMin ','meet')"/>
@@ -97,12 +102,12 @@
                 </xsl:comment>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:element name="title">
-                    <xsl:text>Sewing stations of book: </xsl:text>
+                    <xsl:text>Sewing pattern of book: </xsl:text>
                     <xsl:value-of select="$shelfmark"/>
                 </xsl:element>
-                <!--                <!-\- The following copies the definitions from the Master SVG file for sewing paths -\->
+                <!-- The following copies the definitions from the Master SVG file for sewing paths -->
                 <xsl:copy-of select="document('../SVGmaster/sewingSVGmaster.svg')/svg:svg/svg:defs"
-                    xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>-->
+                    xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>
                 <svg xmlns="http://www.w3.org/2000/svg">
                     <xsl:attribute name="x">
                         <xsl:value-of select="$Ox"/>
@@ -122,18 +127,9 @@
     <!-- Main template to match the description of the sewing stations to the SVG output-->
     <xsl:template match="book/sewing/stations">
         <g xmlns="http://www.w3.org/2000/svg">
-            <xsl:attribute name="stroke">
-                <xsl:text>#000000</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="stroke-width">
-                <xsl:value-of select="1"/>
-            </xsl:attribute>
-            <xsl:attribute name="fill">
-                <xsl:text>none</xsl:text>
-            </xsl:attribute>
-            <!-- The code looks for each sewing station and draws them according to their position: at first and last stations
-                (usually the kettlestitch stations) it also draws the head and tail of the gathering; at each station it draws a portion 
-                of the fold of the gathering. -->
+            <!-- The code looks for each sewing station and draws them according to their position: first and last stations
+                (usually the kettlestitch stations) also draw the head and tail of the gathering and the entrance and exit of the
+                thread; the other stations draw the sewing supports, the sewing loops and the fold of the gathering. -->
             <xsl:for-each select="station">
                 <xsl:choose>
                     <xsl:when test="position() = 1">
@@ -143,6 +139,7 @@
                             </xsl:with-param>
                         </xsl:call-template>
                         <xsl:call-template name="firstStation"/>
+                        <xsl:call-template name="sewingIn"/>
                     </xsl:when>
                     <xsl:when test="position() = last()">
                         <xsl:call-template name="stationDescription">
@@ -151,6 +148,7 @@
                             </xsl:with-param>
                         </xsl:call-template>
                         <xsl:call-template name="lastStation"/>
+                        <xsl:call-template name="sewingOut"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="stationDescription">
@@ -159,6 +157,9 @@
                             </xsl:with-param>
                         </xsl:call-template>
                         <xsl:call-template name="otherStations"/>
+                        <xsl:if test="position() != last() - 1">
+                            <xsl:call-template name="sewingArc"/>
+                        </xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
@@ -167,90 +168,187 @@
 
     <xsl:template name="firstStation">
         <path xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="$Fx - $f2x"/>
+                <xsl:value-of select="$Ox + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Fy"/>
+                <xsl:value-of select="$Gy + $g2y"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="$Fx + $f2x"/>
+                <xsl:value-of select="$Ox + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Fy"/>
-                <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="$Fx"/>
+                <xsl:value-of select="$Gy"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Fy"/>
-                <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="$Fx"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="./measurement + $Fy"/>
+                <xsl:value-of select="$Gy"/>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="measurement"/>
+        <xsl:call-template name="sewingLoop"/>
     </xsl:template>
 
     <xsl:template name="lastStation">
         <xsl:call-template name="otherStations"/>
         <path xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="$Fx"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="./measurement + $Fy"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="$Fx"/>
+                <xsl:value-of select="following-sibling::maxLength[1] + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $Fy"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="$Fx - $f2x"/>
+                <xsl:value-of select="following-sibling::maxLength[1] + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $Fy"/>
-                <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="$Fx + $f2x"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $Fy"/>
+                <xsl:value-of select="$Gy + $g2y"/>
             </xsl:attribute>
         </path>
+        <xsl:call-template name="sewingLoop"/>
     </xsl:template>
 
     <xsl:template name="otherStations">
         <path xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
-                <xsl:value-of select="$Fx"/>
+                <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="preceding-sibling::station[1]/measurement + $Fy"/>
+                <xsl:value-of select="$Gy"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="$Fx"/>
+                <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="./measurement + $Fy"/>
+                <xsl:value-of select="$Gy"/>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="measurement"/>
+        <xsl:call-template name="sewingLoop"/>
     </xsl:template>
 
-    <xsl:template name="measurement">
-        <text xmlns="http://www.w3.org/2000/svg" font-family="courier"
-            font-size="8" dominant-baseline="central">
-            <xsl:attribute name="dx">
-                <xsl:value-of select="$Fx + 3"/>
+    <!-- While the sewingLoop template (i.e. the template to draw the sewing support and the thread loop around it)
+    is called for each station, the template checks whether the station is supported, and thus in need of the drawing
+    or is instead an unsupported kettlestitch, in which case no sewing support is generated -->
+    <xsl:template name="sewingLoop">
+        <xsl:if test="./type[not (unsupported/kettleStitch)]">
+            <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingSupport-Loop">
+                <xsl:attribute name="x">
+                    <xsl:value-of select="(./measurement + $Gx) - 10"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$g2y - 1"/>
+                </xsl:attribute>
+            </use>
+        </xsl:if>
+    </xsl:template>
+
+    <!-- Template to draw the entrance path of the thread -->
+    <xsl:template name="sewingIn">
+        <path xmlns="http://www.w3.org/2000/svg" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+            <xsl:attribute name="class">
+                <xsl:text>thread</xsl:text>
             </xsl:attribute>
-            <xsl:attribute name="dy">
-                <xsl:value-of select="./measurement + $Fy"/>
+            <xsl:attribute name="d">
+                <xsl:text>M&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx - 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy - 3"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx - 3"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy - 2"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement +$Gx"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx + 3"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 2"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx + 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 3"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="following-sibling::station[1]/measurement + $Gx - 13"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 4"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="following-sibling::station[1]/measurement + $Gx - 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 3"/>
             </xsl:attribute>
-            <xsl:value-of select="./measurement"/>
-        </text>
-        <circle xmlns="http://www.w3.org/2000/svg" fill="#000000">
-            <xsl:attribute name="r">
-                <xsl:value-of select="1"/>
+        </path>
+    </xsl:template>
+
+    <!-- Template to draw the sewing arc between stations (not first or last stations) -->
+    <xsl:template name="sewingArc">
+        <path xmlns="http://www.w3.org/2000/svg"
+            marker-end="url(#arrowSymbol)">
+            <xsl:attribute name="class">
+                <xsl:text>thread</xsl:text>
             </xsl:attribute>
-            <xsl:attribute name="cx">
-                <xsl:value-of select="$Fx"/>
+            <xsl:attribute name="d">
+                <xsl:text>M&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx + 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 3"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="./measurement + (2 * $Gx) + 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 4"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="following-sibling::station[1]/measurement + $Gx - 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 3"/>
             </xsl:attribute>
-            <xsl:attribute name="cy">
-                <xsl:value-of select="./measurement + $Fy"/>
+        </path>
+    </xsl:template>
+
+    <!-- Template to draw the exit path of the thread -->
+    <xsl:template name="sewingOut">
+        <path xmlns="http://www.w3.org/2000/svg"
+            marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+            <xsl:attribute name="class">
+                <xsl:text>thread</xsl:text>
             </xsl:attribute>
-        </circle>
+            <xsl:attribute name="d">
+                <xsl:text>M&#32;</xsl:text>
+                <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx + 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 3"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx + 13"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 4"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx - 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 3"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx - 3"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy + 2"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement +$Gx"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy"/>
+                <xsl:text>&#32;Q&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx + 3"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy - 2"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement + $Gx + 9"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy - 3"/>
+            </xsl:attribute>
+        </path>
     </xsl:template>
 
     <!-- This template only adds a <desc></desc> element to the SVG code in order to make explicit which station is
