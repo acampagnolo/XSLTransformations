@@ -21,9 +21,9 @@
     <!-- Variable to indicate the X value of the gathering's fold-edge diagram -->
     <xsl:variable name="Gx" select="$Ox + 20"/>
     <!-- Variable to indicate the Y value of the gathering's fold-edge diagram -->
-    <xsl:variable name="Gy" select="$Oy + ($Gx * 2)"/>
+    <xsl:variable name="Gy" select="$Oy + 20"/>
     <!-- Variable to indicate the Y value of the gathering's head/tail edge portion of the diagram relative to the fold-edge -->
-    <xsl:variable name="g2y" select="$Gx"/>
+    <xsl:variable name="g2y" select="20"/>
     <!-- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -->
     <xsl:variable name="ym" select="5"/>
 
@@ -238,7 +238,7 @@
                     <xsl:value-of select="(./measurement + $Gx) - 10"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
-                    <xsl:value-of select="$g2y - 1"/>
+                    <xsl:value-of select="$Gy - 11"/>
                 </xsl:attribute>
             </use>
         </xsl:if>
