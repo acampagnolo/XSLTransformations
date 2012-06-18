@@ -85,7 +85,7 @@
                     <title>Right endleaves of book: <xsl:value-of select="$shelfmark"/></title>
                     <xsl:copy-of
                         select="document('../SVGmaster/EndleavesSVGmaster.svg')/svg:svg/svg:defs"
-                        xpath-default-namespace="http://www.w3.org/2000/svg"/>
+                        xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>
                     <g transform="scale(-1 1)">
                         <desc>Right endleaves</desc>
                         <svg>
@@ -164,12 +164,16 @@
                             <xsl:with-param name="countComponents" select="$countComponents"/>
                         </xsl:call-template>
                     </xsl:when>
-                    <xsl:otherwise>
+                    <xsl:when test="./pastedowns[no]">
                         <desc xmlns="http://www.w3.org/2000/svg">Flyleaves</desc>
                         <xsl:call-template name="leftEndleavesSeparateFlyleaves">
                             <xsl:with-param name="countComponents" select="$countComponents"/>
                             <xsl:with-param name="currentComponent" select="$currentComponent"/>
                         </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <desc xmlns="http://www.w3.org/2000/svg">Type of endleaf component not checked, not
+                            known, or other</desc>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
@@ -211,10 +215,11 @@
         <xsl:param name="currentComponent"/>
         <xsl:choose>
             <xsl:when test="$countComponents = 1">
-                <!-- TODO -->
-                <!-- TODO: Call modified folded flyleaves to be as long as outermost gathering -->
-                <!-- TODO  -->
-                <desc xmlns="http://www.w3.org/2000/svg">Folded flyleaves</desc>
+                <!-- NB: modified code to accommodate for flyleaves as component #1. Check that this always mean that there is no pastedown. -->
+                <g xmlns="http://www.w3.org/2000/svg">
+                    <desc>Folded flyleaves</desc>
+<!--                    <path d="M" />-->
+                </g>
             </xsl:when>
             <xsl:when test="$countComponents > 1">
                 <desc xmlns="http://www.w3.org/2000/svg">Folded flyleaves</desc>
