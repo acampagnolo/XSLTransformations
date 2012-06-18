@@ -2,8 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:svg="http://www.w3.org/2000/svg"
     xmlns:lig="http://www.ligatus.org.uk/stcatherines/sites/ligatus.org.uk.stcatherines/files/basic-1.8_0.xsd"
-    xmlns:xlink="http://www.w3.org/1999/xlink" exclude-result-prefixes="xs svg xlink lig"
-    version="2.0">
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dict="www.mydict.my"
+    exclude-result-prefixes="xs svg xlink lig dict" version="2.0">
 
     <xsl:output method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
         doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" standalone="no"
@@ -140,6 +140,17 @@
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparate">
+        <!-- Associative array to associate each unit with its number of components -->
+        <xsl:variable name="unit-components_dict">
+            <xsl:for-each select="./yes/type/separate/units/unit">
+                <xsl:value-of select="for $unit in . return position()"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of
+                    select="count(for $component in ./components/component return $component)"/>
+                <xsl:if test="position()!=last()"><xsl:text>-</xsl:text></xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <!--<xsl:value-of select="tokenize($unit-components_dict, '-')[1]"/>-->
         <desc xmlns="http://www.w3.org/2000/svg">Separate endleaves</desc>
         <xsl:for-each select="./yes/type/separate/units/unit">
             <!-- Variable to count the number of Units -->
@@ -148,45 +159,77 @@
             <xsl:variable name="currentUnit" select="position()"/>
             <desc xmlns="http://www.w3.org/2000/svg">Unit N. <xsl:value-of select="$currentUnit"
                 /></desc>
-            <xsl:for-each select="./components/component">
-                <!-- Variable to count the number of Components -->
-                <xsl:variable name="countComponents" select="last()"/>
-                <!-- Counter variable for the current component -->
-                <xsl:variable name="currentComponent" select="position()"/>
-                <!-- Variable to select what kind of material the component is made of -->
-                <xsl:variable name="componentMaterial" select="./material/node()/name()"/>
-                <desc xmlns="http://www.w3.org/2000/svg">Component N. <xsl:value-of
-                        select="$currentComponent"/></desc>
-                <xsl:choose>
-                    <xsl:when test="./pastedown[yes]">
-                        <desc xmlns="http://www.w3.org/2000/svg">Pastedown</desc>
-                        <xsl:call-template name="leftEndleavesSeparatePastedown">
-                            <xsl:with-param name="countComponents" select="$countComponents"/>
-                        </xsl:call-template>
-                    </xsl:when>
-                    <xsl:when test="./pastedowns[no]">
-                        <desc xmlns="http://www.w3.org/2000/svg">Flyleaves</desc>
-                        <xsl:call-template name="leftEndleavesSeparateFlyleaves">
-                            <xsl:with-param name="countComponents" select="$countComponents"/>
-                            <xsl:with-param name="currentComponent" select="$currentComponent"/>
-                        </xsl:call-template>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <desc xmlns="http://www.w3.org/2000/svg">Type of endleaf component not checked, not
-                            known, or other</desc>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>
+            <xsl:choose>
+                <xsl:when test="$countUnits = 1">
+                    <xsl:call-template name="leftEndleavesSeparate_components">
+                        <xsl:with-param name="countUnits" select="$countUnits"/>
+                        <xsl:with-param name="currentUnit" select="$currentUnit"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="$countUnits gt 1">
+                    <!-- do something! -->
+                    <pippo>mmm</pippo>
+                </xsl:when>
+            </xsl:choose>
         </xsl:for-each>
     </xsl:template>
 
+    <xsl:template name="leftEndleavesSeparate_components">
+        <xsl:param name="countUnits"/>
+        <xsl:param name="currentUnit"/>
+        <xsl:for-each select="./components/component">
+            <!-- Variable to count the number of Components -->
+            <xsl:variable name="countComponents" select="last()"/>
+            <!-- Counter variable for the current component -->
+            <xsl:variable name="currentComponent" select="position()"/>
+            <!-- Variable to select what kind of material the component is made of -->
+            <xsl:variable name="componentMaterial" select="./material/node()/name()"/>
+            <xsl:variable name="baseline">
+                <xsl:choose>
+                    <xsl:when test="$currentUnit = 1">
+                        <xsl:value-of select="$Ay"/>
+                    </xsl:when>
+                    <xsl:when test="$currentUnit > 1">
+                        <!-- NB: This is wrong!!!! the components to be counted are those of the previous unit not the current unit -->
+                        <xsl:value-of select="$Ay - ($delta * 2 * $countComponents)"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:variable>
+            <desc xmlns="http://www.w3.org/2000/svg">Component N. <xsl:value-of
+                    select="$currentComponent"/></desc>
+            <xsl:choose>
+                <xsl:when test="./pastedown[yes]">
+                    <desc xmlns="http://www.w3.org/2000/svg">Pastedown</desc>
+                    <xsl:call-template name="leftEndleavesSeparatePastedown">
+                        <xsl:with-param name="countComponents" select="$countComponents"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="./pastedown[no]">
+                    <desc xmlns="http://www.w3.org/2000/svg">Flyleaves</desc>
+                    <xsl:call-template name="leftEndleavesSeparateFlyleaves">
+                        <xsl:with-param name="baseline" select="$baseline"/>
+                        <xsl:with-param name="countComponents" select="$countComponents"/>
+                        <xsl:with-param name="currentComponent" select="$currentComponent"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <desc xmlns="http://www.w3.org/2000/svg">Type of endleaf component not checked,
+                        not known, or other</desc>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:template>
+
+
     <xsl:template name="leftEndleavesSeparateFlyleaves">
+        <xsl:param name="baseline"/>
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
         <xsl:choose>
             <xsl:when test="./type[fold]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type fold</desc>
                 <xsl:call-template name="leftEndleavesSeparateFlyleaves-Fold">
+                    <xsl:with-param name="baseline" select="$baseline"/>
                     <xsl:with-param name="countComponents" select="$countComponents"/>
                     <xsl:with-param name="currentComponent" select="$currentComponent"/>
                 </xsl:call-template>
@@ -211,6 +254,7 @@
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparateFlyleaves-Fold">
+        <xsl:param name="baseline"/>
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
         <xsl:choose>
@@ -218,7 +262,7 @@
                 <!-- NB: modified code to accommodate for flyleaves as component #1. Check that this always mean that there is no pastedown. -->
                 <g xmlns="http://www.w3.org/2000/svg">
                     <desc>Folded flyleaves</desc>
-<!--                    <path d="M" />-->
+                    <path d="M"/>
                 </g>
             </xsl:when>
             <xsl:when test="$countComponents > 1">
@@ -229,7 +273,7 @@
                             <xsl:value-of select="$Ax"/>
                         </xsl:attribute>
                         <xsl:attribute name="y">
-                            <xsl:value-of select="$Ay - ($delta * $currentComponent) - 10"/>
+                            <xsl:value-of select="$baseline - ($delta * $currentComponent) - 10"/>
                         </xsl:attribute>
                     </use>
                 </g>
