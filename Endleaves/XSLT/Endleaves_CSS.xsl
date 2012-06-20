@@ -143,14 +143,16 @@
         <!-- Associative array to associate each unit with its number of components -->
         <xsl:variable name="unit-components_dict">
             <xsl:for-each select="./yes/type/separate/units/unit">
+                <entry>
+                    <xsl:attribute name="key">
                 <xsl:value-of select="for $unit in . return position()"/>
-                <xsl:text>,</xsl:text>
+                    </xsl:attribute>
                 <xsl:value-of
                     select="count(for $component in ./components/component return $component)"/>
-                <xsl:if test="position()!=last()"><xsl:text>-</xsl:text></xsl:if>
+                </entry>
             </xsl:for-each>
         </xsl:variable>
-        <!--<xsl:value-of select="tokenize($unit-components_dict, '-')[1]"/>-->
+<!--        <xsl:value-of select="$unit-components_dict/entry[@key='1']"/>-->
         <desc xmlns="http://www.w3.org/2000/svg">Separate endleaves</desc>
         <xsl:for-each select="./yes/type/separate/units/unit">
             <!-- Variable to count the number of Units -->
