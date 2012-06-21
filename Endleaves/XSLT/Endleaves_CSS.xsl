@@ -140,19 +140,6 @@
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparate">
-        <!-- Associative array to associate each unit with its number of components -->
-        <xsl:variable name="unit-components_dict">
-            <xsl:for-each select="./yes/type/separate/units/unit">
-                <entry>
-                    <xsl:attribute name="key">
-                <xsl:value-of select="for $unit in . return position()"/>
-                    </xsl:attribute>
-                <xsl:value-of
-                    select="count(for $component in ./components/component return $component)"/>
-                </entry>
-            </xsl:for-each>
-        </xsl:variable>
-<!--        <xsl:value-of select="$unit-components_dict/entry[@key='1']"/>-->
         <desc xmlns="http://www.w3.org/2000/svg">Separate endleaves</desc>
         <xsl:for-each select="./yes/type/separate/units/unit">
             <!-- Variable to count the number of Units -->
@@ -161,24 +148,18 @@
             <xsl:variable name="currentUnit" select="position()"/>
             <desc xmlns="http://www.w3.org/2000/svg">Unit N. <xsl:value-of select="$currentUnit"
                 /></desc>
-            <xsl:choose>
-                <xsl:when test="$countUnits = 1">
-                    <xsl:call-template name="leftEndleavesSeparate_components">
-                        <xsl:with-param name="countUnits" select="$countUnits"/>
-                        <xsl:with-param name="currentUnit" select="$currentUnit"/>
-                    </xsl:call-template>
-                </xsl:when>
-                <xsl:when test="$countUnits gt 1">
-                    <!-- do something! -->
-                    <pippo>mmm</pippo>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="leftEndleavesSeparate_components">
+                <xsl:with-param name="countUnits" select="$countUnits"/>
+                <xsl:with-param name="currentUnit" select="$currentUnit"/>
+                <xsl:with-param name="baseline" select="$Ay - ($delta * 2 * count(following-sibling::unit/components/component))"/>
+            </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparate_components">
         <xsl:param name="countUnits"/>
         <xsl:param name="currentUnit"/>
+        <xsl:param name="baseline"/>
         <xsl:for-each select="./components/component">
             <!-- Variable to count the number of Components -->
             <xsl:variable name="countComponents" select="last()"/>
@@ -186,17 +167,6 @@
             <xsl:variable name="currentComponent" select="position()"/>
             <!-- Variable to select what kind of material the component is made of -->
             <xsl:variable name="componentMaterial" select="./material/node()/name()"/>
-            <xsl:variable name="baseline">
-                <xsl:choose>
-                    <xsl:when test="$currentUnit = 1">
-                        <xsl:value-of select="$Ay"/>
-                    </xsl:when>
-                    <xsl:when test="$currentUnit > 1">
-                        <!-- NB: This is wrong!!!! the components to be counted are those of the previous unit not the current unit -->
-                        <xsl:value-of select="$Ay - ($delta * 2 * $countComponents)"/>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:variable>
             <desc xmlns="http://www.w3.org/2000/svg">Component N. <xsl:value-of
                     select="$currentComponent"/></desc>
             <xsl:choose>
@@ -204,6 +174,7 @@
                     <desc xmlns="http://www.w3.org/2000/svg">Pastedown</desc>
                     <xsl:call-template name="leftEndleavesSeparatePastedown">
                         <xsl:with-param name="countComponents" select="$countComponents"/>
+                        <xsl:with-param name="baseline" select="$baseline"/>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="./pastedown[no]">
@@ -281,6 +252,7 @@
                 </g>
                 <xsl:call-template name="componentAttachment">
                     <xsl:with-param name="countComponents" select="$countComponents"/>
+                    <xsl:with-param name="baseline" select="$baseline"/>
                 </xsl:call-template>
             </xsl:when>
         </xsl:choose>
@@ -288,8 +260,9 @@
 
     <xsl:template name="leftEndleavesSeparatePastedown">
         <xsl:param name="countComponents"/>
+        <xsl:param name="baseline"/>
         <xsl:variable name="B1x" select="$Ax - 145"/>
-        <xsl:variable name="B1y" select="$Ay - ($delta * ($countComponents * 2))"/>
+        <xsl:variable name="B1y" select="$baseline - ($delta * ($countComponents * 2))"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#pastedown">
                 <xsl:attribute name="x">
@@ -307,6 +280,7 @@
                     <xsl:with-param name="B1x" select="$B1x"/>
                     <xsl:with-param name="B1y" select="$B1y"/>
                     <xsl:with-param name="countComponents" select="$countComponents"/>
+                    <xsl:with-param name="baseline" select="$baseline"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="./type[guard]">
@@ -333,8 +307,9 @@
         <xsl:param name="B1x"/>
         <xsl:param name="B1y"/>
         <xsl:param name="countComponents"/>
+        <xsl:param name="baseline"/>
         <xsl:variable name="Dx" select="$Ax + 10"/>
-        <xsl:variable name="Dy" select="$Ay - $delta"/>
+        <xsl:variable name="Dy" select="$baseline - $delta"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#flyleaf">
                 <xsl:attribute name="x">
@@ -384,16 +359,19 @@
         </g>
         <xsl:call-template name="componentAttachment">
             <xsl:with-param name="countComponents" select="$countComponents"/>
+            <xsl:with-param name="baseline" select="$baseline"/>
         </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="componentAttachment">
         <xsl:param name="countComponents"/>
+        <xsl:param name="baseline"/>
         <xsl:choose>
             <xsl:when test="./attachment[sewn]">
                 <desc xmlns="http://www.w3.org/2000/svg">Sewn component</desc>
                 <xsl:call-template name="sewnComponent">
                     <xsl:with-param name="countComponents" select="$countComponents"/>
+                    <xsl:with-param name="baseline" select="$baseline"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="./attachment[glued]">
@@ -408,6 +386,7 @@
 
     <xsl:template name="sewnComponent">
         <xsl:param name="countComponents"/>
+        <xsl:param name="baseline"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <path>
                 <xsl:attribute name="class">
@@ -417,11 +396,11 @@
                     <xsl:text>M&#32;</xsl:text>
                     <xsl:value-of select="$F1x"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Ay - ($delta * $countComponents) - 5"/>
+                    <xsl:value-of select="$baseline - ($delta * $countComponents) - 5"/>
                     <xsl:text>&#32;L&#32;</xsl:text>
                     <xsl:value-of select="$F1x - ($delta * ($countComponents +1))"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Ay - ($delta * $countComponents) - 5"/>
+                    <xsl:value-of select="$baseline - ($delta * $countComponents) - 5"/>
                 </xsl:attribute>
             </path>
         </g>
