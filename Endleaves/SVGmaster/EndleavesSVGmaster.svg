@@ -19,6 +19,11 @@
             <desc>Glue pattern</desc>
             <path d="M 0,5 L 3,0 " class="glued"/>
         </pattern>
+        <pattern id="gluedPattern2" patternUnits="userSpaceOnUse" x="0" y="4.1" width="4"
+            height="4.1">
+            <desc>Glue pattern</desc>
+            <path d="M 0,5 L 3,0 " class="glued"/>
+        </pattern>
         <g id="pastedown" class="line">
             <desc>pastedown</desc>
             <path d="M 0,0 L 130,0"/>

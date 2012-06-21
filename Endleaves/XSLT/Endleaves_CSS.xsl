@@ -29,9 +29,6 @@
     <!-- Value to determine the Y value of distance between the different components of the endleaves-->
     <xsl:variable name="delta" select="6"/>
 
-    <!-- X value of F1 -->
-    <xsl:variable name="F1x" select="$Ax + ($delta * 1.5)"/>
-
     <xsl:template name="main" match="/">
         <xsl:for-each select="book/endleaves/left">
             <xsl:result-document href="{$filenameLeft}" method="xml" indent="yes" encoding="utf-8"
@@ -151,7 +148,8 @@
             <xsl:call-template name="leftEndleavesSeparate_components">
                 <xsl:with-param name="countUnits" select="$countUnits"/>
                 <xsl:with-param name="currentUnit" select="$currentUnit"/>
-                <xsl:with-param name="baseline" select="$Ay - ($delta * 2 * count(following-sibling::unit/components/component))"/>
+                <!-- if the units need to be separated more than then delta, subtract 1 or nothing from delta in its last occurrence -->
+                <xsl:with-param name="baseline" select="$Ay - ($delta * 2 * count(following-sibling::unit/components/component) + (($delta - 2) * count(following-sibling::unit)))"/>
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
@@ -266,6 +264,10 @@
                 </xsl:attribute>
             </path>
         </g>
+        <xsl:call-template name="componentAttachment">
+            <xsl:with-param name="countComponents" select="$countComponents"/>
+            <xsl:with-param name="baseline" select="$baseline"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparatePastedown">
@@ -386,6 +388,9 @@
             </xsl:when>
             <xsl:when test="./attachment[glued]">
                 <desc xmlns="http://www.w3.org/2000/svg">Glued component</desc>
+                <xsl:call-template name="gluedComponent">
+                    <xsl:with-param name="baseline" select="$baseline"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <desc xmlns="http://www.w3.org/2000/svg">Attachment method not checked, not known,
@@ -404,15 +409,41 @@
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M&#32;</xsl:text>
-                    <xsl:value-of select="$F1x"/>
+                    <xsl:value-of select="$Ax + ($delta * $countComponents) - 3"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline - ($delta * $countComponents) - 5"/>
                     <xsl:text>&#32;L&#32;</xsl:text>
-                    <xsl:value-of select="$F1x - ($delta * ($countComponents +1))"/>
+                    <xsl:value-of select="$Ax - ($delta * 1.2)"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline - ($delta * $countComponents) - 5"/>
                 </xsl:attribute>
             </path>
+        </g>
+    </xsl:template>
+
+    <xsl:template name="gluedComponent">
+        <xsl:param name="baseline"/>
+        <g xmlns="http://www.w3.org/2000/svg">
+            <rect>
+                <xsl:attribute name="width">
+                    <xsl:value-of select="$delta * 1.5"/>
+                </xsl:attribute>
+                <xsl:attribute name="height">
+                    <xsl:value-of select="$delta"/>
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="$Ax + ($delta div 2)"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$baseline - $delta "/>
+                </xsl:attribute>
+                <xsl:attribute name="fill">
+                    <xsl:text>url(#gluedPattern2)</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="stroke-opacity">
+                    <xsl:value-of select="0.0"/>
+                </xsl:attribute>
+            </rect>
         </g>
     </xsl:template>
 
