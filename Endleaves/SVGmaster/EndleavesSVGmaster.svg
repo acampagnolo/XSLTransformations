@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../CSS/style.css" type="text/css"?>
 <!DOCTYPE svg
   PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
@@ -29,6 +30,18 @@
             <path d="M 0,0 L 130,0"/>
             <rect width="130" height="5" fill="url(#gluedPattern)" stroke-opacity="0.0"/>
         </g>
+        <clipPath id="guardClip">
+            <rect id="rect1"
+                width="32.5" height="10"
+                x="97.5" y="-2"
+                style="stroke: gray; fill: none;"/>
+        </clipPath>
+        <clipPath id="outsideHookClip">
+            <rect id="rect12"
+                width="16.25" height="10"
+                x="113.75" y="-2"
+                style="stroke: gray; fill: none;"/>
+        </clipPath>
         <g id="flyleaf" class="line" >
             <desc>single flyleaf</desc>
             <path d="M 0,0 L 130,0"/>
@@ -39,7 +52,9 @@
         </g>
     </defs>
     
-    <!-- Call the definitions above inside the groups below by <use  xlink:href="[#+ID here]", use the X and Y attributes of the nested SVG node to move the components around -->
+    <!-- Call the definitions above inside the groups below by <use  xlink:href="[#+ID here]", use the X and Y attributes of the use element to move the components around -->
+    
+    <use xlink:href="#pastedown" x="10" y="14" clip-path="url(#guardClip)"/>
 
     
 </svg>
