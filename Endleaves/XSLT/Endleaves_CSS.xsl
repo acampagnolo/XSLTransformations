@@ -172,6 +172,7 @@
                     <desc xmlns="http://www.w3.org/2000/svg">Pastedown</desc>
                     <xsl:call-template name="leftEndleavesSeparatePastedown">
                         <xsl:with-param name="countComponents" select="$countComponents"/>
+                        <xsl:with-param name="currentComponent" select="$currentComponent"/>
                         <xsl:with-param name="baseline" select="$baseline"/>
                     </xsl:call-template>
                 </xsl:when>
@@ -272,9 +273,10 @@
 
     <xsl:template name="leftEndleavesSeparatePastedown">
         <xsl:param name="countComponents"/>
+        <xsl:param name="currentComponent"/>
         <xsl:param name="baseline"/>
         <xsl:variable name="B1x" select="$Ax - 145"/>
-        <xsl:variable name="B1y" select="$baseline - ($delta * ($countComponents * 2))"/>
+        <xsl:variable name="B1y" select="$baseline - (2* $delta * $countComponents) - ($delta * count(preceding-sibling::component))"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#pastedown">
                 <xsl:attribute name="x">
@@ -292,6 +294,7 @@
                     <xsl:with-param name="B1x" select="$B1x"/>
                     <xsl:with-param name="B1y" select="$B1y"/>
                     <xsl:with-param name="countComponents" select="$countComponents"/>
+                    <xsl:with-param name="currentComponent" select="$currentComponent"/>
                     <xsl:with-param name="baseline" select="$baseline"/>
                 </xsl:call-template>
             </xsl:when>
@@ -319,18 +322,26 @@
         <xsl:param name="B1x"/>
         <xsl:param name="B1y"/>
         <xsl:param name="countComponents"/>
+        <xsl:param name="currentComponent"/>
         <xsl:param name="baseline"/>
-        <xsl:variable name="Dx" select="$Ax + 10"/>
-        <xsl:variable name="Dy" select="$baseline - $delta"/>
+        <xsl:variable name="Dx" select="$Ax + ($delta * $countComponents) - 2"/>
+        <xsl:variable name="Dy" select="$baseline - ($delta * $currentComponent)"/>
         <g xmlns="http://www.w3.org/2000/svg">
-            <use xlink:href="#flyleaf">
-                <xsl:attribute name="x">
-                    <xsl:value-of select="$Dx"/>
+            <path>
+                <xsl:attribute name="class">
+                    <xsl:text>line</xsl:text>
                 </xsl:attribute>
-                <xsl:attribute name="y">
+                <xsl:attribute name="d">
+                    <xsl:text>M</xsl:text>
+                    <xsl:value-of select="$Ax + 140"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of select="$Dy"/>
+                    <xsl:text>&#32;L</xsl:text>
+                    <xsl:value-of select="$Dx"/>
+                    <xsl:text>,</xsl:text>
                     <xsl:value-of select="$Dy"/>
                 </xsl:attribute>
-            </use>
+            </path>
         </g>
         <g xmlns="http://www.w3.org/2000/svg">
             <desc>Parametric path describing the fold from the flyleaf to the pastedown</desc>
@@ -343,23 +354,22 @@
                     <xsl:value-of select="$Dx"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$Dy"/>
-                    <xsl:text>&#32;Q&#32;</xsl:text>
-                    <xsl:value-of select="$Dx - ($delta * 2)"/>
+                    <xsl:text>&#32;A</xsl:text>
+                    <xsl:value-of select="$delta - 1 + (count(following-sibling::component) * $delta)"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Dy"/>
+                    <xsl:value-of select="$delta - 1 + (count(following-sibling::component) * $delta)"/>
                     <xsl:text>&#32;</xsl:text>
-                    <xsl:value-of select="$Dx - ($delta * 2)"/>
+                    <xsl:value-of select="0"/>
+                    <xsl:text>&#32;</xsl:text>
+                    <xsl:value-of select="0"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Dy - ($delta * 2)"/>
-                    <!-- CHECK -->
-                    <!-- CHECK: is the Line element in path necessary to allow for multiple components?? -->
-                    <!-- CHECK -->
-                    <xsl:text>&#32;L&#32;</xsl:text>
-                    <xsl:value-of select="$Dx - ($delta * 2)"/>
+                    <xsl:value-of select="1"/>
+                    <xsl:text>&#32;</xsl:text>
+                    <xsl:value-of select="$Ax - 2 + ($delta * count(preceding-sibling::component))"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Dy - ($delta * 2)"/>
+                    <xsl:value-of select="$baseline - ($delta * $countComponents) - 5"/>
                     <xsl:text>&#32;Q&#32;</xsl:text>
-                    <xsl:value-of select="$Dx - ($delta * 2)"/>
+                    <xsl:value-of select="$Ax - 2 + ($delta * count(preceding-sibling::component))"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$B1y"/>
                     <xsl:text>&#32;</xsl:text>
