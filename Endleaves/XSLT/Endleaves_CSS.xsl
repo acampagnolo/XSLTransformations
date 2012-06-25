@@ -20,7 +20,7 @@
     <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
     <xsl:param name="Ox" select="0"/>
     <!-- N.B.: The reference value for Y is the same as the reference value for X -->
-    <xsl:param name="Oy" select="$Ox"/>
+    <xsl:param name="Oy" select="$Ox + $delta * (count(/book/endleaves/left/yes/type/separate/units/unit[1]/following-sibling::unit/components/component))"/>
 
     <!-- X and Y values to place the outermost gathering for both left and right endleaves -->
     <xsl:variable name="Ax" select="$Ox + 155"/>
@@ -151,7 +151,7 @@
                 <!-- The Xpath expression checks whether the following unit contains a text-hook; if so then the baseline is lowered, otherwise the baseline is calculated according to the total number of components in the units that follow -->
                 <!-- NB: if the units need to be separated more than the delta, subtract 1 or nothing from delta in its last occurrence -->
                 <xsl:with-param name="baseline"
-                    select="if (following-sibling::unit/components/component//type[textHook]) then $Ay - $delta else $Ay - ($delta * 2 * count(following-sibling::unit/components/component) + (($delta - 2) * count(following-sibling::unit)))"
+                    select="if (following-sibling::unit[1]/components/component//type[textHook]) then $Ay - $delta else $Ay - ($delta * 2 * count(following-sibling::unit/components/component) + (($delta - 2) * count(following-sibling::unit[not(components//type[textHook])])))"
                 />
             </xsl:call-template>
         </xsl:for-each>
@@ -420,8 +420,8 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    
+
+
     <xsl:template name="leftEndleavesSeparateFlyleaf-SingleLeaf">
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
@@ -467,7 +467,7 @@
                             <xsl:value-of select="$B1y"/>
                         </xsl:attribute>
                     </xsl:otherwise>
-                </xsl:choose>       
+                </xsl:choose>
                 <xsl:choose>
                     <xsl:when test="./type[guard]">
                         <xsl:attribute name="clip-path">
@@ -1001,9 +1001,18 @@
             </xsl:when>
             <xsl:when test="./attachment[glued]">
                 <desc xmlns="http://www.w3.org/2000/svg">Glued component</desc>
-                <xsl:call-template name="gluedComponent">
-                    <xsl:with-param name="baseline" select="$baseline"/>
-                </xsl:call-template>
+                <xsl:choose>
+                    <xsl:when test="./type/hook/type[textHook]">
+                        <xsl:call-template name="gluedComponent-textHook">
+                            <xsl:with-param name="baseline" select="$baseline"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="gluedComponent">
+                            <xsl:with-param name="baseline" select="$baseline"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <desc xmlns="http://www.w3.org/2000/svg">Attachment method not checked, not known,
@@ -1071,6 +1080,32 @@
                 </xsl:attribute>
                 <xsl:attribute name="y">
                     <xsl:value-of select="$baseline - $delta "/>
+                </xsl:attribute>
+                <xsl:attribute name="fill">
+                    <xsl:text>url(#gluedPattern2)</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="stroke-opacity">
+                    <xsl:value-of select="0.0"/>
+                </xsl:attribute>
+            </rect>
+        </g>
+    </xsl:template>
+
+    <xsl:template name="gluedComponent-textHook">
+        <xsl:param name="baseline"/>
+        <g xmlns="http://www.w3.org/2000/svg">
+            <rect>
+                <xsl:attribute name="width">
+                    <xsl:value-of select="$delta * 1.5"/>
+                </xsl:attribute>
+                <xsl:attribute name="height">
+                    <xsl:value-of select="$delta"/>
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="$Ax + ($delta div 2)"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$baseline + 20 "/>
                 </xsl:attribute>
                 <xsl:attribute name="fill">
                     <xsl:text>url(#gluedPattern2)</xsl:text>
