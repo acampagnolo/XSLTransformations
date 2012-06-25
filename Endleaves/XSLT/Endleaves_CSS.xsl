@@ -102,16 +102,56 @@
 
     <xsl:template name="leftEndleaves">
         <xsl:choose>
+            <!-- If endleaves are present, then the right sequence of templates are called to construct the diagram, otherwise only the outer gathering is drawn -->
             <xsl:when test="self::node()[yes | no]">
                 <g xmlns="http://www.w3.org/2000/svg">
-                    <use xlink:href="#outermostGL">
-                        <xsl:attribute name="x">
-                            <xsl:value-of select="$Ax"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="y">
-                            <xsl:value-of select="$Ay"/>
-                        </xsl:attribute>
-                    </use>
+                    <xsl:choose>
+                        <xsl:when test="./yes/type/separate/units/unit[last()]//hook/type[textHook]">
+                            <path xmlns="http://www.w3.org/2000/svg">
+                                <xsl:attribute name="class">
+                                    <xsl:text>line</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="d">
+                                    <xsl:text>M</xsl:text>
+                                    <xsl:value-of select="$Ax + 140"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Ay"/>
+                                    <xsl:text>&#32;L</xsl:text>
+                                    <xsl:value-of select="$Ax + $delta + 10"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Ay"/>
+                                    <xsl:text>&#32;A</xsl:text>
+                                    <xsl:value-of select="10"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="10"/>
+                                    <xsl:text>&#32;</xsl:text>
+                                    <xsl:text>0</xsl:text>
+                                    <xsl:text>&#32;</xsl:text>
+                                    <xsl:text>0</xsl:text>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:text>0</xsl:text>
+                                    <xsl:value-of select="$Ax + $delta + 10"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Ay + 20"/>
+                                    <xsl:text>&#32;L</xsl:text>
+                                    <xsl:value-of select="$Ax + 140"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Ay + 20"/>
+                                    <xsl:text>&#32;z</xsl:text>
+                                </xsl:attribute>
+                            </path>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <use xlink:href="#outermostGL">
+                                <xsl:attribute name="x">
+                                    <xsl:value-of select="$Ax"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="y">
+                                    <xsl:value-of select="$Ay"/>
+                                </xsl:attribute>
+                            </use>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </g>
                 <xsl:choose>
                     <xsl:when test="./yes/type[integral]">
@@ -126,14 +166,165 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
-            <xsl:otherwise>
-                <!-- NB: is there an otherwise?? -->
-            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
     <xsl:template name="leftEndleavesIntegral">
-        <desc xmlns="http://www.w3.org/2000/svg">integral endleaves</desc>
+        <xsl:param name="totLeaves" select="./yes/type/integral/numberOfLeaves" as="xs:integer"/>
+        <xsl:param name="currentLeaf" select="1"/>
+        <xsl:variable name="baseline_int" select="$Ay"/>
+        <xsl:variable name="B1x" select="$Ax - 145"/>
+        <xsl:variable name="B1y"
+            select="$baseline_int - ($delta * $totLeaves) - ($delta * ($totLeaves - $currentLeaf))"/>
+        <desc xmlns="http://www.w3.org/2000/svg">Integral endleaves</desc>
+        <desc xmlns="http://www.w3.org/2000/svg">Leaf N.<xsl:value-of select="$totLeaves - $currentLeaf + 1"/></desc>
+        <xsl:choose>
+            <xsl:when test="./yes/type/integral/pastedown[yes]">
+                <xsl:call-template name="leftEndleavesIntegral-Pastedown">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf"/>
+                    <xsl:with-param name="baseline_int" select="$baseline_int"/>
+                    <xsl:with-param name="B1x" select="$B1x"/>
+                    <xsl:with-param name="B1y" select="$B1y"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="./yes/type/integral/pastedown[no]">
+                <desc xmlns="http://www.w3.org/2000/svg">Flyleaf</desc>    
+                <xsl:call-template name="leftEndleavesIntegral-Flyleaves">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf"/>
+                    <xsl:with-param name="baseline_int" select="$baseline_int"/>
+                    <xsl:with-param name="B1x" select="$B1x"/>
+                    <xsl:with-param name="B1y" select="$B1y"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <desc xmlns="http://www.w3.org/2000/svg">Integral flyleaves not checked, not known, or other.</desc>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="leftEndleavesIntegral-Pastedown">
+        <xsl:param name="totLeaves"/>
+        <xsl:param name="currentLeaf"/>
+        <xsl:param name="baseline_int"/>
+        <xsl:param name="B1x"/>
+        <xsl:param name="B1y"/>
+        <xsl:choose>
+            <xsl:when test="$currentLeaf = $totLeaves">
+                <desc xmlns="http://www.w3.org/2000/svg">Pastedown</desc>
+                <g xmlns="http://www.w3.org/2000/svg">
+                    <use xlink:href="#pastedown">
+                        <xsl:attribute name="x">
+                            <xsl:value-of select="$B1x"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="y">
+                            <xsl:value-of select="$B1y"/>
+                        </xsl:attribute>
+                    </use>
+                    <path>
+                        <xsl:attribute name="class">
+                            <xsl:text>line</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="d">
+                            <xsl:text>M</xsl:text>
+                            <xsl:value-of select="$Ax"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$baseline_int + 10"/>
+                            <xsl:text>&#32;Q</xsl:text>
+                            <xsl:value-of select="$Ax"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$B1y + $delta"/>
+                            <xsl:text>&#32;</xsl:text>
+                            <xsl:value-of select="$B1x + 130"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$B1y"/>
+                        </xsl:attribute>
+                    </path>
+                </g>
+            </xsl:when>
+            <xsl:when test="$currentLeaf lt $totLeaves">
+                <desc xmlns="http://www.w3.org/2000/svg">Flyleaf</desc>
+                <xsl:call-template name="leftEndleavesIntegral-Flyleaf">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf"/>
+                    <xsl:with-param name="B1x" select="$B1x"/>
+                    <xsl:with-param name="B1y" select="$B1y"/>
+                    <xsl:with-param name="baseline_int" select="$baseline_int"/>
+                </xsl:call-template>
+                <xsl:call-template name="leftEndleavesIntegral">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf + 1"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="leftEndleavesIntegral-Flyleaves">
+        <xsl:param name="totLeaves"/>
+        <xsl:param name="currentLeaf"/>
+        <xsl:param name="baseline_int"/>
+        <xsl:param name="B1x"/>
+        <xsl:param name="B1y"/>
+        <xsl:choose>
+            <xsl:when test="$currentLeaf = $totLeaves">
+                <desc xmlns="http://www.w3.org/2000/svg">Flyleaf</desc>
+                <xsl:call-template name="leftEndleavesIntegral-Flyleaf">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf"/>
+                    <xsl:with-param name="B1x" select="$B1x"/>
+                    <xsl:with-param name="B1y" select="$B1y"/>
+                    <xsl:with-param name="baseline_int" select="$baseline_int"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$currentLeaf lt $totLeaves">
+                <desc xmlns="http://www.w3.org/2000/svg">Flyleaf</desc>
+                <xsl:call-template name="leftEndleavesIntegral-Flyleaf">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf"/>
+                    <xsl:with-param name="B1x" select="$B1x"/>
+                    <xsl:with-param name="B1y" select="$B1y"/>
+                    <xsl:with-param name="baseline_int" select="$baseline_int"/>
+                </xsl:call-template>
+                <xsl:call-template name="leftEndleavesIntegral">
+                    <xsl:with-param name="totLeaves" select="$totLeaves"/>
+                    <xsl:with-param name="currentLeaf" select="$currentLeaf + 1"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="leftEndleavesIntegral-Flyleaf">
+        <xsl:param name="totLeaves"/>
+        <xsl:param name="currentLeaf"/>
+        <xsl:param name="baseline_int"/>
+        <xsl:param name="B1x"/>
+        <xsl:param name="B1y"/>
+        <g xmlns="http://www.w3.org/2000/svg">
+            <path>
+                <xsl:attribute name="class">
+                    <xsl:text>line</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="d">
+                    <xsl:text>M</xsl:text>
+                    <xsl:value-of select="$Ax"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of select="$baseline_int + 10"/>
+                    <xsl:text>&#32;Q</xsl:text>
+                    <xsl:value-of select="$Ax"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of select="($baseline_int - ($delta * $currentLeaf))"/>
+                    <xsl:text>&#32;</xsl:text>
+                    <xsl:value-of select="$Ax + 10"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of select="($baseline_int - ($delta * $currentLeaf))"/>
+                    <xsl:text>&#32;L</xsl:text>
+                    <xsl:value-of select="$Ax + 140"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of select="($baseline_int - ($delta * $currentLeaf))"/>
+                </xsl:attribute>
+            </path>
+        </g>
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparate">
@@ -151,7 +342,7 @@
                 <!-- The Xpath expression checks whether the following unit contains a text-hook; if so then the baseline is lowered, otherwise the baseline is calculated according to the total number of components in the units that follow -->
                 <!-- NB: if the units need to be separated more than the delta, subtract 1 or nothing from delta in its last occurrence -->
                 <xsl:with-param name="baseline"
-                    select="if (following-sibling::unit[1]/components/component//type[textHook]) then $Ay - $delta else $Ay - ($delta * 2 * count(following-sibling::unit/components/component) + (($delta - 2) * count(following-sibling::unit[not(components//type[textHook])])))"
+                    select="if (following-sibling::unit[1]/components/component//type[textHook]) then $Ay - $delta * 1.5 else $Ay - ($delta * 2 * count(following-sibling::unit/components/component) + (($delta - 2) * count(following-sibling::unit[not(components//type[textHook])])))"
                 />
             </xsl:call-template>
         </xsl:for-each>
@@ -769,11 +960,11 @@
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
-                    <xsl:value-of select="$Ax + $delta + ($delta * $countComponents)"/>
+                    <xsl:value-of select="$Ax + (2 * $delta) + ($delta * $countComponents)"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + $delta + 20"/>
                     <xsl:text>&#32;L</xsl:text>
-                    <xsl:value-of select="$Ax + 10"/>
+                    <xsl:value-of select="$Ax + $delta + 10"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + $delta + 20"/>
                     <xsl:text>&#32;A</xsl:text>
@@ -787,7 +978,7 @@
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="1"/>
                     <xsl:text>&#32;</xsl:text>
-                    <xsl:value-of select="$Ax + 10"/>
+                    <xsl:value-of select="$Ax + $delta + 10"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline - $delta"/>
                     <xsl:text>&#32;L</xsl:text>
@@ -817,11 +1008,11 @@
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
-                    <xsl:value-of select="$Ax + $delta + ($delta * $countComponents)"/>
+                    <xsl:value-of select="$Ax + (2 * $delta) + ($delta * $countComponents)"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + $delta + 20"/>
                     <xsl:text>&#32;L</xsl:text>
-                    <xsl:value-of select="$Ax + 10"/>
+                    <xsl:value-of select="$Ax + $delta + 10"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + $delta + 20"/>
                     <xsl:text>&#32;A</xsl:text>
@@ -835,11 +1026,11 @@
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="1"/>
                     <xsl:text>&#32;</xsl:text>
-                    <xsl:value-of select="$Ax - $delta"/>
+                    <xsl:value-of select="$Ax"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + 10"/>
                     <xsl:text>&#32;Q</xsl:text>
-                    <xsl:value-of select="$Ax - $delta"/>
+                    <xsl:value-of select="$Ax"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$B1y + $delta"/>
                     <xsl:text>&#32;</xsl:text>
@@ -1053,11 +1244,11 @@
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
-                    <xsl:value-of select="$Ax + 10 - 3"/>
+                    <xsl:value-of select="$Ax + $delta + 10 - 3"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + 10"/>
                     <xsl:text>&#32;L</xsl:text>
-                    <xsl:value-of select="$Ax - ($delta * 1.8)"/>
+                    <xsl:value-of select="$Ax - ($delta * 1.2)"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$baseline + 10"/>
                 </xsl:attribute>
