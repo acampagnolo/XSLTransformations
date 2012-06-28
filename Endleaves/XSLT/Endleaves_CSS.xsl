@@ -385,11 +385,12 @@
                         not known, or other</desc>
                     <!-- NB: if pastedown is ticked as NC or NK then nothing happens even if more information on the typology is known. See files 530.xml and  811.xml.
                         Something needs to be drawn with a degree of uncertainty -->
-                    <!-- try calling "leftEndleavesSeparateFlyleaves"-->
+                    <!-- try calling "leftEndleavesSeparateFlyleaves": works, but the lines need to be greyed out-->
                     <xsl:call-template name="leftEndleavesSeparateFlyleaves">
                         <xsl:with-param name="baseline" select="$baseline"/>
                         <xsl:with-param name="countComponents" select="$countComponents"/>
                         <xsl:with-param name="currentComponent" select="$currentComponent"/>
+                        <xsl:with-param name="certainty" select="50"/>
                     </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
@@ -401,6 +402,7 @@
         <xsl:param name="baseline"/>
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
+        <xsl:param name="certainty" select="100"/>
         <xsl:choose>
             <xsl:when test="./type[fold]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type fold</desc>
@@ -408,6 +410,7 @@
                     <xsl:with-param name="baseline" select="$baseline"/>
                     <xsl:with-param name="countComponents" select="$countComponents"/>
                     <xsl:with-param name="currentComponent" select="$currentComponent"/>
+                    <xsl:with-param name="certainty" select="$certainty"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="./type[guard]">
@@ -474,11 +477,12 @@
         <xsl:param name="baseline"/>
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
+        <xsl:param name="certainty" select="100"/>
         <desc xmlns="http://www.w3.org/2000/svg">Folded flyleaves</desc>
         <g xmlns="http://www.w3.org/2000/svg">
             <path>
                 <xsl:attribute name="class">
-                    <xsl:text>line</xsl:text>
+                    <xsl:value-of separator="-" select="'line',$certainty"/>
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
