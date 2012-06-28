@@ -20,7 +20,8 @@
     <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
     <xsl:param name="Ox" select="0"/>
     <!-- N.B.: The reference value for Y is the same as the reference value for X -->
-    <xsl:param name="Oy" select="$Ox + $delta * (count(/book/endleaves/left/yes/type/separate/units/unit[1]/following-sibling::unit/components/component))"/>
+    <xsl:param name="Oy"
+        select="$Ox + $delta * (count(/book/endleaves/left/yes/type/separate/units/unit[1]/following-sibling::unit/components/component))"/>
 
     <!-- X and Y values to place the outermost gathering for both left and right endleaves -->
     <xsl:variable name="Ax" select="$Ox + 155"/>
@@ -177,7 +178,8 @@
         <xsl:variable name="B1y"
             select="$baseline_int - ($delta * $totLeaves) - ($delta * ($totLeaves - $currentLeaf))"/>
         <desc xmlns="http://www.w3.org/2000/svg">Integral endleaves</desc>
-        <desc xmlns="http://www.w3.org/2000/svg">Leaf N.<xsl:value-of select="$totLeaves - $currentLeaf + 1"/></desc>
+        <desc xmlns="http://www.w3.org/2000/svg">Leaf N.<xsl:value-of
+                select="$totLeaves - $currentLeaf + 1"/></desc>
         <xsl:choose>
             <xsl:when test="./yes/type/integral/pastedown[yes]">
                 <xsl:call-template name="leftEndleavesIntegral-Pastedown">
@@ -189,7 +191,6 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="./yes/type/integral/pastedown[no]">
-                <desc xmlns="http://www.w3.org/2000/svg">Flyleaf</desc>    
                 <xsl:call-template name="leftEndleavesIntegral-Flyleaves">
                     <xsl:with-param name="totLeaves" select="$totLeaves"/>
                     <xsl:with-param name="currentLeaf" select="$currentLeaf"/>
@@ -199,11 +200,12 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <desc xmlns="http://www.w3.org/2000/svg">Integral flyleaves not checked, not known, or other.</desc>
+                <desc xmlns="http://www.w3.org/2000/svg">Integral flyleaves not checked, not known,
+                    or other.</desc>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="leftEndleavesIntegral-Pastedown">
         <xsl:param name="totLeaves"/>
         <xsl:param name="currentLeaf"/>
@@ -259,7 +261,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="leftEndleavesIntegral-Flyleaves">
         <xsl:param name="totLeaves"/>
         <xsl:param name="currentLeaf"/>
@@ -293,7 +295,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="leftEndleavesIntegral-Flyleaf">
         <xsl:param name="totLeaves"/>
         <xsl:param name="currentLeaf"/>
@@ -381,6 +383,14 @@
                 <xsl:otherwise>
                     <desc xmlns="http://www.w3.org/2000/svg">Type of endleaf component not checked,
                         not known, or other</desc>
+                    <!-- NB: if pastedown is ticked as NC or NK then nothing happens even if more information on the typology is known. See files 530.xml and  811.xml.
+                        Something needs to be drawn with a degree of uncertainty -->
+                    <!-- try calling "leftEndleavesSeparateFlyleaves"-->
+                    <xsl:call-template name="leftEndleavesSeparateFlyleaves">
+                        <xsl:with-param name="baseline" select="$baseline"/>
+                        <xsl:with-param name="countComponents" select="$countComponents"/>
+                        <xsl:with-param name="currentComponent" select="$currentComponent"/>
+                    </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -518,13 +528,15 @@
         <xsl:variable name="B1x" select="$Ax - 145"/>
         <xsl:variable name="B1y"
             select="$baseline - (2* $delta * $countComponents) - ($delta * count(preceding-sibling::component))"/>
+        <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
+            <xsl:with-param name="B1x" select="$B1x"/>
+            <xsl:with-param name="B1y" select="$B1y"/>
+            <xsl:with-param name="countComponents" select="$countComponents"/>
+            <xsl:with-param name="baseline" select="$baseline"/>
+        </xsl:call-template>
         <xsl:choose>
             <xsl:when test="./type[fold]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type fold</desc>
-                <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
-                    <xsl:with-param name="B1x" select="$B1x"/>
-                    <xsl:with-param name="B1y" select="$B1y"/>
-                </xsl:call-template>
                 <xsl:call-template name="leftEndleavesSeparatePastedown-Fold">
                     <xsl:with-param name="B1x" select="$B1x"/>
                     <xsl:with-param name="B1y" select="$B1y"/>
@@ -535,10 +547,6 @@
             </xsl:when>
             <xsl:when test="./type[guard]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type guard</desc>
-                <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
-                    <xsl:with-param name="B1x" select="$B1x"/>
-                    <xsl:with-param name="B1y" select="$B1y"/>
-                </xsl:call-template>
                 <xsl:call-template name="leftEndleavesSeparatePastedown-Guard">
                     <xsl:with-param name="B1x" select="$B1x"/>
                     <xsl:with-param name="B1y" select="$B1y"/>
@@ -549,10 +557,6 @@
             </xsl:when>
             <xsl:when test="./type[hook]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type hook</desc>
-                <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
-                    <xsl:with-param name="B1x" select="$B1x"/>
-                    <xsl:with-param name="B1y" select="$B1y"/>
-                </xsl:call-template>
                 <xsl:choose>
                     <xsl:when test="./type/hook/type[endleafHook]">
                         <desc xmlns="http://www.w3.org/2000/svg">Type pastedown-endleaf-hook</desc>
@@ -566,10 +570,6 @@
                     </xsl:when>
                     <xsl:when test="./type/hook/type[textHook]">
                         <desc xmlns="http://www.w3.org/2000/svg">Type pastedown-text-hook</desc>
-                        <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
-                            <xsl:with-param name="B1x" select="$B1x"/>
-                            <xsl:with-param name="B1y" select="$B1y"/>
-                        </xsl:call-template>
                         <xsl:call-template name="leftEndleavesSeparatePastedown-TextHook">
                             <xsl:with-param name="B1x" select="$B1x"/>
                             <xsl:with-param name="B1y" select="$B1y"/>
@@ -586,10 +586,6 @@
             </xsl:when>
             <xsl:when test="./type[outsideHook]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type outside hook</desc>
-                <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
-                    <xsl:with-param name="B1x" select="$B1x"/>
-                    <xsl:with-param name="B1y" select="$B1y"/>
-                </xsl:call-template>
                 <xsl:call-template name="leftEndleavesSeparatePastedown-OutsideHook">
                     <xsl:with-param name="B1x" select="$B1x"/>
                     <xsl:with-param name="B1y" select="$B1y"/>
@@ -600,10 +596,7 @@
             </xsl:when>
             <xsl:when test="./type[singleLeaf]">
                 <desc xmlns="http://www.w3.org/2000/svg">Type single leaf</desc>
-                <xsl:call-template name="leftEndleavesSeparatePastedown-pastedown">
-                    <xsl:with-param name="B1x" select="$B1x"/>
-                    <xsl:with-param name="B1y" select="$B1y"/>
-                </xsl:call-template>
+                <!-- Pastedown already drawn when detected its presence -->
             </xsl:when>
             <xsl:otherwise>
                 <desc xmlns="http://www.w3.org/2000/svg">Type not checked, not known, or other
@@ -642,6 +635,8 @@
     <xsl:template name="leftEndleavesSeparatePastedown-pastedown">
         <xsl:param name="B1x"/>
         <xsl:param name="B1y"/>
+        <xsl:param name="countComponents"/>
+        <xsl:param name="baseline"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <use xlink:href="#pastedown">
                 <xsl:attribute name="x">
@@ -673,6 +668,10 @@
                 </xsl:choose>
             </use>
         </g>
+        <xsl:call-template name="componentAttachment">
+            <xsl:with-param name="countComponents" select="$countComponents"/>
+            <xsl:with-param name="baseline" select="$baseline"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparatePastedown-Fold">

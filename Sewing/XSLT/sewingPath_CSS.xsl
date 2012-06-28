@@ -7,6 +7,8 @@
 
     <xsl:output method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
         doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"/>
+    
+    <!--<xsl:include href="sewingMeasurements_vCSS.xsl"/>-->
 
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
     <xsl:variable name="fileref" select="tokenize($shelfmark, '\.')"/>
