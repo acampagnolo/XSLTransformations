@@ -477,13 +477,22 @@
         <xsl:param name="baseline"/>
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
-        <xsl:param name="certainty" select="100"/>
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
         <desc xmlns="http://www.w3.org/2000/svg">Folded flyleaves</desc>
         <g xmlns="http://www.w3.org/2000/svg">
             <path>
                 <xsl:attribute name="class">
-                    <xsl:value-of separator="-" select="'line',$certainty"/>
+                    <xsl:text>line</xsl:text>
+                    <!-- maybe better to simply use gaussian blur filter instead of colour -->
+                    <!--<xsl:value-of separator="-" select="'line',$certainty"/>-->
                 </xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f1)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
                     <xsl:value-of select="$Ax + 140"/>
