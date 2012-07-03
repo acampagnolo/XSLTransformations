@@ -24,11 +24,14 @@
         <g id="sewingCoreTape" stroke="#000000" stroke-width="1" fill="none">
             <rect width="10" height="2.5"/>
         </g>-->
-        <g id="loop" stroke-linejoin="miter"
-            marker-end="url(#arrowSymbol)">
-            <path d="M 1,14 Q 7,13 10,11 Q 14,8 14,6"/>
-            <path d="M 14,6 A 4,4 0 0,0 6,6"/>
-            <path d="M 6,6 Q 6,8 10,11 Q 13,13 19,14"/>
+        <g id="loop" stroke-linejoin="miter">
+                <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
+                <g marker-end="url(#arrowSymbol)" class="thread">
+                    <path d="M10,11 Q 14,8 14,6"/>
+                    <path d="M 14,6 A 4,4 0 0,0 6,6"/>
+                    <path d="M 6,6 Q 6,8 10,11"/>
+                </g>
+                <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
         </g>
         <g id="sewingSupport-Loop">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sewingCoreRound" x="10"

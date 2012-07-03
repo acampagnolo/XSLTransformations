@@ -7,8 +7,6 @@
 
     <xsl:output method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
         doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"/>
-    
-    <!--<xsl:include href="sewingMeasurements_vCSS.xsl"/>-->
 
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
     <xsl:variable name="fileref" select="tokenize($shelfmark, '\.')"/>
@@ -23,9 +21,9 @@
     <!-- Variable to indicate the X value of the gathering's fold-edge diagram -->
     <xsl:variable name="Gx" select="$Ox + 20"/>
     <!-- Variable to indicate the Y value of the gathering's fold-edge diagram -->
-    <xsl:variable name="Gy" select="$Oy + ($Gx * 2)"/>
+    <xsl:variable name="Gy" select="$Oy + 20"/>
     <!-- Variable to indicate the Y value of the gathering's head/tail edge portion of the diagram relative to the fold-edge -->
-    <xsl:variable name="g2y" select="$Gx"/>
+    <xsl:variable name="g2y" select="20"/>
     <!-- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -->
     <xsl:variable name="ym" select="5"/>
 
@@ -129,6 +127,9 @@
     <!-- Main template to match the description of the sewing stations to the SVG output-->
     <xsl:template match="book/sewing/stations">
         <g xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
             <!-- The code looks for each sewing station and draws them according to their position: first and last stations
                 (usually the kettlestitch stations) also draw the head and tail of the gathering and the entrance and exit of the
                 thread; the other stations draw the sewing supports, the sewing loops and the fold of the gathering. -->
@@ -244,7 +245,7 @@
                     <xsl:value-of select="(./measurement + $Gx) - 10"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
-                    <xsl:value-of select="$g2y - 1"/>
+                    <xsl:value-of select="$Gy - 11"/>
                 </xsl:attribute>
             </use>
         </xsl:if>
@@ -252,7 +253,8 @@
 
     <!-- Template to draw the entrance path of the thread -->
     <xsl:template name="sewingIn">
-        <path xmlns="http://www.w3.org/2000/svg" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
+            marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
                 <xsl:text>thread</xsl:text>
             </xsl:attribute>
@@ -266,6 +268,17 @@
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Gy - 2"/>
                 <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement +$Gx"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy"/>
+            </xsl:attribute>
+        </path>
+        <path xmlns="http://www.w3.org/2000/svg" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+            <xsl:attribute name="class">
+                <xsl:text>innerThread</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="d">
+                <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Gy"/>
@@ -291,10 +304,10 @@
 
     <!-- Template to draw the sewing arc between stations (not first or last stations) -->
     <xsl:template name="sewingArc">
-        <path xmlns="http://www.w3.org/2000/svg"
-            marker-end="url(#arrowSymbol)">
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
+            marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
-                <xsl:text>thread</xsl:text>
+                <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
@@ -315,10 +328,10 @@
 
     <!-- Template to draw the exit path of the thread -->
     <xsl:template name="sewingOut">
-        <path xmlns="http://www.w3.org/2000/svg"
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
             marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
-                <xsl:text>thread</xsl:text>
+                <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
@@ -338,6 +351,18 @@
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Gy + 2"/>
                 <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="./measurement +$Gx"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Gy"/>
+            </xsl:attribute>
+        </path>
+        <path xmlns="http://www.w3.org/2000/svg"
+            marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+            <xsl:attribute name="class">
+                <xsl:text>thread</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="d">
+                <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Gy"/>

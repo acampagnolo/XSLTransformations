@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="13.2">
+<project version="14.0">
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="true"/>
         <options>
-            <serialized version="13.2" xml:space="preserve">
+            <serialized version="14.0" xml:space="preserve">
                 <map>
                     <entry>
                         <String>css.ignored.properties</String>
@@ -12,6 +12,10 @@
                     <entry>
                         <String>css.profile</String>
                         <String>svg</String>
+                    </entry>
+                    <entry>
+                        <String>enable.project.master.files.support</String>
+                        <Boolean>true</Boolean>
                     </entry>
                     <entry>
                         <String>key.css.validator.option.pane</String>
@@ -26,6 +30,13 @@
         </options>
     </meta>
     <projectTree name="Transformations.xpr">
+        <folder masterFiles="true" name="Master Files">
+            <file name="../../Ligatus/Schemas/PrintedBooks/basic-1.8_0.xsd"/>
+            <file name="Endleaves/XSLT/Endleaves_CSS.xsl"/>
+            <file name="Sewing/XSLT/sewingMeasurements_hCSS.xsl"/>
+            <file name="Sewing/XSLT/sewingMeasurements_vCSS.xsl"/>
+            <file name="Sewing/XSLT/sewingPath_CSS.xsl"/>
+        </folder>
         <folder name="Endleaves">
             <folder path="Endleaves/CSS/"/>
             <folder path="Endleaves/SVGmaster/"/>
