@@ -21,7 +21,7 @@
     <!-- Variable to indicate the X value of the gathering's fold-edge diagram -->
     <xsl:variable name="Gx" select="$Ox + 20"/>
     <!-- Variable to indicate the Y value of the gathering's fold-edge diagram -->
-    <xsl:variable name="Gy" select="$Oy + 20"/>
+    <xsl:variable name="Gy" select="$Oy - 20"/>
     <!-- Variable to indicate the Y value of the gathering's head/tail edge portion of the diagram relative to the fold-edge -->
     <xsl:variable name="g2y" select="20"/>
     <!-- Variable to indicate the Y value of the sewing station measurement in the diagram relative to the fold-edge -->
@@ -88,8 +88,7 @@
                     <xsl:value-of select="concat($heigth,'mm')"/>
                 </xsl:attribute>
                 <xsl:attribute name="viewBox">
-                    <xsl:value-of
-                        select="concat($Ox,' ',$Oy,' ', $width,' ',$heigth)"/>
+                    <xsl:value-of select="concat($Ox,' ',$Oy,' ', $width,' ',$heigth)"/>
                 </xsl:attribute>
                 <xsl:attribute name="preserveAspectRatio">
                     <xsl:value-of select="concat('xMinYMin ','meet')"/>
@@ -124,52 +123,141 @@
     <!-- Template to mute all unwanted nodes -->
     <xsl:template match="text()"/>
 
-    <!-- Main template to match the description of the sewing stations to the SVG output-->
-    <xsl:template match="book/sewing/stations">
-        <g xmlns="http://www.w3.org/2000/svg">
-            <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
-            </xsl:attribute>
-            <!-- The code looks for each sewing station and draws them according to their position: first and last stations
+    <xsl:template match="book/sewing">
+        <xsl:call-template name="sewingType"/>
+    </xsl:template>
+
+    <xsl:template name="sewingType">
+        <xsl:choose>
+            <xsl:when test="type[allAlong]">
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:text>Sewing type: all along</xsl:text>
+                </desc>
+                <xsl:call-template name="sewingStations"/>
+            </xsl:when>
+            <xsl:when test="type[multipleSectionSewing]">
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:text>Sewing type: multiple section sewing</xsl:text>
+                </desc>
+                <!-- do something -->
+            </xsl:when>
+            <xsl:when test="type[bypass]">
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:text>Sewing type: bypass</xsl:text>
+                </desc>
+                <!-- do something -->
+            </xsl:when>
+            <xsl:when test="type[NC | NK]">
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:text>Sewing type: not checked or not known. High uncertainty value.</xsl:text>
+                </desc>
+                <xsl:call-template name="sewingStations">
+                    <!-- What is the option with the highest probability? And what is its value?  -->
+                    <!-- NB: We are assuming here that the most probable option is the allAlong sewing type, and we have assigned it a probability value of 40% -->
+                    <xsl:with-param name="certainty" select="40" as="xs:integer"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:text>Sewing type: other</xsl:text>
+                </desc>
+                <!-- do something -->
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="sewingStations">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:variable name="maxLength" select="stations/maxLength[1]"/>
+        <!-- The template groups the stations according to the content of the element <group>: current, previous, earlier, NC, NK -->
+        <xsl:for-each-group select="stations/station" group-by="name(group/child::node()[2])">
+            <xsl:variable name="groupNumber" select="position()"/>
+            <xsl:variable name="groupingKey" select="current-grouping-key()"/>
+            <desc xmlns="http://www.w3.org/2000/svg">
+                <xsl:text>Sewing sequence: </xsl:text>
+                <xsl:value-of select="$groupingKey"/>
+            </desc>
+            <xsl:variable name="stationsGrouped">
+                <xsl:sequence select="current-group()"/>
+            </xsl:variable>
+            <g xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="class">
+                    <xsl:text>line</xsl:text>
+                </xsl:attribute>
+                <!-- The code looks for each sewing station and draws them according to their position: first and last stations
                 (usually the kettlestitch stations) also draw the head and tail of the gathering and the entrance and exit of the
                 thread; the other stations draw the sewing supports, the sewing loops and the fold of the gathering. -->
-            <xsl:for-each select="station">
-                <xsl:choose>
-                    <xsl:when test="position() = 1">
-                        <xsl:call-template name="stationDescription">
-                            <xsl:with-param name="p_stationN">
-                                <xsl:value-of select="position()"/>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                        <xsl:call-template name="firstStation"/>
-                        <xsl:call-template name="sewingIn"/>
-                    </xsl:when>
-                    <xsl:when test="position() = last()">
-                        <xsl:call-template name="stationDescription">
-                            <xsl:with-param name="p_stationN">
-                                <xsl:value-of select="position()"/>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                        <xsl:call-template name="lastStation"/>
-                        <xsl:call-template name="sewingOut"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="stationDescription">
-                            <xsl:with-param name="p_stationN">
-                                <xsl:value-of select="position()"/>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                        <xsl:call-template name="otherStations"/>
-                        <xsl:if test="position() != last() - 1">
-                            <xsl:call-template name="sewingArc"/>
-                        </xsl:if>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>
-        </g>
+                <!-- NB: the code checks and draws a diagram for each station in the current group. 
+                In the case of NC and NK, a certainty value should be generated. At the moment this is not done and all options have the default value of 100% -->
+                <xsl:for-each select="$stationsGrouped/station">
+                    <xsl:variable name="stationNumber" select="position()"/>
+                    <!-- Variable to offset each sewing sequence according to its group number -->
+                    <xsl:variable name="GyDisplacement" as="xs:integer">
+                        <xsl:value-of select="50 * $groupNumber"/>
+                    </xsl:variable>
+                    <xsl:choose>
+                        <xsl:when test="$stationNumber = 1">
+                            <xsl:call-template name="stationDescription">
+                                <xsl:with-param name="p_stationN">
+                                    <xsl:value-of select="$stationNumber"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                            <xsl:call-template name="firstStation">
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="sewingIn">
+                                <xsl:with-param name="certainty" select="$certainty"/>
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="stationType">
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:when test="$stationNumber = last()">
+                            <xsl:call-template name="stationDescription">
+                                <xsl:with-param name="p_stationN">
+                                    <xsl:value-of select="$stationNumber"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                            <xsl:call-template name="lastStation">
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                                <xsl:with-param name="maxLength" select="$maxLength"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="sewingOut">
+                                <xsl:with-param name="certainty" select="$certainty"/>
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="stationType">
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:call-template name="stationDescription">
+                                <xsl:with-param name="p_stationN">
+                                    <xsl:value-of select="$stationNumber"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                            <xsl:call-template name="otherStations">
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="stationType">
+                                <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                            </xsl:call-template>
+                            <xsl:if test="$stationNumber != last() - 1">
+                                <xsl:call-template name="sewingArc">
+                                    <xsl:with-param name="certainty" select="$certainty"/>
+                                    <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                                </xsl:call-template>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </g>
+        </xsl:for-each-group>
     </xsl:template>
 
     <xsl:template name="firstStation">
+        <xsl:param name="GyValue" select="$Gy"/>
         <path xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
@@ -178,22 +266,25 @@
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="$Ox + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + $g2y"/>
+                <xsl:value-of select="$GyValue + $g2y"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
                 <xsl:value-of select="$Ox + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="sewingLoop"/>
     </xsl:template>
 
     <xsl:template name="lastStation">
-        <xsl:call-template name="otherStations"/>
+        <xsl:param name="maxLength"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:call-template name="otherStations">
+            <xsl:with-param name="GyValue" select="$GyValue"/>
+        </xsl:call-template>
         <path xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
@@ -202,21 +293,21 @@
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $Gx"/>
+                <xsl:value-of select="$maxLength + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
                 <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="following-sibling::maxLength[1] + $Gx"/>
+                <xsl:value-of select="$maxLength + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + $g2y"/>
+                <xsl:value-of select="$GyValue + $g2y"/>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="sewingLoop"/>
     </xsl:template>
 
     <xsl:template name="otherStations">
+        <xsl:param name="GyValue" select="$Gy"/>
         <path xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
@@ -225,27 +316,43 @@
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
                 <xsl:text>&#32;L&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="sewingLoop"/>
+    </xsl:template>
+
+    <xsl:template name="stationType">
+        <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:choose>
+            <xsl:when test="type[supported]">
+                <!-- ***********Some passages missing here************ -->
+                <xsl:call-template name="sewingLoop">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="type[unsupported]">
+                <!-- do something -->
+            </xsl:when>
+            <xsl:when test="type[longStitch]"/>
+        </xsl:choose>
     </xsl:template>
 
     <!-- While the sewingLoop template (i.e. the template to draw the sewing support and the thread loop around it)
     is called for each station, the template checks whether the station is supported, and thus in need of the drawing
     or is instead an unsupported kettlestitch, in which case no sewing support is generated -->
     <xsl:template name="sewingLoop">
+        <xsl:param name="GyValue" select="$Gy"/>
         <xsl:if test="./type[not (unsupported/kettleStitch)]">
             <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingSupport-Loop">
                 <xsl:attribute name="x">
                     <xsl:value-of select="(./measurement + $Gx) - 10"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
-                    <xsl:value-of select="$Gy - 11"/>
+                    <xsl:value-of select="$GyValue - 11"/>
                 </xsl:attribute>
             </use>
         </xsl:if>
@@ -253,127 +360,169 @@
 
     <!-- Template to draw the entrance path of the thread -->
     <xsl:template name="sewingIn">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
             marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
                 <xsl:text>thread</xsl:text>
             </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy - 3"/>
+                <xsl:value-of select="$GyValue - 3"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 3"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy - 2"/>
+                <xsl:value-of select="$GyValue - 2"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
             </xsl:attribute>
         </path>
-        <path xmlns="http://www.w3.org/2000/svg" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+        <path xmlns="http://www.w3.org/2000/svg" marker-start="url(#arrowSymbol)"
+            marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
                 <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx + 3"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 2"/>
+                <xsl:value-of select="$GyValue + 2"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx + 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 3"/>
+                <xsl:value-of select="$GyValue + 3"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="following-sibling::station[1]/measurement + $Gx - 13"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 4"/>
+                <xsl:value-of select="$GyValue + 4"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="following-sibling::station[1]/measurement + $Gx - 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 3"/>
+                <xsl:value-of select="$GyValue + 3"/>
             </xsl:attribute>
         </path>
     </xsl:template>
 
     <!-- Template to draw the sewing arc between stations (not first or last stations) -->
     <xsl:template name="sewingArc">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
             marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
                 <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx + 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 3"/>
+                <xsl:value-of select="$GyValue + 3"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="./measurement + (2 * $Gx) + 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 4"/>
+                <xsl:value-of select="$GyValue + 4"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="following-sibling::station[1]/measurement + $Gx - 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 3"/>
+                <xsl:value-of select="$GyValue + 3"/>
             </xsl:attribute>
         </path>
     </xsl:template>
 
     <!-- Template to draw the exit path of the thread -->
     <xsl:template name="sewingOut">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
             marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
                 <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx + 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 3"/>
+                <xsl:value-of select="$GyValue + 3"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx + 13"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 4"/>
+                <xsl:value-of select="$GyValue + 4"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 3"/>
+                <xsl:value-of select="$GyValue + 3"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 3"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy + 2"/>
+                <xsl:value-of select="$GyValue + 2"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
             </xsl:attribute>
         </path>
-        <path xmlns="http://www.w3.org/2000/svg"
-            marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)">
+        <path xmlns="http://www.w3.org/2000/svg" marker-start="url(#arrowSymbol)"
+            marker-end="url(#arrowSymbol)">
             <xsl:attribute name="class">
                 <xsl:text>thread</xsl:text>
             </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:attribute name="d">
                 <xsl:text>M&#32;</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy"/>
+                <xsl:value-of select="$GyValue"/>
                 <xsl:text>&#32;Q&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx + 3"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy - 2"/>
+                <xsl:value-of select="$GyValue - 2"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="./measurement + $Gx + 9"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Gy - 3"/>
+                <xsl:value-of select="$GyValue - 3"/>
             </xsl:attribute>
         </path>
     </xsl:template>
