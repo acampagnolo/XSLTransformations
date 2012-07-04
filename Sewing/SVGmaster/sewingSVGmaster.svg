@@ -6,6 +6,9 @@
     version="1.1">
     <desc>Sewing pattern SVG Master</desc>
     <defs>
+        <filter id="f1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
         <pattern id="fillDottedPattern" patternUnits="userSpaceOnUse" x="0" y="0" width="1"
             height="1" viewBox="0 0 6 6" preserveAspectRatio="xMidYMid meet">
             <desc>Fill Dotted Pattern</desc>

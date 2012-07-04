@@ -211,6 +211,7 @@
                             </xsl:call-template>
                             <xsl:call-template name="stationType">
                                 <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                                <xsl:with-param name="certainty" select="$certainty"/>
                             </xsl:call-template>
                         </xsl:when>
                         <xsl:when test="$stationNumber = last()">
@@ -229,6 +230,7 @@
                             </xsl:call-template>
                             <xsl:call-template name="stationType">
                                 <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                                <xsl:with-param name="certainty" select="$certainty"/>
                             </xsl:call-template>
                         </xsl:when>
                         <xsl:otherwise>
@@ -242,6 +244,7 @@
                             </xsl:call-template>
                             <xsl:call-template name="stationType">
                                 <xsl:with-param name="GyValue" select="$Gy + $GyDisplacement"/>
+                                <xsl:with-param name="certainty" select="$certainty"/>
                             </xsl:call-template>
                             <xsl:if test="$stationNumber != last() - 1">
                                 <xsl:call-template name="sewingArc">
@@ -326,12 +329,14 @@
     </xsl:template>
 
     <xsl:template name="stationType">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
         <xsl:choose>
             <xsl:when test="type[supported]">
                 <!-- ***********Some passages missing here************ -->
                 <xsl:call-template name="sewingLoop">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
+                    <xsl:with-param name="certainty" select="$certainty"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type[unsupported]">
@@ -345,14 +350,30 @@
     is called for each station, the template checks whether the station is supported, and thus in need of the drawing
     or is instead an unsupported kettlestitch, in which case no sewing support is generated -->
     <xsl:template name="sewingLoop">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
         <xsl:if test="./type[not (unsupported/kettleStitch)]">
-            <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingSupport-Loop">
+            <use xmlns="http://www.w3.org/2000/svg" xlink:href="#loop">
                 <xsl:attribute name="x">
                     <xsl:value-of select="(./measurement + $Gx) - 10"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
                     <xsl:value-of select="$GyValue - 11"/>
+                </xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f1)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </use>
+            <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingCoreRound">
+                <xsl:attribute name="x">
+                    <xsl:value-of select="(./measurement + $Gx)"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$GyValue - 5"/>
                 </xsl:attribute>
             </use>
         </xsl:if>
