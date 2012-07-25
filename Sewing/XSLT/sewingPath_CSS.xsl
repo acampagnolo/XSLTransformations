@@ -436,13 +436,12 @@
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 3.6"/>
@@ -467,13 +466,12 @@
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 4.5"/>
@@ -510,13 +508,12 @@
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 3.5"/>
@@ -600,7 +597,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="supportedDouble">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -764,36 +761,34 @@
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
-    
+
     <xsl:template name="sewingSupportRound_double">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
         <use xmlns="http://www.w3.org/2000/svg">
-                    <xsl:attribute name="xlink:href">
-                        <xsl:text>#sewingSupportRound</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="x">
-                        <xsl:value-of select="./measurement + $Gx - 4.2"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="y">
-                        <xsl:value-of select="$GyValue - 5"/>
-                    </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:attribute name="xlink:href">
+                <xsl:text>#sewingSupportRound</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="./measurement + $Gx - 4.2"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$GyValue - 5"/>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
         <use xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="xlink:href">
@@ -805,13 +800,12 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 5"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
 
@@ -825,13 +819,12 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 5"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f2)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
 
@@ -845,16 +838,15 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
-    
+
     <xsl:template name="sewingArch_raised">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -865,16 +857,15 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
-    
+
     <xsl:template name="sewingArch_recessed">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -885,16 +876,15 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
-    
+
     <xsl:template name="sewingLoop_flat">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -905,16 +895,15 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
-    
+
     <xsl:template name="sewingArch_flat">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -925,16 +914,15 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
-    
+
     <xsl:template name="sewingLoop_double">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -945,13 +933,12 @@
             <xsl:attribute name="y">
                 <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
         </use>
     </xsl:template>
 
@@ -964,13 +951,12 @@
             <xsl:attribute name="class">
                 <xsl:text>thread</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement + $Gx - 9"/>
@@ -991,13 +977,12 @@
             <xsl:attribute name="class">
                 <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
@@ -1032,13 +1017,12 @@
             <xsl:attribute name="class">
                 <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement + $Gx + 9"/>
@@ -1065,13 +1049,12 @@
             <xsl:attribute name="class">
                 <xsl:text>innerThread</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="preceding-sibling::station[1]/measurement + $Gx + 9"/>
@@ -1100,13 +1083,12 @@
             <xsl:attribute name="class">
                 <xsl:text>thread</xsl:text>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="./measurement +$Gx"/>
@@ -1143,17 +1125,30 @@
             <xsl:text>)</xsl:text>
         </desc>
     </xsl:template>
-    
+
     <!-- Uncertainty template -->
     <xsl:template name="certainty">
         <xsl:param name="certainty" select="100"/>
         <xsl:param name="uncertaintyIncrement"/>
         <xsl:param name="type"/>
         <xsl:choose>
-            <xsl:when test="$certainty lt 100">
-                <xsl:attribute name="filter">
-                    <xsl:text>url(#f1)</xsl:text>
-                </xsl:attribute>
+            <xsl:when test="$type = 1">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f1)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$type = 2">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f2)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
