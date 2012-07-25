@@ -94,9 +94,27 @@
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#loop" x="0" y="0"
                 xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
         </g>
+        <clipPath id="interlink">
+            <path d="M6,10 L6,18 10,13 14,18 14,10z M10,15.5 L6,21 L6,19 14,19 14,21z"/>
+        </clipPath>
+        <clipPath id="interlink_first">
+            <path d="M6,10 L6,18 10,13 14,18 14,10z"/>
+        </clipPath>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop stop-color = "black" offset = "0%"/>
+            <stop stop-color = "grey" offset = "50%"/>
+            <stop stop-color = "white" offset = "70%" stop-opacity="0"/>
+        </linearGradient>
+        <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink_first)" -->
+        <!-- Other section should have: stroke="#000000" clip-path="url(#interlink)" -->
+        <g id="link-stitch" class="thread" stroke="#000000" stroke-width="1" fill="none" clip-path="url(#interlink)">
+            <path d="M10,11 Q7.5,14 7.5,15 A2.5,2.5 0 0,0 10,18 A2.5,2.5 0 0,0 12.5,15 Q12.5,14 10,11"/>
+        </g>
     </defs>
 
     <!-- Definitions are called here -->
     
+    <use xlink:href="#link-stitch" x="20" y="20"/>
+    <use xlink:href="#link-stitch" x="20" y="23"/>
 
 </svg>
