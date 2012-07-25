@@ -131,21 +131,27 @@
         <xsl:choose>
             <xsl:when test="type[allAlong]">
                 <desc xmlns="http://www.w3.org/2000/svg">
-                    <xsl:text>Sewing type: all along</xsl:text>
+                    <xsl:text>Sewing type: all-along</xsl:text>
                 </desc>
                 <xsl:call-template name="sewingStations"/>
             </xsl:when>
             <xsl:when test="type[multipleSectionSewing]">
                 <desc xmlns="http://www.w3.org/2000/svg">
-                    <xsl:text>Sewing type: multiple section sewing</xsl:text>
+                    <xsl:text>Sewing type: multiple gathering sewing</xsl:text>
                 </desc>
-                <!-- do something -->
+                <xsl:call-template name="sewingStations">
+                    <!-- Since the schema does not describe this sewing in details, the diagram draws an allAlong sewing type with a high degree of uncertainty -->
+                    <xsl:with-param name="certainty" select="40" as="xs:integer"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:when test="type[bypass]">
                 <desc xmlns="http://www.w3.org/2000/svg">
-                    <xsl:text>Sewing type: bypass</xsl:text>
+                    <xsl:text>Sewing type: bypass sewing</xsl:text>
                 </desc>
-                <!-- do something -->
+                <xsl:call-template name="sewingStations">
+                    <!-- Since the schema does not describe this sewing in details, the diagram draws an allAlong sewing type with a high degree of uncertainty -->
+                    <xsl:with-param name="certainty" select="40" as="xs:integer"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:when test="type[NC | NK]">
                 <desc xmlns="http://www.w3.org/2000/svg">
@@ -587,9 +593,25 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/double">
-                <!-- do something -->
+                <xsl:call-template name="supportedDouble">
+                    <xsl:with-param name="certainty" select="$certainty"/>
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
             </xsl:when>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="supportedDouble">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:call-template name="sewingLoop_double">
+            <!-- Select the most probable thread route with an increased degree of uncertainty -->
+            <xsl:with-param name="GyValue" select="$GyValue"/>
+            <xsl:with-param name="certainty" select="$certainty"/>
+        </xsl:call-template>
+        <xsl:call-template name="sewingSupportRound_double">
+            <xsl:with-param name="GyValue" select="$GyValue"/>
+        </xsl:call-template>
     </xsl:template>
 
     <!-- The template calls two templates: one to draw the right kind of thread loop around the sewing support,
@@ -602,39 +624,76 @@
         </desc>
         <xsl:choose>
             <xsl:when test="type/supported/type/single[raised]">
-                <xsl:call-template name="sewingLoop">
-                    <xsl:with-param name="GyValue" select="$GyValue"/>
-                    <xsl:with-param name="certainty" select="$certainty"/>
-                </xsl:call-template>
-                <xsl:call-template name="sewingSupportRound">
+                <xsl:choose>
+                    <xsl:when test="xs:integer(./numberOfHoles) = 1">
+                        <xsl:call-template name="sewingLoop">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="xs:integer(./numberOfHoles) = 2">
+                        <xsl:call-template name="sewingArch_raised">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="xs:string(./numberOfHoles) = 'NK'">
+                        <!-- Select the most probable thread route with an increased degree of uncertainty -->
+                        <xsl:call-template name="sewingLoop">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <!-- Calculate the increased degree of uncertainty -->
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="xs:string(./numberOfHoles) = 'NA'">
+                        <!-- NB -->
+                        <!-- This should only have been used for recessed/vNick prepared stations -->
+                        <!-- NB -->
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:call-template name="sewingSupportRound_single">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/single[recessed]">
+                <!-- Select the most probable route, but with a high degree of uncertainty -->
                 <xsl:call-template name="sewingArch_recessed">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
+                    <!-- Increase uncertainty -->
                     <xsl:with-param name="certainty" select="$certainty"/>
                 </xsl:call-template>
-                <xsl:call-template name="sewingSupportRound">
+                <xsl:call-template name="sewingSupportRound_single">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/single[flat]">
                 <xsl:choose>
                     <xsl:when test="xs:integer(./numberOfHoles) = 1">
+                        <!-- Select the most probable route, but with an increased degree of uncertainty  -->
                         <xsl:call-template name="sewingLoop_flat">
                             <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <!-- Increase uncertainty -->
                             <xsl:with-param name="certainty" select="$certainty"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="xs:integer(./numberOfHoles) = 2">
-                        <!-- around -->
+                        <xsl:call-template name="sewingArch_flat">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="xs:string(./numberOfHoles) = 'NK'">
-                        <!-- Select the most probable thread route? -->
+                        <!-- Select the most probable thread route with an increased degree of uncertainty -->
+                        <xsl:call-template name="sewingLoop_flat">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <!-- Calculate the increased degree of uncertainty -->
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="xs:string(./numberOfHoles) = 'NA'">
-                        <!-- Do what??? -->
+                        <!-- NB -->
+                        <!-- This should only have been used for recessed/vNick prepared stations -->
+                        <!-- NB -->
                     </xsl:when>
                 </xsl:choose>
                 <xsl:call-template name="sewingSupportFlat">
@@ -642,12 +701,42 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/single[NC]">
-                <!-- Do something: high uncertainty -->
+                <!-- Select the most probable thread route with a high degree of uncertainty -->
+                <xsl:choose>
+                    <xsl:when test="xs:integer(./numberOfHoles) = 1">
+                        <xsl:call-template name="sewingLoop">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="xs:integer(./numberOfHoles) = 2">
+                        <xsl:call-template name="sewingArch_raised">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="xs:string(./numberOfHoles) = 'NK'">
+                        <!-- Select the most probable thread route with an increased degree of uncertainty -->
+                        <xsl:call-template name="sewingLoop">
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <!-- Calculate the increased degree of uncertainty -->
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="xs:string(./numberOfHoles) = 'NA'">
+                        <!-- NB -->
+                        <!-- This should only have been used for recessed/vNick prepared stations -->
+                        <!-- NB -->
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:call-template name="sewingSupportRound_single">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template name="sewingSupportRound">
+    <xsl:template name="sewingSupportRound_single">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
         <use xmlns="http://www.w3.org/2000/svg">
@@ -675,6 +764,47 @@
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f2)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </use>
+    </xsl:template>
+    
+    <xsl:template name="sewingSupportRound_double">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <use xmlns="http://www.w3.org/2000/svg">
+                    <xsl:attribute name="xlink:href">
+                        <xsl:text>#sewingSupportRound</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="x">
+                        <xsl:value-of select="./measurement + $Gx - 4.2"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="y">
+                        <xsl:value-of select="$GyValue - 5"/>
+                    </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f2)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </use>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:text>#sewingSupportRound</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="./measurement + $Gx + 4.2"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$GyValue - 5"/>
+            </xsl:attribute>
             <xsl:choose>
                 <xsl:when test="$certainty lt 100">
                     <xsl:attribute name="filter">
@@ -724,14 +854,36 @@
             </xsl:choose>
         </use>
     </xsl:template>
-
+    
+    <xsl:template name="sewingArch_raised">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingArch_raised">
+            <xsl:attribute name="x">
+                <xsl:value-of select="(./measurement + $Gx) - 10"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$GyValue - 11"/>
+            </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </use>
+    </xsl:template>
+    
     <xsl:template name="sewingArch_recessed">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
-        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
-            marker-end="url(#arrowSymbol)">
-            <xsl:attribute name="class">
-                <xsl:text>innerThread</xsl:text>
+        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingArch_recessed">
+            <xsl:attribute name="x">
+                <xsl:value-of select="(./measurement + $Gx) - 10"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$GyValue - 11"/>
             </xsl:attribute>
             <xsl:choose>
                 <xsl:when test="$certainty lt 100">
@@ -740,81 +892,53 @@
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
-            <xsl:attribute name="d">
-                <xsl:text>M</xsl:text>
-                <xsl:value-of select="./measurement + $Gx - 9"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue + 3"/>
-                <xsl:text>&#32;Q</xsl:text>
-                <xsl:value-of select="./measurement + $Gx - 7.75"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue + 3"/>
-                <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $Gx - 2.5"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue"/>
-            </xsl:attribute>
-        </path>
-        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
-            marker-end="url(#arrowSymbol)">
-            <xsl:attribute name="class">
-                <xsl:text>thread</xsl:text>
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
-            <xsl:attribute name="d">
-                <xsl:text>M</xsl:text>
-                <xsl:value-of select="./measurement + $Gx - 2.5"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue"/>
-                <xsl:text>&#32;Q</xsl:text>
-                <xsl:value-of select="./measurement + $Gx"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue - 2"/>
-                <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $Gx + 2.5"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue"/>
-            </xsl:attribute>
-        </path>
-        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square"
-            marker-end="url(#arrowSymbol)">
-            <xsl:attribute name="class">
-                <xsl:text>innerThread</xsl:text>
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$certainty lt 100">
-                    <xsl:attribute name="filter">
-                        <xsl:text>url(#f1)</xsl:text>
-                    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>
-            <xsl:attribute name="d">
-                <xsl:text>M</xsl:text>
-                <xsl:value-of select="./measurement + $Gx + 2.5"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue"/>
-                <xsl:text>&#32;Q</xsl:text>
-                <xsl:value-of select="./measurement + $Gx + 7.75"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue + 3"/>
-                <xsl:text>&#32;</xsl:text>
-                <xsl:value-of select="./measurement + $Gx + 9"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$GyValue + 3"/>
-            </xsl:attribute>
-        </path>
+        </use>
     </xsl:template>
     
     <xsl:template name="sewingLoop_flat">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
         <use xmlns="http://www.w3.org/2000/svg" xlink:href="#loop_flat">
+            <xsl:attribute name="x">
+                <xsl:value-of select="(./measurement + $Gx) - 10"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$GyValue - 11"/>
+            </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </use>
+    </xsl:template>
+    
+    <xsl:template name="sewingArch_flat">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#sewingArch_flat">
+            <xsl:attribute name="x">
+                <xsl:value-of select="(./measurement + $Gx) - 10"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$GyValue - 11"/>
+            </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="$certainty lt 100">
+                    <xsl:attribute name="filter">
+                        <xsl:text>url(#f1)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </use>
+    </xsl:template>
+    
+    <xsl:template name="sewingLoop_double">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#doubleLoop">
             <xsl:attribute name="x">
                 <xsl:value-of select="(./measurement + $Gx) - 10"/>
             </xsl:attribute>
@@ -1018,6 +1142,20 @@
             <xsl:value-of select="./numberOfHoles"/>
             <xsl:text>)</xsl:text>
         </desc>
+    </xsl:template>
+    
+    <!-- Uncertainty template -->
+    <xsl:template name="certainty">
+        <xsl:param name="certainty" select="100"/>
+        <xsl:param name="uncertaintyIncrement"/>
+        <xsl:param name="type"/>
+        <xsl:choose>
+            <xsl:when test="$certainty lt 100">
+                <xsl:attribute name="filter">
+                    <xsl:text>url(#f1)</xsl:text>
+                </xsl:attribute>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>
