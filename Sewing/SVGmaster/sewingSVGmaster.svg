@@ -24,11 +24,21 @@
         <g id="sewingSupportRound" class="sewingSupport">
             <circle r="2.1" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
+        <g id="sewingSupportRound_front">
+            <path d="M1,0 L1,7 5.2,7 5.2,0z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
+            <path d="M1,0 L1,6 M5.2,7 L5.2,1" class="sewingSupport"/>
+        </g>
         <g id="sewingSupportRound_small" class="sewingSupport">
             <circle r="1" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
+        <g id="sewingSupportRound_smallFront" class="sewingSupport">
+            <path d="M1,0 L1,6 M2,7 L2,1"/>
+        </g>
         <g id="sewingSupportFlat" class="sewingSupport">
             <rect width="12" height="2.5" x="0" y="0" rx="0.5" ry="0.5"/>
+        </g>
+        <g id="sewingSupportFlat_front" class="sewingSupport">
+            <path d="M1,0 L1,6 M13,7 L13,1"/>
         </g>
         <g id="loop" stroke-linejoin="miter">
                 <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
@@ -116,5 +126,16 @@
     
     <use xlink:href="#link-stitch" x="20" y="20"/>
     <use xlink:href="#link-stitch" x="20" y="23"/>
+    
+    <use xlink:href="#sewingSupportRound_front" x="40" y="40"/>
+    <use xlink:href="#sewingSupportRound_front" x="40" y="34"/>
+    
+    <use xlink:href="#sewingSupportRound_smallFront" x="60" y="40"/>
+    <use xlink:href="#sewingSupportRound_smallFront" x="60" y="34"/>
+    
+    <use xlink:href="#sewingSupportFlat_front" x="80" y="40"/>
+    <use xlink:href="#sewingSupportFlat_front" x="80" y="34"/>
+
+
 
 </svg>

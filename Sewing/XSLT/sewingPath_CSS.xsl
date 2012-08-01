@@ -218,6 +218,10 @@
                             <xsl:call-template name="firstStation">
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
                             </xsl:call-template>
+                            <xsl:call-template name="firstStation_front">
+                                <xsl:with-param name="GyValue_frontBaseline"
+                                    select="$GyValue_frontBaseline"/>
+                            </xsl:call-template>
                             <xsl:call-template name="sewingIn">
                                 <xsl:with-param name="certainty" select="$certainty"/>
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
@@ -225,8 +229,6 @@
                             <xsl:call-template name="stationType">
                                 <xsl:with-param name="certainty" select="$certainty"/>
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
-                            </xsl:call-template>
-                            <xsl:call-template name="firstStation_front">
                                 <xsl:with-param name="GyValue_frontBaseline"
                                     select="$GyValue_frontBaseline"/>
                             </xsl:call-template>
@@ -241,6 +243,10 @@
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
                                 <xsl:with-param name="maxLength" select="$maxLength"/>
                             </xsl:call-template>
+                            <xsl:call-template name="lastStation_front">
+                                <xsl:with-param name="GyValue_frontBaseline"
+                                    select="$GyValue_frontBaseline"/>
+                            </xsl:call-template>
                             <xsl:call-template name="sewingOut">
                                 <xsl:with-param name="certainty" select="$certainty"/>
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
@@ -248,8 +254,6 @@
                             <xsl:call-template name="stationType">
                                 <xsl:with-param name="certainty" select="$certainty"/>
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
-                            </xsl:call-template>
-                            <xsl:call-template name="lastStation_front">
                                 <xsl:with-param name="GyValue_frontBaseline"
                                     select="$GyValue_frontBaseline"/>
                             </xsl:call-template>
@@ -263,11 +267,13 @@
                             <xsl:call-template name="otherStations">
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
                             </xsl:call-template>
+                            <xsl:call-template name="otherStations_front">
+                                <xsl:with-param name="GyValue_frontBaseline"
+                                    select="$GyValue_frontBaseline"/>
+                            </xsl:call-template>
                             <xsl:call-template name="stationType">
                                 <xsl:with-param name="certainty" select="$certainty"/>
                                 <xsl:with-param name="GyValue" select="$GyValue"/>
-                            </xsl:call-template>
-                            <xsl:call-template name="otherStations_front">
                                 <xsl:with-param name="GyValue_frontBaseline"
                                     select="$GyValue_frontBaseline"/>
                             </xsl:call-template>
@@ -317,7 +323,7 @@
         <desc xmlns="http://www.w3.org/2000/svg">Front view</desc>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square">
             <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
+                <xsl:text>line2</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
@@ -406,7 +412,7 @@
         <desc xmlns="http://www.w3.org/2000/svg">Front view</desc>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square">
             <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
+                <xsl:text>line2</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
@@ -484,7 +490,7 @@
         <desc xmlns="http://www.w3.org/2000/svg">Front view</desc>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="square">
             <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
+                <xsl:text>line2</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
@@ -503,6 +509,9 @@
                 </xsl:call-template>
             </xsl:attribute>
         </path>
+        <xsl:call-template name="stationPreparation_front">
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+        </xsl:call-template>
     </xsl:template>
     
     <!-- Template to draw the same pattern for 4 sections -->
@@ -528,7 +537,6 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-
 
     <xsl:template name="stationPreparation">
         <xsl:param name="GyValue" select="$Gy"/>
@@ -591,9 +599,9 @@
     
     <xsl:template name="stationPreparation_front">
         <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
-        <!--<xsl:choose>
+        <xsl:choose>
             <xsl:when test="./preparation[piercedHole]">
-                <!-\- If the station preparation has been signalled as piercedHole, the diagram draws a straight line, the same as singleKnifeCut -\->
+                <!-- If the station preparation has been signalled as piercedHole, the diagram draws a straight line, the same as singleKnifeCut -->
                 <xsl:call-template name="standardPreparationDiagram_front">
                     <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                     <xsl:with-param name="desc"
@@ -601,10 +609,10 @@
                     />
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="./preparation[singleKnifeCut]">
+            <!--<xsl:when test="./preparation[singleKnifeCut]">
                 <!-\- If the station preparation has been signalled as singleKnifeCut, the diagram draws a straight line, the same as piercedHole -\->
-                <xsl:call-template name="standardPreparationDiagram_front">
-                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                <xsl:call-template name="standardPreparationDiagram">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
                     <xsl:with-param name="desc"
                         select="concat('Station preparation type: ', ./preparation/child::*/name())"
                     />
@@ -612,20 +620,19 @@
             </xsl:when>
             <xsl:when test="./preparation[vNick]">
                 <!-\- If the station preparation has been signalled as vNick, the diagram draws a v shaped line -\->
-                <xsl:call-template name="recessedPreparationDiagram_front">
-                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                <xsl:call-template name="vNickPreparationDiagram">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
                     <xsl:with-param name="desc"
-                        select="concat('Station preparation type: ', ./type/supported/single/recessed/name())"
+                        select="concat('Station preparation type: ', ./preparation/child::*/name())"
                     />
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="./preparation[NC | NK]">
                 <!-\- If the station preparation has been signalled as NC or NK, the diagram draws a straight line with High degree of uncertainty -\->
-                <xsl:call-template name="standardPreparationDiagram_front">
-                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                <xsl:call-template name="standardPreparationDiagram">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
                     <xsl:with-param name="desc"
-                        select="concat('Station preparation type: ', ./preparation/child::*/name())"
-                    />
+                        select="concat('Station preparation type: ', ./preparation/child::*/name())"/>
                     <xsl:with-param name="certainty" select="50"/>
                 </xsl:call-template>
             </xsl:when>
@@ -638,15 +645,15 @@
                 </desc>
                 <xsl:choose>
                     <xsl:when test="./type/supported/type/single[recessed]">
-                        <xsl:call-template name="recessedPreparationDiagram_front">
-                            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                        <xsl:call-template name="recessedSquare">
                             <!-\- NB: Since this kind of station preparation was not properly classified, the certainty should be set to less than 100%? -\->
                             <xsl:with-param name="certainty" select="100"/>
+                            <xsl:with-param name="GyValue" select="$GyValue"/>
                         </xsl:call-template>
                     </xsl:when>
                 </xsl:choose>
-            </xsl:when>
-        </xsl:choose>-->
+            </xsl:when>-->
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="recessedSquare">
@@ -688,6 +695,36 @@
                 <xsl:value-of select="./measurement + $Gx + 3.6"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$GyValue"/>
+            </xsl:attribute>
+        </path>
+    </xsl:template>
+    
+    <xsl:template name="standardPreparationDiagram_front">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy -18"/>
+        <xsl:param name="desc"/>
+        <desc xmlns="http://www.w3.org/2000/svg">
+            <xsl:value-of select="$desc"/>
+        </desc>
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="butt">
+            <xsl:attribute name="class">
+                <xsl:text>line2</xsl:text>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="./measurement + $Gx - 4"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$GyValue_frontBaseline"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="./measurement + $Gx + 4"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$GyValue_frontBaseline"/>
             </xsl:attribute>
         </path>
     </xsl:template>
@@ -787,6 +824,7 @@
     <xsl:template name="stationType">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18"/>
         <desc xmlns="http://www.w3.org/2000/svg">
             <xsl:text>Sewing type: </xsl:text>
             <xsl:value-of select="type/child::*/name()"/>
@@ -796,6 +834,7 @@
                 <xsl:call-template name="supportedSewing">
                     <xsl:with-param name="certainty" select="$certainty"/>
                     <xsl:with-param name="GyValue" select="$GyValue"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type[unsupported]">
@@ -816,6 +855,7 @@
     <xsl:template name="supportedSewing">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18"/>
         <desc xmlns="http://www.w3.org/2000/svg">
             <xsl:value-of select="type/descendant::*[3]/name()"/>
         </desc>
@@ -824,6 +864,7 @@
                 <xsl:call-template name="supportedSingle">
                     <xsl:with-param name="certainty" select="$certainty"/>
                     <xsl:with-param name="GyValue" select="$GyValue"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/double">
@@ -853,6 +894,7 @@
     <xsl:template name="supportedSingle">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18"/>
         <desc xmlns="http://www.w3.org/2000/svg">
             <xsl:value-of select="type/descendant::*[4]/name()"/>
         </desc>
@@ -887,6 +929,9 @@
                 </xsl:choose>
                 <xsl:call-template name="sewingSupportRound_single">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
+                <xsl:call-template name="sewingSupportRound_singleFront">
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/single[recessed]">
@@ -995,6 +1040,48 @@
                     </xsl:attribute>
                     <xsl:attribute name="y">
                         <xsl:value-of select="$GyValue + 1"/>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
+        </use>
+    </xsl:template>
+    
+    <!-- NB: TO DO -->
+    <!-- THE VALUE OF GyValue_frontBaseline HAS TO BE PASSED UP TO THIS POINT AS IT'S THE CASE FOR GyValue -->
+    <!-- NB: TO DO -->
+    <xsl:template name="sewingSupportRound_singleFront">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:param name="sH" select="$sH" as="xs:integer"/>
+        <xsl:param name="counter" select="1"/>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:choose>
+                <xsl:when test="type/supported/type/single[raised]">
+                    <xsl:attribute name="xlink:href">
+                        <xsl:text>#sewingSupportRound_front</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="x">
+                        <xsl:value-of select="./measurement + $Gx - 3.1"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="y">
+                        <xsl:value-of select="$GyValue_frontBaseline - 3"/>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="type/supported/type/single[recessed]">
+                    <xsl:attribute name="xlink:href">
+                        <xsl:text>#sewingSupportRound_smallFront</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="x">
+                        <xsl:value-of select="./measurement + $Gx - 1"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="y">
+                        <xsl:value-of select="$GyValue_frontBaseline - 3"/>
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
