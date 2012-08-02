@@ -25,20 +25,26 @@
             <circle r="2.1" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
         <g id="sewingSupportRound_front">
-            <path d="M1,0 L1,7 5.2,7 5.2,0z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
-            <path d="M1,0 L1,6 M5.2,7 L5.2,1" class="sewingSupport"/>
+            <path d="M1,0 L1,6 5.2,7 5.2,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
+            <path d="M1,0 L1,6 M5.2,7 L5.2,1" class="sewingSupport" stroke-linecap="square"/>
+        </g>
+        <g id="sewingSupportRound_front2">
+            <path d="M1,0 L1,6 6.5,7 6.5,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
+            <path d="M1,0 L1,6 M6.5,7 L6.5,1" class="sewingSupport" stroke-linecap="square"/>
         </g>
         <g id="sewingSupportRound_small" class="sewingSupport">
             <circle r="1" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
-        <g id="sewingSupportRound_smallFront" class="sewingSupport">
-            <path d="M1,0 L1,6 M2,7 L2,1"/>
+        <g id="sewingSupportRound_smallFront">
+            <path d="M1,0 L1,6 3,7 3,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
+            <path d="M1,0 L1,6 M3,7 L3,1" class="sewingSupport" stroke-linecap="square"/>
         </g>
         <g id="sewingSupportFlat" class="sewingSupport">
             <rect width="12" height="2.5" x="0" y="0" rx="0.5" ry="0.5"/>
         </g>
-        <g id="sewingSupportFlat_front" class="sewingSupport">
-            <path d="M1,0 L1,6 M13,7 L13,1"/>
+        <g id="sewingSupportFlat_front">
+            <path d="M1,0 L1,6 13,7 13,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
+            <path d="M1,0 L1,6 M13,7 L13,1"  class="sewingSupport" stroke-linecap="square"/>
         </g>
         <g id="loop" stroke-linejoin="miter">
                 <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
