@@ -860,6 +860,18 @@
                 <xsl:value-of select="./measurement + $Gx + 3"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$GyValue_frontBaseline - ($sH * $counter) + $sH"/>
+                <xsl:choose>
+                    <xsl:when test="./preparation/vNick">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="./measurement + $Gx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$GyValue_frontBaseline - ($sH * $counter)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="./measurement + $Gx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$GyValue_frontBaseline - ($sH * $counter) + $sH"/>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>M</xsl:text>
@@ -870,6 +882,18 @@
                 <xsl:value-of select="./measurement + $Gx + 7"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$GyValue_frontBaseline - ($sH * $counter)"/>
+                <xsl:choose>
+                    <xsl:when test="./preparation/singleKnifeCut">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="./measurement + $Gx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$GyValue_frontBaseline - ($sH * $counter)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="./measurement + $Gx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$GyValue_frontBaseline - ($sH * $counter) + $sH"/>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
@@ -992,7 +1016,11 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type[unsupported]">
-                <!-- do something -->
+                <xsl:call-template name="unsupportedSewing">
+                    <xsl:with-param name="certainty" select="$certainty"/>
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:when test="type[longStitch]">
                 <!-- Do something -->
@@ -1035,16 +1063,20 @@
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
         <xsl:param name="GyValue_frontBaseline" select="$Gy - 18"/>
-        <xsl:call-template name="sewingLoop_double">
-            <!-- Select the most probable thread route with an increased degree of uncertainty -->
-            <xsl:with-param name="GyValue" select="$GyValue"/>
-            <xsl:with-param name="certainty" select="$certainty"/>
-        </xsl:call-template>
         <xsl:call-template name="sewingSupportRound_double">
             <xsl:with-param name="GyValue" select="$GyValue"/>
         </xsl:call-template>
         <xsl:call-template name="sewingSupportRound_doubleFront">
             <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+        </xsl:call-template>
+        <xsl:call-template name="sewingLoop_double">
+            <!-- Select the most probable thread route with an increased degree of uncertainty -->
+            <xsl:with-param name="GyValue" select="$GyValue"/>
+            <xsl:with-param name="certainty" select="$certainty"/>
+        </xsl:call-template>
+        <xsl:call-template name="sewingLoop_doubleFront">
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="certainty" select="$certainty"/>
         </xsl:call-template>
     </xsl:template>
 
@@ -1059,16 +1091,32 @@
         </desc>
         <xsl:choose>
             <xsl:when test="type/supported/type/single[raised]">
+                <xsl:call-template name="sewingSupportRound_single">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
+                <xsl:call-template name="sewingSupportRound_singleFront">
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                </xsl:call-template>
                 <xsl:choose>
                     <xsl:when test="xs:integer(./numberOfHoles) = 1">
                         <xsl:call-template name="sewingLoop">
                             <xsl:with-param name="GyValue" select="$GyValue"/>
                             <xsl:with-param name="certainty" select="$certainty"/>
                         </xsl:call-template>
+                        <xsl:call-template name="sewingLoop_front">
+                            <xsl:with-param name="GyValue_frontBaseline"
+                                select="$GyValue_frontBaseline"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="xs:integer(./numberOfHoles) = 2">
                         <xsl:call-template name="sewingArch_raised">
                             <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                        <xsl:call-template name="sewingLoop_front">
+                            <xsl:with-param name="GyValue_frontBaseline"
+                                select="$GyValue_frontBaseline"/>
                             <xsl:with-param name="certainty" select="$certainty"/>
                         </xsl:call-template>
                     </xsl:when>
@@ -1079,6 +1127,13 @@
                             <!-- Calculate the increased degree of uncertainty -->
                             <xsl:with-param name="certainty" select="$certainty"/>
                         </xsl:call-template>
+                        <!-- Select the most probable thread route with an increased degree of uncertainty -->
+                        <xsl:call-template name="sewingLoop_front">
+                            <xsl:with-param name="GyValue_frontBaseline"
+                                select="$GyValue_frontBaseline"/>
+                            <!-- Calculate the increased degree of uncertainty -->
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="xs:string(./numberOfHoles) = 'NA'">
                         <!-- NB -->
@@ -1086,28 +1141,36 @@
                         <!-- NB -->
                     </xsl:when>
                 </xsl:choose>
+            </xsl:when>
+            <xsl:when test="type/supported/type/single[recessed]">
                 <xsl:call-template name="sewingSupportRound_single">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
                 </xsl:call-template>
                 <xsl:call-template name="sewingSupportRound_singleFront">
                     <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 </xsl:call-template>
-            </xsl:when>
-            <xsl:when test="type/supported/type/single[recessed]">
                 <!-- Select the most probable route, but with a high degree of uncertainty -->
                 <xsl:call-template name="sewingArch_recessed">
                     <xsl:with-param name="GyValue" select="$GyValue"/>
                     <!-- Increase uncertainty -->
                     <xsl:with-param name="certainty" select="$certainty"/>
                 </xsl:call-template>
-                <xsl:call-template name="sewingSupportRound_single">
-                    <xsl:with-param name="GyValue" select="$GyValue"/>
-                </xsl:call-template>
-                <xsl:call-template name="sewingSupportRound_singleFront">
+                <xsl:call-template name="sewingArch_recessedFront">
                     <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                    <xsl:with-param name="certainty" select="$certainty"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/single[flat]">
+                <xsl:call-template name="sewingSupportFlat">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
+                <xsl:call-template name="sewingSupportFlat_front">
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                </xsl:call-template>
+                <xsl:call-template name="sewingLoop_flatFront">
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                    <xsl:with-param name="certainty" select="$certainty"/>
+                </xsl:call-template>
                 <xsl:choose>
                     <xsl:when test="xs:integer(./numberOfHoles) = 1">
                         <!-- Select the most probable route, but with an increased degree of uncertainty  -->
@@ -1137,19 +1200,24 @@
                         <!-- NB -->
                     </xsl:when>
                 </xsl:choose>
-                <xsl:call-template name="sewingSupportFlat">
-                    <xsl:with-param name="GyValue" select="$GyValue"/>
-                </xsl:call-template>
-                <xsl:call-template name="sewingSupportFlat_front">
-                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
-                </xsl:call-template>
             </xsl:when>
             <xsl:when test="type/supported/type/single[NC]">
+                <xsl:call-template name="sewingSupportRound_single">
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                </xsl:call-template>
+                <xsl:call-template name="sewingSupportRound_singleFront">
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                </xsl:call-template>
                 <!-- Select the most probable thread route with a high degree of uncertainty -->
                 <xsl:choose>
                     <xsl:when test="xs:integer(./numberOfHoles) = 1">
                         <xsl:call-template name="sewingLoop">
                             <xsl:with-param name="GyValue" select="$GyValue"/>
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
+                        <xsl:call-template name="sewingSupportRound_singleFront">
+                            <xsl:with-param name="GyValue_frontBaseline"
+                                select="$GyValue_frontBaseline"/>
                             <xsl:with-param name="certainty" select="$certainty"/>
                         </xsl:call-template>
                     </xsl:when>
@@ -1166,6 +1234,13 @@
                             <!-- Calculate the increased degree of uncertainty -->
                             <xsl:with-param name="certainty" select="$certainty"/>
                         </xsl:call-template>
+                        <!-- Select the most probable thread route with an increased degree of uncertainty -->
+                        <xsl:call-template name="sewingSupportRound_singleFront">
+                            <xsl:with-param name="GyValue_frontBaseline"
+                                select="$GyValue_frontBaseline"/>
+                            <!-- Calculate the increased degree of uncertainty -->
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                        </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="xs:string(./numberOfHoles) = 'NA'">
                         <!-- NB -->
@@ -1173,12 +1248,6 @@
                         <!-- NB -->
                     </xsl:when>
                 </xsl:choose>
-                <xsl:call-template name="sewingSupportRound_single">
-                    <xsl:with-param name="GyValue" select="$GyValue"/>
-                </xsl:call-template>
-                <xsl:call-template name="sewingSupportRound_singleFront">
-                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
-                </xsl:call-template>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -1224,12 +1293,11 @@
     <xsl:template name="sewingSupportRound_singleFront">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
-        <xsl:param name="sH" select="$sH" as="xs:integer"/>
-        <xsl:variable name="y" select="$GyValue_frontBaseline - 3"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
         <g xmlns="http://www.w3.org/2000/svg">
             <xsl:choose>
                 <xsl:when test="type/supported/type/single[raised]">
-                    <xsl:variable name="x1" select="./measurement + $Gx - 3.1"/>
+                    <xsl:variable name="x" select="./measurement + $Gx - 3.1"/>
                     <xsl:variable name="supportType">
                         <xsl:text>#sewingSupportRound_front</xsl:text>
                     </xsl:variable>
@@ -1238,7 +1306,7 @@
                             <xsl:value-of select="$supportType"/>
                         </xsl:attribute>
                         <xsl:attribute name="x">
-                            <xsl:value-of select="$x1"/>
+                            <xsl:value-of select="$x"/>
                         </xsl:attribute>
                         <xsl:attribute name="y">
                             <xsl:value-of select="$y"/>
@@ -1247,13 +1315,13 @@
                     <xsl:call-template name="sewingSupport_frontRecursive">
                         <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                         <xsl:with-param name="sH" select="$sH"/>
-                        <xsl:with-param name="x1" select="$x1"/>
+                        <xsl:with-param name="x" select="$x"/>
                         <xsl:with-param name="y" select="$y"/>
                         <xsl:with-param name="supportType" select="$supportType"/>
                     </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="type/supported/type/single[recessed]">
-                    <xsl:variable name="x1" select="./measurement + $Gx - 2"/>
+                    <xsl:variable name="x" select="./measurement + $Gx - 2"/>
                     <xsl:variable name="supportType">
                         <xsl:text>#sewingSupportRound_smallFront</xsl:text>
                     </xsl:variable>
@@ -1262,7 +1330,7 @@
                             <xsl:value-of select="$supportType"/>
                         </xsl:attribute>
                         <xsl:attribute name="x">
-                            <xsl:value-of select="$x1"/>
+                            <xsl:value-of select="$x"/>
                         </xsl:attribute>
                         <xsl:attribute name="y">
                             <xsl:value-of select="$y"/>
@@ -1271,7 +1339,7 @@
                     <xsl:call-template name="sewingSupport_frontRecursive">
                         <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                         <xsl:with-param name="sH" select="$sH"/>
-                        <xsl:with-param name="x1" select="$x1"/>
+                        <xsl:with-param name="x" select="$x"/>
                         <xsl:with-param name="y" select="$y"/>
                         <xsl:with-param name="supportType" select="$supportType"/>
                     </xsl:call-template>
@@ -1325,7 +1393,7 @@
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
         <xsl:param name="sH" select="$sH" as="xs:integer"/>
-        <xsl:variable name="y" select="$GyValue_frontBaseline - 3"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
         <xsl:variable name="supportType">
             <xsl:text>#sewingSupportRound_front2</xsl:text>
         </xsl:variable>
@@ -1344,7 +1412,7 @@
             <xsl:call-template name="sewingSupport_frontRecursive">
                 <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 <xsl:with-param name="sH" select="$sH"/>
-                <xsl:with-param name="x1" select="./measurement + $Gx - 7.3"/>
+                <xsl:with-param name="x" select="./measurement + $Gx - 7.3"/>
                 <xsl:with-param name="y" select="$y"/>
                 <xsl:with-param name="supportType" select="$supportType"/>
             </xsl:call-template>
@@ -1362,7 +1430,7 @@
             <xsl:call-template name="sewingSupport_frontRecursive">
                 <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 <xsl:with-param name="sH" select="$sH"/>
-                <xsl:with-param name="x1" select="./measurement + $Gx - 0.5"/>
+                <xsl:with-param name="x" select="./measurement + $Gx - 0.5"/>
                 <xsl:with-param name="y" select="$y"/>
                 <xsl:with-param name="supportType" select="$supportType"/>
             </xsl:call-template>
@@ -1398,8 +1466,8 @@
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
         <xsl:param name="sH" select="$sH" as="xs:integer"/>
-        <xsl:variable name="x1" select="./measurement + $Gx - 7"/>
-        <xsl:variable name="y" select="$GyValue_frontBaseline - 3"/>
+        <xsl:variable name="x" select="./measurement + $Gx - 7"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
         <xsl:variable name="supportType">
             <xsl:text>#sewingSupportFlat_front</xsl:text>
         </xsl:variable>
@@ -1409,7 +1477,7 @@
                     <xsl:value-of select="$supportType"/>
                 </xsl:attribute>
                 <xsl:attribute name="x">
-                    <xsl:value-of select="$x1"/>
+                    <xsl:value-of select="$x"/>
                 </xsl:attribute>
                 <xsl:attribute name="y">
                     <xsl:value-of select="$y"/>
@@ -1418,7 +1486,7 @@
             <xsl:call-template name="sewingSupport_frontRecursive">
                 <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
                 <xsl:with-param name="sH" select="$sH"/>
-                <xsl:with-param name="x1" select="$x1"/>
+                <xsl:with-param name="x" select="$x"/>
                 <xsl:with-param name="y" select="$y"/>
                 <xsl:with-param name="supportType" select="$supportType"/>
             </xsl:call-template>
@@ -1430,8 +1498,7 @@
         <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
         <xsl:param name="sH" select="$sH" as="xs:integer"/>
         <xsl:param name="counter" select="1"/>
-        <xsl:param name="x1" select="1"/>
-        <xsl:param name="x2" select="1"/>
+        <xsl:param name="x" select="1"/>
         <xsl:param name="y" select="1"/>
         <xsl:param name="supportType"/>
         <use xmlns="http://www.w3.org/2000/svg">
@@ -1439,7 +1506,7 @@
                 <xsl:value-of select="$supportType"/>
             </xsl:attribute>
             <xsl:attribute name="x">
-                <xsl:value-of select="$x1"/>
+                <xsl:value-of select="$x"/>
             </xsl:attribute>
             <xsl:attribute name="y">
                 <xsl:value-of select="$y - ($sH * $counter)"/>
@@ -1451,7 +1518,7 @@
                     <xsl:with-param name="counter" select="$counter + 1"/>
                     <xsl:with-param name="sH" select="$sH"/>
                     <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
-                    <xsl:with-param name="x1" select="$x1"/>
+                    <xsl:with-param name="x" select="$x"/>
                     <xsl:with-param name="y" select="$y"/>
                     <xsl:with-param name="supportType" select="$supportType"/>
                 </xsl:call-template>
@@ -1476,6 +1543,45 @@
                 <xsl:with-param name="type"/>-->
             </xsl:call-template>
         </use>
+    </xsl:template>
+
+    <xsl:template name="sewingLoop_front">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:variable name="x" select="./measurement + $Gx - 4.1"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
+        <xsl:variable name="loopType">
+            <xsl:text>#loop_front</xsl:text>
+        </xsl:variable>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$loopType"/>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$x"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$y"/>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
+        </use>
+        <xsl:call-template name="sewing_frontRecursive">
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="y" select="$y"/>
+            <xsl:with-param name="loopType" select="$loopType"/>
+        </xsl:call-template>
+        <xsl:call-template name="packedSewing_front">
+            <xsl:with-param name="certainty" select="40"/>
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="loopType" select="$loopType"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="sewingArch_raised">
@@ -1516,6 +1622,45 @@
         </use>
     </xsl:template>
 
+    <xsl:template name="sewingArch_recessedFront">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:variable name="x" select="./measurement + $Gx - 3"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
+        <xsl:variable name="loopType">
+            <xsl:text>#sewingArch_recessedFront</xsl:text>
+        </xsl:variable>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$loopType"/>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$x"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$y"/>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
+        </use>
+        <xsl:call-template name="sewing_frontRecursive">
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="y" select="$y"/>
+            <xsl:with-param name="loopType" select="$loopType"/>
+        </xsl:call-template>
+        <xsl:call-template name="packedSewing_front">
+            <xsl:with-param name="certainty" select="40"/>
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="loopType" select="$loopType"/>
+        </xsl:call-template>
+    </xsl:template>
+
     <xsl:template name="sewingLoop_flat">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
         <xsl:param name="GyValue" select="$Gy"/>
@@ -1533,6 +1678,45 @@
                 <xsl:with-param name="type"/>-->
             </xsl:call-template>
         </use>
+    </xsl:template>
+
+    <xsl:template name="sewingLoop_flatFront">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:variable name="x" select="./measurement + $Gx - 8"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
+        <xsl:variable name="loopType">
+            <xsl:text>#loop_flatFront</xsl:text>
+        </xsl:variable>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$loopType"/>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$x"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$y"/>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
+        </use>
+        <xsl:call-template name="sewing_frontRecursive">
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="y" select="$y"/>
+            <xsl:with-param name="loopType" select="$loopType"/>
+        </xsl:call-template>
+        <xsl:call-template name="packedSewing_front">
+            <xsl:with-param name="certainty" select="40"/>
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="loopType" select="$loopType"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="sewingArch_flat">
@@ -1571,6 +1755,323 @@
                 <xsl:with-param name="type"/>-->
             </xsl:call-template>
         </use>
+    </xsl:template>
+
+    <xsl:template name="sewingLoop_doubleFront">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - ($sH div 2)"/>
+        <g xmlns="http://www.w3.org/2000/svg">
+            <xsl:choose>
+                <xsl:when test="./type/supported/type/double/linking[notLinked]">
+                    <xsl:variable name="loopType">
+                        <xsl:text>#loop_front2</xsl:text>
+                    </xsl:variable>
+                    <use xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="xlink:href">
+                            <xsl:value-of select="$loopType"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="x">
+                            <xsl:value-of select="./measurement + $Gx - 8.5"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="y">
+                            <xsl:value-of select="$y"/>
+                        </xsl:attribute>
+                    </use>
+                    <xsl:call-template name="sewing_frontRecursive">
+                        <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                        <xsl:with-param name="x" select="./measurement + $Gx - 8.5"/>
+                        <xsl:with-param name="y" select="$y"/>
+                        <xsl:with-param name="loopType" select="$loopType"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="packedSewing_front">
+                        <xsl:with-param name="certainty" select="40"/>
+                        <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                        <xsl:with-param name="x" select="./measurement + $Gx - 8.5"/>
+                        <xsl:with-param name="loopType" select="$loopType"/>
+                    </xsl:call-template>
+                    <use xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="xlink:href">
+                            <xsl:value-of select="$loopType"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="x">
+                            <xsl:value-of select="./measurement + $Gx -1.5"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="y">
+                            <xsl:value-of select="$y"/>
+                        </xsl:attribute>
+                    </use>
+                    <xsl:call-template name="sewing_frontRecursive">
+                        <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                        <xsl:with-param name="x" select="./measurement + $Gx - 1.5"/>
+                        <xsl:with-param name="y" select="$y"/>
+                        <xsl:with-param name="loopType" select="$loopType"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="packedSewing_front">
+                        <xsl:with-param name="certainty" select="40"/>
+                        <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                        <xsl:with-param name="x" select="./measurement + $Gx - 1.5"/>
+                        <xsl:with-param name="loopType" select="$loopType"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="./type/supported/type/double/linking[linked]">
+                    <xsl:variable name="loopType">
+                        <xsl:text>#loop_frontLinked</xsl:text>
+                    </xsl:variable>
+                    <use xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="xlink:href">
+                            <xsl:value-of select="$loopType"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="x">
+                            <xsl:value-of select="./measurement + $Gx - 8.5"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="y">
+                            <xsl:value-of select="$y"/>
+                        </xsl:attribute>
+                    </use>
+                    <xsl:call-template name="sewing_frontRecursive">
+                        <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                        <xsl:with-param name="x" select="./measurement + $Gx - 8.5"/>
+                        <xsl:with-param name="y" select="$y"/>
+                        <xsl:with-param name="loopType" select="$loopType"/>
+                    </xsl:call-template>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <!-- modify the template to the right kind of parameters to be passed on to represent the degree of certainty (i.e. the probability) -->
+                <!--<xsl:with-param name="uncertaintyIncrement"/>
+                <xsl:with-param name="type"/>-->
+            </xsl:call-template>
+        </g>
+    </xsl:template>
+
+    <!-- Template to draw the whole length of the sewing support according to the number of sections (= 4) -->
+    <xsl:template name="sewing_frontRecursive">
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:param name="counter" select="1"/>
+        <xsl:param name="x" select="1"/>
+        <xsl:param name="y" select="1"/>
+        <xsl:param name="loopType"/>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$loopType"/>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$x"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$y - ($sH * $counter)"/>
+            </xsl:attribute>
+        </use>
+        <xsl:choose>
+            <xsl:when test="$counter lt ($sN - 1)">
+                <xsl:call-template name="sewing_frontRecursive">
+                    <xsl:with-param name="counter" select="$counter + 1"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                    <xsl:with-param name="x" select="$x"/>
+                    <xsl:with-param name="y" select="$y"/>
+                    <xsl:with-param name="loopType" select="$loopType"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Template to draw the diagram of packed sewing. 
+        NB: the schema does not indicate whether a sewing is packed or not,
+        hence the diagram has to be drawn with a high degree of uncertainty -->
+    <xsl:template name="packedSewing_front">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:param name="loopType"/>
+        <xsl:param name="x" select="1"/>
+        <xsl:param name="y" select="$GyValue_frontBaseline - ($sH div 2) + 1.5"/>
+        <g xmlns="http://www.w3.org/2000/svg">
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <xsl:with-param name="type" select="'2'"/>
+            </xsl:call-template>
+            <use xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="xlink:href">
+                    <xsl:value-of select="$loopType"/>
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="$x"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$y"/>
+                </xsl:attribute>
+            </use>
+            <xsl:call-template name="packedSewing_frontRecursive">
+                <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                <xsl:with-param name="x" select="$x"/>
+                <xsl:with-param name="y" select="$y"/>
+                <xsl:with-param name="loopType" select="$loopType"/>
+            </xsl:call-template>
+            <use xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="xlink:href">
+                    <xsl:value-of select="$loopType"/>
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="$x"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$y - 3"/>
+                </xsl:attribute>
+            </use>
+            <xsl:call-template name="packedSewing_frontRecursive">
+                <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                <xsl:with-param name="x" select="$x"/>
+                <xsl:with-param name="y" select="$y - 3"/>
+                <xsl:with-param name="loopType" select="$loopType"/>
+            </xsl:call-template>
+            <use xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="xlink:href">
+                    <xsl:value-of select="$loopType"/>
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="$x"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$y - 4.5"/>
+                </xsl:attribute>
+            </use>
+            <xsl:call-template name="packedSewing_frontRecursive">
+                <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                <xsl:with-param name="x" select="$x"/>
+                <xsl:with-param name="y" select="$y - 4.5"/>
+                <xsl:with-param name="loopType" select="$loopType"/>
+            </xsl:call-template>
+        </g>
+    </xsl:template>
+
+    <xsl:template name="packedSewing_frontRecursive">
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:param name="counter" select="1"/>
+        <xsl:param name="x" select="1"/>
+        <xsl:param name="y" select="1"/>
+        <xsl:param name="loopType"/>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$loopType"/>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$x"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$y - ($sH * $counter)"/>
+            </xsl:attribute>
+        </use>
+        <xsl:choose>
+            <xsl:when test="$counter lt ($sN - 1)">
+                <xsl:call-template name="sewing_frontRecursive">
+                    <xsl:with-param name="counter" select="$counter + 1"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                    <xsl:with-param name="x" select="$x"/>
+                    <xsl:with-param name="y" select="$y"/>
+                    <xsl:with-param name="loopType" select="$loopType"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="unsupportedSewing">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18"/>
+        <desc xmlns="http://www.w3.org/2000/svg">
+            <xsl:value-of select="type/descendant::*[2]/name()"/>
+        </desc>
+        <xsl:choose>
+            <xsl:when test="type/unsupported/kettleStitch">
+                <xsl:call-template name="kettleStitch_front">
+                    <xsl:with-param name="certainty" select="$certainty"/>
+                    <xsl:with-param name="GyValue" select="$GyValue"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="type/unsupported/twoNeedle">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="type/unsupported/singleSequence">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="type/unsupported/doubleSequence">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="type/unsupported/NC">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="type/unsupported/NK">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="type/unsupported/other">
+                <!-- Do something -->
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="kettleStitch_front">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="GyValue" select="$Gy"/>
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18"/>
+        <xsl:variable name="x" select="./measurement + $Gx - 9"/>
+        <xsl:variable name="y" select="$GyValue_frontBaseline - 14"/>
+        <xsl:variable name="pippo">
+                <xsl:text>#kettleStitch_front</xsl:text>
+        </xsl:variable>
+        <desc xmlns="http://www.w3.org/2000/svg">
+            <xsl:value-of select="type/descendant::*[2]/name()"/>
+        </desc>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$pippo"/>
+            </xsl:attribute>
+            <xsl:attribute name="stroke">
+                <xsl:text>url(#grad1)</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="clip-path">
+                <xsl:text>url(#interlink2_first)</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="x" select="$x"/>
+            <xsl:attribute name="y" select="$y"/>
+        </use>
+        <xsl:call-template name="sewing_frontRecursive">
+            <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="y" select="$y"/>
+            <xsl:with-param name="loopType" select="$pippo"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template name="kettleStitch_frontRecursive">
+        <xsl:param name="GyValue_frontBaseline" select="$Gy - 18" as="xs:integer"/>
+        <xsl:param name="counter" select="1"/>
+        <xsl:param name="x" select="1"/>
+        <xsl:param name="y" select="1"/>
+        <xsl:param name="loopType"/>
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$loopType"/>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$x"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$y - ($sH * $counter)"/>
+            </xsl:attribute>
+        </use>
+        <xsl:choose>
+            <xsl:when test="$counter lt ($sN - 1)">
+                <xsl:call-template name="sewing_frontRecursive">
+                    <xsl:with-param name="counter" select="$counter + 1"/>
+                    <xsl:with-param name="GyValue_frontBaseline" select="$GyValue_frontBaseline"/>
+                    <xsl:with-param name="x" select="$x"/>
+                    <xsl:with-param name="y" select="$y"/>
+                    <xsl:with-param name="loopType" select="$loopType"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <!-- Template to draw the entrance path of the thread -->
@@ -1777,6 +2278,15 @@
                     <xsl:when test="$certainty lt 100">
                         <xsl:attribute name="filter">
                             <xsl:text>url(#f2)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$type = '3'">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f3)</xsl:text>
                         </xsl:attribute>
                     </xsl:when>
                 </xsl:choose>

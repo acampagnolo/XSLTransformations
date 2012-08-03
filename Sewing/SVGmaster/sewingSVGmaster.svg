@@ -10,6 +10,9 @@
             <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
         </filter>
         <filter id="f2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
             <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
         </filter>
         <pattern id="fillDottedPattern" patternUnits="userSpaceOnUse" x="0" y="0" width="1"
@@ -55,6 +58,16 @@
                 </g>
                 <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
         </g>
+        <g id="loop_front" stroke-linejoin="bevel">
+            <path d="M2,0 L1.5,0 Q1.5,1 4.1,1 Q6.7,1 6.7,0 L6.2,0"/>
+        </g>
+        <g id="loop_front2" stroke-linejoin="bevel">
+            <path d="M2,0 L1.5,0 Q1.5,1 5.25,1 Q8.3,1 8.3,0 L7.5,0"/>
+        </g>
+        <g id="loop_frontLinked" stroke-linejoin="round">
+            <path d="M2,7 L1.5,7 L8.3,0 L8,0.3"/>
+            <path d="M8,0.3 L8.3,0 L15.3,7 14.8,7"/>
+        </g>
         <g id="sewingArch_raised"  stroke-linejoin="miter" stroke-linecap="square" marker-end="url(#arrowSymbol)">
             <path d="M1,14 Q5.5,14 6,11" class="innerThread"/>
             <g class="thread">
@@ -71,6 +84,9 @@
             </g>
             <path d="M12.5,11 Q17.75,14 19,14" class="innerThread"/>
         </g>
+        <g id="sewingArch_recessedFront" stroke-linejoin="bevel">
+            <path d="M2,0 L1.5,0 Q1.5,1 3,1 Q4.5,1 4.5,0 L4,0"/>
+        </g>
         <g id="loop_flat" stroke-linejoin="bevel">
             <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
             <g marker-end="url(#arrowSymbol)" class="thread">
@@ -80,6 +96,9 @@
                 <path d="M 2.5,7 A 18,6 0 0,0 4,9.5 Q 8,10 10,11"/>
             </g>
             <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
+        </g>
+        <g id="loop_flatFront" stroke-linejoin="bevel">
+            <path d="M2,0 L1.5,0 Q1.5,1 8,1 Q14.5,1 14.5,0 L13.8,0"/>
         </g>
         <g id="sewingArch_flat" stroke-linejoin="bevel" marker-end="url(#arrowSymbol)">
             <path d="M1,14 Q1.5,14 2,11" class="innerThread"/>
@@ -104,37 +123,50 @@
             </g>
             <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
         </g>
-        <g id="sewingSupport-Loop">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sewingCoreRound" x="10"
-                y="6" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#loop" x="0" y="0"
-                xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
-        </g>
-        <clipPath id="interlink">
+        <clipPath id="interlink1">
             <path d="M6,10 L6,18 Q8.6,14 10,13 Q11.4,14 14,18 L14,10z M10,15.5 Q12,13 6,21 L6,19 14,19 14,21z"/>
         </clipPath>
-        <clipPath id="interlink_first">
+        <clipPath id="interlink1_first">
             <path d="M6,10 L6,18 10,13 14,18 14,10z"/>
+        </clipPath>
+        <clipPath id="interlink2">
+            <path d="M7,5 L7,20 9.7,20 9.7,17 11,17 11.5,20 18,20 18,5z"/>
+        </clipPath>
+        <clipPath id="interlink2_first">
+            <path d="M7,5 L7,15 18,15 18,5z"/>
         </clipPath>
         <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop stop-color = "black" offset = "0%"/>
             <stop stop-color = "grey" offset = "50%"/>
             <stop stop-color = "white" offset = "70%" stop-opacity="0"/>
         </linearGradient>
-        <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink_first)" -->
-        <!-- Other section should have: stroke="#000000" clip-path="url(#interlink)" -->
-        <g id="link-stitch" class="thread" stroke="#000000" stroke-width="1" fill="none" clip-path="url(#interlink)">
+        <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink1_first)" -->
+        <!-- Other section should have: stroke="#000000" clip-path="url(#interlink1)" -->
+        <g id="link-stitch" class="thread" stroke-linecap="round" clip-path="url(#interlink1)">
             <path d="M10,11 Q7.5,14 7.5,15 A2.5,2.5 0 0,0 10,18 A2.5,2.5 0 0,0 12.5,15 Q12.5,14 10,11"/>
+        </g>
+        <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink2_first)" -->
+        <!-- Other section should have: stroke="#000000" clip-path="url(#interlink2)" -->
+        <g id="kettleStitch_front" class="thread" stroke-linecap="round">
+            <path d="M9.5,5.5 Q11,5.5 10.5,9.5 M9,12 Q7.5,14 7.5,16.5 A3,3 0 0,0 10,18.8 A3,3 0 0,0 11.4,16.5 Q12,14 10,11 Q9,10 9.5,10.5"/>
         </g>
     </defs>
 
     <!-- Definitions are called here -->
     
-    <use xlink:href="#link-stitch" x="20" y="20"/>
-    <use xlink:href="#link-stitch" x="20" y="23"/>
+    <use xlink:href="#link-stitch" x="20" y="20" stroke="#000000" stroke-width="1" fill="none" />
+    <use xlink:href="#link-stitch" x="20" y="23" stroke="#000000" stroke-width="1" fill="none" />
     
-    <use xlink:href="#sewingSupportRound_front" x="40" y="40"/>
-    <use xlink:href="#sewingSupportRound_front" x="40" y="34"/>
+    <use xlink:href="#kettleStitch" x="20" y="40" stroke="#000000" stroke-width="1" fill="none" />
+    <use xlink:href="#kettleStitch" x="20" y="52" stroke="#000000" stroke-width="1" fill="none" />
+    
+    <use xlink:href="#sewingSupportRound_front" x="40" y="40" fill="none" stroke="#000000" stroke-width="0.5"/>
+    <use xlink:href="#sewingSupportRound_front" x="40" y="34" fill="none" stroke="#000000" stroke-width="0.5"/>
+    <use xlink:href="#loop_frontLinked" x="39" y="43" fill="none" stroke="#000000"/>
+    <use xlink:href="#loop_front" x="39" y="41.5" fill="none" stroke="#000000"/>
+    <use xlink:href="#loop_front" x="39" y="40" fill="none" stroke="#000000"/>
+    <use xlink:href="#loop_front" x="39" y="38.5" fill="none" stroke="#000000"/>
+    <use xlink:href="#loop_front" x="39" y="37" fill="none" stroke="#000000"/>
     
     <use xlink:href="#sewingSupportRound_smallFront" x="60" y="40"/>
     <use xlink:href="#sewingSupportRound_smallFront" x="60" y="34"/>
