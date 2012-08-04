@@ -24,6 +24,10 @@
             markerWidth="4" markerHeight="3" orient="auto">
             <path d="M 0,0 L 8,4 L 0,8 z"/>
         </marker>
+        <marker id="arrowSymbol_180" viewBox="0 0 10 10" refX="0" refY="4" markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3" orient="180">
+            <path d="M 0,0 L 8,4 L 0,8 z"/>
+        </marker>
         <g id="sewingSupportRound" class="sewingSupport">
             <circle r="2.1" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
@@ -47,16 +51,24 @@
         </g>
         <g id="sewingSupportFlat_front">
             <path d="M1,0 L1,6 13,7 13,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
-            <path d="M1,0 L1,6 M13,7 L13,1"  class="sewingSupport" stroke-linecap="square"/>
+            <path d="M1,0 L1,6 M13,7 L13,1" class="sewingSupport" stroke-linecap="square"/>
         </g>
         <g id="loop" stroke-linejoin="miter">
-                <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
-                <g marker-end="url(#arrowSymbol)" class="thread">
-                    <path d="M10,11 Q 14,8 14,6"/>
-                    <path d="M 14,6 A 4,4 0 0,0 6,6"/>
-                    <path d="M 6,6 Q 6,8 10,11"/>
-                </g>
-                <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
+            <g marker-end="url(#arrowSymbol)" class="thread">
+                <path d="M10,11 Q 14,8 14,6"/>
+                <path d="M 14,6 A 4,4 0 0,0 6,6"/>
+                <path d="M 6,6 Q 6,8 10,11"/>
+            </g>
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
+        </g>
+        <g id="loop_unsupported" stroke-linejoin="miter">
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>
+            <g class="thread">
+                <use xlink:href="#link-stitch_front" x="0" y="0" stroke="#000000" stroke-width="1" fill="none"
+                    transform="rotate(180, 10,11)"/>
+            </g>
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
         </g>
         <g id="loop_front" stroke-linejoin="bevel">
             <path d="M2,0 L1.5,0 Q1.5,1 4.1,1 Q6.7,1 6.7,0 L6.2,0"/>
@@ -68,7 +80,8 @@
             <path d="M2,7 L1.5,7 L8.3,0 L8,0.3"/>
             <path d="M8,0.3 L8.3,0 L15.3,7 14.8,7"/>
         </g>
-        <g id="sewingArch_raised"  stroke-linejoin="miter" stroke-linecap="square" marker-end="url(#arrowSymbol)">
+        <g id="sewingArch_raised" stroke-linejoin="miter" stroke-linecap="square"
+            marker-end="url(#arrowSymbol)">
             <path d="M1,14 Q5.5,14 6,11" class="innerThread"/>
             <g class="thread">
                 <path d="M6,11 L6,6"/>
@@ -124,55 +137,97 @@
             <path d="M10,11 Q 13,13 19,14" class="innerThread"/>
         </g>
         <clipPath id="interlink1">
-            <path d="M6,10 L6,18 Q8.6,14 10,13 Q11.4,14 14,18 L14,10z M10,15.5 Q12,13 6,21 L6,19 14,19 14,21z"/>
+            <path
+                d="M6,10 L6,23 Q8,18 10,16 Q12,18 14,23 L14,10z M8,23 Q8.5,20 10,18 Q11.5,20 12,23z"
+            />
         </clipPath>
         <clipPath id="interlink1_first">
-            <path d="M6,10 L6,18 10,13 14,18 14,10z"/>
+            <path d="M6,10 L6,16 10,13 14,17 14,10z"/>
         </clipPath>
         <clipPath id="interlink2">
             <path d="M7,5 L7,20 9.7,20 9.7,17 11,17 11.5,20 18,20 18,5z"/>
         </clipPath>
         <clipPath id="interlink2_first">
-            <path d="M7,5 L7,15 18,15 18,5z"/>
+            <path d="M7,5 L7,14.5 18,17 18,5z"/>
+        </clipPath>
+        <clipPath id="interlink2_first2">
+            <path d="M7,5 L7,10 18,10 18,5z"/>
+        </clipPath>
+        <clipPath id="interlink2_last">
+            <path d="M7,10 L7,20 9.7,20 9.7,17 11,17 11.5,20 18,20 18,10z"/>
         </clipPath>
         <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop stop-color = "black" offset = "0%"/>
-            <stop stop-color = "grey" offset = "50%"/>
-            <stop stop-color = "white" offset = "70%" stop-opacity="0"/>
+            <stop stop-color="black" offset="0%"/>
+            <stop stop-color="grey" offset="50%"/>
+            <stop stop-color="white" offset="70%" stop-opacity="0"/>
         </linearGradient>
         <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink1_first)" -->
         <!-- Other section should have: stroke="#000000" clip-path="url(#interlink1)" -->
-        <g id="link-stitch" class="thread" stroke-linecap="round" clip-path="url(#interlink1)">
-            <path d="M10,11 Q7.5,14 7.5,15 A2.5,2.5 0 0,0 10,18 A2.5,2.5 0 0,0 12.5,15 Q12.5,14 10,11"/>
+        <g id="link-stitch_front" class="thread" stroke-linecap="round">
+            <path
+                d="M10,11.2 Q7.5,14 7.5,16 A2.5,2.5 0 0,0 10,19 A2.5,2.5 0 0,0 12.5,16 Q12.5,14 10,11.2"
+            />
+        </g>
+        <g id="link-stitch_front180" class="thread" stroke-linecap="round">
+            <use xlink:href="#link-stitch_front" x="0" y="0" stroke="#000000" stroke-width="1" fill="none"
+                transform="rotate(180, 10,11)  translate(0,-7)"/>
         </g>
         <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink2_first)" -->
         <!-- Other section should have: stroke="#000000" clip-path="url(#interlink2)" -->
         <g id="kettleStitch_front" class="thread" stroke-linecap="round">
-            <path d="M9.5,5.5 Q11,5.5 10.5,9.5 M9,12 Q7.5,14 7.5,16.5 A3,3 0 0,0 10,18.8 A3,3 0 0,0 11.4,16.5 Q12,14 10,11 Q9,10 9.5,10.5"/>
+            <path
+                d="M9.5,5.2 Q11,5.5 10.5,9.5 M9,12 Q7.5,14 7.5,16.5 A3,3 0 0,0 10,18.8 A3,3 0 0,0 11.4,16.5 Q12,14 10,11 Q9,10 9.5,11"
+            />
+        </g>
+        <g id="kettleStitch_front180" class="thread" stroke-linecap="round">
+            <use xlink:href="#kettleStitch_front" x="0" y="0" stroke="#000000" stroke-width="1" fill="none"
+                transform="rotate(180, 10,11)  translate(0,-7)"/>
         </g>
     </defs>
 
     <!-- Definitions are called here -->
+
+    <use xlink:href="#link-stitch_front" x="20" y="20" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#link-stitch_front" x="20" y="26" stroke="#000000" stroke-width="1" fill="none"/>
+
+
+
+    <use xlink:href="#link-stitch_front" x="0" y="0" stroke="#000000" stroke-width="1" fill="none"
+        transform="rotate(180, 10,11) translate(0,-8)"/>
+    <circle r="1" cx="100" cy="30" fill="#000000"/>
+    <circle r="1" cx="0" cy="0" fill="#000000"/>
+    <use xlink:href="#link-stitch_front180" x="60" y="60" stroke="#000000" stroke-width="1" fill="none"/>
     
-    <use xlink:href="#link-stitch" x="20" y="20" stroke="#000000" stroke-width="1" fill="none" />
-    <use xlink:href="#link-stitch" x="20" y="23" stroke="#000000" stroke-width="1" fill="none" />
-    
-    <use xlink:href="#kettleStitch" x="20" y="40" stroke="#000000" stroke-width="1" fill="none" />
-    <use xlink:href="#kettleStitch" x="20" y="52" stroke="#000000" stroke-width="1" fill="none" />
-    
-    <use xlink:href="#sewingSupportRound_front" x="40" y="40" fill="none" stroke="#000000" stroke-width="0.5"/>
-    <use xlink:href="#sewingSupportRound_front" x="40" y="34" fill="none" stroke="#000000" stroke-width="0.5"/>
+    <use xlink:href="#kettleStitch_front180" x="70" y="60" stroke="#000000" stroke-width="1" fill="none"/>
+
+
+    <path d="M6,10 L6,23 Q8,18 10,16 Q12,18 14,23 L14,10z M8,23 Q9,20 10,18 Q11,20 12,23z"
+        fill="none" stroke="#000000"/>
+
+    <use xlink:href="#kettleStitch_front" x="20" y="40" stroke="#000000" stroke-width="1"
+        fill="none"/>
+    <use xlink:href="#kettleStitch_front" x="20" y="52" stroke="#000000" stroke-width="1"
+        fill="none"/>
+
+    <use xlink:href="#sewingSupportRound_front" x="40" y="40" fill="none" stroke="#000000"
+        stroke-width="0.5"/>
+    <use xlink:href="#sewingSupportRound_front" x="40" y="34" fill="none" stroke="#000000"
+        stroke-width="0.5"/>
     <use xlink:href="#loop_frontLinked" x="39" y="43" fill="none" stroke="#000000"/>
     <use xlink:href="#loop_front" x="39" y="41.5" fill="none" stroke="#000000"/>
     <use xlink:href="#loop_front" x="39" y="40" fill="none" stroke="#000000"/>
     <use xlink:href="#loop_front" x="39" y="38.5" fill="none" stroke="#000000"/>
     <use xlink:href="#loop_front" x="39" y="37" fill="none" stroke="#000000"/>
-    
+
     <use xlink:href="#sewingSupportRound_smallFront" x="60" y="40"/>
     <use xlink:href="#sewingSupportRound_smallFront" x="60" y="34"/>
-    
+
     <use xlink:href="#sewingSupportFlat_front" x="80" y="40"/>
     <use xlink:href="#sewingSupportFlat_front" x="80" y="34"/>
+    
+    
+    <use xlink:href="#loop_unsupported" x="50" y="52" stroke="#000000" stroke-width="1"
+        fill="none"/>
 
 
 
