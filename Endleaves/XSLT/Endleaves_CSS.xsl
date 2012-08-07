@@ -19,7 +19,7 @@
 
     <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
     <xsl:param name="Ox" select="0"/>
-    <!-- N.B.: The reference value for Y is the same as the reference value for X -->
+    
     <xsl:param name="Oy"
         select="$Ox + $delta * (count(/book/endleaves/left/yes/type/separate/units/unit[1]/following-sibling::unit/components/component))"/>
 
