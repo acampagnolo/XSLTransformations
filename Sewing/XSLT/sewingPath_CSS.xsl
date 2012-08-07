@@ -2267,7 +2267,7 @@
                 <xsl:value-of select="$loopType"/>
             </xsl:attribute>
             <xsl:choose>
-                <xsl:when test="$counter eq ($sN - 2) and position() != 1">
+                <xsl:when test="($counter eq ($sN - 2) and position() != 1) or position() mod 2 =0">
                     <xsl:attribute name="clip-path">
                         <xsl:text>url(#interlink2_last)</xsl:text>
                     </xsl:attribute>
