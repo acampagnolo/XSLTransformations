@@ -6,11 +6,19 @@
     version="1.1">
     <desc>Page Markers SVG Master</desc>
     <defs>
+        <filter id="f1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
         <linearGradient id="three_stops">
             <stop offset="0%" stop-color="#FFFFFF"/>
             <stop offset="50%" stop-color="#666666"/>
         </linearGradient>   
-
         <g id="foldedKnotted" stroke-linejoin="bevel" stroke-linecap="round">
             <path d="M0,0 L20,0 Q22,0 22,0.6 L40,2 M40,3 L22,4.4 Q22,5 20,5 L4,5"/>
             <path id="turkKnot_element" d="M40,2 Q42,-2 45.5,-1"/>
@@ -18,13 +26,47 @@
             <use xlink:href="#turkKnot_element" transform=" translate(3,-0.5) rotate(175, 42.5, 2.5)"/>
             <use xlink:href="#turkKnot_element" transform=" translate(1,-7.5) rotate(266, 42.5, 2.5) scale(0.8,1)"/>
         </g>
+        <g id="foldedKnotted_above" stroke-linejoin="bevel" stroke-linecap="round">
+            <path d="M0,0 L20,0 Q30,0 40,4 M39.5,8 Q30,12 20,12 L0,12 0,0"/>
+            <path d="M40,5 Q41,3 41.5,2"/>
+            <path d="M40,5 Q38,9 43,11"/>
+            <path d="M45,11 Q43,12 43,10 Q44,8 44,6"/>
+            <path d="M44,6 Q44,4 41,2"/>
+            <path d="M41,2 Q43.5,0 45,1.5"/>
+            <path d="M43,10 Q49,13 49,5"/>
+            <path d="M44,8 Q46.5,8.5 46.5,6"/>
+            <path d="M46.5,6 Q47.5,5 49,5"/>
+            <path d="M46.5,6 Q47.5,4 45.5,2"/>
+            <path d="M45.5,2 Q46,1 47.5,1.5"/>
+            <path d="M47.5,1.5 Q49.5,3 49.3,5"/>
+        </g>
+        <g id="foldedKnotted_above-90">
+            <use xlink:href="#foldedKnotted_above" transform="rotate(-90, 0, 0)"/>
+        </g>
+        <g id="foldedKnotted_above90">
+            <use xlink:href="#foldedKnotted_above" transform="rotate(90, 0, 0) translate(0, -12)"/>
+        </g>
         <g id="folded" stroke-linejoin="round" stroke-linecap="round">
             <path d="M0,0 L20,0 Q22,0 22,0.6 L42.5,1.5 A0.5,0.5 0,0 1 42.5,3.5 L22,4.4 Q22,5 20,5 L4,5"/>
         </g>
         <g id="straight" stroke-linejoin="round" stroke-linecap="round">
             <path d="M0,0 L20,0 42.5,0"/>
         </g>
-        
+        <g id="foldedStraight_above" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M0,0 L20,0 40,0 40,12 20,12 L0,12z"/>
+        </g>
+        <g id="foldedStraight_above-90">
+            <use xlink:href="#foldedStraight_above" transform="rotate(-90, 0, 0)"/>
+        </g>
+        <g id="foldedStraight_above90">
+            <use xlink:href="#foldedStraight_above" transform="rotate(90, 0, 0) translate(0,-12)"/>
+        </g>
+        <g id="pageProfile">
+            <path d="M0,0.1 L41,0" stroke-width="2" stroke="url(#three_stops)" fill="none"/>
+        </g>
+        <g id="pageOutline">
+            <!-- page outline -->
+        </g>
     </defs>
     
     <!-- Definitions are called here -->
@@ -37,5 +79,9 @@
     
     <use xlink:href="#straight" stroke="#000000" stroke-width="1" fill="none" x="50" y="90"/>
     <path d="M30,92.51 L71,92.5" stroke-width="2" stroke="url(#three_stops)" fill="none"/>
+    
+    <use xlink:href="#foldedKnotted_above" stroke="#000000" stroke-width="1" fill="none" x="150" y="50"/>
+    
+    <use xlink:href="#foldedKnotted_above90" stroke="#000000" stroke-width="1" fill="none" x="150" y="50"/>
     
 </svg>

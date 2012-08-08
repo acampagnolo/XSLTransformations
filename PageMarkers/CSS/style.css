@@ -1,0 +1,36 @@
+/* style.css */
+
+/*
+ *    GENERAL   *
+ * 
+ * stroke=#000000; stroke-width=1; fill=none;
+ */
+
+.line{
+    stroke:#000000;
+    stroke-width:1;
+    fill:none;
+}
+
+.line2{
+    stroke:#666666;
+    stroke-width:0.3;
+    fill:none;
+}
+
+.thread{
+    stroke:#000000;
+    stroke-width:0.75;
+    fill:none;
+    stroke-linecap:square;
+}
+
+.text_va{
+    font-family:courier, monospace;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:bold;
+    font-size:8px;
+    fill:#000000;
+    dominant-baseline:central;
+}
