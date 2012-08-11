@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
+    width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="xMinYMin meet"
+    version="1.1">
+    <desc>Board Markers SVG Master</desc>
+    <defs>
+        <linearGradient id="fading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <pattern id="gluedPattern" patternUnits="userSpaceOnUse" viewBox="0 0 3 5" x="0" y="0"
+            width="3" height="5">
+            <desc>Glue pattern</desc>
+            <path d="M 0,5 L 3,0 " class="glued" stroke="#666666" stroke-width="0.5"/>
+        </pattern>
+        <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
+            patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
+            <path d="M0,0 L5,50" class="line2" fill="none" stroke="#666666" stroke-width="0.1"
+                stroke-linejoin="miter"/>
+        </pattern>
+        <g id="boardProfile">
+            <path d="M0,0 L50,0 50,10 0,10z" stroke="url(#fading)" stroke-width="0.5"
+                fill="url(#thicknessCutoutTile)"/>
+            <path d="M0,0 L50,0 50,10 0,10z" stroke-opacity="0" fill-opacity="0.1"
+                fill="url(#fading)"/>
+        </g>
+        <g id="boardMarker">
+            <rect x="0" y="0" width="80" height="2" rx="0.5" ry="0.5" stroke="#000000"
+                stroke-width="0.5" fill="#FFFFFF" fill-opacity="1"/>
+        </g>
+        <g id="boardMarker_above">
+            <path
+                d="M0,0 L0,-2 A5,5 0 0,1 4,-4 L76,-8 A5,5 0 0,1 80,-2 L80,0 80,2 A5,5 0 0,1 76,8 L4,4 A5,5 0 0,1 0,2z"
+                stroke="#000000" stroke-width="1" stroke-dasharray="0.1 1.5" stroke-linecap="round"
+                fill="#FFFFFF"/>
+        </g>
+        <g id="turnin">
+            <path d="M0,0 L38,0 A5,5 0 0,1 42,4 L42,14 A5,5 0 0,1 38,18" stroke="#000000"
+                stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M38,18 L-10,18.1" stroke="url(#fading)" stroke-width="1.5"/>
+        </g>
+        <g id="nail">
+            <path d="M0,0 L3,0 Q2,0 2,1 L1.5,15 1.5,15 1,1 Q1,0 0,0 " stroke="#999999"
+                stroke-width="0.5" fill="#999999" fill-opacity="1"/>
+        </g>
+        <g id="nail_above">
+            <circle r="1.5" cx="0" cy="0" stroke="#999999" stroke-width="0.5" fill="#999999"
+                fill-opacity="1"/>
+        </g>
+        <g id="gluedAttachment">
+            <rect width="30" height="1.3" fill="url(#gluedPattern)" stroke-opacity="0.0" x="0" y="0.5"/>
+        </g>
+        <g id="boardOutline">
+            <g id="edges">
+                <path id="edge1" d="M0,0 L45,0.1" stroke="url(#fading)"/>
+                <use xlink:href="#edge1" transform="rotate(-90, 45, 0) translate(0.4, -0.4)"/>
+            </g>
+            <use xlink:href="#edges" transform="translate(-25, 25)"/>
+        </g>
+        <g id="turninOpacity">
+            <rect width="24" height="24" x="0" y="0" stroke="#FFFFFF" stroke-opacity="0"
+                fill="#FFFFFF" fill-opacity="0.8"/>
+        </g>
+    </defs>
+
+    <!-- Definitions are called here -->
+
+    <g transform="translate(0, 20)">
+        <use xlink:href="#boardProfile" x="50" y="50"/>
+        <use xlink:href="#turnin" x="60" y="44"/>
+        <use xlink:href="#boardMarker" x="70" y="46"/>
+        <!--<use xlink:href="#nail" x="83" y="45.5"/>-->
+        <use xlink:href="#gluedAttachment" x="70" y="48"/>
+    </g>
+
+    <!--<g transform="translate(-50, -50) scale(-1, 1) translate(-250, 70)">
+        <use xlink:href="#boardProfile" x="50" y="50"/>
+        <use xlink:href="#turnin" x="60" y="60" transform="scale(1, 0.8)"/>
+        <use xlink:href="#boardMarker" x="70" y="44"/>
+        <use xlink:href="#nail" x="83" y="43.5"/>
+    </g>-->
+
+
+    <g transform="translate(-200, -50)  scale(-1, 1) translate(-650, 50)">
+        <use xlink:href="#boardOutline" x="200" y="50"/>
+        <use xlink:href="#boardMarker_above" x="225" y="70" transform="rotate (-45, 225, 70)"/>
+        <use xlink:href="#nail_above" x="235" y="60"/>
+        <!--<use xlink:href="#turninOpacity" x="220" y="51"/>-->
+    </g>
+
+
+    <!--<use xlink:href="#boardOutlineL" x="220" y="50"/>
+    <use xlink:href="#boardMarker_above" x="240" y="70" transform="rotate (225, 240, 70)"/>
+    <use xlink:href="#nail_above" x="230" y="60"/>
+    <use xlink:href="#turninOpacity" x="221" y="51"/>-->
+
+</svg>
