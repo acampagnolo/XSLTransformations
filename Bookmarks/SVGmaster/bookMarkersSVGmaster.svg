@@ -11,6 +11,14 @@
             <stop offset="50%" stop-color="#666666"/>
             <stop offset="90%" stop-color="#000000"/>
         </linearGradient>
+        <linearGradient id="fadingBothEnds">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="20%" stop-color="#666666"/>
+            <stop offset="40%" stop-color="#000000"/>
+            <stop offset="60%" stop-color="#000000"/>
+            <stop offset="80%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
         <pattern id="gluedPattern" patternUnits="userSpaceOnUse" viewBox="0 0 3 5" x="0" y="0"
             width="3" height="5">
             <desc>Glue pattern</desc>
@@ -21,34 +29,83 @@
             <path d="M0,0 L5,50" class="line2" fill="none" stroke="#666666" stroke-width="0.1"
                 stroke-linejoin="miter"/>
         </pattern>
+        <pattern id="endbandFill" x="0" y="0" width="4" height="14" patternUnits="userSpaceOnUse">
+            <path d="M0,0 Q-1,7 0,14 M2,0 Q1,7 2,14" stroke="#666666" stroke-width="0.3" fill="none"
+            />
+        </pattern>
+        <pattern id="endbandFill2" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+            <path d="M0,0 L4,0 4,4 0,4z" stroke="#FFFFFF" stroke-opacity="0" fill="#FFFBCB" fill-opacity="1"/>
+            <path d="M0,0 Q-0.5,2 0,4 M2,0 Q1.5,2 2,4" stroke="#666666" stroke-width="0.3" fill="none"/>
+        </pattern>
+        <clipPath id="knot_back_clip">
+            <path d="M-1,-1 L3,-1 3,2 -1,2z"/>
+        </clipPath>
+        <clipPath id="span2_clip">
+            <path d="M-1,-7 L-1,11 21,11 21,-7z"/>
+        </clipPath>
         <g id="endbandCore">
             <circle r="7" cx="0" cy="0" fill="url(#thicknessCutoutTile)"/>
+        </g>
+        <g id="endbandCore_front">
+            <path d="M0,0 L80,0 80,14 0,14z" stroke="url(#fadingBothEnds)" fill="url(#endbandFill)"
+            />
         </g>
         <g id="crowningCore">
             <circle r="2" cx="0" cy="0" fill="url(#thicknessCutoutTile)"/>
         </g>
-        <!--<g id="textblock">
-            <path d="M0,25 L0,0 25,0"/>
-        </g>-->
+        <g id="crowningCore_front">
+            <path d="M0,0 L80,0 80,4 0,4z" stroke="url(#fadingBothEnds)" fill="url(#endbandFill2)"/>
+        </g>
         <g id="textblock">
             <g id="edges" transform="scale(-1, 1) translate(-45)">
                 <path d="M0,0 L45,0.1" stroke="url(#fading)"/>
-                <path d="M0,0 L 70,0.1" stroke="url(#fading)" transform="rotate(-90, 45, 0) translate(-24.6, -0.4)"/>
+                <path d="M0,0 L 70,0.1" stroke="url(#fading)"
+                    transform="rotate(-90, 45, 0) translate(-24.6, -0.4)"/>
             </g>
         </g>
         <g id="type1">
             <path d="M0,0 L18,0" stroke-linecap="round"/>
         </g>
+        <g id="span_front">
+            <path d="M0,0 Q-1,1.5 0.5,3 Q10,8 19.5,3 Q21,1.5 20,0"/>
+        </g>
+        <g id="span_above">
+            <path d="M0,0 A10,10 0 0,0 20,0"/>
+            <path d="M0,0 L0,-15 M20,0 L20,-15" stroke-dasharray="1 2" stroke-linecap="round"/>
+        </g>
+        <g id="multipleSpan_back">
+            <path d="M0,0 Q10,2.5 20,0"/>
+        </g>
+        <g id="multipleSpan_back_above">
+            <path d="M1,-1 Q10,-5 19,-1"/>
+            <path d="M0,1 Q0,0 1,-1 M20,1 Q20,0 19,-1"/>
+        </g>
+        <g id="closedLoop_front">
+            <path d="M-3,0 Q-18,3 2,4 Q20,3 4,0"/>
+        </g>
+        <g id="closedLoop_above">
+            <!--<path d="M0,0 Q-18,3 1,20 Q20,3 0,0"/>-->
+            <path d="M-0.5,0 Q-1,10 -3,15 M0.5,0 Q1,10 3,15" stroke-linecap="round" stroke-dasharray="1 2"/>
+            <path d="M-3,15 Q-18,20 0,23 Q18,20 3,15"></path>
+        </g>
         <g id="twistedSpan">
             <path d="M0,0 L10,0 Q16,0 18,-2 Q14,-4 10,0" stroke-linejoin="round"/>
         </g>
         <g id="twistedClosedLoop">
-            <path d="M0,0 L10,0 Q19,0 18,-2 Q18,-3 15.7,-4 M14.3,-4.7 Q12,-6 12,-7 A1,1 0 0,1 16,-7 Q16,-4 10,0" stroke-linejoin="round"/>
+            <path
+                d="M0,0 L10,0 Q19,0 18,-2 Q18,-3 15.7,-4 M14.3,-4.7 Q12,-6 12,-7 A1,1 0 0,1 16,-7 Q16,-4 10,0"
+                stroke-linejoin="round"/>
         </g>
         <g id="knot">
             <path d="M0,0 L2,0" stroke-linecap="round"/>
             <ellipse rx="0.5" ry="0.8" cx="1.7" cy="0.5" transform="rotate(-22, 1.7,0.5)"/>
             <path d="M2,1 L4,1" stroke-linecap="round"/>
+        </g>
+        <g id="knot_above" transform="rotate(-90, 0,0)">
+            <use xlink:href="#knot"/>
+        </g>
+        <g id="knot_back">
+            <use xlink:href="#knot" clip-path="url(#knot_back_clip)"/>
         </g>
         <g id="frayed">
             <path d="M1.5,3 L-0.5,9" stroke-linecap="round"/>
@@ -59,6 +116,12 @@
             <path d="M4,1 Q-1.1,3 -1.5,9"/>
             <path d="M4,1 Q-1.1,3 -1.5,9" transform="rotate(10, 4,1)"/>
         </g>
+        <g id="frayed_back">
+            <path d="M1,0 Q-1,4.5 -2,9"/>
+            <path d="M1,0 Q0.5,4.5 0,9"/>
+            <path d="M1,0 Q1.5,4.5 2,9"/>
+            <path d="M1,0 Q3,4.5 4,9"/>
+        </g>
     </defs>
 
     <!-- Definitions are called here -->
@@ -68,9 +131,9 @@
     <use xlink:href="#crowningCore" x="48" y="40" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#textblock" x="46" y="61" stroke="#000000" stroke-width="1" fill="none"/>
     <use xlink:href="#type1" x="46" y="59" stroke="#000000" stroke-width="1"/>
-<!--    <use xlink:href="#knot" x="42" y="58"  stroke="#000000" stroke-width="1"/>-->
-    <use xlink:href="#frayed" x="42" y="58"  stroke="#000000" stroke-width="1" fill="none"/>
-    
+    <!--    <use xlink:href="#knot" x="42" y="58"  stroke="#000000" stroke-width="1"/>-->
+    <use xlink:href="#frayed" x="42" y="58" stroke="#000000" stroke-width="1" fill="none"/>
+
     <!-- Span2 -->
     <!--<use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#crowningCore" x="48" y="39" stroke="#000000" stroke-width="0.5"/>
@@ -86,7 +149,7 @@
     <use xlink:href="#twistedSpan" x="46" y="59" stroke="#000000" stroke-width="1" fill="none"/>
 <!-\-    <use xlink:href="#knot" x="42" y="58"  stroke="#000000" stroke-width="1"/>-\->
     <use xlink:href="#frayed" x="42" y="58"  stroke="#000000" stroke-width="1" fill="none"/>-->
-    
+
     <!-- twistedClosedLoop -->
     <!--<use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#crowningCore" x="48" y="40" stroke="#000000" stroke-width="0.5"/>
@@ -96,6 +159,67 @@
 <!-\-    <use xlink:href="#frayed" x="42" y="58"  stroke="#000000" stroke-width="1" fill="none"/>-\->-->
 
 
+    <!-- Front pattern -->
+    <use xlink:href="#endbandCore_front" x="100" y="43" stroke="#000000" stroke-width="0.5" fill="none"/>
+    <use xlink:href="#crowningCore_front" x="100" y="38" stroke="#000000" stroke-width="0.5" fill="none"/>
+    <!-- Span1 -->
+    <!--<use xlink:href="#span_front" x="130" y="57" stroke="#000000" stroke-width="1" fill="none"/>-->
+    <!-- Span2 -->
+    <!--<use xlink:href="#span_front" x="130" y="42" stroke="#000000" stroke-width="1" fill="none"/>-->
+    <!-- Multiplespan -->
+    <!--<use xlink:href="#span_front" x="110" y="57" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#span_front" x="150" y="57" stroke="#000000" stroke-width="1" fill="none"/>-->
+    <!-- ClosedLoop -->
+    <use xlink:href="#closedLoop_front" x="140" y="57" stroke="#000000" stroke-width="1" fill="none"/>
+    
+    <!-- Back pattern -->
+    <g transform="scale(-1, 1) translate(-400, 0)">
+        <use xlink:href="#endbandCore_front" x="130" y="43" stroke="#000000" stroke-width="0.5"
+            fill="none"/>
+        <use xlink:href="#crowningCore_front" x="130" y="38" stroke="#000000" stroke-width="0.5"
+            fill="none"/>
+    </g>
+    <!-- Span1 -->
+    <!--<use xlink:href="#knot_back" x="219" y="57" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_back" x="239" y="57" stroke="#000000" stroke-width="1"/>-->
+    <!--<use xlink:href="#frayed_back" x="219" y="57" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#frayed_back" x="239" y="57" stroke="#000000" stroke-width="1"/>-->
+    <!-- Span2 -->
+    <!--<use xlink:href="#knot_back" x="219" y="42" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_back" x="239" y="42" stroke="#000000" stroke-width="1"/>-->
+    <!--<use xlink:href="#frayed_back" x="219" y="42" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#frayed_back" x="239" y="42" stroke="#000000" stroke-width="1"/>-->
+    <!-- Multiplespan -->
+    <!--<use xlink:href="#multipleSpan_back" x="219" y="57" stroke="#000000" stroke-width="1" fill="none"/>-->
+    <!--<use xlink:href="#knot_back" x="199" y="57" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_back" x="259" y="57" stroke="#000000" stroke-width="1"/>-->
+    <!--<use xlink:href="#frayed_back" x="199" y="57" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#frayed_back" x="259" y="57" stroke="#000000" stroke-width="1"/>-->
+    <!-- ClosedLoop -->
+    <use xlink:href="#knot_back" x="229.5" y="57" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_back" x="228.5" y="57" stroke="#000000" stroke-width="1"/>
+    
+    
+    <!-- Above pattern -->
+    <use xlink:href="#endbandCore_front" x="100" y="83" stroke="#000000" stroke-width="0.5" fill="none"/>
+    <use xlink:href="#crowningCore_front" x="100" y="85" stroke="#000000" stroke-width="0.5" fill="none"/>
+    <!-- Span1 -->
+    <!-- <use xlink:href="#span_above" x="130" y="97" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#knot_above" x="130" y="82" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_above" x="150" y="82" stroke="#000000" stroke-width="1"/>-->
+    <!-- Span2 -->
+    <!--<use xlink:href="#span_above" x="130" y="90" stroke="#000000" stroke-width="1" fill="none" clip-path="url(#span2_clip)"/>
+    <use xlink:href="#knot_above" x="130" y="82" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_above" x="150" y="82" stroke="#000000" stroke-width="1"/>-->
+    <!-- MultipleSpan -->
+     <!--<use xlink:href="#span_above" x="110" y="97" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#span_above" x="150" y="97" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#multipleSpan_back_above" x="130" y="83" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#knot_above" x="110" y="82" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_above" x="170" y="82" stroke="#000000" stroke-width="1"/>-->
+    <!-- ClosedLoop -->
+    <use xlink:href="#closedLoop_above" x="140" y="82" stroke="#000000" stroke-width="1" fill="none"/>
+    
 
 
 </svg>
