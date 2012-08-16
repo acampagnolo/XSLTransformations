@@ -81,20 +81,33 @@
             <path d="M0,1 Q0,0 1,-1 M20,1 Q20,0 19,-1"/>
         </g>
         <g id="closedLoop_front">
-            <path d="M-3,0 Q-18,3 2,4 Q20,3 4,0"/>
+            <path d="M-0.5,0 Q-18,3 2,3.5 Q18,3 0.5,0"/>
         </g>
         <g id="closedLoop_above">
-            <!--<path d="M0,0 Q-18,3 1,20 Q20,3 0,0"/>-->
-            <path d="M-0.5,0 Q-1,10 -3,15 M0.5,0 Q1,10 3,15" stroke-linecap="round" stroke-dasharray="1 2"/>
-            <path d="M-3,15 Q-18,20 0,23 Q18,20 3,15"></path>
+            <path d="M-0.2,-0.5 Q-1,-8 -0.5,-15 M0.2,0 Q1,-8 0.5,-15" stroke-linecap="round" stroke-dasharray="1 2"/>
+            <path d="M-0.5,0 Q-7.5,3 -8.5,8 A5,5 0 0,0 8.5,8 Q7.5,3 0.5,0"/>
         </g>
         <g id="twistedSpan">
             <path d="M0,0 L10,0 Q16,0 18,-2 Q14,-4 10,0" stroke-linejoin="round"/>
+        </g>
+        <g id="twistedSpan_front">
+            <path d="M0,0.5 Q-7,-3.5 -5,-4.5 Q-1.5,-5.5 2,-1.5 Q2,0.5 0,0.5"/>
+        </g>
+        <g id="twistedSpan_above">
+            <path d="M-0.2,-0.5 Q-1,-8 -0.5,-15 M0.2,0 Q1,-8 0.5,-15" stroke-linecap="round" stroke-dasharray="1 2"/>
+            <path d="M0,0 Q6,10 -3,12.5 Q-7,12 -0.5,0"/>
         </g>
         <g id="twistedClosedLoop">
             <path
                 d="M0,0 L10,0 Q19,0 18,-2 Q18,-3 15.7,-4 M14.3,-4.7 Q12,-6 12,-7 A1,1 0 0,1 16,-7 Q16,-4 10,0"
                 stroke-linejoin="round"/>
+        </g>
+        <g id="twistedClosedLoop_front">
+            <path d="M0,0 Q-1,-4 2.1,-8 Q3.5,-12 0.5,-10 Q-0.5,-8 1,-6 Q8,-2 0,0"/>
+        </g>
+        <g id="twistedClosedLoop_above" stroke-linejoin="round">
+            <path d="M-0.2,-0.5 Q-1,-8 -0.5,-15 M0.2,0 Q1,-8 0.5,-15" stroke-linecap="round" stroke-dasharray="1 2"/>
+            <path d="M0.5,0 Q8,6 0,8.5 Q2,3 -2,3.2 Q-4,5 0,8.5 Q-1,4 -0.2,0"/>
         </g>
         <g id="knot">
             <path d="M0,0 L2,0" stroke-linecap="round"/>
@@ -127,12 +140,12 @@
     <!-- Definitions are called here -->
 
     <!-- Span1 | multipleSpan | closedLoop -->
-    <use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
+    <!--<use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#crowningCore" x="48" y="40" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#textblock" x="46" y="61" stroke="#000000" stroke-width="1" fill="none"/>
     <use xlink:href="#type1" x="46" y="59" stroke="#000000" stroke-width="1"/>
-    <!--    <use xlink:href="#knot" x="42" y="58"  stroke="#000000" stroke-width="1"/>-->
-    <use xlink:href="#frayed" x="42" y="58" stroke="#000000" stroke-width="1" fill="none"/>
+    <!-\-    <use xlink:href="#knot" x="42" y="58"  stroke="#000000" stroke-width="1"/>-\->
+    <use xlink:href="#frayed" x="42" y="58" stroke="#000000" stroke-width="1" fill="none"/>-->
 
     <!-- Span2 -->
     <!--<use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
@@ -151,12 +164,12 @@
     <use xlink:href="#frayed" x="42" y="58"  stroke="#000000" stroke-width="1" fill="none"/>-->
 
     <!-- twistedClosedLoop -->
-    <!--<use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
+    <use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#crowningCore" x="48" y="40" stroke="#000000" stroke-width="0.5"/>
     <use xlink:href="#textblock" x="46" y="61" stroke="#000000" stroke-width="1" fill="none"/>
     <use xlink:href="#twistedClosedLoop" x="46" y="59" stroke="#000000" stroke-width="1" fill="none"/>
     <use xlink:href="#knot" x="42" y="58"  stroke="#000000" stroke-width="1"/>
-<!-\-    <use xlink:href="#frayed" x="42" y="58"  stroke="#000000" stroke-width="1" fill="none"/>-\->-->
+<!--    <use xlink:href="#frayed" x="42" y="58"  stroke="#000000" stroke-width="1" fill="none"/>-->
 
 
     <!-- Front pattern -->
@@ -170,7 +183,11 @@
     <!--<use xlink:href="#span_front" x="110" y="57" stroke="#000000" stroke-width="1" fill="none"/>
     <use xlink:href="#span_front" x="150" y="57" stroke="#000000" stroke-width="1" fill="none"/>-->
     <!-- ClosedLoop -->
-    <use xlink:href="#closedLoop_front" x="140" y="57" stroke="#000000" stroke-width="1" fill="none"/>
+    <!--<use xlink:href="#closedLoop_front" x="140" y="57" stroke="#000000" stroke-width="1" fill="none"/>-->
+    <!-- TwistedSpan -->
+    <!--<use xlink:href="#twistedSpan_front" x="140" y="57" stroke="#000000" stroke-width="1" fill="none"/>-->
+    <!-- TwistedClosedLoop -->
+    <use xlink:href="#twistedClosedLoop_front" x="140" y="57" stroke="#000000" stroke-width="1" fill="none"/>
     
     <!-- Back pattern -->
     <g transform="scale(-1, 1) translate(-400, 0)">
@@ -195,9 +212,11 @@
     <use xlink:href="#knot_back" x="259" y="57" stroke="#000000" stroke-width="1"/>-->
     <!--<use xlink:href="#frayed_back" x="199" y="57" stroke="#000000" stroke-width="1"/>
     <use xlink:href="#frayed_back" x="259" y="57" stroke="#000000" stroke-width="1"/>-->
-    <!-- ClosedLoop -->
-    <use xlink:href="#knot_back" x="229.5" y="57" stroke="#000000" stroke-width="1"/>
-    <use xlink:href="#knot_back" x="228.5" y="57" stroke="#000000" stroke-width="1"/>
+    <!-- ClosedLoop | TwistedSpan | TwistedClosedLoop-->
+    <!--<use xlink:href="#knot_back" x="229.5" y="57" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_back" x="228.5" y="57" stroke="#000000" stroke-width="1"/>-->
+    <use xlink:href="#frayed_back" x="229" y="57" stroke="#000000" stroke-width="1"/>
+
     
     
     <!-- Above pattern -->
@@ -218,8 +237,19 @@
     <use xlink:href="#knot_above" x="110" y="82" stroke="#000000" stroke-width="1"/>
     <use xlink:href="#knot_above" x="170" y="82" stroke="#000000" stroke-width="1"/>-->
     <!-- ClosedLoop -->
-    <use xlink:href="#closedLoop_above" x="140" y="82" stroke="#000000" stroke-width="1" fill="none"/>
-    
+    <!--<use xlink:href="#closedLoop_above" x="140" y="97" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#knot_above" x="139.5" y="82" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_above" x="140.5" y="82" stroke="#000000" stroke-width="1"/>-->
+    <!-- TwistedSpan -->
+    <!--<use xlink:href="#twistedSpan_above" x="140" y="97" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#knot_above" x="139.5" y="82" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_above" x="140.5" y="82" stroke="#000000" stroke-width="1"/>-->
+    <!-- TwistedClosedLoop -->
+    <use xlink:href="#twistedClosedLoop_above" x="140" y="97" stroke="#000000" stroke-width="1" fill="none"/>
+    <use xlink:href="#knot_above" x="139.5" y="82" stroke="#000000" stroke-width="1"/>
+    <use xlink:href="#knot_above" x="140.5" y="82" stroke="#000000" stroke-width="1"/>
+
+
 
 
 </svg>
