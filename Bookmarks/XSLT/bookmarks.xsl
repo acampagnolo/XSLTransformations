@@ -126,10 +126,10 @@
                     />
                 </desc>
                 <xsl:call-template name="endbandDiagrams"/>
-                <xsl:call-template name="primaryType"/>
-                <xsl:call-template name="primaryAttachmentType"/>
+                <xsl:call-template name="prymaryTypeXYvalues"/>
+                <xsl:call-template name="primaryAttachmentXYvalues"/>
                 <!--<xsl:call-template name="primaryAttachmentDecoration"/>-->
-                <xsl:call-template name="secondaryType"/>
+                <xsl:call-template name="secondaryTypeXYvalues"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -196,104 +196,219 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-
-    <xsl:template name="primaryType">
-        <desc xmlns="http://www.w3.org/2000/svg">
-            <xsl:text>Primary bookmark type: </xsl:text>
-            <xsl:value-of select="./compound/primaryType[not(NC | NK | other)]/node()[2]/name()"/>
-        </desc>
-        <xsl:choose>
-            <xsl:when test="./compound/primaryType/NC">
-                <desc xmlns="http://www.w3.org/2000/svg">
-                    <xsl:text>Primary bookmark type not checked.</xsl:text>
-                </desc>
-                <!--NB:  No file from St Catherine has this option. The most probable type should be drawn with a high degree of uncertainty: 'closedLoop.' -->
-                <!-- TO DO -->
-                <!-- Call the 'closedLoop' diagram option with a high degree of uncertainty -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/NK">
-                <desc xmlns="http://www.w3.org/2000/svg">
-                    <xsl:text>Primary bookmark type not known.</xsl:text>
-                </desc>
-                <!--NB:  The most probable type should be drawn with a high degree of uncertainty: 'closedLoop.' -->
-                <!-- TO DO -->
-                <!-- Call the 'closedLoop' diagram option with a high degree of uncertainty -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/other">
-                <desc xmlns="http://www.w3.org/2000/svg">
-                    <xsl:text>Primary bookmark type not covered by schema yet. Description notes: </xsl:text>
-                    <xsl:value-of select="./compound/primaryType/other/text()"/>
-                </desc>
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/span1">
-                <!-- TO DO -->
-                <!-- Call the 'span1' diagram option -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/span2">
-                <!-- TO DO -->
-                <!-- Call the 'span2' diagram option -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/multipleSpan">
-                <!-- TO DO -->
-                <!-- Call the 'multipleSpan' diagram option -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/twistedSpan">
-                <!-- TO DO -->
-                <!-- Call the 'twistedSpan' diagram option -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/closedLoop">
-                <!-- TO DO -->
-                <!-- Call the 'closedLoop' diagram option -->
-                <!-- TO DO -->
-            </xsl:when>
-            <xsl:when test="./compound/primaryType/twistedClosedLoop">
-                <!-- TO DO -->
-                <!-- Call the 'twistedClosedLoop' diagram option -->
-                <!-- TO DO -->
-            </xsl:when>
-        </xsl:choose>
-    </xsl:template>
-
-    <xsl:template name="useXYvalues">
+    
+    <xsl:template name="prymaryTypeXYvalues">
         <!-- Need two variables for the values of X and Y in the <use> element that vary accordingly to the primaryType; Need a couple of values for each view: cross-section, front, back, above-->
         <!-- NB: some secondary types might need further modifications from the standard X and Y values for their respective primary type, but these might be adjusted inside the X/Y selection xPath or with a <xsl:choose> -->
         <xsl:variable name="x">
             <xsl:choose>
-                <xsl:when test="./compound/primaryType/span1">
+                <xsl:when test="./compound/primaryType/span2">
+                    <xsl:value-of select="$Ox + 47"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$Ox + 46"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="x_front">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType[twistedSpan | closedLoop | twistedClosedLoop]">
+                    <xsl:value-of select="$Ox + 140"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$Ox + 130"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="x_above">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType[twistedSpan | closedLoop | twistedClosedLoop]">
+                    <xsl:value-of select="$Ox + 140"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$Ox + 130"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="y">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType/span2">
+                    <xsl:value-of select="$Oy + 42"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$Oy + 59"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="y_front">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType/span2">
+                    <xsl:value-of select="$Oy + 42"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$Oy + 57"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="y_above">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType/span2">
+                    <xsl:value-of select="$Oy + 90"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$Oy + 97"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:call-template name="primaryType">
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="y" select="$y"/>
+            <xsl:with-param name="x_front" select="$x_front"/>
+            <xsl:with-param name="y_front" select="$y_front"/>
+            <xsl:with-param name="x_above" select="$x_above"/>
+            <xsl:with-param name="y_above" select="$y_above"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="primaryType">
+        <xsl:param name="x"/>
+        <xsl:param name="y"/>
+        <xsl:param name="x_front"/>
+        <xsl:param name="y_front"/>
+        <xsl:param name="x_above"/>
+        <xsl:param name="y_above"/>
+        <desc xmlns="http://www.w3.org/2000/svg">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType/NC">
+                    <xsl:text>Primary bookmark type not checked.</xsl:text>
+                </xsl:when>
+                <xsl:when test="./compound/primaryType/NK">
+                    <xsl:text>Primary bookmark type not known.</xsl:text>
+                </xsl:when>
+                <xsl:when test="./compound/primaryType/other">
+                    <xsl:text>Primary bookmark type not covered by schema yet. Description notes: </xsl:text>
+                    <xsl:value-of select="./compound/primaryType/other/text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Primary bookmark type: </xsl:text>
+                    <xsl:value-of select="./compound/primaryType/node()[2]/name()"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </desc>
+        <g xmlns="http://www.w3.org/2000/svg">
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="if (./compound/primaryType[ NC | NK]) then xs:integer(50) else xs:integer(100)"/>
+            </xsl:call-template>
+            <use xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="xlink:href">
+                    <xsl:choose>
+                        <xsl:when test="./compound/primaryType[NC | NK | span1 | span2 | multipleSpan | closedLoop]">
+                            <xsl:text>#type1</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="./compound/primaryType[twistedSpan | twistedClosedLoop]">
+                            <xsl:value-of select="concat('#', ./compound/primaryType/node()[2]/name())"/>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:attribute name="x">
+                        <xsl:value-of select="$x"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="y">
+                        <xsl:value-of select="$y"/>
+                    </xsl:attribute>
+                </xsl:attribute>
+            </use>
+            <use xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="xlink:href">
+                    <xsl:choose>
+                        <xsl:when test="./compound/primaryType[span1 | span2 | multipleSpan]">
+                            <xsl:text>#span_front</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="./compound/primaryType[NC | NK]">
+                            <xsl:text>#closedLoop_front</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="./compound/primaryType[twistedSpan | twistedClosedLoop | closedLoop]">
+                            <xsl:value-of select="concat('#', ./compound/primaryType/node()[2]/name(), '_front')"/>
+                        </xsl:when>
+                    </xsl:choose>                   
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="if (./compound/primaryType/multipleSpan) then $x_front - 20 else $x_front"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$y_front"/>
+                </xsl:attribute>
+            </use>
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType/multipleSpan">
+                    <use xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="xlink:href">
+                            <xsl:text>#span_front</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="x">
+                            <xsl:value-of select="$x_front + 20"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="y">
+                            <xsl:value-of select="$y_front"/>
+                        </xsl:attribute>
+                    </use>
+                </xsl:when>
+            </xsl:choose>
+            <use xmlns="http://www.w3.org/2000/svg">
+                <xsl:attribute name="xlink:href">
+                    <xsl:choose>
+                        <xsl:when test="./compound/primaryType[span1 | span2 | multipleSpan]">
+                            <xsl:text>#span_above</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="./compound/primaryType[NC | NK]">
+                            <xsl:text>#closedLoop_above</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="./compound/primaryType[twistedSpan | twistedClosedLoop | closedLoop]">
+                            <xsl:value-of select="concat('#', ./compound/primaryType/node()[2]/name(), '_above')"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:attribute>
+                <xsl:attribute name="x">
+                    <xsl:value-of select="if (./compound/primaryType/multipleSpan) then $x_above - 20 else $x_above"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$y_above"/>
+                </xsl:attribute>
+            </use>
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType/multipleSpan">
+                    <use xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="xlink:href">
+                            <xsl:text>#span_above</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="x">
+                            <xsl:value-of select="$x_above + 20"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="y">
+                            <xsl:value-of select="$y_above"/>
+                        </xsl:attribute>
+                    </use>
+                </xsl:when>
+            </xsl:choose>
+        </g>
+    </xsl:template>
+    
+    <xsl:template name="primaryAttachmentXYvalues">
+        <xsl:param name="certainty" select="100"/>
+        <!-- Need two variables for the values of X and Y in the <use> element that vary accordingly to the primaryType; Need a couple of values for each view: cross-section, front, back, above-->
+        <!-- NB: some secondary types might need further modifications from the standard X and Y values for their respective primary type, but these might be adjusted inside the X/Y selection xPath or with a <xsl:choose> -->
+        <xsl:variable name="x">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType[span1 | multipleSpan | closedLoop | twistedSpan | twistedClosedLoop]">
                     <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
-                    <!--<xsl:value-of select="x"/>-->
+                    <xsl:value-of select="42"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/span2">
                     <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
-                    <!--<xsl:value-of select="x"/>-->
+                    <xsl:value-of select="43"/>
                 </xsl:when>
-                <xsl:when test="./compound/primaryType/multipleSpan">
+                <xsl:when test="./compound/primaryType[NC | NK | other]">
                     <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
-                    <!--<xsl:value-of select="x"/>-->
-                </xsl:when>
-                <xsl:when test="./compound/primaryType/twistedSpan">
-                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
-                    <!--<xsl:value-of select="x"/>-->
-                </xsl:when>
-                <xsl:when test="./compound/primaryType/closedLoop">
-                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
-                    <!--<xsl:value-of select="x"/>-->
-                </xsl:when>
-                <xsl:when test="./compound/primaryType/twistedClosedLoop">
-                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
-                    <!--<xsl:value-of select="x"/>
-                        or
-                        <xsl:choose>
-                        <xsl:when test="mmm">
-                            <xsl:value-of select="x"/>
-                        </xsl:when>
-                    </xsl:choose>-->
+                    <xsl:value-of select="42"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -307,7 +422,16 @@
             <!-- selection -->
         </xsl:variable>
         <xsl:variable name="y">
-            <!-- selection -->
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType[span1 | multipleSpan | closedLoop | twistedSpan | twistedClosedLoop]">
+                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
+                    <xsl:value-of select="58"/>
+                </xsl:when>
+                <xsl:when test="./compound/primaryType/span2">
+                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
+                    <xsl:value-of select="41"/>
+                </xsl:when>
+            </xsl:choose>
         </xsl:variable>
         <xsl:variable name="y_front">
             <!-- selection -->
@@ -326,16 +450,8 @@
             <xsl:with-param name="x_above" select="$x_above"/>
             <xsl:with-param name="y_above" select="$y_above"/>
         </xsl:call-template>
-        <xsl:call-template name="secondaryType">
-            <xsl:with-param name="x" select="$x"/>
-            <xsl:with-param name="y" select="$y"/>
-            <xsl:with-param name="x_front" select="$x_front"/>
-            <xsl:with-param name="y_front" select="$y_front"/>
-            <xsl:with-param name="x_above" select="$x_above"/>
-            <xsl:with-param name="y_above" select="$y_above"/>
-        </xsl:call-template>
     </xsl:template>
-
+    
     <xsl:template name="primaryAttachmentType">
         <xsl:param name="x"/>
         <xsl:param name="y"/>
@@ -344,7 +460,7 @@
         <xsl:param name="x_above"/>
         <xsl:param name="y_above"/>
         <xsl:choose>
-            <xsl:when test="./compound/secondaryType[NC | NK | other]">
+            <xsl:when test="./compound/primaryAttachment/type[NC | NK | other]">
                 <!-- do something and set a high degree of uncertainty. A possibility for NC and NK is drawing the most probable diagram with a high degree of uncertainty, while for 'other' a signpost diagram (again with a high degree of uncertainty) might work? -->
             </xsl:when>
             <xsl:otherwise>
@@ -388,10 +504,72 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
+    
+    
     <!--<xsl:template name="primaryAttachmentDecoration">
         <!-\- something -\->
     </xsl:template>-->
+    
+
+    <xsl:template name="secondaryTypeXYvalues">
+        <!-- Need two variables for the values of X and Y in the <use> element that vary accordingly to the primaryType; Need a couple of values for each view: cross-section, front, back, above-->
+        <!-- NB: some secondary types might need further modifications from the standard X and Y values for their respective primary type, but these might be adjusted inside the X/Y selection xPath or with a <xsl:choose> -->
+        <xsl:variable name="x">
+            <xsl:choose>
+                <xsl:when test="./compound/primaryType[span1 | multipleSpan | closedLoop]">
+                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
+                    <xsl:value-of select="x"/>
+                </xsl:when>
+                <xsl:when test="./compound/primaryType/span2">
+                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
+                    <!--<xsl:value-of select="x"/>-->
+                </xsl:when>
+                <xsl:when test="./compound/primaryType/twistedSpan">
+                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
+                    <!--<xsl:value-of select="x"/>-->
+                </xsl:when>
+                <xsl:when test="./compound/primaryType/twistedClosedLoop">
+                    <!-- if some secondary types require a different value from the standard one adjust  here and pass on the right value -->
+                    <!--<xsl:value-of select="x"/>
+                        or
+                        <xsl:choose>
+                        <xsl:when test="mmm">
+                            <xsl:value-of select="x"/>
+                        </xsl:when>
+                    </xsl:choose>-->
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="x_front">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:variable name="x_back">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:variable name="x_above">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:variable name="y">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:variable name="y_front">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:variable name="y_back">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:variable name="y_above">
+            <!-- selection -->
+        </xsl:variable>
+        <xsl:call-template name="secondaryType">
+            <xsl:with-param name="x" select="$x"/>
+            <xsl:with-param name="y" select="$y"/>
+            <xsl:with-param name="x_front" select="$x_front"/>
+            <xsl:with-param name="y_front" select="$y_front"/>
+            <xsl:with-param name="x_above" select="$x_above"/>
+            <xsl:with-param name="y_above" select="$y_above"/>
+        </xsl:call-template>
+    </xsl:template>
 
     <xsl:template name="secondaryType">
         <xsl:param name="x"/>
