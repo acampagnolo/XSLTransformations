@@ -116,16 +116,16 @@
                 stroke-dasharray="2 2"/>
             <path d="M0.5,0 Q8,6 0,8.5 Q2,3 -2,3.2 Q-4,5 0,8.5 Q-1,4 -0.2,0"/>
         </g>
-        <g id="knot">
+        <g id="knotted">
             <path d="M0,0 L2,0" stroke-linecap="round"/>
             <ellipse rx="0.5" ry="0.8" cx="1.7" cy="0.5" transform="rotate(-22, 1.7,0.5)"/>
             <path d="M2,1 L4,1" stroke-linecap="round"/>
         </g>
-        <g id="knot_above" transform="rotate(-90, 0,0)">
-            <use xlink:href="#knot"/>
+        <g id="knotted_above" transform="rotate(-90, 0,0)">
+            <use xlink:href="#knotted"/>
         </g>
-        <g id="knot_back">
-            <use xlink:href="#knot" clip-path="url(#knot_back_clip)"/>
+        <g id="knotted_back">
+            <use xlink:href="#knotted" clip-path="url(#knot_back_clip)"/>
         </g>
         <g id="frayed">
             <path d="M1.5,3 L-0.5,9" stroke-linecap="round"/>
@@ -208,6 +208,19 @@
             <path d="M-1,8 L1,8" stroke="#666666" stroke-width="0.5"/>
         </g>
         <g id="sewnSingleLength_above">
+            <path d="M-0.8,2 Q0.1,2 0.2,1" stroke="url(#fadingDown)"/>
+            <path d="M1,4 Q0.2,1 0.2,1" stroke="url(#fadingDown)"/>
+            <path d="M-0.3,0 L-0.3,2 M0.3,0 L0.3,2" stroke="#000000" stroke-linecap="round"/>
+        </g>
+        <g id="ɡeneric">
+            <path d="M-0.8,1.8 Q4,9 2,12" stroke="url(#fadingDown)" stroke-linecap="round"/>
+            <path d="M6,32 Q6,22 1.5,0 Q0.5,-2 -1.2,-0.7" stroke="url(#fadingDown)"
+                stroke-linecap="round"/>
+        </g>
+        <g id="ɡeneric_front">
+            <path d="M0.1,32 L0,0" stroke="url(#fadingDown)" stroke-linecap="round"/>
+        </g>
+        <g id="ɡeneric_above">
             <path d="M-0.8,2 Q0.1,2 0.2,1" stroke="url(#fadingDown)"/>
             <path d="M1,4 Q0.2,1 0.2,1" stroke="url(#fadingDown)"/>
             <path d="M-0.3,0 L-0.3,2 M0.3,0 L0.3,2" stroke="#000000" stroke-linecap="round"/>
@@ -422,10 +435,10 @@
         fill="none"/>-->
     <!--<use xlink:href="#hitchedDoubleLength" x="64" y="58.5" stroke-width="1" stroke-opacity="0.9"
         fill="none"/>-->
-    <!--<use xlink:href="#sewnSingleLength" x="64" y="58.5" stroke-width="1" stroke-opacity="0.9"
-        fill="none"/>-->
+    <use xlink:href="#sewnSingleLength" x="64" y="58.5" stroke-width="1" stroke-opacity="0.9"
+        fill="none"/>
     <!--<use xlink:href="#plied" x="64" y="58.5" stroke-width="1" stroke-opacity="0.9" fill="none"/>-->
-    <use xlink:href="#plaited" x="64" y="58.5" stroke-width="1" stroke-opacity="0.9" fill="none"/>
+<!--    <use xlink:href="#plaited" x="64" y="58.5" stroke-width="1" stroke-opacity="0.9" fill="none"/>-->
 
     <!-- Span2 -->
     <!--<use xlink:href="#endbandCore" x="50" y="50" stroke="#000000" stroke-width="0.5"/>
@@ -504,18 +517,18 @@
     <use xlink:href="#crowningCore_front" x="100" y="38" stroke="#000000" stroke-width="0.5"
         fill="none"/>
     <!-- Span1 -->
-    <!--<use xlink:href="#span_front" x="130" y="57" stroke="#000000" stroke-width="1" fill="none"/>
-    <!-\- Secondary types -\->
-    <!-\-<use xlink:href="#knottedDoubleLength_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
-        fill="none"/>-\->
-    <!-\-<use xlink:href="#knottedSingleLength_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
-        fill="none"/>-\->
-    <!-\-<use xlink:href="#hitchedDoubleLength_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
-        fill="none"/>-\->
-    <!-\-<use xlink:href="#sewnSingleLength_front" x="140" y="62" stroke-width="1.5" stroke-opacity="0.9"
-        fill="none"/>-\->
-    <!-\-<use xlink:href="#plaited_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
-        fill="none"/>-\->-->
+    <use xlink:href="#span_front" x="130" y="57" stroke="#000000" stroke-width="1" fill="none"/>
+    <!-- Secondary types -->
+    <!--<use xlink:href="#knottedDoubleLength_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
+        fill="none"/>-->
+    <!--<use xlink:href="#knottedSingleLength_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
+        fill="none"/>-->
+    <!--<use xlink:href="#hitchedDoubleLength_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
+        fill="none"/>-->
+    <use xlink:href="#sewnSingleLength_front" x="140" y="62" stroke-width="1.5" stroke-opacity="0.9"
+        fill="none"/>
+    <!--<use xlink:href="#plaited_front" x="140" y="62" stroke-width="1" stroke-opacity="0.9"
+        fill="none"/>-->
     <!-- Span2 -->
     <!--<use xlink:href="#span_front" x="130" y="42" stroke="#000000" stroke-width="1" fill="none"/>
     <!-\- Secondary types -\->
@@ -647,7 +660,7 @@
     <use xlink:href="#knot_back" x="259" y="57" stroke="#000000" stroke-width="1"/>-->
     <!--<use xlink:href="#frayed_back" x="199" y="57" stroke="#000000" stroke-width="1"/>
     <use xlink:href="#frayed_back" x="259" y="57" stroke="#000000" stroke-width="1"/>-->
-    <!-- ClosedLoop | TwistedSpan | TwistedClosedLoop-->
+    <!-- closedLoop | twistedSpan | twistedClosedLoop-->
     <!--<use xlink:href="#knot_back" x="229.5" y="57" stroke="#000000" stroke-width="1"/>
     <use xlink:href="#knot_back" x="228.5" y="57" stroke="#000000" stroke-width="1"/>-->
     <!--    <use xlink:href="#frayed_back" x="229" y="57" stroke="#000000" stroke-width="1"/>-->
@@ -772,6 +785,8 @@
     </svg>
 
     <!-- NB: we need to set CSS classes for different materials with changes in stroke-width values: 1 for 'cord' and 'thread', 2 for 'ribbon' and 'textile.' -->
+    
+    <!-- REMEMBER THE GENERIC SHAPES -->
 
 
 </svg>
