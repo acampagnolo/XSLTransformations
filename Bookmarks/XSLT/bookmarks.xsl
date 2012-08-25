@@ -410,7 +410,7 @@
         <xsl:variable name="x_front">
             <xsl:choose>
                 <xsl:when
-                    test="./compound/primaryType[twistedSpan | closedLoop | twistedClosedLoop]">
+                    test="./compound/primaryType[twistedSpan | closedLoop | twistedClosedLoop | NC | NK]">
                     <xsl:value-of select="$Ox + 140"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -421,7 +421,7 @@
         <xsl:variable name="x_above">
             <xsl:choose>
                 <xsl:when
-                    test="./compound/primaryType[twistedSpan | closedLoop | twistedClosedLoop]">
+                    test="./compound/primaryType[twistedSpan | closedLoop | twistedClosedLoop | NC | NK]">
                     <xsl:value-of select="$Ox + 140"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -499,6 +499,7 @@
                 <xsl:with-param name="certainty"
                     select="if (./compound/primaryType[ NC | NK]) then xs:integer(50) else xs:integer(100)"
                 />
+                <xsl:with-param name="type" select="'1'"/>
             </xsl:call-template>
             <xsl:attribute name="class">
                 <xsl:choose>
@@ -699,6 +700,7 @@
                 <xsl:with-param name="certainty"
                     select="if (./compound/primaryAttachment/type[NC | NK]) then xs:integer(50) else xs:integer(100)"
                 />
+                <xsl:with-param name="type" select="'1'"/>
             </xsl:call-template>
             <xsl:attribute name="class">
                 <xsl:choose>
@@ -750,7 +752,7 @@
                         <xsl:when test="./compound/primaryType/multipleSpan">
                             <xsl:value-of select="$x_back - 30"/>
                         </xsl:when>
-                        <xsl:when test="./compound/primaryType[closedLoop | twistedSpan | twistedClosedLoop]">
+                        <xsl:when test="./compound/primaryType[closedLoop | twistedSpan | twistedClosedLoop | NC | NK]">
                             <xsl:value-of select="if (./compound/primaryAttachment/type/frayed) then $x_back else $x_back - 0.5"/>
                         </xsl:when>
                     </xsl:choose>
@@ -935,13 +937,13 @@
         </xsl:variable>
         <xsl:variable name="y_front">
             <xsl:choose>
-                <xsl:when test="./compound/primaryType[span1 | multipleSpan | NC | NK | other]">
+                <xsl:when test="./compound/primaryType[span1 | multipleSpan | other]">
                     <xsl:value-of select="$Oy + 62"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/span2">
                     <xsl:value-of select="$Oy + 47"/>
                 </xsl:when>
-                <xsl:when test="./compound/primaryType/closedLoop">
+                <xsl:when test="./compound/primaryType[closedLoop | NC | NK]">
                     <xsl:value-of select="$Oy + 60"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/twistedSpan">
@@ -958,13 +960,13 @@
         </xsl:variable>
         <xsl:variable name="y_above">
             <xsl:choose>
-                <xsl:when test="./compound/primaryType[span1 | multipleSpan | NC | NK | other]">
+                <xsl:when test="./compound/primaryType[span1 | multipleSpan | other]">
                     <xsl:value-of select="$Oy + 126"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/span2">
                     <xsl:value-of select="$Oy + 119"/>
                 </xsl:when>
-                <xsl:when test="./compound/primaryType/closedLoop">
+                <xsl:when test="./compound/primaryType[closedLoop | NC | NK]">
                     <xsl:value-of select="$Oy + 132"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/twistedSpan">
@@ -1019,6 +1021,7 @@
                 <xsl:with-param name="certainty"
                     select="if (./compound/secondaryType[NC | NK| other]) then xs:integer(50) else xs:integer(100)"
                 />
+                <xsl:with-param name="type" select="'1'"></xsl:with-param>
             </xsl:call-template>
             <xsl:attribute name="class">
                 <xsl:choose>

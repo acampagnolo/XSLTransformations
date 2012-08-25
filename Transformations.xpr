@@ -26,6 +26,21 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/4907.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>bookmarks</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/1421.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -222,7 +237,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>pageMarkers</String>
+                                    <String>bookmarks</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -240,7 +255,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/PageMarkers/XSLT/pageMarkers.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/Bookmarks/XSLT/bookmarks.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -305,7 +320,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>bookmarks</String>
+                                    <String>pageMarkers</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -323,7 +338,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/Bookmarks/XSLT/bookmarks.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/PageMarkers/XSLT/pageMarkers.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>

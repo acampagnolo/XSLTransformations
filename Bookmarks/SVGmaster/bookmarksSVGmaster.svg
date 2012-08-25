@@ -6,6 +6,15 @@
     version="1.1">
     <desc>Board Markers SVG Master</desc>
     <defs>
+        <filter id="f1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
         <linearGradient id="fading">
             <stop offset="0%" stop-color="#FFFFFF"/>
             <stop offset="50%" stop-color="#666666"/>
@@ -204,15 +213,15 @@
             <path d="M1,4 Q0.2,1 0.2,1" stroke="url(#fadingDown)"/>
             <path d="M-0.3,0 L-0.3,2 M0.3,0 L0.3,2" class="line" stroke-linecap="round"/>
         </g>
-        <g id="ɡeneric">
+        <g id="generic">
             <path d="M-0.8,1.8 Q4,9 2,12" stroke="url(#fadingDown)" stroke-linecap="round"/>
             <path d="M6,32 Q6,22 1.5,0 Q0.5,-2 -1.2,-0.7" stroke="url(#fadingDown)"
                 stroke-linecap="round"/>
         </g>
-        <g id="ɡeneric_front">
+        <g id="generic_front">
             <path d="M0.1,32 L0,0" stroke="url(#fadingDown)" stroke-linecap="round"/>
         </g>
-        <g id="ɡeneric_above">
+        <g id="generic_above">
             <path d="M-0.8,2 Q0.1,2 0.2,1" stroke="url(#fadingDown)"/>
             <path d="M1,4 Q0.2,1 0.2,1" stroke="url(#fadingDown)"/>
             <path d="M-0.3,0 L-0.3,2 M0.3,0 L0.3,2" class="line" stroke-linecap="round"/>
