@@ -237,7 +237,7 @@
                         <xsl:value-of select="$Ox + 100"/>
                     </xsl:attribute>
                     <xsl:attribute name="y">
-                        <xsl:value-of select="$Oy + 83"/>
+                        <xsl:value-of select="$Oy + 103"/>
                     </xsl:attribute>
                 </use>
                 <!-- Modify the above USE to reflect more complex endbands if needed -->
@@ -286,7 +286,7 @@
                         <xsl:value-of select="$Ox + 100"/>
                     </xsl:attribute>
                     <xsl:attribute name="y">
-                        <xsl:value-of select="$Oy + 83"/>
+                        <xsl:value-of select="$Oy + 103"/>
                     </xsl:attribute>
                 </use>
             </xsl:when>
@@ -452,10 +452,10 @@
         <xsl:variable name="y_above">
             <xsl:choose>
                 <xsl:when test="./compound/primaryType/span2">
-                    <xsl:value-of select="$Oy + 90"/>
+                    <xsl:value-of select="$Oy + 110"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$Oy + 97"/>
+                    <xsl:value-of select="$Oy + 117"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -500,6 +500,16 @@
                     select="if (./compound/primaryType[ NC | NK]) then xs:integer(50) else xs:integer(100)"
                 />
             </xsl:call-template>
+            <xsl:attribute name="class">
+                <xsl:choose>
+                    <xsl:when test="./compound/material[NC | cord | thread | NK | other]">
+                        <xsl:text>line</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="./compound/material[textile | ribbon]">
+                        <xsl:text>line7</xsl:text>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
             <use xmlns="http://www.w3.org/2000/svg">
                 <xsl:attribute name="xlink:href">
                     <xsl:choose>
@@ -647,7 +657,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="y_above">
-            <xsl:value-of select="$Oy + 82"/>
+            <xsl:value-of select="$Oy + 102"/>
         </xsl:variable>
         <xsl:call-template name="primaryAttachmentType">
             <xsl:with-param name="x" select="$x"/>
@@ -690,6 +700,16 @@
                     select="if (./compound/primaryAttachment/type[NC | NK]) then xs:integer(50) else xs:integer(100)"
                 />
             </xsl:call-template>
+            <xsl:attribute name="class">
+                <xsl:choose>
+                    <xsl:when test="./compound/material[NC | cord | thread | NK | other]">
+                        <xsl:text>line</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="./compound/material[textile | ribbon]">
+                        <xsl:text>line7</xsl:text>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
             <use xmlns="http://www.w3.org/2000/svg">
                 <xsl:attribute name="xlink:href">
                     <xsl:choose>
@@ -785,13 +805,13 @@
                 <xsl:attribute name="x">
                     <xsl:choose>
                         <xsl:when test="./compound/primaryType[span1 | span2]">
-                            <xsl:value-of select="$x_back - 10"/>
+                            <xsl:value-of select="$x_above - 10"/>
                         </xsl:when>
                         <xsl:when test="./compound/primaryType/multipleSpan">
-                            <xsl:value-of select="$x_back - 30"/>
+                            <xsl:value-of select="$x_above - 30"/>
                         </xsl:when>
                         <xsl:when test="./compound/primaryType[closedLoop | twistedSpan | twistedClosedLoop]">
-                            <xsl:value-of select="$x_back - 0.5"/>
+                            <xsl:value-of select="$x_above - 0.5"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:attribute>
@@ -813,13 +833,13 @@
                 <xsl:attribute name="x">
                     <xsl:choose>
                         <xsl:when test="./compound/primaryType[span1 | span2]">
-                            <xsl:value-of select="$x_back + 10"/>
+                            <xsl:value-of select="$x_above + 10"/>
                         </xsl:when>
                         <xsl:when test="./compound/primaryType/multipleSpan">
-                            <xsl:value-of select="$x_back + 30"/>
+                            <xsl:value-of select="$x_above + 30"/>
                         </xsl:when>
                         <xsl:when test="./compound/primaryType[closedLoop | twistedSpan | twistedClosedLoop]">
-                            <xsl:value-of select="$x_back -+ 0.5"/>
+                            <xsl:value-of select="$x_above -+ 0.5"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:attribute>
@@ -939,23 +959,23 @@
         <xsl:variable name="y_above">
             <xsl:choose>
                 <xsl:when test="./compound/primaryType[span1 | multipleSpan | NC | NK | other]">
-                    <xsl:value-of select="$Oy + 106"/>
+                    <xsl:value-of select="$Oy + 126"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/span2">
-                    <xsl:value-of select="$Oy + 99"/>
+                    <xsl:value-of select="$Oy + 119"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/closedLoop">
-                    <xsl:value-of select="$Oy + 112"/>
+                    <xsl:value-of select="$Oy + 132"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/twistedSpan">
-                    <xsl:value-of select="$Oy + 108"/>
+                    <xsl:value-of select="$Oy + 128"/>
                 </xsl:when>
                 <xsl:when test="./compound/primaryType/twistedClosedLoop">
-                    <xsl:value-of select="if (./compound/secondaryType[knottedDoubleLength | knottedSingleLength]) then $Oy + 101.5 else $Oy + 103.5"/>
+                    <xsl:value-of select="if (./compound/secondaryType[knottedDoubleLength | knottedSingleLength]) then $Oy + 121.5 else $Oy + 123.5"/>
                 </xsl:when>
                 <!--<!-\- Alternative positioning -\->
                 <xsl:when test="./compound/primaryType/twistedClosedLoop">
-                    <xsl:value-of select="if (./compound/secondaryType[knottedDoubleLength | knottedSingleLength]) then $Oy + 101.5 else $Oy + 102.5"/>
+                    <xsl:value-of select="if (./compound/secondaryType[knottedDoubleLength | knottedSingleLength]) then $Oy + 121.5 else $Oy + 122.5"/>
                 </xsl:when>-->
             </xsl:choose>
         </xsl:variable>
@@ -1000,6 +1020,19 @@
                     select="if (./compound/secondaryType[NC | NK| other]) then xs:integer(50) else xs:integer(100)"
                 />
             </xsl:call-template>
+            <xsl:attribute name="class">
+                <xsl:choose>
+                    <xsl:when test="./compound/material[NC | cord | thread | NK | other]">
+                        <xsl:text>line</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="./compound/material[textile | ribbon]">
+                        <xsl:text>line7</xsl:text>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+            <!--<xsl:attribute name="class">
+                <xsl:text>semiTransparent</xsl:text>
+            </xsl:attribute>-->
             <use xmlns="http://www.w3.org/2000/svg">
                 <xsl:attribute name="xlink:href">
                     <xsl:choose>

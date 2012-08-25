@@ -1,0 +1,105 @@
+/* style.css */
+
+/*
+ *    GENERAL   *
+ * 
+ * stroke=#000000; stroke-width=1; fill=none;
+ */
+
+
+.line{
+    stroke:#000000;
+    stroke-width:1;
+    fill:none;
+}
+
+.line2{
+    stroke:#666666;
+    stroke-width:0.3;
+    fill:none;
+}
+
+.line3{
+    stroke:#666666;
+    stroke-width:0.1;
+    fill:none;
+    stroke-linejoin:miter;
+}
+
+.line4{
+    stroke:#666666;
+    stroke-width:0.5;
+}
+
+.line5{
+    stroke:#000000;
+    stroke-width:0.2;
+    fill:none;
+}
+
+.line6{
+    stroke:#000000;
+    stroke-width:0.1;
+    fill:none;
+}
+
+.line7{
+    stroke:#000000;
+    stroke-width:1.5;
+    fill:none;
+}
+
+.semiTransparent{
+    stroke-opacity:0.9;
+}
+
+.fill2{
+    stroke:#FFFFFF;
+    stroke-opacity:0; 
+    fill:#FFFBCB;
+    fill-opacity:1;
+}
+
+.filler{
+     stroke:#FFFFFF;
+     stroke-opacity:1;
+}
+
+
+.knot2{
+    stroke:#333333; 
+    fill:#333333;
+}
+
+.hitched{
+    stroke:#333333; 
+}
+
+
+/*
+
+
+
+.above{
+    stroke:#000000;
+    stroke-width:1;
+    fill:#FFFFFF;
+    fill-opacity:0.9;
+}
+
+.thread{
+    stroke:#000000;
+    stroke-width:0.75;
+    fill:none;
+    stroke-linecap:square;
+}*/
+
+/*.text_va{
+    font-family:courier, monospace;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:bold;
+    font-size:8px;
+    fill:#000000;
+    dominant-baseline:central;
+}*/
