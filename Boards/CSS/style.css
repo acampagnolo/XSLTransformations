@@ -1,0 +1,15 @@
+/* style.css */
+
+/*
+ *    GENERAL   *
+ * 
+ * stroke=#000000; stroke-width=1; fill=none;
+ */
+
+
+.line{
+    stroke:#000000;
+    stroke-width:1;
+    fill:none;
+}
+
