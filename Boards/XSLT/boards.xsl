@@ -61,6 +61,19 @@
         </xsl:variable>
         <xsl:value-of select="/book/dimensions/width - $raisedBands - $protrudingFurniture - $spineShape"/>
     </xsl:variable>
+    
+    <!-- Variable to store the board thickness. Either take the measurement from the XML file,
+        or, in case of NK value give it an arbitrary value of 10 -->
+    <xsl:variable name="boardThickness">
+        <xsl:choose>
+            <xsl:when test="/book/boards/yes/boards/board/formation/boardThickness[not(NK)]">
+                <xsl:value-of select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="10"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
 
     <xsl:template name="main" match="/">
         <xsl:for-each select="book/boards/yes/boards/board/location/left">
@@ -154,6 +167,20 @@
                     <xsl:when test="parent::location/following-sibling::formation/bevels[NA | NC | NK | other]">
                         <xsl:text>&#32;L</xsl:text>
                         <xsl:value-of select="$Bx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$By"/>
+                    </xsl:when>
+                    <xsl:when test="parent::location/following-sibling::formation/bevels[centreBevel | claspBevel]">
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Bx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$By - $boardThickness + 2"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Bx + 7"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$By"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Bx + 7 + ($boardWidth - 7)"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$By"/>
                     </xsl:when>
