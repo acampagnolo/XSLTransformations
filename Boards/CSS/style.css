@@ -13,3 +13,10 @@
     fill:none;
 }
 
+.nolineFilled{
+    stroke:#FFFFFF;
+    stroke-opacity:0;
+    stroke-width:1;
+    fill:url(#thicknessCutoutTile);
+}
+
