@@ -26,6 +26,96 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/126.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/18.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/5384.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/2172.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/124.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/2329.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/125.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -57,36 +147,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/4282.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../../Ligatus/StCarherinesFiles/18.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../../Ligatus/StCarherinesFiles/2329.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -161,21 +221,6 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../../Ligatus/StCarherinesFiles/124.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/6331.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -192,21 +237,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/11.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../../Ligatus/StCarherinesFiles/5384.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>

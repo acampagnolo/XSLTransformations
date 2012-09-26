@@ -871,15 +871,12 @@
                         <xsl:text>&#32;translate(</xsl:text>
                         <xsl:value-of select="200 + $boardWidth"/>
                         <xsl:text>,&#32;</xsl:text>
-                        <!-- NB: to adjust the positioning of the tail diagram work on '$By + $boardThickness + 20' below -->
+                        <!-- NB: to adjust the positioning of the tail diagram work on '$By + $boardThickness + 30' below -->
                         <xsl:value-of
-                            select="(($By + $boardThickness + 25) - ($Cy + $boardThickness) + $boardHeight + 20) * -1"/>
+                            select="(($By + $boardThickness + 30) - ($Cy + $boardThickness) + $boardHeight + 20) * -1"/>
                         <xsl:text>)</xsl:text>
                         <xsl:text>&#32;scale(-1, 1)</xsl:text>
                     </xsl:attribute>
-                    <pippo>
-                        <xsl:value-of select="$boardWidth"/>
-                    </pippo>
                     <xsl:call-template name="head-tailEdge">
                         <xsl:with-param name="boardThickness" select="$boardThickness"/>
                         <xsl:with-param name="Cx" select="$Cx"/>
@@ -1395,6 +1392,144 @@
                     <xsl:when
                         test="parent::location/following-sibling::formation/bevels[NA | NC | NK | other | internalBevels | centreBevels | claspBevels]">
                         <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:choose>
+                            <!-- NB: the positioning of the bevels is arbitrary as no measurement (relative or absolute) is given -->
+                            <!-- NB: for clasp bevels no precise information is given about the number and location of clasps -->
+                            <xsl:when test="parent::location/following-sibling::formation/bevels/centreBevels">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Dx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardHeight div 5)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardHeight div 5) + ($boardWidth div 16)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 5) - ($boardWidth div 16)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 5)"/>
+                            </xsl:when>
+                            <xsl:when test="parent::location/following-sibling::formation/bevels/claspBevels">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Dx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardHeight div 8)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardHeight div 8) + ($boardWidth div 16)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + 2 * ($boardHeight div 8)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + 2 * ($boardHeight div 8) + ($boardWidth div 16)"/>
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Dx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + $boardHeight - 2 * ($boardHeight div 8) - ($boardWidth div 16)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + $boardHeight - 2 * ($boardHeight div 8)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 8) - ($boardWidth div 16)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx  + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 8)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:when>
+                    <xsl:when test="parent::location/following-sibling::formation/bevels/cushion">
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;Q</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardHeight div 2)"/>
+                        <xsl:text>&#32;</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                    </xsl:when>
+                    <xsl:when
+                        test="parent::location/following-sibling::formation/bevels/peripheralCushion">
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;Q</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardHeight div 8)"/>
+                        <xsl:text>&#32;</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardHeight div 4)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 4)"/>
+                        <xsl:text>&#32;Q</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 8)"/>
+                        <xsl:text>&#32;</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+        </path>
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
+            <!-- TO DO: add uncertainty  -->
+            <!-- TO DO -->
+            <xsl:attribute name="d">
+                <xsl:choose>
+                    <xsl:when
+                        test="parent::location/following-sibling::formation/bevels/internalBevels">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardWidth div 16)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 16)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;z</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>M</xsl:text>
                         <xsl:value-of select="$Dx"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Dy"/>
@@ -1402,110 +1537,11 @@
                         <xsl:value-of select="$Dx"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Dy + $boardHeight"/>
-                    </xsl:when>
-                    <!--<xsl:when test="parent::location/following-sibling::formation/bevels/cushion">
-                        <xsl:text>&#32;M</xsl:text>
-                        <xsl:value-of select="$Cx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 3)"/>
-                        <xsl:text>&#32;Q</xsl:text>
-                        <xsl:value-of select="$Cx + ($boardWidth div 2)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness "/>
-                        <xsl:text>&#32;</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 3)"/>
-                    </xsl:when>
-                    <xsl:when
-                        test="parent::location/following-sibling::formation/bevels/peripheralCushion">
-                        <xsl:text>&#32;M</xsl:text>
-                        <xsl:value-of select="$Cx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 3)"/>
-                        <xsl:text>&#32;Q</xsl:text>
-                        <xsl:value-of select="$Cx + ($boardWidth div 8)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness"/>
-                        <xsl:text>&#32;</xsl:text>
-                        <xsl:value-of select="$Cx + ($boardWidth div 4)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness"/>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 4)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness"/>
-                        <xsl:text>&#32;Q</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 8)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness"/>
-                        <xsl:text>&#32;</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 3)"/>
-                    </xsl:when>-->
-                </xsl:choose>
-            </xsl:attribute>
-        </path>
-        <!--<path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
-            <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
-            </xsl:attribute>
-            <!-\- TO DO: add uncertainty  -\->
-            <!-\- TO DO -\->
-            <xsl:attribute name="d">
-                <xsl:choose>
-                    <xsl:when
-                        test="parent::location/following-sibling::formation/bevels[NA | NC | NK | other | internalBevels | centreBevels | claspBevels]">
-                        <xsl:text>M</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness"/>
-                    </xsl:when>
-                    <xsl:when test="parent::location/following-sibling::formation/bevels/cushion">
-                        <xsl:text>&#32;M</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 3)"/>
-                    </xsl:when>
-                    <xsl:when
-                        test="parent::location/following-sibling::formation/bevels/peripheralCushion">
-                        <xsl:text>&#32;M</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 3)"/>
-                    </xsl:when>
-                </xsl:choose>
-                <xsl:text>&#32;L</xsl:text>
-                <xsl:value-of select="$Cx + $boardWidth"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Cy"/>
-                <xsl:choose>
-                    <xsl:when
-                        test="parent::location/following-sibling::formation/bevels/internalBevels">
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Cx + ($boardWidth div 16)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy"/>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Cx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 4)"/>
-                        <xsl:text>L</xsl:text>
-                        <xsl:value-of select="$Cx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $boardThickness"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Cx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="head-tailEdge_foredge">
+   <!--     <xsl:call-template name="head-tailEdge_foredge">
             <xsl:with-param name="boardThickness" select="$boardThickness"/>
         </xsl:call-template>
         <xsl:choose>
