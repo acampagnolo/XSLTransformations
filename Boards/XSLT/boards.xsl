@@ -840,10 +840,18 @@
                         <xsl:value-of select="$Cx"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 4)"/>
-                        <xsl:text>L</xsl:text>
+                        <xsl:text>&#32;L</xsl:text>
                         <xsl:value-of select="$Cx"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Cy + $boardThickness"/>
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Cx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 4)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $boardThickness - ($boardThickness div 4)"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:text>&#32;L</xsl:text>
@@ -871,9 +879,8 @@
                         <xsl:text>&#32;translate(</xsl:text>
                         <xsl:value-of select="200 + $boardWidth"/>
                         <xsl:text>,&#32;</xsl:text>
-                        <!-- NB: to adjust the positioning of the tail diagram work on '$By + $boardThickness + 30' below -->
                         <xsl:value-of
-                            select="(($By + $boardThickness + 30) - ($Cy + $boardThickness) + $boardHeight + 20) * -1"/>
+                            select="($Oy + $boardThickness + $boardHeight + 20) * -1"/>
                         <xsl:text>)</xsl:text>
                         <xsl:text>&#32;scale(-1, 1)</xsl:text>
                     </xsl:attribute>
@@ -907,7 +914,8 @@
                     <xsl:with-param name="boardThickness" select="$boardThickness"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="parent::location/following-sibling::formation/bevels/cushion">
+            <xsl:when
+                test="parent::location/following-sibling::formation/bevels[cushion | peripheralCushion]">
                 <xsl:call-template name="head-tailEdge_cornerTreatment">
                     <xsl:with-param name="Zx" select="$Cx"/>
                     <xsl:with-param name="Zy"
@@ -917,7 +925,7 @@
                     <xsl:with-param name="boardThickness" select="$boardThickness"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="parent::location/following-sibling::formation/bevels/peripheralCushion">
+            <!--            <xsl:when test="parent::location/following-sibling::formation/bevels/peripheralCushion">
                 <xsl:call-template name="head-tailEdge_cornerTreatment">
                     <xsl:with-param name="Zx" select="$Cx"/>
                     <xsl:with-param name="Zy"
@@ -926,7 +934,7 @@
                     <xsl:with-param name="Cy" select="$Cy"/>
                     <xsl:with-param name="boardThickness" select="$boardThickness"/>
                 </xsl:call-template>
-            </xsl:when>
+            </xsl:when>-->
         </xsl:choose>
     </xsl:template>
 
@@ -1402,7 +1410,8 @@
                         <xsl:choose>
                             <!-- NB: the positioning of the bevels is arbitrary as no measurement (relative or absolute) is given -->
                             <!-- NB: for clasp bevels no precise information is given about the number and location of clasps -->
-                            <xsl:when test="parent::location/following-sibling::formation/bevels/centreBevels">
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/bevels/centreBevels">
                                 <xsl:text>M</xsl:text>
                                 <xsl:value-of select="$Dx + $boardThickness"/>
                                 <xsl:text>,</xsl:text>
@@ -1410,17 +1419,20 @@
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Dy + ($boardHeight div 5) + ($boardWidth div 16)"/>
+                                <xsl:value-of
+                                    select="$Dy + ($boardHeight div 5) + ($boardWidth div 16)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 5) - ($boardWidth div 16)"/>
+                                <xsl:value-of
+                                    select="$Dy + $boardHeight - ($boardHeight div 5) - ($boardWidth div 16)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + $boardThickness"/>
                                 <xsl:text>,</xsl:text>
                                 <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 5)"/>
                             </xsl:when>
-                            <xsl:when test="parent::location/following-sibling::formation/bevels/claspBevels">
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/bevels/claspBevels">
                                 <xsl:text>M</xsl:text>
                                 <xsl:value-of select="$Dx + $boardThickness"/>
                                 <xsl:text>,</xsl:text>
@@ -1428,7 +1440,8 @@
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Dy + ($boardHeight div 8) + ($boardWidth div 16)"/>
+                                <xsl:value-of
+                                    select="$Dy + ($boardHeight div 8) + ($boardWidth div 16)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
                                 <xsl:text>,</xsl:text>
@@ -1436,11 +1449,13 @@
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + $boardThickness"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Dy + 2 * ($boardHeight div 8) + ($boardWidth div 16)"/>
+                                <xsl:value-of
+                                    select="$Dy + 2 * ($boardHeight div 8) + ($boardWidth div 16)"/>
                                 <xsl:text>M</xsl:text>
                                 <xsl:value-of select="$Dx + $boardThickness"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Dy + $boardHeight - 2 * ($boardHeight div 8) - ($boardWidth div 16)"/>
+                                <xsl:value-of
+                                    select="$Dy + $boardHeight - 2 * ($boardHeight div 8) - ($boardWidth div 16)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
                                 <xsl:text>,</xsl:text>
@@ -1448,7 +1463,8 @@
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + ($boardThickness div 4)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Dy + $boardHeight - ($boardHeight div 8) - ($boardWidth div 16)"/>
+                                <xsl:value-of
+                                    select="$Dy + $boardHeight - ($boardHeight div 8) - ($boardWidth div 16)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Dx  + $boardThickness"/>
                                 <xsl:text>,</xsl:text>
@@ -1541,19 +1557,501 @@
                 </xsl:choose>
             </xsl:attribute>
         </path>
-   <!--     <xsl:call-template name="head-tailEdge_foredge">
+        <xsl:call-template name="foredge_head-tailEdge">
             <xsl:with-param name="boardThickness" select="$boardThickness"/>
+            <xsl:with-param name="Dx" select="$Dx"/>
+            <xsl:with-param name="Dy" select="$Dy"/>
         </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="foredge_head-tailEdge">
+        <xsl:param name="boardThickness" select="10"/>
+        <xsl:param name="Dx" select="$Bx - $boardThickness -10"/>
+        <xsl:param name="Dy" select="$By + (2 * $boardThickness) + 20"/>
         <xsl:choose>
-            <xsl:when test="$counter lt 2">
-                <xsl:call-template name="head-tailEdge">
+            <xsl:when test="parent::location/following-sibling::formation/bevels/internalBevels">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness - ($boardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + $boardThickness"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when
+                test="parent::location/following-sibling::formation/bevels[NA | NC | NK | other | centreBevels | claspBevels]">
+                <xsl:call-template name="foredge_cornerTreatment">
+                    <xsl:with-param name="Zx" select="$Dx + $boardThickness"/>
+                    <xsl:with-param name="Zy" select="$Dy"/>
+                    <xsl:with-param name="Dx" select="$Dx"/>
+                    <xsl:with-param name="Dy" select="$Dy"/>
                     <xsl:with-param name="boardThickness" select="$boardThickness"/>
-                    <xsl:with-param name="Cx" select="$Cx"/>
-                    <xsl:with-param name="Cy" select="($Cy + $boardThickness) + $boardHeight + 20"/>
-                    <xsl:with-param name="counter" select="$counter + 1"/>
                 </xsl:call-template>
             </xsl:when>
-        </xsl:choose>-->
+            <xsl:when
+                test="parent::location/following-sibling::formation/bevels[cushion | peripheralCushion]">
+                <xsl:call-template name="foredge_cornerTreatment">
+                    <xsl:with-param name="Zx"
+                        select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                    <xsl:with-param name="Zy" select="$Dy"/>
+                    <xsl:with-param name="Dx" select="$Dx"/>
+                    <xsl:with-param name="Dy" select="$Dy"/>
+                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                </xsl:call-template>
+            </xsl:when>
+            <!--            <xsl:when test="parent::location/following-sibling::formation/bevels/peripheralCushion">
+                <xsl:call-template name="foredge_cornerTreatment">
+                    <xsl:with-param name="Zx" select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                    <xsl:with-param name="Zy" select="$Dy"/>
+                    <xsl:with-param name="Dx" select="$Dx"/>
+                    <xsl:with-param name="Dy" select="$Dy"/>
+                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                </xsl:call-template>
+            </xsl:when>-->
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="foredge_cornerTreatment">
+        <xsl:param name="boardThickness" select="10"/>
+        <xsl:param name="Dx" select="$Bx"/>
+        <xsl:param name="Dy" select="($By + $boardThickness) + 10"/>
+        <xsl:param name="Zx" select="$Dx + $boardThickness"/>
+        <xsl:param name="Zy" select="$Dy"/>
+        <xsl:variable name="edgeBoardThickness">
+            <xsl:value-of select="$boardThickness - (($Dx + $boardThickness) - $Zx)"/>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when
+                test="parent::location/following-sibling::formation/corners/foredge[other | unknownGrooved | type6]">
+                <!-- NB: leaves a blank -->
+                <!-- It might be an idea to draw a very blurry line resembling the simplest of the drawings - i.e. a straight line - 
+                            but also setting the line in red to highlight that it's not a correct representation of the original  -->
+                <!--<path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line-red</xsl:text>
+                    </xsl:attribute>
+                    <!-\- TO DO: add uncertainty  -\->
+                    <!-\- TO DO -\->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy"/>
+                    </xsl:attribute>
+                </path>-->
+            </xsl:when>
+            <xsl:when
+                test="parent::location/following-sibling::formation/corners/foredge[NC | NK | type5]">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- for NC and NK add uncertainty-->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy"/>
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy + $boardHeight"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when
+                test="parent::location/following-sibling::formation/corners/foredge[type1 | type2]">
+                <!-- The diagram is divided in four paths to allow for increased uncertainty towards the spine edge
+                    as no description is given for the way the groove ends and where it ends, plus the line of the inside of the groove -->
+                <pippo>
+                    <xsl:value-of
+                        select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                </pippo>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line4</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:value-of select="$Dy + ($boardWidth div 42)"/>
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:value-of select="$Dy + 3 * ($boardWidth div 84)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 42)"/>
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:value-of select="$Dy + $boardHeight - 3 * ($boardWidth div 84)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </path>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy"/>
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy + $boardHeight"/>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of
+                                    select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardWidth div 42)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + 3 * ($boardWidth div 84)"/>
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of
+                                    select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + 3 * ($boardWidth div 84)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardWidth div 42)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:value-of select="$Dy + $boardHeight - 3 * ($boardWidth div 84)"
+                                />
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 42)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 42)"/>
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:value-of select="$Dy + $boardHeight - 3 * ($boardWidth div 84)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of
+                                    select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardWidth div 42)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of
+                                    select="$Dx + $edgeBoardThickness - ($edgeBoardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + 3 * ($boardWidth div 84)"/>
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of
+                                    select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + 3 * ($boardWidth div 84)"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of
+                                    select="$Dx + $edgeBoardThickness - ($edgeBoardThickness div 4)"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Dy + ($boardWidth div 42)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + $edgeBoardThickness - ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:value-of select="$Dy + $boardHeight - 3 * ($boardWidth div 84)"
+                                />
+                            </xsl:when>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 42)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="parent::location/following-sibling::formation/corners/foredge/type1">
+                                <xsl:value-of
+                                    select="$Dy + $boardHeight - ($boardWidth div 42)"/>
+                            </xsl:when>
+                            <xsl:when test="parent::location/following-sibling::formation/corners/foredge/type2">
+                                <xsl:value-of
+                                    select="$Dy + $boardHeight - 3 * ($boardWidth div 84)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when test="parent::location/following-sibling::formation/corners/foredge/type3">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line4</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardWidth div 84)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"
+                        />
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of
+                            select="$Dy + $boardHeight - ($boardWidth div 84)"/> 
+                    </xsl:attribute>
+                </path>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardWidth div 84)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy"/>
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 84)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy + $boardHeight"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when test="parent::location/following-sibling::formation/corners/foredge/type4">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line4</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardWidth div 84)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"
+                        />
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of
+                            select="$Dy + $boardHeight - ($boardWidth div 84)"/>
+                    </xsl:attribute>
+                </path>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;M</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + $edgeBoardThickness - ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + $edgeBoardThickness - ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                    </xsl:attribute>
+                </path>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + ($boardWidth div 84)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx - ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy"/>
+                    </xsl:attribute>
+                </path>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="butt"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Dx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Dx + ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of
+                            select="$Dx + (($boardThickness - (($Dx + $boardThickness) - $Zx)) div 2)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight - ($boardWidth div 84)"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx - ($edgeBoardThickness div 4)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Dy + $boardHeight"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Zx"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Zy + $boardHeight"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>
