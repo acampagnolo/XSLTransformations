@@ -32,6 +32,15 @@
     fill:none;
     stroke-linejoin:miter;
 }
+
+.nolineFilledWhite{
+    stroke:#FFFFFF;
+    stroke-opacity:0;
+    stroke-width:1;
+    fill:#FFFFFF;
+    fill-opacity:1;
+}
+
 .nolineFilled{
     stroke:#FFFFFF;
     stroke-opacity:0;
