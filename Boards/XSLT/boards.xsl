@@ -186,7 +186,7 @@
                     <g xmlns="http://www.w3.org/2000/svg" transform="scale(-1 1)">
                         <desc>Right board</desc>
                         <svg>
-                            <!-- Check how much to substract from Ox to have a good right board visualization -->
+                            <!--right board visualization -->
                             <xsl:attribute name="x">
                                 <xsl:value-of select="$Ox - $boardWidth - 350"/>
                             </xsl:attribute>
