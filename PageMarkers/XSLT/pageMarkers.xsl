@@ -27,7 +27,7 @@
                 doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
                 <xsl:processing-instruction name="xml-stylesheet">
-                <xsl:text>href="../../../GitHub/Transformations/PageMarkers/CSS/style.css"&#32;</xsl:text>
+                <xsl:text>href="../../../GitHub/XSLTransformations/PageMarkers/CSS/style.css"&#32;</xsl:text>
                 <xsl:text>type="text/css"</xsl:text>
             </xsl:processing-instruction>
                 <xsl:text>&#10;</xsl:text>

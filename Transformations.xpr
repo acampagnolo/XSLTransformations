@@ -26,6 +26,61 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/2186.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boardMarkers</String>
+                                        <String>boards</String>
+                                        <String>bookmarks</String>
+                                        <String>pageMarkers</String>
+                                        <String>endleaves</String>
+                                        <String>sewing</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                        <String>XSL</String>
+                                        <String>XSL</String>
+                                        <String>XSL</String>
+                                        <String>XSL</String>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/6331.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>boards</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../Ligatus/StCarherinesFiles/111.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>endleaves</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/552.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -131,21 +186,6 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../../Ligatus/StCarherinesFiles/111.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/4282.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -236,21 +276,6 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../../Ligatus/StCarherinesFiles/6331.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
                                     <String>../../Ligatus/StCarherinesFiles/11.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -286,36 +311,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>boards</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../../Ligatus/SummerSchool_Paris2012/811.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>textHook</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XSL</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../../Ligatus/LoB/Export_Thesaurus_BINDING_2012-08-28_13-23-01-397.rdf</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>LoB_CSVgenerator</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -439,89 +434,6 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>LoB_CSVgenerator</String>
-                                </field>
-                                <field name="baseURL">
-                                    <String></String>
-                                </field>
-                                <field name="footerURL">
-                                    <String></String>
-                                </field>
-                                <field name="fOPMethod">
-                                    <String>pdf</String>
-                                </field>
-                                <field name="fOProcessorName">
-                                    <String>Apache FOP</String>
-                                </field>
-                                <field name="headerURL">
-                                    <String></String>
-                                </field>
-                                <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/Ligatus/LoB/LoBConcepts_CSVgenerator_20120828.xsl</String>
-                                </field>
-                                <field name="inputXMLURL">
-                                    <String>${currentFileURL}</String>
-                                </field>
-                                <field name="defaultScenario">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="isFOPPerforming">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="type">
-                                    <String>XSL</String>
-                                </field>
-                                <field name="saveAs">
-                                    <Boolean>true</Boolean>
-                                </field>
-                                <field name="openInBrowser">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="outputFile">
-                                    <File>${cfn}.csv</File>
-                                </field>
-                                <field name="openOtherLocationInBrowser">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="locationToOpenInBrowserURL">
-                                    <null/>
-                                </field>
-                                <field name="openInEditor">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInHTMLPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInXMLPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInSVGPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="showInResultSetPane">
-                                    <Boolean>false</Boolean>
-                                </field>
-                                <field name="useXSLTInput">
-                                    <Boolean>true</Boolean>
-                                </field>
-                                <field name="xsltParams">
-                                    <list/>
-                                </field>
-                                <field name="cascadingStylesheets">
-                                    <String-array/>
-                                </field>
-                                <field name="xslTransformer">
-                                    <String>Saxon-EE</String>
-                                </field>
-                                <field name="extensionURLs">
-                                    <String-array/>
-                                </field>
-                            </scenario>
-                            <scenario>
-                                <field name="advancedOptionsMap">
-                                    <null/>
-                                </field>
-                                <field name="name">
                                     <String>boardMarkers</String>
                                 </field>
                                 <field name="baseURL">
@@ -540,7 +452,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/BoardMarkers/XSLT/boardMarkers.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/XSLTransformations/BoardMarkers/XSLT/boardMarkers.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -623,7 +535,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/Boards/XSLT/boards.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/XSLTransformations/Boards/XSLT/boards.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -706,7 +618,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/Bookmarks/XSLT/bookmarks.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/XSLTransformations/Bookmarks/XSLT/bookmarks.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -789,7 +701,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/Transformations/PageMarkers/XSLT/pageMarkers.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/XSLTransformations/PageMarkers/XSLT/pageMarkers.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -854,7 +766,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>textHook</String>
+                                    <String>endleaves</String>
                                 </field>
                                 <field name="baseURL">
                                     <String></String>
@@ -872,7 +784,7 @@
                                     <String></String>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>file:/C:/Users/Alberto/Documents/PhD/Ligatus/SummerSchool_Paris2012/textHook.xsl</String>
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/XSLTransformations/Endleaves/XSLT/Endleaves_CSS.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String>${currentFileURL}</String>
@@ -893,7 +805,7 @@
                                     <Boolean>false</Boolean>
                                 </field>
                                 <field name="outputFile">
-                                    <File>${cfn}.svg</File>
+                                    <null/>
                                 </field>
                                 <field name="openOtherLocationInBrowser">
                                     <Boolean>false</Boolean>
@@ -911,7 +823,90 @@
                                     <Boolean>true</Boolean>
                                 </field>
                                 <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInResultSetPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="useXSLTInput">
                                     <Boolean>true</Boolean>
+                                </field>
+                                <field name="xsltParams">
+                                    <list/>
+                                </field>
+                                <field name="cascadingStylesheets">
+                                    <String-array/>
+                                </field>
+                                <field name="xslTransformer">
+                                    <String>Saxon-EE</String>
+                                </field>
+                                <field name="extensionURLs">
+                                    <String-array/>
+                                </field>
+                            </scenario>
+                            <scenario>
+                                <field name="advancedOptionsMap">
+                                    <null/>
+                                </field>
+                                <field name="name">
+                                    <String>sewing</String>
+                                </field>
+                                <field name="baseURL">
+                                    <String></String>
+                                </field>
+                                <field name="footerURL">
+                                    <String></String>
+                                </field>
+                                <field name="fOPMethod">
+                                    <String>pdf</String>
+                                </field>
+                                <field name="fOProcessorName">
+                                    <String>Apache FOP</String>
+                                </field>
+                                <field name="headerURL">
+                                    <String></String>
+                                </field>
+                                <field name="inputXSLURL">
+                                    <String>file:/C:/Users/Alberto/Documents/PhD/GitHub/XSLTransformations/Sewing/XSLT/sewingPath_CSS.xsl</String>
+                                </field>
+                                <field name="inputXMLURL">
+                                    <String>${currentFileURL}</String>
+                                </field>
+                                <field name="defaultScenario">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="isFOPPerforming">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="type">
+                                    <String>XSL</String>
+                                </field>
+                                <field name="saveAs">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="openInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="outputFile">
+                                    <null/>
+                                </field>
+                                <field name="openOtherLocationInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="locationToOpenInBrowserURL">
+                                    <null/>
+                                </field>
+                                <field name="openInEditor">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInHTMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInXMLPane">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
                                 </field>
                                 <field name="showInResultSetPane">
                                     <Boolean>false</Boolean>
@@ -947,10 +942,8 @@
             <file name="../../Ligatus/Schemas/PrintedBooks/basic-1.8_0.xsd"/>
             <file name="BoardMarkers/XSLT/boardMarkers.xsl"/>
             <file name="Boards/XSLT/boards.xsl"/>
+            <file name="Bookmarks/XSLT/bookmarks.xsl"/>
             <file name="Endleaves/XSLT/Endleaves_CSS.xsl"/>
-            <file name="PageMarkers/XSLT/pageMarkers.xsl"/>
-            <file name="Sewing/XSLT/sewingMeasurements_hCSS.xsl"/>
-            <file name="Sewing/XSLT/sewingMeasurements_vCSS.xsl"/>
             <file name="Sewing/XSLT/sewingPath_CSS.xsl"/>
         </folder>
         <folder name="BoardMarkers">
@@ -967,8 +960,16 @@
             <folder path="Boards/XSLT/"/>
             <folder path="../../Transformations/Boards/SVGoutput/"/>
         </folder>
+        <folder name="Bookmarks">
+            <folder path="Bookmarks/CSS/"/>
+            <folder path="Bookmarks/Examples/"/>
+            <folder path="Bookmarks/SVGmaster/"/>
+            <folder path="Bookmarks/XSLT/"/>
+            <folder path="../../Transformations/Bookmarks/SVGoutput/"/>
+        </folder>
         <folder name="Endleaves">
             <folder path="Endleaves/CSS/"/>
+            <folder path="Endleaves/Examples/"/>
             <folder path="Endleaves/SVGmaster/"/>
             <folder path="Endleaves/XSLT/"/>
             <folder path="../../Transformations/Endleaves/SVGoutput/"/>
@@ -982,6 +983,7 @@
         </folder>
         <folder name="Sewing">
             <folder path="Sewing/CSS/"/>
+            <folder path="Sewing/Examples/"/>
             <folder path="Sewing/SVGmaster/"/>
             <folder path="Sewing/XSLT/"/>
             <folder path="../../Transformations/Sewing/SVGoutput/"/>
