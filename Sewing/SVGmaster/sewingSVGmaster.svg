@@ -236,6 +236,8 @@
     <circle r="2" cx="100" cy="60" fill="#000000" stroke="#000000" stroke-width="1"/>
     <text x="100" y="60" fill="#FFFFFF" font-family="serif" font-weight="bold" font-size="3" text-anchor="middle" dominant-baseline="central">10</text>
     
+    <use xlink:href="#loop_front2" x="60" y="60" class="line"/>
+    
     
   
 </svg>
