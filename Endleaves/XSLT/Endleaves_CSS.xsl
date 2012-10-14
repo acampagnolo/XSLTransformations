@@ -11,11 +11,11 @@
         include-content-type="no"/>
 
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
-    <xsl:variable name="fileref" select="tokenize($shelfmark, '\.')"/>
+    <xsl:variable name="fileref" select="tokenize(replace($shelfmark, '/', '.'), '\.')"/>
     <xsl:variable name="filenameLeft"
-        select="concat('../../Transformations/Endleaves/SVGoutput/', $fileref[1], '_', 'leftEndleaves', '.svg')"/>
+        select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'leftEndleaves', '.svg')"/>
     <xsl:variable name="filenameRight"
-        select="concat('../../Transformations/Endleaves/SVGoutput/', $fileref[1], '_', 'rightEndleaves', '.svg')"/>
+        select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'rightEndleaves', '.svg')"/>
 
     <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
     <xsl:param name="Ox" select="0"/>
@@ -36,7 +36,7 @@
                 doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
                 <xsl:processing-instruction name="xml-stylesheet">
-                    <xsl:text>href="../../../GitHub/XSLTransformations/Endleaves/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>href="../../../../GitHub/XSLTransformations/Endleaves/CSS/style.css"&#32;</xsl:text>
                     <xsl:text>type="text/css"</xsl:text>
                 </xsl:processing-instruction>
                 <xsl:text>&#10;</xsl:text>
@@ -74,7 +74,7 @@
                 doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
                 <xsl:processing-instruction name="xml-stylesheet">
-                    <xsl:text>href="../../../GitHub/XSLTransformations/Endleaves/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>href="../../../../GitHub/XSLTransformations/Endleaves/CSS/style.css"&#32;</xsl:text>
                     <xsl:text>type="text/css"</xsl:text>
                 </xsl:processing-instruction>
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
