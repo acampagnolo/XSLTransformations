@@ -3302,7 +3302,7 @@
            <xsl:call-template name="smallMultiples_standardSewingStationInOut">
                <xsl:with-param name="GyValue" select="$GyValue + 30"/>
                <xsl:with-param name="measurement" select="$measurement - 4"/>
-               <xsl:with-param name="precedingSiblingMeasurement" select="$precedingSiblingMeasurement - 8"/>
+               <xsl:with-param name="precedingSiblingMeasurement" select="$precedingSiblingMeasurement - 4"/>
                <xsl:with-param name="followingSiblingMeasurement" select="$followingSiblingMeasurement + 8"/>
            </xsl:call-template>
         </g>
