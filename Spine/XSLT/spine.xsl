@@ -2,8 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:svg="http://www.w3.org/2000/svg"
     xmlns:lig="http://www.ligatus.org.uk/stcatherines/sites/ligatus.org.uk.stcatherines/files/basic-1.8_0.xsd"
-    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dict="www.mydict.my"
-    exclude-result-prefixes="xs svg xlink lig dict" version="2.0">
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dict="www.mydict.my" xmlns:math="http://exslt.org/math"
+    exclude-result-prefixes="xs svg xlink lig dict math" version="2.0">
 
     <xsl:output method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
         doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" standalone="no"
@@ -55,7 +55,10 @@
     <xsl:variable name="bookblockThickness">
         <xsl:value-of select="/book/dimensions/thickness/min - $leftBoardThickness - $rightBoardThickness"/>
     </xsl:variable>
-
+    
+    <!-- Value of pi to 16 decimal digits: 3.1415676535897985 -->
+    <xsl:variable name="pi" select="3.1415676535897985"/>
+    
     <xsl:template name="main" match="/">
         <xsl:result-document href="{$filename}" method="xml" indent="yes" encoding="utf-8"
             doctype-public="-//W3C//DTD SVG 1.1//EN"
@@ -271,6 +274,35 @@
                 <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
             </xsl:attribute>
         </path>
+        <xsl:call-template name="trigonometria"/>
+    </xsl:template>
+    
+    <xsl:template name="trigonometria">
+        <xsl:variable name="sectionThickness" select="4"/>
+       <xsl:variable name="sections">
+           <xsl:choose>
+               <xsl:when test="($bookblockThickness div 2) mod $sectionThickness = 0">
+                   <xsl:value-of select="($bookblockThickness div 2) div $sectionThickness"/>
+               </xsl:when>
+               <xsl:otherwise>
+                   <xsl:value-of select="xs:integer($bookblockThickness div (($bookblockThickness div 2) -(($bookblockThickness div 2) - (($bookblockThickness div 2) mod $sectionThickness))) div ((($bookblockThickness div 2) - (($bookblockThickness div 2) mod $sectionThickness)) div $sectionThickness) + $sectionThickness)"/>
+               </xsl:otherwise>
+        </xsl:choose>
+       </xsl:variable>
+        <pippo3>
+            <xsl:value-of select="$pi"/>
+        </pippo3>
+        <xsl:variable name="i">
+            <xsl:value-of select="
+            for $i in 1 to $sections
+            return concat(10*math:sin(0.34906584 * $i), ',', 5*math:cos(1.5707964 - (0.34906584 * $i)), ';')" />
+        </xsl:variable>
+        <pippo2>
+            <xsl:value-of select="tokenize($i, '; ')[3]"/>
+        </pippo2>
+        <pippo>
+            <xsl:value-of select="$sections"/>
+        </pippo>
     </xsl:template>
 
 </xsl:stylesheet>
