@@ -35,7 +35,7 @@
                 />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="10"/>
+                <xsl:value-of select="/book/dimensions/thickness/min *.07"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -48,7 +48,7 @@
                 />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="10"/>
+                <xsl:value-of select="/book/dimensions/thickness/min *.07"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -58,8 +58,7 @@
             select="/book/dimensions/thickness/min - $leftBoardThickness - $rightBoardThickness"/>
     </xsl:variable>
 
-    <!-- Value of pi to 16 decimal digits: 3.1415676535897985 -->
-    <xsl:variable name="pi" select="3.1415676535897985"/>
+    
 
     <xsl:template name="main" match="/">
         <xsl:result-document href="{$filename}" method="xml" indent="yes" encoding="utf-8"
@@ -295,51 +294,72 @@
                 <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
             </xsl:attribute>
         </path>
-        <xsl:call-template name="trigonometria">
+        <xsl:call-template name="trigonometry">
             <xsl:with-param name="boardThickness" select="$boardThickness"/>
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template name="trigonometria">
+    <!-- Template to make trigonometric calculations to subdivide the spine arc in a set of coordinates -->
+    <xsl:template name="trigonometry">
+        <xsl:param name="counter" select="1"/>
         <xsl:param name="boardThickness"/>
-        <xsl:variable name="sectionThickness" select="5"/>
+        <xsl:param name="sectionThickness" select="1"/>
+        <xsl:param name="xRadius" select="$bookblockThickness * .1"/>
+        <xsl:param name="yRadius" select="($bookblockThickness div 2 + ($boardThickness div 3))"/>
         <xsl:variable name="h" select="$Ox + $boardLength"/>
         <xsl:variable name="k" select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
         <!-- variable to calculate the number of sections to cover the spine arc -->
         <xsl:variable name="sections">
-            <xsl:choose>
+            <xsl:value-of select="xs:integer(($bookblockThickness div 2) div $sectionThickness)"/>
+            <!--<xsl:choose>
                 <xsl:when test="($bookblockThickness div 2) mod $sectionThickness = 0">
                     <xsl:value-of select="xs:integer(($bookblockThickness div 2) div $sectionThickness)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of
-                        select="xs:integer($bookblockThickness div (($bookblockThickness div 2) -(($bookblockThickness div 2) - (($bookblockThickness div 2) mod $sectionThickness))) div ((($bookblockThickness div 2) - (($bookblockThickness div 2) mod $sectionThickness)) div $sectionThickness) + $sectionThickness)"
-                    />
+                        select="xs:integer($bookblockThickness div (($bookblockThickness div 2) - (($bookblockThickness div 2) - (($bookblockThickness div 2) mod $sectionThickness))) div ((($bookblockThickness div 2) - (($bookblockThickness div 2) mod $sectionThickness)) div $sectionThickness) + $sectionThickness)"
+                     />
                 </xsl:otherwise>
-            </xsl:choose>
+            </xsl:choose>-->
         </xsl:variable>
         <!-- variable to calculate the angle in radians to cover the spine arc -->
-        <xsl:variable name="angle" select="($pi div 2) div $sections"/>
+        <xsl:variable name="angle" select="(math:constant('PI',16) div 2) div $sections"/>
         <!-- variable to assign the right x and y values for each point on the reference arc -->
         <xsl:variable name="i">
             <xsl:value-of
                 select="
             for $i in 1 to $sections
-            return concat($h + ($bookblockThickness * .1)*math:cos($pi div 2 - ($angle * $i)), ',', $k - ($bookblockThickness div 2 + ($boardThickness div 3))*math:cos($angle * $i), ';')"
+            return concat($h + ($xRadius) * math:cos(math:constant('PI',16) div 2 - ($angle * $i)), ',', $k - $yRadius * math:cos($angle * $i), ';')"
             />
         </xsl:variable>
-        <xsl:call-template name="sectionSpineArcs">
-            <xsl:with-param name="boardThickness" select="$boardThickness"/>
-            <xsl:with-param name="sectionThickness" select="$sectionThickness"/>
-            <xsl:with-param name="i" select="$i"/>
-            <xsl:with-param name="sections" select="$sections"/>
-        </xsl:call-template>
-        <xsl:call-template name="sectionLines">
-            <xsl:with-param name="boardThickness" select="$boardThickness"/>
-            <xsl:with-param name="sectionThickness" select="$sectionThickness"/>
-            <xsl:with-param name="i" select="$i"/>
-            <xsl:with-param name="sections" select="$sections"/>
-        </xsl:call-template>
+        <xsl:choose>
+            <xsl:when test="$counter lt 2">
+                <xsl:choose>
+                    <xsl:when test="$counter eq 1">
+                        <pippo22>.</pippo22>
+                        <xsl:call-template name="sectionSpineArcs">
+                            <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                            <xsl:with-param name="sectionThickness" select="$sectionThickness"/>
+                            <xsl:with-param name="i" select="$i"/>
+                            <xsl:with-param name="sections" select="$sections"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:call-template name="trigonometry">
+                    <xsl:with-param name="counter" select="$counter + 1"/>
+                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                    <xsl:with-param name="sectionThickness" select="$sectionThickness"/>
+                    <xsl:with-param name="xRadius" select="($bookblockThickness * .1) div 2"/>
+                    <xsl:with-param name="yRadius" select="$bookblockThickness div 2"/>
+                </xsl:call-template>
+                <xsl:call-template name="sectionLines">
+                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                    <xsl:with-param name="sectionThickness" select="$sectionThickness"/>
+                    <xsl:with-param name="i" select="$i"/>
+                    <xsl:with-param name="sections" select="$sections"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="sectionSpineArcs">
@@ -348,6 +368,7 @@
         <xsl:param name="sectionThickness"/>
         <xsl:param name="i"/>
         <xsl:param name="sections" as="xs:integer"/>
+        <pippo66><xsl:value-of select="$i"/></pippo66>
         <path xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.5" fill="none">
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
@@ -362,9 +383,9 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>&#32;A</xsl:text>
-                <xsl:value-of select="$sectionThickness div 2"/>
+                <xsl:value-of select="$sectionThickness"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$sectionThickness div 2"/>
+                <xsl:value-of select="$sectionThickness"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="0"/>
                 <xsl:text>&#32;</xsl:text>
@@ -395,8 +416,30 @@
         <xsl:param name="sectionThickness"/>
         <xsl:param name="i"/>
         <xsl:variable name="sectionSeparation">
-            <xsl:value-of select="($bookblockThickness div 2) div ($sections)"/>
+            <xsl:value-of select="($bookblockThickness div 2) div $sections"/>
         </xsl:variable>
+ <!--       <path xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.1" fill="none">
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="$Ox + $boardLength"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + $boardThickness"/>
+                <xsl:text>&#32;A</xsl:text>
+                <xsl:value-of select="($bookblockThickness * .1) div 2"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$bookblockThickness div 2"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="0"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="0"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="1"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="$Ox + $boardLength"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + $boardThickness + $bookblockThickness"/>
+            </xsl:attribute>
+        </path>-->
         <path xmlns="http://www.w3.org/2000/svg" stroke="url(#fading)" stroke-width="0.1" fill="none">
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
@@ -409,13 +452,34 @@
                         <xsl:value-of select="$Ox + $boardLength * .95"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Oy + $boardThickness + $bookblockThickness div 2"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Ox"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + $boardThickness + $bookblockThickness div 2 + .001"/>
                     </xsl:when>
+                    <!--<xsl:when test="$counter eq 1">
+                        <xsl:value-of select="$Ox + $boardLength"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + $boardThickness * 2 div 3"/>
+                        <xsl:text>&#32;Q</xsl:text>
+                        <xsl:value-of select="tokenize($i, '; ')[$counter + 1]"/>
+<!-\-                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + ($counter)* $sectionSeparation"/>-\->
+                        <xsl:text>&#32;</xsl:text>
+                        <xsl:value-of select="$Ox + $boardLength * .95"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + $boardThickness"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Ox"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + $boardThickness"/>
+                    </xsl:when>-->
                     <xsl:otherwise>
                         <xsl:value-of select="tokenize($i, '; ')[$counter]"/>
                         <xsl:text>&#32;Q</xsl:text>
-                        <!--<xsl:value-of select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[1])"/>
+                        <xsl:value-of select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[1])"/>
                         <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Oy + ($counter +3)* $sectionSeparation"/>-->
+                        <xsl:value-of select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
                         <xsl:text>&#32;</xsl:text>
                         <xsl:value-of select="$Ox + $boardLength * .95"/>
                         <xsl:text>,</xsl:text>
@@ -426,13 +490,9 @@
                         <xsl:value-of select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:text>&#32;L</xsl:text>
-                <xsl:value-of select="$Ox"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy + $boardThickness + $bookblockThickness div 2 + .001"/>
+                
             </xsl:attribute>
         </path>
-        <pippo><xsl:value-of select="$counter"></xsl:value-of></pippo>
         <xsl:choose>
             <xsl:when test="$counter lt $sections">
                 <xsl:call-template name="sectionLines">
