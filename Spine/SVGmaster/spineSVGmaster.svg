@@ -7,6 +7,15 @@
     version="1.1">
     <desc>Spine SVG Master</desc>
     <defs>
+        <filter id="f1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
         <linearGradient id="fading">
             <stop offset="0%" stop-color="#FFFFFF"/>
             <stop offset="50%" stop-color="#666666"/>

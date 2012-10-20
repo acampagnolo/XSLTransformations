@@ -22,10 +22,6 @@
 
     <!-- Only a portion of the book width is drawn: this parameter selects the length -->
     <xsl:param name="boardLength" select="50"/>
-    <!--
-    
-    <xsl:variable name="Ax" select="$Ox + 20"/>
-    <xsl:variable name="Ay" select="$Oy + 20"/>-->
 
     <xsl:variable name="bookThicknessDatatypeChecker">
         <!-- Some surveyors have types 'same' instead of giving the value in mm: 
@@ -52,31 +48,106 @@
         </xsl:choose>
     </xsl:variable>
 
+    <!--<xsl:variable name="leftBoardThickness">
+        <xsl:choose>
+            <xsl:when test="/book/boards/yes/boards/board[2]">
+                <xsl:value-of
+                    select="xs:integer(/book/boards/yes/boards/board[location/left]/formation/boardThickness)"
+                />
+            <!-\-<xsl:choose>
+                <xsl:when test="/book/boards/yes/boards/board[location/left]/formation/boardThickness[not(NK)]">
+                    <xsl:value-of
+                        select="/book/boards/yes/boards/board[location/left]/formation/boardThickness"
+                    />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="
+                        if (/book/boards/yes/boards/board[location/right]/formation/boardThickness[not(NK)]) 
+                        then /book/boards/yes/boards/board[location/right]/formation/boardThickness 
+                        else $bookThicknessDatatypeChecker *.07"/>
+                </xsl:otherwise>
+            </xsl:choose>-\->
+        </xsl:when>
+        <xsl:when test="/book/boards/yes/boards[not(board[2])]">
+            <xsl:choose>
+                <xsl:when test="/book/boards/yes/boards/board[not(left)]">
+                    
+                        <xsl:value-of select="xs:integer(/book/boards/yes/boards/board[location/right]/formation/boardThickness)"/>
+                    
+                </xsl:when>              
+            </xsl:choose>
+        </xsl:when>
+            <xsl:otherwise>
+                <!-\-<xsl:value-of select="$bookThicknessDatatypeChecker *.07"/>-\->
+                <xsl:value-of select="20"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>-->
+    
     <xsl:variable name="leftBoardThickness">
         <xsl:choose>
             <xsl:when test="/book/boards/yes/boards/board/location[left]">
                 <xsl:value-of
-                    select="/book/boards/yes/boards/board[location/left]/formation/boardThickness[not(NK)]"
-                />
+                    select="/book/boards/yes/boards/board[location/left]/formation/boardThickness[not(NK)]"/>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="/book/boards/yes/boards/board/location[not(left)]">
+                <xsl:value-of
+                    select="/book/boards/yes/boards/board[location/right]/formation/boardThickness[not(NK)]"/>
+            </xsl:when>
+            <xsl:when test="/book/boards/yes/boards/board[no]">
                 <xsl:value-of select="$bookThicknessDatatypeChecker *.07"/>
-            </xsl:otherwise>
+            </xsl:when>
         </xsl:choose>
     </xsl:variable>
-
+    
     <xsl:variable name="rightBoardThickness">
         <xsl:choose>
             <xsl:when test="/book/boards/yes/boards/board/location[right]">
                 <xsl:value-of
-                    select="/book/boards/yes/boards/board[location/right]/formation/boardThickness[not(NK)]"
-                />
+                    select="/book/boards/yes/boards/board[location/right]/formation/boardThickness[not(NK)]"/>
+            </xsl:when>
+            <xsl:when test="/book/boards/yes/boards/board/location[not(right)]">
+                <xsl:value-of
+                    select="/book/boards/yes/boards/board[location/left]/formation/boardThickness[not(NK)]"/>
+            </xsl:when>
+            <xsl:when test="/book/boards/yes/boards/board[no]">
+                <xsl:value-of select="$bookThicknessDatatypeChecker *.07"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:variable>
+
+    <!--<xsl:variable name="rightBoardThickness">
+        <xsl:choose>
+            <xsl:when test="/book/boards/yes/boards/board[2]">
+                <xsl:choose>
+                    <xsl:when test="/book/boards/yes/boards/board[location/right]/formation/boardThickness[not(NK)]">
+                        <xsl:value-of
+                            select="/book/boards/yes/boards/board[location/right]/formation/boardThickness"
+                        />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="
+                            if (/book/boards/yes/boards/board[location/left]/formation/boardThickness[not(NK)]) 
+                            then /book/boards/yes/boards/board[location/left]/formation/boardThickness 
+                            else $bookThicknessDatatypeChecker *.07"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="/book/boards/yes/boards[not(board[2])]">
+                <xsl:choose>
+                    <xsl:when test="/book/boards/yes/boards/board[not(right)]">
+                        <xsl:value-of select="
+                            if (/book/boards/yes/boards/board[location/left]/formation/boardThickness[not(NK)]) 
+                            then /book/boards/yes/boards/board[location/left]/formation/boardThickness 
+                            else $bookThicknessDatatypeChecker *.07"/>
+                    </xsl:when>              
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$bookThicknessDatatypeChecker *.07"/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:variable>
+    </xsl:variable>-->
 
     <xsl:variable name="bookblockThickness">
         <!-- Some surveyors have types 'same' instead of giving the value in mm: 
@@ -84,13 +155,11 @@
         <xsl:choose>
             <xsl:when test="/book/dimensions/thickness/min castable as xs:integer">
                 <xsl:value-of
-                    select="/book/dimensions/thickness/min - $leftBoardThickness - $rightBoardThickness"
-                />
+                    select="/book/dimensions/thickness/min - xs:double($leftBoardThickness) - xs:double($rightBoardThickness)"/>
             </xsl:when>
             <xsl:when test="xs:string(/book/dimensions/thickness/min)">
                 <xsl:value-of
-                    select="/book/dimensions/thickness/max - $leftBoardThickness - $rightBoardThickness"
-                />
+                    select="/book/dimensions/thickness/max - xs:double($leftBoardThickness) - xs:double($rightBoardThickness)"/>
             </xsl:when>
         </xsl:choose>
     </xsl:variable>
@@ -131,6 +200,10 @@
                     </xsl:attribute>
                     <g xmlns="http://www.w3.org/2000/svg"
                         transform="translate(-10,50) rotate(-90,50,0)">
+                        <pippo><xsl:value-of select="$leftBoardThickness"/></pippo>
+                        <pippo><xsl:value-of select="$rightBoardThickness"/></pippo>
+                        <pippo><xsl:value-of select="$bookblockThickness"/></pippo>
+                        <pippo><xsl:value-of select="$bookThicknessDatatypeChecker"/></pippo>
                         <xsl:apply-templates/>
                     </g>
                 </svg>
@@ -144,62 +217,107 @@
     <!-- Template that calls the spine arc pipeline of templates for both halves of the bookblock -->
     <xsl:template match="book/spine" name="spineArcCaller">
         <xsl:call-template name="spineArc">
-            <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
+            <xsl:with-param name="boardThickness" select="$rightBoardThickness"/>
         </xsl:call-template>
         <g xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="transform">
                 <xsl:text>translate(</xsl:text>
                 <xsl:value-of select="$Ox"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy + $rightBoardThickness"/>
+                <xsl:value-of select="$Oy + $leftBoardThickness"/>
                 <xsl:text>) scale(1,-1)</xsl:text>
                 <xsl:text>translate(</xsl:text>
                 <xsl:value-of select="$Ox"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="- $bookblockThickness - $leftBoardThickness"/>
+                <xsl:value-of select="- $bookblockThickness - $rightBoardThickness"/>
                 <xsl:text>)</xsl:text>
             </xsl:attribute>
             <xsl:call-template name="spineArc">
-                <xsl:with-param name="boardThickness" select="$rightBoardThickness"/>
+                <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
             </xsl:call-template>
         </g>
     </xsl:template>
 
     <xsl:template match="book/boards//board/location" name="boardLocation">
         <xsl:choose>
-            <xsl:when test="left">
-                <xsl:variable name="boardThickness" select="$leftBoardThickness"/>
-                <xsl:variable name="location">
-                    <xsl:value-of select="./name()"/>
-                </xsl:variable>
-                <xsl:call-template name="boardCrossSection">
-                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
-                    <xsl:with-param name="location" select="$location"/>
-                </xsl:call-template>
+            <!-- This checks that both boards are present. To allow for dos-a-dos bindings and other bindings with more than 2 boards change test to 'ancestor::boards[1]/board[last() gt 1]' -->
+            <xsl:when test="ancestor::boards[1]/board[2]">
+                <xsl:choose>
+                    <xsl:when test="right">
+                        <xsl:variable name="boardThickness" select="$rightBoardThickness"/>
+                        <xsl:variable name="location">
+                            <xsl:value-of select="./name()"/>
+                        </xsl:variable>
+                        <xsl:call-template name="boardCrossSection">
+                            <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                            <xsl:with-param name="location" select="$location"/>
+                            <xsl:with-param name="certainty" select="100"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="left">
+                        <xsl:variable name="boardThickness" select="$leftBoardThickness"/>
+                        <xsl:variable name="location">
+                            <xsl:value-of select="./name()"/>
+                        </xsl:variable>
+                        <g xmlns="http://www.w3.org/2000/svg">
+                            <xsl:attribute name="transform">
+                                <xsl:text>translate(</xsl:text>
+                                <xsl:value-of select="$Ox"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Oy + $boardThickness"/>
+                                <xsl:text>) scale(1,-1)</xsl:text>
+                                <xsl:text>translate(</xsl:text>
+                                <xsl:value-of select="$Ox"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="- $bookblockThickness - $boardThickness"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:call-template name="boardCrossSection">
+                                <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                                <xsl:with-param name="location" select="$location"/>
+                                <xsl:with-param name="certainty" select="100"/>
+                            </xsl:call-template>
+                        </g>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
-            <xsl:when test="right">
-                <xsl:variable name="boardThickness" select="$rightBoardThickness"/>
-                <xsl:variable name="location">
-                    <xsl:value-of select="./name()"/>
-                </xsl:variable>
-                <g xmlns="http://www.w3.org/2000/svg">
-                    <xsl:attribute name="transform">
-                        <xsl:text>translate(</xsl:text>
-                        <xsl:value-of select="$Ox"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Oy + $boardThickness"/>
-                        <xsl:text>) scale(1,-1)</xsl:text>
-                        <xsl:text>translate(</xsl:text>
-                        <xsl:value-of select="$Ox"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="- $bookblockThickness - $boardThickness"/>
-                        <xsl:text>)</xsl:text>
-                    </xsl:attribute>
-                    <xsl:call-template name="boardCrossSection">
-                        <xsl:with-param name="boardThickness" select="$boardThickness"/>
-                        <xsl:with-param name="location" select="$location"/>
-                    </xsl:call-template>
-                </g>
+            <xsl:when test="ancestor::boards[1][not(board[2])]">
+                <xsl:choose>
+                    <xsl:when test="left | right">
+                        <!-- concat('Board not pesent, diagram copied from', $location) -->
+                        <xsl:variable name="boardThickness" select="if (right) then $leftBoardThickness else $rightBoardThickness"/>
+                        <xsl:variable name="location">
+                            <xsl:value-of select="./name()"/>
+                        </xsl:variable>
+                        <xsl:variable name="locationCopied">
+                            <xsl:value-of select="concat('Board not pesent, diagram copied from', $location)"/>
+                        </xsl:variable>
+                        <xsl:call-template name="boardCrossSection">
+                            <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                            <xsl:with-param name="location" select="if (right) then $location else $locationCopied"/>
+                            <xsl:with-param name="certainty" select="if (right) then xs:integer(100) else xs:integer(40)"/>
+                        </xsl:call-template>
+                        <g xmlns="http://www.w3.org/2000/svg">
+                            <xsl:attribute name="transform">
+                                <xsl:text>translate(</xsl:text>
+                                <xsl:value-of select="$Ox"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Oy + $boardThickness"/>
+                                <xsl:text>) scale(1,-1)</xsl:text>
+                                <xsl:text>translate(</xsl:text>
+                                <xsl:value-of select="$Ox"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="- $bookblockThickness - $boardThickness"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:call-template name="boardCrossSection">
+                                <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                                <xsl:with-param name="location" select="if (left) then $location else $locationCopied"/>
+                                <xsl:with-param name="certainty" select="if (left) then xs:integer(100) else xs:integer(40)"/>
+                            </xsl:call-template>
+                        </g>
+                    </xsl:when>              
+                </xsl:choose>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -207,6 +325,7 @@
     <xsl:template name="boardCrossSection">
         <xsl:param name="boardThickness"/>
         <xsl:param name="location"/>
+        <xsl:param name="certainty" as="xs:integer"/>
         <desc xmlns="http://www.w3.org/2000/svg">
             <xsl:value-of select="$location"/>
             <xsl:text>&#32;board</xsl:text>
@@ -216,9 +335,13 @@
             <!--<xsl:attribute name="class">
                     <xsl:text>line</xsl:text>
                 </xsl:attribute>-->
-            <!-- TO DO: add uncertainty  -->
+            <!-- TO DO: add uncertainty for NC, NK, other  -->
             <!-- when NC: some uncertainty; when NK or other: uncertainty -->
             <!-- TO DO -->
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <xsl:with-param name="type" select="'2'"/>
+            </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:call-template name="boardPath">
                     <xsl:with-param name="boardThickness" select="$boardThickness"/>
@@ -547,7 +670,8 @@
                     <xsl:with-param name="counter" select="$counter + 1"/>
                     <xsl:with-param name="boardThickness" select="$boardThickness"/>
                     <xsl:with-param name="sectionThickness" select="$sectionThickness"/>
-                    <xsl:with-param name="xRadius" select="($xRadius) div 2"/>
+                    <xsl:with-param name="xRadius"
+                        select="if (profile/shape/flat) then 0 else ($xRadius) div 2"/>
                     <xsl:with-param name="yRadius" select="$yRadius"/>
                 </xsl:call-template>
                 <xsl:call-template name="sectionLines">
@@ -584,9 +708,11 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>&#32;A</xsl:text>
-                <xsl:value-of select="$sectionThickness"/>
+                <xsl:value-of
+                    select="if (xs:double($bookblockThickness) lt 20) then $sectionThickness * 2 else $sectionThickness"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$sectionThickness"/>
+                <xsl:value-of
+                    select="if (xs:double($bookblockThickness) lt 20) then $sectionThickness * 2 else $sectionThickness"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="0"/>
                 <xsl:text>&#32;</xsl:text>
@@ -676,7 +802,8 @@
                                     select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
                                 />
                             </xsl:when>
-                            <xsl:when test="profile/joints[slight | quadrant] and profile/shape/flat">
+                            <xsl:when
+                                test="profile/joints[slight | quadrant] and profile/shape/flat">
                                 <xsl:choose>
                                     <xsl:when test="$counter lt 2">
                                         <xsl:value-of select="tokenize($i, '; ')[$counter]"/>
@@ -702,17 +829,10 @@
                                     <xsl:otherwise>
                                         <xsl:value-of select="tokenize($i, '; ')[$counter]"/>
                                         <xsl:text>&#32;L</xsl:text>
-                                        <!--<xsl:value-of
-                                            select="$Ox + $boardLength * .99"/>-->
-                                        <xsl:value-of select="tokenize(tokenize($i, '; ')[$counter], ',')[1]"/>
-                                        <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
-                                        <xsl:text>&#32;L</xsl:text>
                                         <xsl:value-of select="$Ox"/>
                                         <xsl:text>,</xsl:text>
                                         <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
+                                            select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[2]) + .001"
                                         />
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -727,7 +847,14 @@
                                 <!-- draw the lines -->
                             </xsl:when>
                             <xsl:when test="profile/joints[none | flat]">
-                                <!-- draw the lines -->
+
+                                <xsl:value-of select="tokenize($i, '; ')[$counter]"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Ox"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of
+                                    select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[2]) + .001"/>
+
                             </xsl:when>
                         </xsl:choose>
                     </xsl:otherwise>
@@ -745,6 +872,42 @@
                     <xsl:with-param name="xRadius" select="$xRadius"/>
                     <xsl:with-param name="h" select="$h"/>
                 </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- Uncertainty template -->
+    <xsl:template name="certainty">
+        <xsl:param name="certainty" select="100" as="xs:integer"/>
+        <xsl:param name="uncertaintyIncrement"/>
+        <xsl:param name="type"/>
+        <xsl:choose>
+            <xsl:when test="$type = '1'">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f1)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$type = '2'">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f2)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$type = '3'">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f3)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
