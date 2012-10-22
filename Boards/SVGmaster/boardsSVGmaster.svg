@@ -8,7 +8,7 @@
     <defs>
         <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
             patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
-            <path d="M0,0 L5,50" class="line3" />
+            <path d="M0,0 L5,100" class="line3" />
         </pattern>
     </defs>
 
