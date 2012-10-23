@@ -1627,74 +1627,11 @@
             <!-- Add the back corner if needed -->
             <xsl:when
                 test="parent::location/following-sibling::formation/corners/spine[backCorner | NC | NK | other]">
-                <!-- DO WE NEED TO MODIFY THE FOLLOWING PATH TO COVER LINES??? -->
-                <!--<path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <xsl:attribute name="class">
-                        <xsl:text>nolineFilledWhite</xsl:text>
-                    </xsl:attribute>
-                    <!-\- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -\->
-                    <!-\- TO DO -\->
-                    <xsl:attribute name="d">
-                        <xsl:choose>
-                            <xsl:when test="ancestor::book/spine/profile/joints/slight">
-                                <xsl:text>M</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth * .97"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy"/>
-                                <xsl:text>&#32;L</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth * .97"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy + $edgeBoardThickness"/>
-                                <xsl:text>&#32;Q</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy + $edgeBoardThickness"/>
-                                <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy + $edgeBoardThickness  * 2 div 3"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>M</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy"/>
-                                <xsl:text>&#32;L</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy + $edgeBoardThickness"/>
-                                <xsl:text>&#32;L</xsl:text>
-                                <xsl:value-of select="$Cx + $boardWidth"/>
-                                <xsl:text>,</xsl:text>
-                                <xsl:value-of select="$Cy + $edgeBoardThickness"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy"/>
-                        <xsl:text>z</xsl:text>
-                    </xsl:attribute>
-                </path>-->
-                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <xsl:attribute name="class">
-                        <xsl:text>line</xsl:text>
-                    </xsl:attribute>
-                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
-                    <!-- TO DO -->
-                    <xsl:attribute name="d">
-                        <xsl:text>M</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy - .5"/>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy + $edgeBoardThickness + .5"/>
-                    </xsl:attribute>
-                </path>
+                <xsl:call-template name="head-tailEdge_backCorner">
+                    <xsl:with-param name="edgeBoardThickness" select="$edgeBoardThickness"/>
+                    <xsl:with-param name="Cx" select="$Cx"/>
+                    <xsl:with-param name="Cy" select="$Cy"/>
+                </xsl:call-template>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -2891,7 +2828,14 @@
         </xsl:variable>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
             <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>line</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
             <!-- TO DO: add uncertainty  -->
             <!-- when NC: some uncertainty; when NK or other: uncertainty -->
@@ -2955,7 +2899,14 @@
         </path>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
             <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="ancestor::book/spine/profile/joints[slight | quadrant | acute]">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>line</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
             <!-- TO DO: add uncertainty  -->
             <!-- TO DO -->
@@ -2993,9 +2944,123 @@
                 </xsl:choose>
             </xsl:attribute>
         </path>
+        <!-- Devide the upper border in two lines to allow for thinner line depth cue to be implemented for //spine/profile/joints -->
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
             <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="parent::location/following-sibling::formation/corners/spine/backCorner or
+                        ancestor::book/spine/profile/joints[acute | slight | quadrant]">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                        <xsl:text>line</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>line</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <!-- TO DO: add uncertainty  -->
+            <!-- TO DO -->
+            <xsl:attribute name="d">
+                <xsl:choose>
+                    <xsl:when
+                        test="parent::location/following-sibling::formation/bevels/internalBevels">
+                        <!-- Do not draw anything? -->
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:choose>
+                            <xsl:when test="ancestor::book/spine/profile/joints/acute">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                            <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                            <xsl:when test="ancestor::book/spine/profile/joints/quadrant">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $edgeBoardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $edgeBoardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+        </path>
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+            <xsl:attribute name="class">
+                <xsl:choose>
+                    <xsl:when test="parent::location/following-sibling::formation/corners/spine/backCorner or
+                        ancestor::book/spine/profile/joints/angled">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="ancestor::book/spine/profile/joints[acute | slight | quadrant]">
+                        <xsl:text>line</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>line</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
             <!-- TO DO: add uncertainty  -->
             <!-- TO DO -->
@@ -3021,22 +3086,62 @@
                         <xsl:value-of select="$Fy + $boardHeight"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:text>M</xsl:text>
-                        <xsl:value-of select="$Fx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Fy"/>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Fx + $edgeBoardThickness"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Fy"/>
-                        <xsl:text>&#32;M</xsl:text>
-                        <xsl:value-of select="$Fx"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Fy + $boardHeight"/>
-                        <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Fx + $edgeBoardThickness"/>
-                        <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Fy + $boardHeight"/>
+                        <xsl:choose>
+                            <xsl:when test="ancestor::book/spine/profile/joints/acute">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                            <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $edgeBoardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $edgeBoardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                            <xsl:when test="ancestor::book/spine/profile/joints/quadrant">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                        </xsl:choose>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
@@ -3044,13 +3149,13 @@
         <xsl:choose>
             <xsl:when
                 test="parent::location/following-sibling::formation/corners/spine[backCorner | NC | NK | other]">
-                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="butt"
+                <!--<path xmlns="http://www.w3.org/2000/svg" stroke-linecap="butt"
                     stroke-linejoin="round">
                     <xsl:attribute name="class">
                         <xsl:text>line</xsl:text>
                     </xsl:attribute>
-                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
-                    <!-- TO DO -->
+                    <!-\- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -\->
+                    <!-\- TO DO -\->
                     <xsl:attribute name="d">
                         <xsl:text>M</xsl:text>
                         <xsl:value-of select="$Fx"/>
@@ -3068,6 +3173,189 @@
                         <xsl:value-of select="$Fx + $edgeBoardThickness"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Fy + $boardHeight - ($boardHeight * .02)"/>
+                    </xsl:attribute>
+                </path>-->
+                <!-- Devide the upper border in two lines to allow for thinner line depth cue to be implemented for //spine/profile/joints -->
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:choose>
+                            <xsl:when test="ancestor::book/spine/profile/joints[acute | slight | quadrant]">
+                                <xsl:text>line2</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                                <xsl:text>line</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>line</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/bevels/internalBevels">
+                                <!-- Canvas over and redraw the lines to use thinner lines? -->
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:choose>
+                                    <xsl:when test="ancestor::book/spine/profile/joints/acute">
+                                        <xsl:text>M</xsl:text>
+                                        <xsl:value-of select="$Fx"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;M</xsl:text>
+                                        <xsl:value-of select="$Fx"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                    </xsl:when>
+                                    <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                                        <xsl:text>M</xsl:text>
+                                        <xsl:value-of select="$Fx"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;M</xsl:text>
+                                        <xsl:value-of select="$Fx"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                    </xsl:when>
+                                    <xsl:when test="ancestor::book/spine/profile/joints/quadrant">
+                                        <xsl:text>M</xsl:text>
+                                        <xsl:value-of select="$Fx"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;M</xsl:text>
+                                        <xsl:value-of select="$Fx"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                    </xsl:when>
+                                </xsl:choose>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </path>
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:choose>
+                            <xsl:when test="parent::location/following-sibling::formation/corners/spine/backCorner or
+                                ancestor::book/spine/profile/joints/angled">
+                                <xsl:text>line2</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="ancestor::book/spine/profile/joints[acute | slight | quadrant]">
+                                <xsl:text>line</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>line</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:choose>
+                            <xsl:when
+                                test="parent::location/following-sibling::formation/bevels/internalBevels">
+                                <xsl:text>M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness - $edgeBoardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy"/>
+                                <xsl:text>&#32;M</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                                <xsl:text>&#32;L</xsl:text>
+                                <xsl:value-of select="$Fx + $boardThickness - $edgeBoardThickness"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Fy + $boardHeight"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:choose>
+                                    <xsl:when test="ancestor::book/spine/profile/joints/acute">
+                                        <xsl:text>M</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;M</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness - $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                    </xsl:when>
+                                    <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                                        <xsl:text>M</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $edgeBoardThickness"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;M</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness div 4"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $edgeBoardThickness"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                    </xsl:when>
+                                    <xsl:when test="ancestor::book/spine/profile/joints/quadrant">
+                                        <xsl:text>M</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy"/>
+                                        <xsl:text>&#32;M</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness * .5"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                        <xsl:text>&#32;L</xsl:text>
+                                        <xsl:value-of select="$Fx + $boardThickness"/>
+                                        <xsl:text>,</xsl:text>
+                                        <xsl:value-of select="$Fy + $boardHeight"/>
+                                    </xsl:when>
+                                </xsl:choose>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:attribute>
                 </path>
             </xsl:when>
@@ -3159,6 +3447,215 @@
             <xsl:with-param name="Dx" select="$Dx"/>
             <xsl:with-param name="Dy" select="$Dy"/>
         </xsl:call-template>-->
+    </xsl:template>
+
+    <xsl:template name="head-tailEdge_backCorner">
+        <xsl:param name="edgeBoardThickness"/>
+        <xsl:param name="Cx"/>
+        <xsl:param name="Cy"/>
+        <!-- This covers the previously drawn spine edge so that the outline can be redrawn over it with a thinner line to indicate depth. -->
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+            <xsl:attribute name="class">
+                <xsl:text>nolineFilledWhite</xsl:text>
+            </xsl:attribute>
+            <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+            <!-- TO DO -->
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Cy + 2"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Cy + $edgeBoardThickness - 2"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Cx + $boardWidth + 2"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Cy + $edgeBoardThickness - 2"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Cx + $boardWidth + 2"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Cy + 2"/>
+                <xsl:text>z</xsl:text>
+            </xsl:attribute>
+        </path>
+        <xsl:choose>
+            <xsl:when test="ancestor::book/spine/profile/joints/slight">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - $edgeBoardThickness div 3"/>
+                        <xsl:text>&#32;Q</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + .25"/>
+                        <xsl:text>&#32;</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth * .97"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + .25"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when test="ancestor::book/spine/profile/joints/quadrant">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness * .5"/>
+                        <xsl:text>&#32;Q</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + .25"/>
+                        <xsl:text>&#32;</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth * .95"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + .25"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when test="ancestor::book/spine/profile/joints/acute">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of
+                            select="$Cy + $edgeBoardThickness  - $edgeBoardThickness div 4"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth * .97"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + .25"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line2</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy +  .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + .25"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness div 4"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth * .97"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness - .25"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- ???????????????? -->
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy - 0.5"/>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness div 3 - 1"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+            <xsl:when test="ancestor::book/spine/profile/joints[slight | quadrant | acute]">
+                <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <xsl:attribute name="class">
+                        <xsl:text>line</xsl:text>
+                    </xsl:attribute>
+                    <!-- TO DO: add uncertainty: NC, NK, other should have an increasingly higher degree of uncertainty  -->
+                    <!-- TO DO -->
+                    <xsl:attribute name="d">
+                        <xsl:text>M</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="ancestor::book/spine/profile/joints[sliɡht | quadrant]">
+                                <xsl:value-of select="$Cy - 0.5"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <!-- NB: might need to revise the coordinates -->
+                                <xsl:value-of select="$Cy + $edgeBoardThickness div 3 - 1"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:text>&#32;L</xsl:text>
+                        <xsl:value-of select="$Cx + $boardWidth - ($boardWidth div 84)"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Cy + $edgeBoardThickness"/>
+                    </xsl:attribute>
+                </path>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>
