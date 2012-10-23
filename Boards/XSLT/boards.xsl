@@ -1095,7 +1095,7 @@
                         <xsl:text>&#32;L</xsl:text>
                         <xsl:value-of select="$Cx + $boardWidth"/>
                         <xsl:text>,</xsl:text>
-                        <xsl:value-of select="$Cy"/>
+                        <xsl:value-of select="$Cy + $boardThickness"/>
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:choose>
