@@ -11,7 +11,7 @@
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
     <xsl:variable name="fileref" select="tokenize(replace($shelfmark, '/', '.'), '\.')"/>
     <xsl:variable name="filenamePath"
-        select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'PageMarkers')"/>
+        select="concat('../../Transformations/pageMarkers/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'PageMarkers')"/>
 
     <!-- X and Y reference values of the Origin - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved  NB: in SVG the origin is the top left corner of the screen area -->
     <xsl:param name="Ox" select="0"/>
@@ -23,8 +23,9 @@
 
     <xsl:template name="main" match="/">
         <xsl:for-each select="book/markers/yes/marker/pageMarker">
-            <xsl:result-document href="{if (last() = 1) then concat($filenamePath, '.svg') else concat($filenamePath, '_',position(), '.svg')}" method="xml" indent="yes" encoding="utf-8"
-                doctype-public="-//W3C//DTD SVG 1.1//EN"
+            <xsl:result-document
+                href="{if (last() = 1) then concat($filenamePath, '.svg') else concat($filenamePath, '_',position(), '.svg')}"
+                method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
                 <xsl:processing-instruction name="xml-stylesheet">
                 <xsl:text>href="../../../../GitHub/XSLTransformations/PageMarkers/CSS/style.css"&#32;</xsl:text>
@@ -238,7 +239,15 @@
     <xsl:template name="locationSet">
         <use xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="xlink:href">
-                <xsl:text>#pageOutline</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="following-sibling::locations/locationSet[head | foredge | NC]">
+                        <xsl:text>#pageOutline_head-foredge</xsl:text>
+                    </xsl:when>
+                    <!-- NB check that coordinates are correct -->
+                    <xsl:when test="following-sibling::locations/locationSet/tail">
+                        <xsl:text>#pageOutline_tail</xsl:text>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:attribute>
             <xsl:attribute name="x">
                 <xsl:value-of select="$Ax + 70"/>
@@ -331,7 +340,7 @@
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
-    
+
     <xsl:template name="numberOfTabs">
         <xsl:param name="Bx" select="1"/>
         <xsl:param name="By" select="1"/>
@@ -364,7 +373,12 @@
             <xsl:attribute name="font-size">
                 <xsl:text>8pt</xsl:text>
             </xsl:attribute>
-            <xsl:value-of select="child::node()/text()"/>
+            <xsl:choose>
+                <xsl:when test="xs:integer(child::node()/text()) eq 1"/>
+                <xsl:otherwise>
+                    <xsl:value-of select="child::node()/text()"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </text>
     </xsl:template>
 
