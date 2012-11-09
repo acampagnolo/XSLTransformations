@@ -458,7 +458,7 @@
                 <xsl:value-of select="
                         if (descendant::formation/bevels[cushion | peripheralCushion]) 
                         then $Oy + ($boardThickness *.375) 
-                        else $Oy + $boardThickness div 8"/>
+                        else $Oy "/>
                 <xsl:text>&#32;L</xsl:text>
                 <xsl:value-of select="$Ox + $boardLength"/>
                 <xsl:text>,</xsl:text>
@@ -476,7 +476,7 @@
                 <xsl:text>&#32;L</xsl:text>
                 <xsl:value-of select="$Ox + $boardLength"/>
                 <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy + $boardThickness * .875"/>
+                <xsl:value-of select="$Oy + $boardThickness * .95"/>
                 <xsl:text>&#32;L</xsl:text>
                 <xsl:value-of select="$Ox + $boardLength * .9"/>
                 <xsl:text>,</xsl:text>
@@ -544,8 +544,8 @@
         <xsl:variable name="arc_tMin">
             <!-- Coordinates of the starting point of the spine arc -->
             <xsl:choose>
-                <xsl:when test="profile/joints/slight">
-                    <!-- slight round at the spine -->
+                <!--<xsl:when test="profile/joints/slight">
+                    <!-\- slight round at the spine -\->
                     <xtMin>
                         <xsl:value-of select="$Ox + $boardLength"/>
                     </xtMin>
@@ -554,15 +554,15 @@
                     </ytMin>
                 </xsl:when>
                 <xsl:when test="profile/joints/quadrant">
-                    <!-- rounded corner at the spine -->
+                    <!-\- rounded corner at the spine -\->
                     <xtMin>
                         <xsl:value-of select="$Ox + $boardLength"/>
                     </xtMin>
                     <ytMin>
                         <xsl:value-of select="$Oy + $boardThickness * .5"/>
                     </ytMin>
-                </xsl:when>
-                <xsl:when test="profile/joints/acute">
+                </xsl:when>-->
+                <xsl:when test="profile/joints[slight | quadrant | acute]">
                     <!-- angled spine edge -->
                     <xtMin>
                         <xsl:value-of select="$Ox + $boardLength"/>
@@ -571,7 +571,7 @@
                         <xsl:value-of select="
                             if (ancestor::book/boards//formation/bevels[cushion | peripheralCushion]) 
                             then $Oy + ($boardThickness *.375) 
-                            else $Oy + $boardThickness div 8"/>
+                            else $Oy"/>
                     </ytMin>
                 </xsl:when>
                 <xsl:when test="profile/joints/angled">
@@ -708,7 +708,7 @@
         <xsl:variable name="k" select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
         <!-- variable to calculate the number of sections to cover the spine arc -->
         <xsl:variable name="sections">
-            <xsl:value-of select="xs:integer(($bookblockThickness div 2) div $sectionThickness)"/>
+            <xsl:value-of select="xs:integer(($bookblockThickness div 2) div $sectionThickness * .5)"/>
             <!--<xsl:choose>
                 <xsl:when test="($bookblockThickness div 2) mod $sectionThickness = 0">
                     <xsl:value-of select="xs:integer(($bookblockThickness div 2) div $sectionThickness)"/>
@@ -788,10 +788,10 @@
                 </xsl:choose>
                 <xsl:text>&#32;A</xsl:text>
                 <xsl:value-of
-                    select="if (xs:double($bookblockThickness) lt 20) then $sectionThickness * 2 else $sectionThickness"/>
+                    select="if (xs:double($bookblockThickness) lt 20) then $sectionThickness * 2.5 else $sectionThickness * 2.5"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of
-                    select="if (xs:double($bookblockThickness) lt 20) then $sectionThickness * 2 else $sectionThickness"/>
+                    select="if (xs:double($bookblockThickness) lt 20) then $sectionThickness * 2.5 else $sectionThickness * 2.5"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="0"/>
                 <xsl:text>&#32;</xsl:text>
