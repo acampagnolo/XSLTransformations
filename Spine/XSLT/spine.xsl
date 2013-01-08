@@ -704,7 +704,7 @@
         <xsl:param name="xtMin"/>
         <xsl:param name="ytMin"/>
         <xsl:variable name="h"
-            select="if (profile/joints/angled) then $Ox + $boardLength *.9 else $Ox + $boardLength"/>
+            select="if (profile/joints/angled) then $Ox + $boardLength *.94 else $Ox + $boardLength"/>
         <xsl:variable name="k" select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
         <!-- variable to calculate the number of sections to cover the spine arc -->
         <xsl:variable name="sections">
