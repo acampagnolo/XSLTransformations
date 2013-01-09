@@ -950,7 +950,7 @@
                                 <xsl:value-of select="tokenize($i, '; ')[$counter]"/>
                                 <xsl:text>&#32;Q</xsl:text>
                                 <xsl:value-of
-                                    select="$Ox + $boardLength + 3*$sectionSeparation + ($bookblockThickness * .001)  * ($counter)"/>
+                                    select="$Ox + $boardLength + 1.5*$sectionSeparation + ($bookblockThickness * .001)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
                                 <xsl:value-of
                                     select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
