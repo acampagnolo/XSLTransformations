@@ -149,13 +149,10 @@
     <!-- Template to mute all unwanted nodes -->
     <xsl:template match="text()"/>
 
-    <!-- Template that calls the spine arc pipeline of templates for both halves of the bookblock and the lining template -->
+    <!-- Template that calls the spine arc pipeline of templates for both halves of the bookblock and the lining -->
     <xsl:template match="book/spine" name="spineArcCaller">
         <xsl:call-template name="spineArc">
             <xsl:with-param name="boardThickness" select="$rightBoardThickness"/>
-        </xsl:call-template>
-        <xsl:call-template name="lining">
-            <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
         </xsl:call-template>
         <g xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="transform">
@@ -171,9 +168,6 @@
                 <xsl:text>)</xsl:text>
             </xsl:attribute>
             <xsl:call-template name="spineArc">
-                <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
-            </xsl:call-template>
-            <xsl:call-template name="lining">
                 <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
             </xsl:call-template>
         </g>
@@ -628,18 +622,25 @@
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$arc_tMin/ytMin"/>
                 <xsl:text>&#32;Q</xsl:text>
-                <xsl:value-of select="if (parent::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius else $Ox + $boardLength + $arcShape/xRadius"/>
+                <xsl:value-of select="if (profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius else $Ox + $boardLength + $arcShape/xRadius"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Oy"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of
-                    select="if (parent::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius else $Ox + $boardLength + $arcShape/xRadius"/>
+                    select="if (profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius else $Ox + $boardLength + $arcShape/xRadius"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
             </xsl:attribute>
         </path>
         <xsl:call-template name="trigonometry">
             <xsl:with-param name="boardThickness" select="$boardThickness"/>
+            <xsl:with-param name="xRadius" select="$arcShape/xRadius" as="xs:double"/>
+            <xsl:with-param name="yRadius" select="$arcShape/yRadius" as="xs:double"/>
+            <xsl:with-param name="xtMin" select="$arc_tMin/xtMin"/>
+            <xsl:with-param name="ytMin" select="$arc_tMin/ytMin"/>
+        </xsl:call-template>
+        <xsl:call-template name="lining">
+            <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
             <xsl:with-param name="xRadius" select="$arcShape/xRadius" as="xs:double"/>
             <xsl:with-param name="yRadius" select="$arcShape/yRadius" as="xs:double"/>
             <xsl:with-param name="xtMin" select="$arc_tMin/xtMin"/>
@@ -898,146 +899,112 @@
     
     <xsl:template name="lining">
         <xsl:param name="boardThickness"/>
-        <xsl:variable name="arc_tMin">
-            <!-- Coordinates of the starting point of the spine arc -->
-            <xsl:choose>
-                <xsl:when test="profile/joints[slight | quadrant | acute]">
-                    <!-- angled spine edge -->
-                    <xtMin>
-                        <xsl:value-of select="$Ox + $boardLength"/>
-                    </xtMin>
-                    <ytMin>
-                        <xsl:value-of
-                            select="
-                            if (ancestor::book/boards//formation/bevels[cushion | peripheralCushion]) 
-                            then $Oy + ($boardThickness *.375) 
-                            else $Oy"
-                        />
-                    </ytMin>
-                </xsl:when>
-                <xsl:when test="profile/joints/angled">
-                    <!-- angled spine edge (mirror of acute) -->
-                    <xtMin>
-                        <xsl:value-of select="$Ox + $boardLength * .9"/>
-                    </xtMin>
-                    <ytMin>
-                        <xsl:value-of
-                            select="
-                            if (ancestor::book/boards//formation/bevels[cushion | peripheralCushion]) 
-                            then $Oy + ($boardThickness div 4) 
-                            else $Oy"
-                        />
-                    </ytMin>
-                </xsl:when>
-                <xsl:when test="profile/joints/square">
-                    <xtMin>
-                        <xsl:value-of select="$Ox + $boardLength"/>
-                    </xtMin>
-                    <ytMin>
-                        <xsl:value-of
-                            select="
-                            if (ancestor::book/boards//formation/bevels[cushion | peripheralCushion]) 
-                            then $Oy + ($boardThickness div 4) 
-                            else $Oy"
-                        />
-                    </ytMin>
-                </xsl:when>
-                <xsl:otherwise>
-                    <!-- None, flat, NC, NK, and other have a squared board -->
-                    <!-- NB. how to pass on the uncertainty of the shape? -->
-                    <xtMin>
-                        <xsl:value-of select="$Ox + $boardLength"/>
-                    </xtMin>
-                    <ytMin>
-                        <xsl:value-of select="$Oy + $boardThickness"/>
-                    </ytMin>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="arcShape">
-            <xsl:choose>
-                <xsl:when test="profile/shape/flat">
-                    <!-- flat spine -->
-                    <xRadius>
-                        <xsl:value-of select="$bookblockThickness * .0001"/>
-                    </xRadius>
-                    <yRadius>
-                        <xsl:value-of select="xs:double($bookblockThickness div 2)"/>
-                    </yRadius>
-                </xsl:when>
-                <xsl:when test="profile/shape/slightRound">
-                    <!-- slight round at the spine -->
-                    <xRadius>
-                        <xsl:value-of
-                            select="if (profile/joints/angled) then xs:double($bookblockThickness * .3) else xs:double($bookblockThickness * .15)"
-                        />
-                    </xRadius>
-                    <yRadius>
-                        <xsl:value-of
-                            select="xs:double($bookblockThickness div 2 + ($boardThickness - $arc_tMin/ytMin))"
-                        />
-                    </yRadius>
-                </xsl:when>
-                <xsl:when test="profile/shape/round">
-                    <!-- slight round at the spine -->
-                    <xRadius>
-                        <xsl:value-of select="xs:double($bookblockThickness * .3)"/>
-                    </xRadius>
-                    <yRadius>
-                        <xsl:value-of
-                            select="xs:double($bookblockThickness div 2 + ($boardThickness - $arc_tMin/ytMin))"
-                        />
-                    </yRadius>
-                </xsl:when>
-                <xsl:when test="profile/shape/heavyRound">
-                    <!-- slight round at the spine -->
-                    <xRadius>
-                        <xsl:value-of select="xs:double($bookblockThickness * .45)"/>
-                    </xRadius>
-                    <yRadius>
-                        <xsl:value-of
-                            select="xs:double($bookblockThickness div 2 + ($boardThickness - $arc_tMin/ytMin))"
-                        />
-                    </yRadius>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:variable>
+        <xsl:param name="xRadius" as="xs:double"/>
+        <xsl:param name="yRadius" as="xs:double"/>
+        <xsl:param name="xtMin"/>
+        <xsl:param name="ytMin"/>
         <xsl:for-each select="lining/yes/lining">
-            <path xmlns="http://www.w3.org/2000/svg">
-                <xsl:attribute name="class">
-                    <xsl:text>lineFading</xsl:text>
-                </xsl:attribute>
-                <xsl:attribute name="d">
-                    <xsl:text>M</xsl:text>
-                    <xsl:value-of select="$Ox"/>
-                    <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy - 2"/>
-                    <xsl:text>&#32;L</xsl:text>
-                    <xsl:value-of select="$Ox + $boardLength -2"/>
-                    <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy - 1.999"/>
-                </xsl:attribute>
-            </path>
-            <path xmlns="http://www.w3.org/2000/svg">
+            <xsl:variable name="boardLengthVariable">
+                <xsl:value-of select="if (ancestor::spine/profile/joints/angled) then $boardLength * .9 else $boardLength"/>
+            </xsl:variable>
+            <xsl:variable name="arcParameters">
+                <xsl:choose>
+                    <xsl:when test="ancestor::spine/profile/shape/NC">
+                        <!-- Do something -->
+                    </xsl:when>
+                    <xsl:when test="ancestor::spine/profile/shape/flat">
+                        <value1>
+                            <xsl:value-of select="-4"/>
+                        </value1>
+                        <value2>
+                            <xsl:value-of select="2"/>
+                        </value2>
+                    </xsl:when>
+                    <xsl:when test="ancestor::spine/profile/shape[slightRound | round | heavyRound]">
+                        <value1>
+                            <xsl:value-of select="-2"/>
+                        </value1>
+                        <value2>
+                            <xsl:value-of select="-4"/>
+                        </value2>
+                    </xsl:when>
+                    <xsl:when test="ancestor::spine/profile/shape/NK">
+                        <!-- Do something -->
+                    </xsl:when>
+                    <xsl:when test="ancestor::spine/profile/shape/other">
+                        <!-- Do something -->
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:variable>
+            <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
                 <xsl:attribute name="class">
                     <xsl:text>line</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
-                    <xsl:value-of select="$Ox + $boardLength -2"/>
+                    <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy - 2"/>
+                    <xsl:value-of select="$Oy + $arcParameters/value1"/>
+                    <!--<xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Ox + $boardLength + $arcParameters/arc else $Ox + $boardLength - 2"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $arcParameters/line else $Oy - 2"/>-->
                     <xsl:text>&#32;Q</xsl:text>
-                    <xsl:value-of select="if (parent::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius + 2 else $Ox + $boardLength + $arcShape/xRadius + 2"/>
+                    <xsl:value-of select="if (ancestor::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $xRadius + 2 else $Ox + $boardLength + $xRadius + 2"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy"/>
+                    <xsl:value-of select="$Oy + $arcParameters/value2"/>
                     <xsl:text>&#32;</xsl:text>
                     <xsl:value-of
-                        select="if (parent::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius + 2 else $Ox + $boardLength + $arcShape/xRadius + 2"/>
+                        select="if (ancestor::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $xRadius + 2 else $Ox + $boardLength + $xRadius + 2"/>
                     <xsl:text>,</xsl:text>
                     <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
                 </xsl:attribute>
             </path>
+            <xsl:choose>
+                <xsl:when test="liningJoints/NC">
+                    <!-- Do something -->
+                </xsl:when>
+                <xsl:when test="liningJoints/insideBoards">
+                    <!-- Do something -->
+                </xsl:when>
+                <xsl:when test="liningJoints/outsideBoards">
+                    <desc xmlns="http://www.w3.org/2000/svg">Lining outside boards</desc>
+                    <!-- NB -->
+                    <!-- Choose different paths according to the different spine shapes -->
+                    <!-- NB -->
+                    <path xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="class">
+                            <xsl:text>lineFading</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="d">
+                            <xsl:text>M</xsl:text>
+                            <xsl:value-of select="$Ox"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $arcParameters/value1 - 0.000001"/>
+                            <xsl:text>&#32;L</xsl:text>
+                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $arcParameters/value1"/>
+                            <!--<xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + 4 else $Oy - 2"/>
+                            <xsl:text>&#32;L</xsl:text>
+                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Ox + $boardLength + $arcParameters/arc else $Ox + $boardLength - 2"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $arcParameters/line - 0.001 else $Oy - 1.999"/>-->
+                        </xsl:attribute>
+                    </path>
+                </xsl:when>
+                <xsl:when test="liningJoints/pastedToFlyleaf">
+                    <!-- Do something -->
+                </xsl:when>
+                <xsl:when test="liningJoints/free">
+                    <!-- Do something -->
+                </xsl:when>
+                <xsl:when test="liningJoints/NK">
+                    <!-- Do something -->
+                </xsl:when>
+                <xsl:when test="liningJoints/other">
+                    <!-- Do something -->
+                </xsl:when>
+            </xsl:choose>
         </xsl:for-each>
     </xsl:template>
 
