@@ -102,6 +102,12 @@
         </xsl:choose>
     </xsl:variable>
 
+    <xsl:variable name="countInsideBoards">
+        <xsl:value-of
+            select="count(//book/spine/lining/yes/lining[liningJoints[insideBoards | pastedToFlyleaf]])"
+        />
+    </xsl:variable>
+
     <xsl:template name="main" match="/">
         <xsl:result-document href="{$filename}" method="xml" indent="yes" encoding="utf-8"
             doctype-public="-//W3C//DTD SVG 1.1//EN"
@@ -289,20 +295,46 @@
         <xsl:param name="boardThickness"/>
         <xsl:param name="location"/>
         <xsl:param name="certainty" as="xs:integer"/>
+        <xsl:variable name="explodeBoards">
+            <xsl:choose>
+                <!-- NB: check that NC, free, NK and other lining joints are actually to be drawn as if they were outsideBoards -->
+                <xsl:when test="ancestor::book/spine/profile/shape/flat">
+                    <xsl:choose>
+                        <xsl:when
+                            test="ancestor::book/spine/lining/yes/lining/liningJoints[outsideBoards | NC | free | NK | other]">
+                            <xsl:value-of select="concat('translate(', 0, ',', -2, ')')"/>
+                        </xsl:when>
+                        <xsl:when
+                            test="ancestor::book/spine/lining/yes/lining/liningJoints/insideBoards">
+                            <xsl:value-of
+                                select="concat('translate(', 0, ',', -5 * $countInsideBoards, ')')"
+                            />
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when
+                            test="ancestor::book/spine/lining/yes/lining/liningJoints[outsideBoards | NC | free | NK | other]">
+                            <xsl:value-of select="concat('translate(', -2, ',', 0, ')')"/>
+                        </xsl:when>
+                        <xsl:when
+                            test="ancestor::book/spine/lining/yes/lining/liningJoints/insideBoards">
+                            <xsl:value-of
+                                select="concat('translate(', -5 * $countInsideBoards, ',', 0, ')')"
+                            />
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <desc xmlns="http://www.w3.org/2000/svg">
             <xsl:value-of select="$location"/>
             <xsl:text>&#32;board</xsl:text>
         </desc>
         <g xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="transform">
-                <xsl:choose>
-                    <xsl:when test="ancestor::book/spine/profile/shape/flat">
-                        <xsl:text>translate(0,-2)</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>translate(-2,0)</xsl:text>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$explodeBoards"/>
             </xsl:attribute>
             <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round"
                 stroke="url(#fading)" stroke-width="0.2" fill="url(#thicknessCutoutTile)">
@@ -325,14 +357,7 @@
         </g>
         <g xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="transform">
-                <xsl:choose>
-                    <xsl:when test="ancestor::book/spine/profile/shape/flat">
-                        <xsl:text>translate(0,-2)</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>translate(-2,0)</xsl:text>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$explodeBoards"/>
             </xsl:attribute>
             <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round"
                 stroke-opacity="0" fill-opacity="0.1" fill="url(#fading)">
@@ -622,7 +647,8 @@
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$arc_tMin/ytMin"/>
                 <xsl:text>&#32;Q</xsl:text>
-                <xsl:value-of select="if (profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius else $Ox + $boardLength + $arcShape/xRadius"/>
+                <xsl:value-of
+                    select="if (profile/joints/angled) then $Ox + $boardLength *.94 + $arcShape/xRadius else $Ox + $boardLength + $arcShape/xRadius"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Oy"/>
                 <xsl:text>&#32;</xsl:text>
@@ -714,21 +740,25 @@
         <xsl:variable name="sectionSeparation">
             <xsl:value-of select="($bookblockThickness div 2) div $sections"/>
         </xsl:variable>
+        <xsl:variable name="implodeFlyleafLine">
+            <xsl:choose>
+                <xsl:when test="lining/yes/lining/liningJoints[insideBoards | pastedToFlyleaf]">
+                    <xsl:value-of
+                        select="$Oy + $boardThickness + (($sectionSeparation * 2) + 1) * $countInsideBoards"
+                    />
+                </xsl:when>
+                <xsl:when
+                    test="lining/yes/lining/liningJoints[outsideBoards | NC | free | NK | other]">
+                    <xsl:value-of select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:choose>
             <xsl:when test="$counter lt $sections">
                 <path xmlns="http://www.w3.org/2000/svg" stroke="url(#fading)" stroke-width="0.1"
                     fill="none">
                     <xsl:attribute name="stroke-opacity">
-                        <xsl:choose>
-                            <xsl:when test="$counter eq $sections">
-                                <xsl:value-of
-                                    select="if (ancestor::book/sewing/stations/station/type/unsupported/doubleSequence) then .6 else .3"
-                                />
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select=".6"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:value-of select=".6"/>
                     </xsl:attribute>
                     <xsl:attribute name="d">
                         <xsl:text>M</xsl:text>
@@ -745,8 +775,7 @@
                                                 <xsl:value-of
                                                   select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[1])"/>
                                                 <xsl:text>,</xsl:text>
-                                                <xsl:value-of
-                                                  select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                                <xsl:value-of select="$implodeFlyleafLine"/>
                                                 <xsl:text>&#32;</xsl:text>
                                                 <xsl:value-of
                                                   select="
@@ -754,14 +783,11 @@
                                                             then $Ox + $boardLength * .95 - ($boardLength * .1) div $sections * $counter 
                                                             else $Ox + $boardLength * .85 - ($boardLength * .1) div $sections * $counter"/>
                                                 <xsl:text>,</xsl:text>
-                                                <xsl:value-of
-                                                  select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                                <xsl:value-of select="$implodeFlyleafLine"/>
                                                 <xsl:text>&#32;L</xsl:text>
                                                 <xsl:value-of select="$Ox"/>
                                                 <xsl:text>,</xsl:text>
-                                                <xsl:value-of
-                                                  select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
-                                                />
+                                                <xsl:value-of select="$implodeFlyleafLine"/>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:text>&#32;L</xsl:text>
@@ -778,8 +804,7 @@
                                         <xsl:value-of
                                             select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[1])"/>
                                         <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                        <xsl:value-of select="$implodeFlyleafLine"/>
                                         <xsl:text>&#32;</xsl:text>
                                         <xsl:value-of
                                             select="
@@ -787,14 +812,11 @@
                                                     then $Ox + $boardLength * .95 - ($boardLength * .1) div $sections * $counter 
                                                     else $Ox + $boardLength * .85 - ($boardLength * .1) div $sections * $counter"/>
                                         <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                        <xsl:value-of select="$implodeFlyleafLine"/>
                                         <xsl:text>&#32;L</xsl:text>
                                         <xsl:value-of select="$Ox"/>
                                         <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
-                                        />
+                                        <xsl:value-of select="$implodeFlyleafLine"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xsl:when>
@@ -803,60 +825,48 @@
                                 <xsl:value-of
                                     select="$Ox + $boardLength * .9 + ($bookblockThickness * .01)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                                 <xsl:text>&#32;</xsl:text>
                                 <xsl:value-of
                                     select="$Ox + $boardLength * .9 - ($bookblockThickness * .01)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Ox"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
-                                />
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                             </xsl:when>
                             <xsl:when test="profile/joints/angled">
                                 <xsl:text>&#32;Q</xsl:text>
                                 <xsl:value-of
                                     select="$Ox + $boardLength + 1.5*$sectionSeparation + ($bookblockThickness * .001)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                                 <xsl:text>&#32;</xsl:text>
                                 <xsl:value-of
                                     select="$Ox + $boardLength - ($bookblockThickness * .01)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Ox"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
-                                />
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                             </xsl:when>
                             <xsl:when test="profile/joints/square">
                                 <xsl:text>&#32;Q</xsl:text>
                                 <xsl:value-of
                                     select="$Ox + $boardLength + $sectionSeparation + ($bookblockThickness * .01)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                                 <xsl:text>&#32;</xsl:text>
                                 <xsl:value-of
                                     select="$Ox + $boardLength - ($bookblockThickness * .01)  * ($counter)"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$Ox"/>
                                 <xsl:text>,</xsl:text>
-                                <xsl:value-of
-                                    select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
-                                />
+                                <xsl:value-of select="$implodeFlyleafLine"/>
                             </xsl:when>
                             <xsl:when test="profile/joints[none | flat]">
                                 <xsl:choose>
@@ -873,20 +883,16 @@
                                         <xsl:value-of
                                             select="xs:double(tokenize(tokenize($i, '; ')[$counter], ',')[1])"/>
                                         <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                        <xsl:value-of select="$implodeFlyleafLine"/>
                                         <xsl:text>&#32;</xsl:text>
                                         <xsl:value-of
                                             select="$Ox + $boardLength * .85 - ($boardLength * .1) div $sections * $counter"/>
                                         <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"/>
+                                        <xsl:value-of select="$implodeFlyleafLine"/>
                                         <xsl:text>&#32;L</xsl:text>
                                         <xsl:value-of select="$Ox"/>
                                         <xsl:text>,</xsl:text>
-                                        <xsl:value-of
-                                            select="$Oy + $boardThickness + ($sectionSeparation * $counter)"
-                                        />
+                                        <xsl:value-of select="$implodeFlyleafLine"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xsl:when>
@@ -896,7 +902,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="lining">
         <xsl:param name="boardThickness"/>
         <xsl:param name="xRadius" as="xs:double"/>
@@ -905,7 +911,9 @@
         <xsl:param name="ytMin"/>
         <xsl:for-each select="lining/yes/lining">
             <xsl:variable name="boardLengthVariable">
-                <xsl:value-of select="if (ancestor::spine/profile/joints/angled) then $boardLength * .9 else $boardLength"/>
+                <xsl:value-of
+                    select="if (ancestor::spine/profile/joints/angled) then $boardLength * .86 else $boardLength"
+                />
             </xsl:variable>
             <xsl:variable name="arcParameters">
                 <xsl:choose>
@@ -914,25 +922,25 @@
                     </xsl:when>
                     <xsl:when test="ancestor::spine/profile/shape/flat">
                         <value1>
-                            <xsl:value-of select="-4"/>
+                            <xsl:value-of select="-4 * position()"/>
                         </value1>
                         <value2>
-                            <xsl:value-of select="2"/>
+                            <xsl:value-of select="2 * position()"/>
                         </value2>
                     </xsl:when>
                     <xsl:when test="ancestor::spine/profile/shape[slightRound | round | heavyRound]">
                         <value1>
-                            <xsl:value-of select="-2"/>
+                            <xsl:value-of select="-2 * position()"/>
                         </value1>
                         <value2>
-                            <xsl:value-of select="-4"/>
+                            <xsl:value-of select="-4 * position()"/>
                         </value2>
                     </xsl:when>
                     <xsl:when test="ancestor::spine/profile/shape/NK">
-                        <!-- Do something -->
+                        <!-- Do something? -->
                     </xsl:when>
                     <xsl:when test="ancestor::spine/profile/shape/other">
-                        <!-- Do something -->
+                        <!-- Do something? -->
                     </xsl:when>
                 </xsl:choose>
             </xsl:variable>
@@ -942,35 +950,126 @@
                 </xsl:attribute>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
-                    <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
-                    <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy + $arcParameters/value1"/>
-                    <!--<xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Ox + $boardLength + $arcParameters/arc else $Ox + $boardLength - 2"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $arcParameters/line else $Oy - 2"/>-->
-                    <xsl:text>&#32;Q</xsl:text>
-                    <xsl:value-of select="if (ancestor::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $xRadius + 2 else $Ox + $boardLength + $xRadius + 2"/>
-                    <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy + $arcParameters/value2"/>
-                    <xsl:text>&#32;</xsl:text>
                     <xsl:value-of
-                        select="if (ancestor::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $xRadius + 2 else $Ox + $boardLength + $xRadius + 2"/>
+                        select="if (ancestor::spine/profile/shape/flat) then $Ox + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
                     <xsl:text>,</xsl:text>
-                    <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
+                    <xsl:choose>
+                        <xsl:when test="ancestor::spine/profile/shape/flat and ./liningJoints/insideBoards"> 
+                            <xsl:value-of
+                                select="$Oy + $boardThickness - $arcParameters/value2 -.5"/>
+                            <xsl:text>&#32;L</xsl:text>
+                            <xsl:value-of select="$Ox + $boardLengthVariable + $arcParameters/value2"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of
+                                select="$Oy + $arcParameters/value1"/>
+                            <xsl:text>&#32;Q</xsl:text>
+                            <xsl:value-of
+                                select="if (ancestor::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $xRadius + 2 else $Ox + $boardLength + $xRadius + (2 * position())"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $arcParameters/value2"/>
+                            <xsl:text>&#32;</xsl:text>
+                            <xsl:value-of
+                                select="if (ancestor::spine/profile/joints/angled) then $Ox + $boardLength *.94 + $xRadius + 2 else $Ox + $boardLength + $xRadius + (2 * position())"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $boardThickness + ($bookblockThickness div 2)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:attribute>
             </path>
             <xsl:choose>
                 <xsl:when test="liningJoints/NC">
                     <!-- Do something -->
                 </xsl:when>
-                <xsl:when test="liningJoints/insideBoards">
-                    <!-- Do something -->
+                <xsl:when test="liningJoints[insideBoards | pastedToFlyleaf]">
+                    <!-- NB: ADD GLUE PATTER FOR PASTEDTOFLYLEAF -->
+                    <xsl:choose>
+                        <xsl:when test="ancestor::spine/profile/shape/flat">
+                            <path xmlns="http://www.w3.org/2000/svg">
+                                <xsl:attribute name="class">
+                                    <xsl:text>lineFading</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="d">
+                                    <xsl:text>M</xsl:text>
+                                    <xsl:value-of select="$Ox"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value2 -.5 - 0.000001"/>
+                                    <xsl:text>&#32;L</xsl:text>
+                                    <xsl:value-of select="$Ox + $boardLength + $arcParameters/value2"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value2 -.5"/>
+                                </xsl:attribute>
+                            </path>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <path xmlns="http://www.w3.org/2000/svg">
+                                <xsl:attribute name="class">
+                                    <xsl:text>lineFading</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="d">
+                                    <xsl:text>M</xsl:text>
+                                    <xsl:value-of select="$Ox"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value1 +.5 - 0.000001"/>
+                                    <xsl:choose>
+                                        <xsl:when test="ancestor::book/spine/profile/joints/acute">
+                                            <xsl:text>&#32;L</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength * .9 + $arcParameters/value2"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;Q</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value2"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy  + $boardThickness - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value1"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $arcParameters/value1"/>
+                                        </xsl:when>
+                                        <xsl:when test="ancestor::book/spine/profile/joints/angled">
+                                            <xsl:text>&#32;L</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value1"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;Q</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value1 +1.5"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy  + $boardThickness *.95 - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLengthVariable + $arcParameters/value1"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $arcParameters/value1"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <!-- None, flat, square have a squared board -->
+                                            <!-- Also valid for quadrant and slight -->
+                                            <xsl:text>&#32;L</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength * .85 + $arcParameters/value1"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;Q</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value2"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $boardThickness - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value1 -.5"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $boardThickness * .5 - $arcParameters/value1 +.5"/>
+                                            <xsl:text>&#32;L</xsl:text>
+                                            <xsl:value-of select="$Ox + $boardLength + $arcParameters/value1"/>
+                                            <xsl:text>,</xsl:text>
+                                            <xsl:value-of select="$Oy + $arcParameters/value1"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:attribute>
+                            </path>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:when>
                 <xsl:when test="liningJoints/outsideBoards">
                     <desc xmlns="http://www.w3.org/2000/svg">Lining outside boards</desc>
-                    <!-- NB -->
-                    <!-- Choose different paths according to the different spine shapes -->
-                    <!-- NB -->
                     <path xmlns="http://www.w3.org/2000/svg">
                         <xsl:attribute name="class">
                             <xsl:text>lineFading</xsl:text>
@@ -981,19 +1080,12 @@
                             <xsl:text>,</xsl:text>
                             <xsl:value-of select="$Oy + $arcParameters/value1 - 0.000001"/>
                             <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
+                            <xsl:value-of
+                                select="if (ancestor::spine/profile/shape/flat) then $Oy + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
                             <xsl:text>,</xsl:text>
                             <xsl:value-of select="$Oy + $arcParameters/value1"/>
-                            <!--<xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + 4 else $Oy - 2"/>
-                            <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Ox + $boardLength + $arcParameters/arc else $Ox + $boardLength - 2"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of select="if (ancestor::spine/profile/shape/flat) then $Oy + $arcParameters/line - 0.001 else $Oy - 1.999"/>-->
                         </xsl:attribute>
                     </path>
-                </xsl:when>
-                <xsl:when test="liningJoints/pastedToFlyleaf">
-                    <!-- Do something -->
                 </xsl:when>
                 <xsl:when test="liningJoints/free">
                     <!-- Do something -->
