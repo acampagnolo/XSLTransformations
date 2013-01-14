@@ -361,8 +361,17 @@
             <xsl:value-of select="$location"/>
             <xsl:text>&#32;board</xsl:text>
         </desc>
+        <mask xmlns="http://www.w3.org/2000/svg" id="fademaskBoards">
+            <path xmlns="http://www.w3.org/2000/svg" fill="url(#fading2)">
+                <xsl:attribute name="d">
+                    <xsl:call-template name="boardPath">
+                        <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                    </xsl:call-template>
+                </xsl:attribute>
+            </path>
+        </mask>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round"
-            stroke="url(#fading)" stroke-width="0.5" fill="url(#thicknessCutoutTile)">
+            stroke="url(#fading)" stroke-width="0.2" fill="url(#thicknessCutoutTile)"  mask="url(#fademaskBoards)">
             <!--<xsl:attribute name="class">
                     <xsl:text>line</xsl:text>
                 </xsl:attribute>-->
