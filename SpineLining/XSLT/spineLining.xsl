@@ -108,7 +108,6 @@
         />
     </xsl:variable>
 
-
     <xsl:variable name="sectionThickness">
         <xsl:value-of select="1"/>
     </xsl:variable>
@@ -149,9 +148,10 @@
                         <xsl:value-of select="$Oy"/>
                     </xsl:attribute>
                     <g xmlns="http://www.w3.org/2000/svg"
-                        transform="translate(-10,50) rotate(-90,50,0)">
+                        transform="translate(40,50) rotate(-90,50,0)">
                         <xsl:apply-templates/>
                     </g>
+                    <xsl:call-template name="aboveSilouette"/>
                 </svg>
             </svg>
         </xsl:result-document>
@@ -960,10 +960,27 @@
                     </xsl:when>
                 </xsl:choose>
             </xsl:variable>
+            <xsl:variable name="certainty">
+                <xsl:choose>
+                    <xsl:when test="liningJoints[NC | NK]">
+                        <xsl:value-of>
+                            <xsl:value-of select="52"/>
+                        </xsl:value-of>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="100"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
                 <xsl:attribute name="class">
                     <xsl:text>line</xsl:text>
                 </xsl:attribute>
+                <!-- Certainty adjustment -->
+                <xsl:call-template name="certainty">
+                    <xsl:with-param name="certainty" select="$certainty"/>
+                    <xsl:with-param name="type" select="'4'"/>
+                </xsl:call-template>
                 <xsl:attribute name="d">
                     <xsl:text>M</xsl:text>
                     <xsl:value-of
@@ -999,6 +1016,10 @@
             </path>
             <xsl:choose>
                 <xsl:when test="liningJoints[insideBoards | pastedToFlyleaf]">
+                    <desc xmlns="http://www.w3.org/2000/svg">
+                        <xsl:text>Lining:</xsl:text>
+                        <xsl:value-of select="liningJoints/node()/name()"/>
+                    </desc>
                     <xsl:choose>
                         <xsl:when test="ancestor::spine/profile/shape/flat">
                             <path xmlns="http://www.w3.org/2000/svg">
@@ -1138,17 +1159,35 @@
                         </xsl:when>
                     </xsl:choose>
                 </xsl:when>
-                <xsl:when test="liningJoints/outsideBoards">
-                    <desc xmlns="http://www.w3.org/2000/svg">Lining outside boards</desc>
+                <xsl:when test="liningJoints[outsideBoards | NC | NK]">
+                    <!-- NC and NK: Draw most probable - outsideBoards: 51.74% - with high degree of uncertainty -->
+                    <desc xmlns="http://www.w3.org/2000/svg">
+                        <xsl:text>Lining:</xsl:text>
+                        <xsl:value-of select="liningJoints/node()/name()"/>
+                    </desc>
                     <path xmlns="http://www.w3.org/2000/svg">
                         <xsl:attribute name="class">
-                            <xsl:text>lineFading</xsl:text>
+                            <!-- NB: the filter for certainty blurring does not work well with faded lines -->
+                            <xsl:choose>
+                                <xsl:when test="liningJoints/outsideBoards">
+                                    <xsl:text>lineFading</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>line</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </xsl:attribute>
+                        <!-- Certainty adjustment -->
+                        <xsl:call-template name="certainty">
+                            <xsl:with-param name="certainty" select="$certainty"/>
+                            <xsl:with-param name="type" select="'3'"/>
+                        </xsl:call-template>
                         <xsl:attribute name="d">
                             <xsl:text>M</xsl:text>
                             <xsl:value-of select="$Ox"/>
                             <xsl:text>,</xsl:text>
-                            <xsl:value-of select="$Oy + $arcParameters/value1 - 0.000001"/>
+                            <xsl:value-of
+                                select="$Oy + $arcParameters/value1 - (if (liningJoints/outsideBoards) then 0.000001 else 0)"/>
                             <xsl:text>&#32;L</xsl:text>
                             <xsl:value-of
                                 select="if (ancestor::spine/profile/shape/flat) then $Oy + $boardLengthVariable + $arcParameters/value2 else $Ox + $boardLengthVariable + $arcParameters/value1"/>
@@ -1158,14 +1197,19 @@
                     </path>
                 </xsl:when>
                 <xsl:when test="liningJoints/free">
+                    <desc xmlns="http://www.w3.org/2000/svg">
+                        <xsl:text>Lining:</xsl:text>
+                        <xsl:value-of select="liningJoints/node()/name()"/>
+                    </desc>
                     <!-- NB -->
                     <!-- NB: what to draw??? -->
                     <!-- NB -->
                 </xsl:when>
-                <xsl:when test="liningJoints[NC | NK]">
-                    <!-- Draw most probable with high degree of uncertainty -->
-                </xsl:when>
                 <xsl:when test="liningJoints/other">
+                    <desc xmlns="http://www.w3.org/2000/svg">
+                        <xsl:text>Lining:</xsl:text>
+                        <xsl:value-of select="liningJoints/node()/name()"/>
+                    </desc>
                     <!-- NB -->
                     <!-- NB: indicate with label 'other'??? -->
                     <!-- NB -->
@@ -1237,6 +1281,234 @@
         </xsl:attribute>
     </xsl:template>
 
+    <xsl:template name="aboveSilouette">
+        <mask xmlns="http://www.w3.org/2000/svg" id="fademaskAboveSilouette">
+            <rect xmlns="http://www.w3.org/2000/svg" fill="url(#doubleFading2)">
+                <xsl:attribute name="x">
+                    <xsl:value-of select="$Ox + 8"/>
+                </xsl:attribute>
+                <xsl:attribute name="y">
+                    <xsl:value-of select="$Oy + 120"/>
+                </xsl:attribute>
+                <xsl:attribute name="width">
+                    <xsl:value-of
+                        select="($Ox + 90) - ($Ox + 8) + $leftBoardThickness + $bookblockThickness + $rightBoardThickness + (($Ox + 90) - ($Ox + 8))"
+                    />
+                </xsl:attribute>
+                <xsl:attribute name="height">
+                    <xsl:value-of select="/book/dimensions/height + 20"/>
+                </xsl:attribute>
+            </rect>
+        </mask>
+        <path xmlns="http://www.w3.org/2000/svg" mask="url(#fademaskAboveSilouette)">
+            <xsl:attribute name="stroke-dasharray">
+                <xsl:choose>
+                    <xsl:when
+                        test="boolean(/book/spine/lining/yes/lining/liningJoints[outsideBoards | NC | NK])">
+                        <xsl:text>1&#32;1</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>0&#32;0</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text>line4</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="$Ox + 10"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + 90"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + 90"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130 + /book/dimensions/height"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + 10"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130 + /book/dimensions/height"/>
+                <xsl:text>&#32;M</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness + (($Ox + 90) - ($Ox + 10))"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130 + /book/dimensions/height"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness + (($Ox + 90) - ($Ox + 10))"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130 + /book/dimensions/height"/>
+            </xsl:attribute>
+        </path>
+        <path xmlns="http://www.w3.org/2000/svg" mask="url(#fademaskAboveSilouette)">
+            <xsl:attribute name="stroke-dasharray">
+                <xsl:choose>
+                    <xsl:when
+                        test="boolean(/book/spine/lining/yes/lining/types/type[overall | comb | panel | continuous | NC | NK])">
+                        <xsl:text>1&#32;1</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>0&#32;0</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text>line4</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="d">
+                <xsl:text>&#32;M</xsl:text>
+                <xsl:value-of select="$Ox + 90"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130"/>
+                <xsl:text>&#32;M</xsl:text>
+                <xsl:value-of select="$Ox + 90"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130 + /book/dimensions/height"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + 130 + /book/dimensions/height"/>
+            </xsl:attribute>
+        </path>
+        <xsl:call-template name="liningAbove">
+            <xsl:with-param name="bookHeight" select=" /book/dimensions/height"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="liningAbove">
+        <xsl:param name="bookHeight"/>
+        <xsl:for-each select="/book/spine/lining/yes/lining">
+            <xsl:variable name="dashArray">
+                <xsl:choose>
+                    <xsl:when test="last()">
+                        <xsl:text>0&#32;0</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="position() eq last() - 1">
+                        <xsl:text>1&#32;2</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="position() eq last() - 2">
+                        <xsl:text>3&#32;2&#32;1&#32;2</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>5&#32;2</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <desc xmlns="http://www.w3.org/2000/svg">
+                <xsl:text>Lining number:</xsl:text>
+                <xsl:value-of select="position()"/>
+            </desc>
+            <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round"
+                mask="url(#fademaskAboveSilouette)">
+                <xsl:attribute name="stroke-dasharray">
+                    <xsl:value-of select="$dashArray"/>
+                </xsl:attribute>
+                <xsl:attribute name="class">
+                    <xsl:text>line</xsl:text>
+                </xsl:attribute>
+                <!--<!-\- Certainty adjustment -\->
+                <xsl:call-template name="certainty">
+                    <xsl:with-param name="certainty" select="$certainty"/>
+                    <xsl:with-param name="type" select="'4'"/>
+                </xsl:call-template>-->
+                <xsl:attribute name="d">
+                    <xsl:call-template name="liningAbovePath">
+                        <xsl:with-param name="bookHeight" select="$bookHeight"/>
+                    </xsl:call-template>
+                </xsl:attribute>
+            </path>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="liningAbovePath">
+        <xsl:param name="bookHeight"/>
+        <xsl:choose>
+            <xsl:when test="types/type/overall">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="$Ox + 90 - 70"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness + 70"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness + 70"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130 + $bookHeight"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + 90 - 70"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130 + $bookHeight"/>
+                <xsl:text>&#32;z</xsl:text>
+            </xsl:when>
+            <xsl:when test="types/type/transverse">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="types/type/comb">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="types/type/panel">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="types/type/patch">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="types/type/continuous">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="$Ox + 90"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of
+                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130 + $bookHeight"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + 90"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy +130 + $bookHeight"/>
+                <xsl:text>&#32;z</xsl:text>
+            </xsl:when>
+            <xsl:when test="types/type/NC">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="types/type/NK">
+                <!-- Do something -->
+            </xsl:when>
+            <xsl:when test="types/type/other">
+                <!-- Do something -->
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
     <!-- Uncertainty template -->
     <xsl:template name="certainty">
         <xsl:param name="certainty" select="100" as="xs:integer"/>
@@ -1266,6 +1538,15 @@
                     <xsl:when test="$certainty lt 100">
                         <xsl:attribute name="filter">
                             <xsl:text>url(#f3)</xsl:text>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$type = '4'">
+                <xsl:choose>
+                    <xsl:when test="$certainty lt 100">
+                        <xsl:attribute name="filter">
+                            <xsl:text>url(#f4)</xsl:text>
                         </xsl:attribute>
                     </xsl:when>
                 </xsl:choose>
