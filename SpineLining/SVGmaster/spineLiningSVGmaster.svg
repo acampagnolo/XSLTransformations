@@ -38,10 +38,10 @@
         </linearGradient>
         <linearGradient id="doubleFading2">
             <stop offset="0%" stop-color="#000000"/>
-            <stop offset="20%" stop-color="#666666"/>
+            <stop offset="30%" stop-color="#666666"/>
             <stop offset="40%" stop-color="#FFFFFF"/>
             <stop offset="60%" stop-color="#FFFFFF"/>
-            <stop offset="80%" stop-color="#666666"/>
+            <stop offset="70%" stop-color="#666666"/>
             <stop offset="100%" stop-color="#000000"/>
         </linearGradient>
         <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
