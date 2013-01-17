@@ -1597,7 +1597,7 @@
         <xsl:for-each select="/book/spine/lining/yes/lining">
             <xsl:variable name="dashArray">
                 <xsl:choose>
-                    <xsl:when test="last()">
+                    <xsl:when test="position() eq last()">
                         <xsl:text>0&#32;0</xsl:text>
                     </xsl:when>
                     <xsl:when test="position() eq last() - 1">
@@ -1680,10 +1680,11 @@
                                 select="$dashArray_underboards"/>
                         </xsl:call-template>
                         <!-- Call spine template for left side with dashed lines -->
-                        <xsl:call-template name="liningSpine_comb_left">
+                        <xsl:call-template name="liningSpine_comb">
                             <xsl:with-param name="bookHeight" select="$bookHeight"/>
                             <xsl:with-param name="countCombLining" select="$countCombLining"/>
                             <xsl:with-param name="dashArray" select="$dashArray"/>
+                            <xsl:with-param name="left1right2" select="1"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="preceding-sibling::lining[1]/types/type/comb">
@@ -1694,10 +1695,11 @@
                                 select="$dashArray_underboards"/>
                         </xsl:call-template>
                         <!-- Call spine template for right side -->
-                        <xsl:call-template name="liningSpine_comb_right">
+                        <xsl:call-template name="liningSpine_comb">
                             <xsl:with-param name="bookHeight" select="$bookHeight"/>
                             <xsl:with-param name="countCombLining" select="$countCombLining"/>
                             <xsl:with-param name="dashArray" select="$dashArray"/>
+                            <xsl:with-param name="left1right2" select="2"/>
                         </xsl:call-template>
                     </xsl:when>
                 </xsl:choose>
@@ -1863,10 +1865,39 @@
         </path>
     </xsl:template>
 
-    <xsl:template name="liningSpine_comb_left">
+    <xsl:template name="liningSpine_comb">
         <xsl:param name="bookHeight"/>
         <xsl:param name="countCombLining"/>
         <xsl:param name="dashArray"/>
+        <xsl:param name="left1right2"/>
+        <xsl:variable name="xValue">
+            <xsl:variable name="values">
+                <left>
+                    <xsl:value-of select="$Ox + 90"/>
+                </left>
+                <right>
+                    <xsl:value-of select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                </right>
+            </xsl:variable>
+            <xsl:choose>
+                <xsl:when test="$left1right2 eq 1">
+                    <value1>
+                        <xsl:value-of select="$values/left"/>
+                    </value1>
+                    <value2>
+                        <xsl:value-of select="$values/right"/>
+                    </value2>
+                </xsl:when>
+                <xsl:when test="$left1right2 eq 2">
+                    <value1>
+                        <xsl:value-of select="$values/right"/>
+                    </value1>
+                    <value2>
+                        <xsl:value-of select="$values/left"/>
+                    </value2>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
         <!--        <xsl:variable name="countSlottedStations">
             <!-\- NB: kettlestich stations are not counted as the schema as it is does not indicate whether the head and tail panels are divided to avoid the kettlestitch -\->
             <xsl:value-of select="count(station[not(type/unsupported/kettleStitch)])"/>
@@ -1883,130 +1914,75 @@
                     <xsl:with-param name="certainty" select="$certainty"/>
                     <xsl:with-param name="type" select="'4'"/>
                 </xsl:call-template>-->
-            <xsl:attribute name="pippo" select="2"/>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
-                <xsl:value-of select="$Ox + 90"/>
+                <xsl:value-of select="$xValue/value1"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Oy +130"/>
                 <xsl:text>&#32;L</xsl:text>
                 <xsl:value-of
-                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
+                    select="$xValue/value2"/>
                 <xsl:text>,</xsl:text>
                 <xsl:value-of select="$Oy +130"/>
-                <xsl:for-each select="ancestor::book/sewing/stations/station[group/current]">
+                <xsl:for-each select="ancestor::book/sewing/stations/station[not(type/unsupported/kettleStitch)][group/current]">
+                    <xsl:variable name="gapDimension">
+                        <xsl:choose>
+                            <xsl:when test="type[NC | NK | other | supported]">
+                                <xsl:choose>
+                                    <xsl:when test="type/supported/type/single[raised]">
+                                        <xsl:value-of select="2.5"/>
+                                    </xsl:when>
+                                    <xsl:when test="type/supported/type[double | single/flat]">
+                                        <xsl:value-of select="5"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="2.5"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:text>&#32;L</xsl:text>
+                    <xsl:value-of
+                        select="$xValue/value2"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of
+                        select="$Oy +130 + measurement - $gapDimension"/>
+                    <xsl:text>&#32;L</xsl:text>
+                    <xsl:value-of
+                        select="$xValue/value1"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of
+                        select="$Oy +130 + measurement - $gapDimension"/>
+                    <xsl:text>&#32;L</xsl:text>
+                    <xsl:value-of
+                        select="$xValue/value1"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of
+                        select="$Oy +130 + measurement + $gapDimension"/>
+                    <xsl:text>&#32;L</xsl:text>
+                    <xsl:value-of
+                        select="$xValue/value2"/>
+                    <xsl:text>,</xsl:text>
+                    <xsl:value-of
+                        select="$Oy +130 + measurement + $gapDimension"/>
                     <xsl:choose>
                         <xsl:when test="position() eq last()">
-                            
+                            <xsl:text>&#32;L</xsl:text>
+                            <xsl:value-of
+                                select="$xValue/value2"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of
+                                select="$Oy +130 + $bookHeight"/>
+                            <xsl:text>&#32;L</xsl:text>
+                            <xsl:value-of
+                                select="$xValue/value1"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of
+                                select="$Oy +130 + $bookHeight"/>
                         </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of
-                                select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of
-                                select="$Oy +130 + following-sibling::station[not(type/unsupported/kettleStitch)][1]/measurement - 5"/>
-                            <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of
-                                select="$Ox + 90"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of
-                                select="$Oy +130 + following-sibling::station[not(type/unsupported/kettleStitch)][1]/measurement - 5"/>
-                            <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of
-                                select="$Ox + 90"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of
-                                select="$Oy +130 + following-sibling::station[not(type/unsupported/kettleStitch)][1]/measurement + 5"/>
-                            <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of
-                                select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of
-                                select="$Oy +130 + following-sibling::station[not(type/unsupported/kettleStitch)]/measurement[text() eq $sewingStationMeasurements_notKettlestitch/value[1]] +5"/>
-                            <!-- for i in [1 to $countTotal.... -->
-                        </xsl:otherwise>
                     </xsl:choose>
                 </xsl:for-each>
-                <!--<xsl:for-each select="$sewingStationMeasurements_notKettlestitch/value">
-                    <xsl:choose>
-                        <xsl:when test="position() eq last()">
-                            
-                        </xsl:when>
-                        <xsl:otherwise><!-\-
-                            <xsl:text>&#32;L</xsl:text>
-                            <xsl:value-of
-                                select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                            <xsl:text>,</xsl:text>
-                            <xsl:value-of
-                                select="$Oy +130 + $sewingStationMeasurements_notKettlestitch/value[position()]"/>-\->
-                            <xsl:value-of select="$sewingStationMeasurements_notKettlestitch/value[position()]"></xsl:value-of>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    
-                    
-                </xsl:for-each>-->
-                
-                <!--<xsl:text>&#32;L</xsl:text>
-                <xsl:value-of
-                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of
-                    select="$Oy +130 + $sewingStationMeasurements_notKettlestitch/value[1]"/>-->
-
-                <!--<xsl:text>&#32;M</xsl:text>
-                <xsl:value-of select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy +130 + $bookHeight"/>
-                <xsl:text>&#32;L</xsl:text>
-                <xsl:value-of select="$Ox + 90"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy +130 + $bookHeight"/>-->
-            </xsl:attribute>
-        </path>
-        <!--
-        <pippo>
-            <xsl:copy-of select="$sewingStationMeasurements_notKettlestitch/value[position() eq last()]"/>
-            <!-\-
-            <xsl:value-of select="tokenize($sewingStationMeasurements_notKettlestitch, '; ')[6]"/>-\->
-        </pippo>-->
-    </xsl:template>
-
-    <xsl:template name="liningSpine_comb_right">
-        <xsl:param name="bookHeight"/>
-        <xsl:param name="countCombLining"/>
-        <xsl:param name="dashArray"/>
-        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
-            <xsl:attribute name="stroke-dasharray">
-                <xsl:value-of select="$dashArray"/>
-            </xsl:attribute>
-            <xsl:attribute name="class">
-                <xsl:text>line</xsl:text>
-            </xsl:attribute>
-            <!--<!-\- Certainty adjustment -\->
-                <xsl:call-template name="certainty">
-                    <xsl:with-param name="certainty" select="$certainty"/>
-                    <xsl:with-param name="type" select="'4'"/>
-                </xsl:call-template>-->
-            <xsl:attribute name="d">
-                <xsl:text>M</xsl:text>
-                <xsl:value-of select="$Ox + 90"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy +130"/>
-                <xsl:text>&#32;L</xsl:text>
-                <xsl:value-of
-                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy +130"/>
-                <xsl:text>&#32;M</xsl:text>
-                <xsl:value-of
-                    select="$Ox + 90 + $leftBoardThickness + $bookblockThickness + $rightBoardThickness"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy +130 + $bookHeight"/>
-                <xsl:text>&#32;L</xsl:text>
-                <xsl:value-of select="$Ox + 90"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$Oy +130 + $bookHeight"/>
             </xsl:attribute>
         </path>
     </xsl:template>

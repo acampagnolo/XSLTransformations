@@ -6,17 +6,42 @@
     xmlns:math="http://exslt.org/math" exclude-result-prefixes="xs svg xlink lig dict math"
     version="2.0">
     
+    <!--<xsl:variable name="mmm">
+        <xsl:perform-sort select="/book/sewing/stations/station">
+            <xsl:sort select="measurement"/>
+        </xsl:perform-sort>
+    </xsl:variable>
+    
     <xsl:template match="/">
+        <xsl:copy-of select="$mmm"/>
+    </xsl:template>-->
+    
+    <xsl:variable name="sorted">
         <xsl:for-each-group select="book/sewing/stations/station" group-by="name(group/child::node()[2])">
             <xsl:for-each select="current-group()">
                 <xsl:sort select="measurement" data-type="number" order="ascending"/>
-                <!--<xsl:value-of select="measurement"/>
-            <xsl:text>;</xsl:text>-->
                 <xsl:element name="stations">
                     <xsl:copy-of select="."/>
                 </xsl:element>
             </xsl:for-each>
         </xsl:for-each-group>
+    </xsl:variable>
+    
+    <xsl:template match="/">
+        <xsl:value-of select="$sorted/stations/station/measurement"/>
     </xsl:template>
+    
+    <!--<xsl:template match="/">
+        <xsl:for-each-group select="book/sewing/stations/station" group-by="name(group/child::node()[2])">
+            <xsl:for-each select="current-group()">
+                <xsl:sort select="measurement" data-type="number" order="ascending"/>
+                <!-\-<xsl:value-of select="measurement"/>
+            <xsl:text>;</xsl:text>-\->
+                <xsl:element name="stations">
+                    <xsl:copy-of select="."/>
+                </xsl:element>
+            </xsl:for-each>
+        </xsl:for-each-group>
+    </xsl:template>-->
     
 </xsl:stylesheet>
