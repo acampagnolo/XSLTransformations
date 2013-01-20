@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../CSS/style.css" type="text/css"?>
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
+    width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="xMinYMin meet"
+    version="1.1">
+    <desc>Furniture SVG Master</desc>
+    <defs>
+        <filter id="f1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0.5"/>
+        </filter>
+        <linearGradient id="fading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="fading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="doubleFading">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="doubleFading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="30%" stop-color="#666666"/>
+            <stop offset="40%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#FFFFFF"/>
+            <stop offset="70%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
+            patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
+            <path d="M0,0 L5,50" class="line2" fill="none" stroke="#666666" stroke-width="0.1"
+                stroke-linejoin="miter"/>
+        </pattern>
+    </defs>
+
+    <!-- Definitions are called here -->
+    
+    <g id="boardProfile">
+        <path d="M0,0 L50,0 50,10 0,10z" stroke="url(#fading)" stroke-width="0.5"
+            fill="url(#thicknessCutoutTile)"/>
+        <path d="M0,0 L50,0 50,10 0,10z" stroke-opacity="0" fill-opacity="0.1"
+            fill="url(#fading)"/>
+    </g>
+    
+    <g transform="translate(-10,50) rotate(-90,50,0)">
+        <mask id="fademask1">
+            <path d="M0,0 L50,0 50,10 0,10 z" fill="url(#fading2)"/>
+        </mask>
+        <path d="M0,0 L50,0 50,10 0,10 z" stroke="url(#fading)" stroke-width="0.5"
+            fill="url(#thicknessCutoutTile)" mask="url(#fademask1)"/>
+        <path d="M0,0 L50,0 50,10 0,10z" stroke-opacity="0" fill-opacity="0.1"
+            fill="url(#fading)"/>
+    </g>
+    
+    <line x1="10" x2="90" y1="130" y2="130" stroke="#000000" stroke-width="1"/>
+    
+    <g transform="translate(30,50) rotate(-90,50,0)">
+        <mask id="fademaskPastedToFlyleaf">
+            <path d="M0,0 L50,0 50,10 0,10 z" fill="url(#doubleFading)"/>
+        </mask>
+        <path d="M0,0 L50,0 50,10 0,10 z" stroke="#FFFFFF" stroke-opacity="0" stroke-width="0.5"
+            fill="url(#thicknessCutoutTile)" mask="url(#fademask2)"/>
+    </g>
+    
+    <rect width="100" height="30" x="100" y="100" fill="url(#doubleFading)"/>
+    
+    <path class="line" filter="url(#f3)" d="M0,20 L41,20" stroke-linecap="butt" stroke-dasharray="5 2"/>
+
+
+</svg>
