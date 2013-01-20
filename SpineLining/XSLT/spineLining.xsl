@@ -1656,15 +1656,18 @@
                     <xsl:with-param name="bookHeight" select="$bookHeight"/>
                     <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
                     <xsl:with-param name="left1right2" select="1"/>
+                    <xsl:with-param name="certainty" select="100"/>
                 </xsl:call-template>
                 <xsl:call-template name="liningJoints_overall-comb">
                     <xsl:with-param name="bookHeight" select="$bookHeight"/>
                     <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
-                    <xsl:with-param name="left1right2" select="2"/>
+                    <xsl:with-param name="left1right2" select="2"/>                    
+                    <xsl:with-param name="certainty" select="100"/>
                 </xsl:call-template>
                 <xsl:call-template name="liningSpine_overall">
                     <xsl:with-param name="bookHeight" select="$bookHeight"/>
                     <xsl:with-param name="dashArray" select="$dashArray"/>
+                    <xsl:with-param name="certainty" select="100"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="types/type[transverse | panel | patch]">
@@ -1732,6 +1735,35 @@
             <xsl:when test="types/type[NC | NK]">
                 <!-- Do something -->
                 <!-- Most probable with high degree of uncertainty -->
+                <xsl:choose>
+                    <xsl:when test="ancestor::book/sewing/stations/station/type/supported">
+                        <xsl:call-template name="lining_transversePanelPatch">
+                            <xsl:with-param name="bookHeight" select="$bookHeight"/>
+                            <xsl:with-param name="dashArray" select="$dashArray"/>
+                            <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                            <xsl:with-param name="certainty" select="50"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:when test="ancestor::book/sewing/stations/station/type[unsupported | longStitch | stitched]">
+                        <xsl:call-template name="liningJoints_overall-comb">
+                            <xsl:with-param name="bookHeight" select="$bookHeight"/>
+                            <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                            <xsl:with-param name="left1right2" select="1"/>
+                            <xsl:with-param name="certainty" select="50"/>
+                        </xsl:call-template>
+                        <xsl:call-template name="liningJoints_overall-comb">
+                            <xsl:with-param name="bookHeight" select="$bookHeight"/>
+                            <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                            <xsl:with-param name="left1right2" select="2"/>
+                            <xsl:with-param name="certainty" select="50"/>
+                        </xsl:call-template>
+                        <xsl:call-template name="liningSpine_overall">
+                            <xsl:with-param name="bookHeight" select="$bookHeight"/>
+                            <xsl:with-param name="dashArray" select="$dashArray"/>
+                            <xsl:with-param name="certainty" select="50"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
             <xsl:when test="types/type/other">
                 <!-- Do something -->
@@ -1774,7 +1806,7 @@
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
-        <!-- The extension of the lining on the boards is not give: Add the mask attribute to indicate imprecision: mask="url(#fademaskAboveSilouette)" ?
+        <!-- The extension of the lining on the boards is not given: Add the mask attribute to indicate imprecision: mask="url(#fademaskAboveSilouette)" ?
                 or apply the imprecision filter? -->
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
             <xsl:attribute name="stroke-dasharray">
@@ -1813,6 +1845,7 @@
         <xsl:param name="bookHeight"/>
         <xsl:param name="countCombLining"/>
         <xsl:param name="dashArray"/>
+        <xsl:param name="certainty"/>
         <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
             <xsl:attribute name="stroke-dasharray">
                 <xsl:value-of select="$dashArray"/>
@@ -1820,11 +1853,11 @@
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
             </xsl:attribute>
-            <!--<!-\- Certainty adjustment -\->
+            <!-- Certainty adjustment -->
                 <xsl:call-template name="certainty">
                     <xsl:with-param name="certainty" select="$certainty"/>
                     <xsl:with-param name="type" select="'4'"/>
-                </xsl:call-template>-->
+                </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="$Ox + 90"/>
@@ -1963,6 +1996,7 @@
         <xsl:param name="bookHeight"/>
         <xsl:param name="dashArray"/>
         <xsl:param name="dashArray_underboards"/>
+        <xsl:param name="certainty" select="100"/>
         <xsl:variable name="countPanels">
             <xsl:value-of
                 select="count(ancestor::book/sewing/stations/station[not(type/unsupported/kettleStitch)][group/current]) + 1"
@@ -2170,7 +2204,7 @@
                     <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
                     <xsl:with-param name="countPanels" select="$countPanels"/>
                     <xsl:with-param name="panels" select="$panels"/>
-                    <xsl:with-param name="certainty" select="100"/>
+                    <xsl:with-param name="certainty" select="$certainty"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="location/selected">
@@ -2184,11 +2218,17 @@
                     <xsl:with-param name="certainty" select="50"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="location/NC">
-                <!-- Check for most probable -->
-            </xsl:when>
-            <xsl:when test="location/NK">
-                <!-- Check for most probable -->
+            <xsl:when test="location[NC | NK]">
+                <!-- Check for most probable: all -->
+                <xsl:call-template name="liningPath_transversePanelPatch_all">
+                    <xsl:with-param name="bookHeight" select="$bookHeight"/>
+                    <xsl:with-param name="dashArray" select="$dashArray"/>
+                    <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                    <xsl:with-param name="countPanels" select="$countPanels"/>
+                    <xsl:with-param name="panels" select="$panels"/>
+                    <!-- NB: Adjust uncertainty? -->
+                    <xsl:with-param name="certainty" select="50"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:when test="location/other">
                 <!-- Do something -->
@@ -2205,7 +2245,27 @@
         <xsl:param name="certainty"/>
         <xsl:choose>
             <xsl:when test="types/type/transverse">
-                <!--  -->
+                <xsl:choose>
+                    <xsl:when test="$countPanels mod 2 eq 0">
+                        <xsl:for-each
+                            select="$panels/my:panel[if (xs:integer($countPanels) le 4) then (position() eq 1) or (position() eq last()) or (position() eq $countPanels div 2 + 1) else (position() eq 1) or (position() eq last()) or (position() eq $countPanels div 2) or (position() eq $countPanels div 2 + 1)]">
+                            <xsl:call-template name="lining_transverse">
+                                <xsl:with-param name="dashArray" select="$dashArray"/>
+                                <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                                <xsl:with-param name="certainty" select="$certainty"/>
+                            </xsl:call-template>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:for-each select="$panels/my:panel[position() mod 2 eq 1]">
+                            <xsl:call-template name="lining_transverse">
+                                <xsl:with-param name="dashArray" select="$dashArray"/>
+                                <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                                <xsl:with-param name="certainty" select="$certainty"/>
+                            </xsl:call-template>
+                        </xsl:for-each>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:when test="types/type/panel">
                 <xsl:choose>
@@ -2229,7 +2289,27 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="types/type/patch">
-                <!--  -->
+                <xsl:choose>
+                    <xsl:when test="$countPanels mod 2 eq 0">
+                        <xsl:for-each
+                            select="$panels/my:panel[if (xs:integer($countPanels) le 4) then (position() eq 1) or (position() eq last()) or (position() eq $countPanels div 2 + 1) else (position() eq 1) or (position() eq last()) or (position() eq $countPanels div 2) or (position() eq $countPanels div 2 + 1)]">
+                            <xsl:call-template name="lining_patch">
+                                <xsl:with-param name="dashArray" select="$dashArray"/>
+                                <!-- The shapes are irregular hence the need for uncertainty -->
+                                <xsl:with-param name="certainty" select="50"/>
+                            </xsl:call-template>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:for-each select="$panels/my:panel[position() mod 2 eq 1]">
+                            <xsl:call-template name="lining_patch">
+                                <xsl:with-param name="dashArray" select="$dashArray"/>
+                                <!-- The shapes are irregular hence the need for uncertainty -->
+                                <xsl:with-param name="certainty" select="50"/>
+                            </xsl:call-template>
+                        </xsl:for-each>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -2242,8 +2322,14 @@
         <xsl:param name="panels"/>
         <xsl:param name="certainty"/>
         <xsl:choose>
-            <xsl:when test="types/type/transverse">
-                <!--  -->
+            <xsl:when test="types/type[transverse | NC | NK]">
+                <xsl:for-each select="$panels/my:panel">
+                    <xsl:call-template name="lining_transverse">
+                        <xsl:with-param name="dashArray" select="$dashArray"/>
+                        <xsl:with-param name="dashArray_underboards" select="$dashArray_underboards"/>
+                        <xsl:with-param name="certainty" select="$certainty"/>
+                    </xsl:call-template>
+                </xsl:for-each>
             </xsl:when>
             <xsl:when test="types/type/panel">
                 <xsl:for-each select="$panels/my:panel">
@@ -2254,7 +2340,13 @@
                 </xsl:for-each>
             </xsl:when>
             <xsl:when test="types/type/patch">
-                <!--  -->
+                <xsl:for-each select="$panels/my:panel">
+                    <xsl:call-template name="lining_patch">
+                        <xsl:with-param name="dashArray" select="$dashArray"/>
+                        <!-- The shapes are irregular hence the need for uncertainty -->
+                        <xsl:with-param name="certainty" select="50"/>
+                    </xsl:call-template>
+                </xsl:for-each>
             </xsl:when>
         </xsl:choose>   
     </xsl:template>
@@ -2269,11 +2361,11 @@
             <xsl:attribute name="class">
                 <xsl:text>line</xsl:text>
             </xsl:attribute>
-            <!--<!-\- Certainty adjustment -\->
+            <!-- Certainty adjustment -->
                 <xsl:call-template name="certainty">
                     <xsl:with-param name="certainty" select="$certainty"/>
-                    <xsl:with-param name="type" select="'4'"/>
-                </xsl:call-template>-->
+                    <xsl:with-param name="type" select="'3'"/>
+                </xsl:call-template>
             <xsl:attribute name="d">
                 <xsl:text>M</xsl:text>
                 <xsl:value-of select="my:P1/my:x"/>
@@ -2291,6 +2383,163 @@
                 <xsl:value-of select="my:P4/my:x"/>
                 <xsl:text>&#32;</xsl:text>
                 <xsl:value-of select="my:P4/my:y"/>
+                <xsl:text>&#32;z</xsl:text>
+            </xsl:attribute>
+        </path>
+    </xsl:template>
+    
+    <xsl:template name="lining_transverse">
+        <xsl:param name="dashArray"/>
+        <xsl:param name="certainty"/>
+        <xsl:param name="dashArray_underboards"/>
+        <!-- The extension of the lining on the boards is not given: Add the mask attribute to indicate imprecision: mask="url(#fademaskAboveSilouette)" ?
+                or apply the imprecision filter? -->
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
+            <xsl:attribute name="stroke-dasharray">
+                <xsl:value-of select="$dashArray_underboards"/>
+            </xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
+            <!-- Certainty adjustment -->
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <xsl:with-param name="type" select="'2'"/>
+            </xsl:call-template>
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="my:P1/my:x"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P1/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P1/my:x - $liningJointsLength"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P1/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P1/my:x - $liningJointsLength"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="my:P4/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P1/my:x"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="my:P4/my:y"/>
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="my:P2/my:x"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P2/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P2/my:x + $liningJointsLength"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P2/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P3/my:x + $liningJointsLength"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="my:P3/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P3/my:x"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="my:P3/my:y"/>
+            </xsl:attribute>
+        </path>            
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
+            <xsl:attribute name="stroke-dasharray">
+                <xsl:value-of select="$dashArray"/>
+            </xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
+            <!-- Certainty adjustment -->
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <xsl:with-param name="type" select="'3'"/>
+            </xsl:call-template>
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="my:P1/my:x"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P1/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P2/my:x"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P2/my:y"/>
+                <xsl:text>&#32;M</xsl:text>
+                <xsl:value-of select="my:P3/my:x"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P3/my:y"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="my:P4/my:x"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P4/my:y"/>
+            </xsl:attribute>
+        </path>
+    </xsl:template>
+    
+    <xsl:template name="lining_patch">
+        <xsl:param name="dashArray"/>
+        <xsl:param name="certainty"/>
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round">
+            <xsl:attribute name="stroke-dasharray">
+                <xsl:value-of select="$dashArray"/>
+            </xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>
+            <!-- Certainty adjustment -->
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <xsl:with-param name="type" select="'3'"/>
+            </xsl:call-template>
+            <!-- Patches have irregular shapes. To mimic this random numbers are used in the path -->
+            <xsl:variable name="plusMinusRandomizer">
+                <xsl:variable name="random">
+                    <xsl:value-of select="math:random()"/>
+                </xsl:variable>
+                <xsl:choose>
+                    <xsl:when test="xs:double($random) le 0.5">
+                        <xsl:value-of select="+ math:random()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="- math:random()"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:attribute name="d">
+                <xsl:text>M</xsl:text>
+                <xsl:value-of select="my:P1/my:x + 1.8 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P1/my:y + 3.1 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;Q</xsl:text>                
+                <xsl:value-of select="my:P2/my:x - ((my:P2/my:x - my:P1/my:x) div 2) + 2.45 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P2/my:y + 3.35 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P2/my:x - 2.5 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P2/my:y + 2.7 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;Q</xsl:text>                
+                <xsl:value-of select="my:P3/my:x - 2.3 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P3/my:y - ((my:P3/my:y - my:P2/my:y) div 2) - 2.45 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P3/my:x - 2.9 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P3/my:y - 2.1 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;Q</xsl:text>
+                <xsl:value-of select="my:P3/my:x - ((my:P3/my:x - my:P4/my:x) div 2) + 2.45 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P4/my:y - 3.35 - 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P4/my:x + 2.6 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P4/my:y - 3.1 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;Q</xsl:text>                
+                <xsl:value-of select="my:P4/my:x + 3.1 + 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P4/my:y - ((my:P4/my:y - my:P1/my:y) div 2) - 2.15 - 1 * $plusMinusRandomizer - math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P1/my:x + 2.8 + 1 * $plusMinusRandomizer + math:random()"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="my:P1/my:y + 3.2 + 1 * $plusMinusRandomizer + math:random()"/>
                 <xsl:text>&#32;z</xsl:text>
             </xsl:attribute>
         </path>
