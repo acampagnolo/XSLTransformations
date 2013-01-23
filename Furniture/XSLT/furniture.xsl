@@ -13,68 +13,109 @@
 
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
     <xsl:variable name="fileref" select="tokenize(replace($shelfmark, '/', '.'), '\.')"/>
-    <xsl:variable name="filename"
-        select="concat('../../Transformations/Furniture/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'furniture', '.svg')"/>
 
     <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
     <xsl:param name="Ox" select="0"/>
     <xsl:param name="Oy" select="0"/>
+
+    <!-- X and Y reference values - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved -->
+    <xsl:variable name="Px" select="$Ox + 20"/>
+    <xsl:variable name="Py" select="$Oy + 20"/>
+
+    <!-- Only a portion of the book width is drawn: this parameter selects the length -->
+    <xsl:param name="boardLength" select="50"/>
 
     <!-- Gap between furniture frames -->
     <xsl:variable name="gap">
         <xsl:value-of select="20"/>
     </xsl:variable>
 
-    <!-- Frame dimension -->
-    <xsl:variable name="frameDimension">
-        <xsl:value-of select="150"/>
+    <xsl:variable name="bookThicknessDatatypeChecker">
+        <!-- Some surveyors have types 'same' instead of giving the value in mm: 
+            check for the numeric value in /book/dimensions/thickness/max instead-->
+        <xsl:choose>
+            <xsl:when test="/book/dimensions/thickness/min castable as xs:integer">
+                <xsl:value-of select="/book/dimensions/thickness/min"/>
+            </xsl:when>
+            <xsl:when
+                test="/book/dimensions/thickness/min castable as xs:string or /book/dimensions/thickness/min eq ' '">
+                <xsl:choose>
+                    <xsl:when test="/book/dimensions/thickness/max castable as xs:integer">
+                        <xsl:value-of select="/book/dimensions/thickness/max"/>
+                    </xsl:when>
+                    <xsl:when
+                        test="/book/dimensions/thickness/max castable as xs:string or /book/dimensions/thickness/max eq ' '">
+                        <!-- NB: in this case the measurement should be indicated as estimated for the sole purpose 
+                            of the XSLT to be able to draw the diagram with the rest of the data available -->
+                        <!-- How to pass on the information that the measurement has been guessed?? -->
+                        <xsl:value-of select="50"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="leftBoardThickness">
+        <xsl:choose>
+            <xsl:when test="/book/boards/yes/boards/board/location/left">
+                <!-- To avoid problems with erroneous inputs (e.g. two left boards), only the first board with a location/left child is considered -->
+                <xsl:value-of
+                    select="/book/boards/yes/boards/board[location/left][1]/formation/boardThickness[not(NK)]"
+                />
+            </xsl:when>
+            <xsl:when test="/book/boards/yes/boards/board/location[not(left)]">
+                <xsl:value-of
+                    select="/book/boards/yes/boards/board[location/right][1]/formation/boardThickness[not(NK)]"
+                />
+            </xsl:when>
+            <xsl:when test="/book/boards[no | NK]">
+                <xsl:value-of select="xs:double($bookThicknessDatatypeChecker *.07)"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="rightBoardThickness">
+        <xsl:choose>
+            <xsl:when test="/book/boards/yes/boards/board/location/right">
+                <xsl:value-of
+                    select="/book/boards/yes/boards/board[location/right][1]/formation/boardThickness[not(NK)]"
+                />
+            </xsl:when>
+            <xsl:when test="/book/boards/yes/boards/board/location[not(right)]">
+                <xsl:value-of
+                    select="/book/boards/yes/boards/board[location/left][1]/formation/boardThickness[not(NK)]"
+                />
+            </xsl:when>
+            <xsl:when test="/book/boards[no | NK]">
+                <xsl:value-of select="xs:double($bookThicknessDatatypeChecker *.07)"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="bookblockThickness">
+        <!-- Some surveyors have types 'same' instead of giving the value in mm: 
+            check for the numeric value in /book/dimensions/thickness/max instead-->
+        <xsl:choose>
+            <xsl:when test="/book/dimensions/thickness/min castable as xs:integer">
+                <xsl:value-of
+                    select="/book/dimensions/thickness/min - xs:double($leftBoardThickness) - xs:double($rightBoardThickness)"
+                />
+            </xsl:when>
+            <xsl:when test="xs:string(/book/dimensions/thickness/min)">
+                <xsl:value-of
+                    select="xs:integer(/book/dimensions/thickness/max) - xs:double($leftBoardThickness) - xs:double($rightBoardThickness)"
+                />
+            </xsl:when>
+        </xsl:choose>
     </xsl:variable>
 
     <xsl:template name="main" match="/">
-        <xsl:result-document href="{$filename}" method="xml" indent="yes" encoding="utf-8"
-            doctype-public="-//W3C//DTD SVG 1.1//EN"
-            doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-            <xsl:processing-instruction name="xml-stylesheet">
-                    <xsl:text>href="../../../../GitHub/XSLTransformations/Furniture/CSS/style.css"&#32;</xsl:text>
-                    <xsl:text>type="text/css"</xsl:text>
-                </xsl:processing-instruction>
-            <xsl:text>&#10;</xsl:text>
-            <xsl:comment>
-                    <xsl:text>SVG file generated on: </xsl:text>
-                    <xsl:value-of select="format-dateTime(current-dateTime(), '[D] [MNn] [Y] at [H]:[m]:[s]')"/>
-                    <xsl:text> using </xsl:text>
-                    <xsl:value-of select="system-property('xsl:product-name')"/>
-                    <xsl:text> version </xsl:text>
-                    <xsl:value-of select="system-property('xsl:product-version')"/>
-                </xsl:comment>
-            <xsl:text>&#10;</xsl:text>
-            <!-- Printed on A0 -->
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                version="1.1" x="0" y="0" width="1189mm" height="841mm" viewBox="0 0 1189 841"
-                preserveAspectRatio="xMidYMid meet">
-                <title>Furniture of book: <xsl:value-of select="$shelfmark"/></title>
-                <xsl:copy-of
-                    select="document('../SVGmaster/spineLiningSVGmaster.svg')/svg:svg/svg:defs"
-                    xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>
-                <desc xmlns="http://www.w3.org/2000/svg">Furniture of book: <xsl:value-of
-                        select="$shelfmark"/></desc>
-                <svg>
-                    <xsl:attribute name="x">
-                        <xsl:value-of select="$Ox"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="y">
-                        <xsl:value-of select="$Oy"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates/>
-                </svg>
-            </svg>
-        </xsl:result-document>
+        <xsl:apply-templates/>
     </xsl:template>
 
     <!-- Template to mute all unwanted nodes -->
     <xsl:template match="text()"/>
 
-    <!-- Template that calls the spine arc pipeline of templates for both halves of the bookblock and the lining -->
     <xsl:template match="book/furniture">
         <xsl:choose>
             <xsl:when test="NC | no | NK | other">
@@ -97,157 +138,420 @@
                 </desc>
             </xsl:when>
             <xsl:when test="yes">
-                <!--                <xsl:variable name="totalFurnitureTypes">
-                    <xsl:value-of select="count(./yes/furniture)"/>
-                </xsl:variable>-->
-                <!--<xsl:for-each select="yes/furniture">
-                    <xsl:variable name="P_coordinates">
-                        <xsl:choose>
-                            <xsl:when test="position() eq 1 or position() eq 5 or position() eq 9">
-                                <my:Px>
-                                    <xsl:value-of select="$Ox + $gap"/>
-                                </my:Px>
-                            </xsl:when>
-                            <xsl:when test="position() eq 2 or position() eq 6 or position() eq 10">
-                                <my:Px>
-                                    <xsl:value-of select="($Ox + $gap) + $gap + $frameDimension"/>
-                                </my:Px>
-                            </xsl:when>
-                            <xsl:when test="position() eq 3 or position() eq 7 or position() eq 11">
-                                <my:Px>
-                                    <xsl:value-of
-                                        select="($Ox + $gap) + ($gap + $frameDimension) * 2"/>
-                                </my:Px>
-                            </xsl:when>
-                            <xsl:when test="position() eq 4 or position() eq 8 or position() eq 12">
-                                <my:Px>
-                                    <xsl:value-of
-                                        select="($Ox + $gap) + ($gap + $frameDimension) * 3"/>
-                                </my:Px>
-                            </xsl:when>
-                        </xsl:choose>
-                        <xsl:choose>
-                            <xsl:when
-                                test="position() eq 1 or position() eq 2 or position() eq 3 or position() eq 4">
-                                <my:Py>
-                                    <xsl:value-of select="$Oy + $gap"/>
-                                </my:Py>
-                            </xsl:when>
-                            <xsl:when
-                                test="position() eq 5 or position() eq 6 or position() eq 7 or position() eq 8">
-                                <my:Py>
-                                    <xsl:value-of select="($Oy + $gap) + $gap + $frameDimension"/>
-                                </my:Py>
-                            </xsl:when>
-                            <xsl:when
-                                test="position() eq 9 or position() eq 10 or position() eq 11 or position() eq 12">
-                                <my:Py>
-                                    <xsl:value-of
-                                        select="($Oy + $gap) + ($gap + $frameDimension) * 2"/>
-                                </my:Py>
-                            </xsl:when>
-                        </xsl:choose>
-                    </xsl:variable>
-                    <g xmlns="http://www.w3.org/2000/svg">
-                        <xsl:attribute name="x" select="$P_coordinates/my:Px"/>
-                        <xsl:attribute name="y" select="$P_coordinates/my:Py"/>
-                        <!-\- Framework to visualize positioning of various types of furniture present: do not visualize in the final version -\->
-                        <path xmlns="http://www.w3.org/2000/svg">
-                            <xsl:attribute name="class">
-                                <xsl:text>line</xsl:text>
-                            </xsl:attribute>
-                            <xsl:attribute name="d">
-                                <xsl:text>M</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Px"/>
-                                <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Py"/>
-                                <xsl:text>&#32;L</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Px + $frameDimension"/>
-                                <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Py"/>
-                                <xsl:text>&#32;L</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Px + $frameDimension"/>
-                                <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Py + $frameDimension"/>
-                                <xsl:text>&#32;L</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Px"/>
-                                <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Py + $frameDimension"/>
-                                <xsl:text>&#32;z</xsl:text>
-                            </xsl:attribute>
-                        </path>
-                        <!-\- call furniture template -\->
-                        <xsl:call-template name="types">
-                            <xsl:with-param name="P_coordinates" select="$P_coordinates"/>
-                        </xsl:call-template>
-                    </g>
-                </xsl:for-each>-->
-                <!--<pippo n="1">
-                <xsl:for-each-group select="yes/furniture[type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]]" group-by="type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]">
-                    <xsl:copy-of select="current-group()"/>
-                </xsl:for-each-group>
-                </pippo>
-                <pippo n="2">
-                    <xsl:for-each-group select="yes/furniture[type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]]" group-by="type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]">
-                    <xsl:copy-of select="current-group()"/>
-                </xsl:for-each-group>
-                </pippo>
-                <pippo n="3">
-                    <xsl:for-each-group select="yes/furniture[type[bosses | corners | plates | ties]]" group-by="type/name()">
-                        <xsl:copy-of select="current-group()"/>
-                    </xsl:for-each-group>
-                </pippo>-->
                 <xsl:choose>
                     <xsl:when
                         test="yes/furniture[type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]]">
-                        <pippo1>
-                            <xsl:choose>
-                                <xsl:when
-                                    test="(yes/furniture/type/clasp/type[NK] and yes/furniture[type[pin | straps[type[tripleBraidedStrap | doubleBraidedStrap]]]]) or (yes/furniture/type/straps[type[NK | flat | other]] and yes/furniture[type[pin | clasp[type[stirrupRing]]  | pin ]]) or (yes/furniture[type[clasp[type[stirrupRing]] | pin | straps[type[tripleBraidedStrap | doubleBraidedStrap]]]])">
-                                    <xsl:for-each-group
-                                        select="yes/furniture[type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]]"
-                                        group-by="type">
-                                        <xsl:copy-of select="current-group()"/>
-                                    </xsl:for-each-group>
-                                </xsl:when>
-                            </xsl:choose>
-                        </pippo1>
+                        <xsl:variable name="group" select="1"/>
+                        <xsl:choose>
+                            <xsl:when
+                                test="(yes/furniture/type/clasp/type[NK] and yes/furniture[type[pin | straps[type[tripleBraidedStrap | doubleBraidedStrap]]]]) or (yes/furniture/type/straps[type[NK | flat | other]] and yes/furniture[type[pin | clasp[type[stirrupRing]]  | pin ]]) or (yes/furniture[type[clasp[type[stirrupRing]] | pin | straps[type[tripleBraidedStrap | doubleBraidedStrap]]]])">
+                                <!-- Each group of furniture is drawn on a different file -->
+                                <xsl:variable name="filename"
+                                    select="concat('../../Transformations/Furniture/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'furniture', '_', $group, '.svg')"/>
+                                <xsl:result-document href="{$filename}" method="xml" indent="yes"
+                                    encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
+                                    doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                    <xsl:processing-instruction name="xml-stylesheet">
+                    <xsl:text>href="../../../../GitHub/XSLTransformations/Furniture/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>type="text/css"</xsl:text>
+                </xsl:processing-instruction>
+                                    <xsl:text>&#10;</xsl:text>
+                                    <xsl:comment>
+                    <xsl:text>SVG file generated on: </xsl:text>
+                    <xsl:value-of select="format-dateTime(current-dateTime(), '[D] [MNn] [Y] at [H]:[m]:[s]')"/>
+                    <xsl:text> using </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-name')"/>
+                    <xsl:text> version </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-version')"/>
+                </xsl:comment>
+                                    <xsl:text>&#10;</xsl:text>
+                                    <!-- Printed on A0 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                                        x="0" y="0" width="1189mm" height="841mm"
+                                        viewBox="0 0 1189 841" preserveAspectRatio="xMidYMid meet">
+                                        <title>Furniture of book: <xsl:value-of select="$shelfmark"
+                                            /></title>
+                                        <xsl:copy-of
+                                            select="document('../SVGmaster/furnitureSVGmaster.svg')/svg:svg/svg:defs"
+                                            xpath-default-namespace="http://www.w3.org/2000/svg"
+                                            copy-namespaces="no"/>
+                                        <desc xmlns="http://www.w3.org/2000/svg">Furniture of book:
+                                                <xsl:value-of select="$shelfmark"/></desc>
+                                        <svg>
+                                            <xsl:attribute name="x">
+                                                <xsl:value-of select="$Ox"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="y">
+                                                <xsl:value-of select="$Oy"/>
+                                            </xsl:attribute>
+                                                <g xmlns="http://www.w3.org/2000/svg">
+                                                  <!-- call furniture template -->
+                                                  <xsl:call-template name="boardLocation"/>
+                                                </g>
+                                        </svg>
+                                    </svg>
+                                </xsl:result-document>
+                            </xsl:when>
+                        </xsl:choose>
                     </xsl:when>
                 </xsl:choose>
                 <xsl:choose>
                     <xsl:when
                         test="yes/furniture[type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]]">
-                        <pippo2>
-                            <xsl:choose>
-                                <xsl:when
-                                    test="(yes/furniture/type/clasp/type[NK] and yes/furniture[type[catchplate | strapPlates | strapCollars]]) or (yes/furniture/type/straps[type[NK | flat | other]] and yes/furniture[type[catchplate | clasp[type[simpleHook | foldedHook]] | strapPlates | strapCollars]]) or (yes/furniture[type[clasp[type[simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[flat | NK]] | strapPlates | strapCollars]])">
-                                    <xsl:for-each-group
-                                        select="yes/furniture[type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]]"
-                                        group-by="type">
-                                        <xsl:copy-of select="current-group()"/>
-                                    </xsl:for-each-group>
-                                </xsl:when>
-                            </xsl:choose>
-                        </pippo2>
+                        <xsl:variable name="group" select="2"/>
+                        <xsl:choose>
+                            <xsl:when
+                                test="(yes/furniture/type/clasp/type[NK] and yes/furniture[type[catchplate | strapPlates | strapCollars]]) or (yes/furniture/type/straps[type[NK | flat | other]] and yes/furniture[type[catchplate | clasp[type[simpleHook | foldedHook]] | strapPlates | strapCollars]]) or (yes/furniture[type[clasp[type[simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[flat | NK]] | strapPlates | strapCollars]])">
+                                <!-- Each group of furniture is drawn on a different file -->
+                                <xsl:variable name="filename"
+                                    select="concat('../../Transformations/Furniture/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'furniture', '_', $group, '.svg')"/>
+                                <xsl:result-document href="{$filename}" method="xml" indent="yes"
+                                    encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
+                                    doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                    <xsl:processing-instruction name="xml-stylesheet">
+                    <xsl:text>href="../../../../GitHub/XSLTransformations/Furniture/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>type="text/css"</xsl:text>
+                </xsl:processing-instruction>
+                                    <xsl:text>&#10;</xsl:text>
+                                    <xsl:comment>
+                    <xsl:text>SVG file generated on: </xsl:text>
+                    <xsl:value-of select="format-dateTime(current-dateTime(), '[D] [MNn] [Y] at [H]:[m]:[s]')"/>
+                    <xsl:text> using </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-name')"/>
+                    <xsl:text> version </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-version')"/>
+                </xsl:comment>
+                                    <xsl:text>&#10;</xsl:text>
+                                    <!-- Printed on A0 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                                        x="0" y="0" width="1189mm" height="841mm"
+                                        viewBox="0 0 1189 841" preserveAspectRatio="xMidYMid meet">
+                                        <title>Furniture of book: <xsl:value-of select="$shelfmark"
+                                            /></title>
+                                        <xsl:copy-of
+                                            select="document('../SVGmaster/furnitureSVGmaster.svg')/svg:svg/svg:defs"
+                                            xpath-default-namespace="http://www.w3.org/2000/svg"
+                                            copy-namespaces="no"/>
+                                        <desc xmlns="http://www.w3.org/2000/svg">Furniture of book:
+                                                <xsl:value-of select="$shelfmark"/></desc>
+                                        <svg>
+                                            <xsl:attribute name="x">
+                                                <xsl:value-of select="$Ox"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="y">
+                                                <xsl:value-of select="$Oy"/>
+                                            </xsl:attribute>
+                                                <g xmlns="http://www.w3.org/2000/svg">
+                                                  <!-- call furniture template -->
+                                                  <xsl:call-template name="boardLocation"/>
+                                                </g>                                            
+                                        </svg>
+                                    </svg>
+                                </xsl:result-document>
+                            </xsl:when>
+                        </xsl:choose>
                     </xsl:when>
                 </xsl:choose>
                 <xsl:choose>
                     <xsl:when test="yes/furniture[type[bosses | corners | plates | ties]]">
-                        <pippo3>
-                            <xsl:for-each-group
-                                select="yes/furniture[type[bosses | corners | plates | ties]]"
-                                group-by="type">
-                                <xsl:copy-of select="current-group()"/>
-                            </xsl:for-each-group>
-                        </pippo3>
+                        <xsl:variable name="group" select="3"/>
+                        <!-- NB: check how many times things are drawn -->
+                        <xsl:for-each-group
+                            select="yes/furniture[type[bosses | corners | plates | ties]]"
+                            group-by="type">
+                            <xsl:for-each select="type">
+                                <!-- Each group of furniture is drawn on a different file -->
+                                <xsl:variable name="filename"
+                                    select="concat('../../Transformations/Furniture/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'furniture', '_', $group, '.svg')"/>
+                                <xsl:result-document href="{$filename}" method="xml" indent="yes"
+                                    encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
+                                    doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                    <xsl:processing-instruction name="xml-stylesheet">
+                    <xsl:text>href="../../../../GitHub/XSLTransformations/Furniture/CSS/style.css"&#32;</xsl:text>
+                    <xsl:text>type="text/css"</xsl:text>
+                </xsl:processing-instruction>
+                                    <xsl:text>&#10;</xsl:text>
+                                    <xsl:comment>
+                    <xsl:text>SVG file generated on: </xsl:text>
+                    <xsl:value-of select="format-dateTime(current-dateTime(), '[D] [MNn] [Y] at [H]:[m]:[s]')"/>
+                    <xsl:text> using </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-name')"/>
+                    <xsl:text> version </xsl:text>
+                    <xsl:value-of select="system-property('xsl:product-version')"/>
+                </xsl:comment>
+                                    <xsl:text>&#10;</xsl:text>
+                                    <!-- Printed on A0 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                                        x="0" y="0" width="1189mm" height="841mm"
+                                        viewBox="0 0 1189 841" preserveAspectRatio="xMidYMid meet">
+                                        <title>Furniture of book: <xsl:value-of select="$shelfmark"
+                                            /></title>
+                                        <xsl:copy-of
+                                            select="document('../SVGmaster/furnitureSVGmaster.svg')/svg:svg/svg:defs"
+                                            xpath-default-namespace="http://www.w3.org/2000/svg"
+                                            copy-namespaces="no"/>
+                                        <desc xmlns="http://www.w3.org/2000/svg">Furniture of book:
+                                                <xsl:value-of select="$shelfmark"/></desc>
+                                        <svg>
+                                            <xsl:attribute name="x">
+                                                <xsl:value-of select="$Ox"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="y">
+                                                <xsl:value-of select="$Oy"/>
+                                            </xsl:attribute>
+                                            <g xmlns="http://www.w3.org/2000/svg">
+                                                <!-- call furniture template -->
+                                                <xsl:call-template name="boardLocation"/>
+                                            </g>
+                                        </svg>
+                                    </svg>
+                                </xsl:result-document>
+                            </xsl:for-each>
+                        </xsl:for-each-group>
                     </xsl:when>
                 </xsl:choose>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template name="boardLocation">
+        <g xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="transform">
+                <xsl:text>translate(</xsl:text>
+                <xsl:value-of select="30"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="30"/>
+                <xsl:text>)</xsl:text>
+            </xsl:attribute>
+            <xsl:choose>
+                <!-- This checks that both boards are present. To allow for dos-a-dos bindings and other bindings with more than 2 boards change test to 'ancestor::boards[1]/board[last() gt 1]' -->
+                <xsl:when test="ancestor::book/boards/descendant::board[2]">
+                    <!--<xsl:variable name="boardThickness"
+                    select="if (descendant::board/location/right) then $rightBoardThickness else $leftBoardThickness"/>-->
+                    <xsl:variable name="location">
+                        <xsl:value-of
+                            select="ancestor::book/boards/descendant::board/location/node()/name()"
+                        />
+                    </xsl:variable>
+                    <xsl:call-template name="boardCrossSection">
+                        <xsl:with-param name="boardThickness" select="$rightBoardThickness"/>
+                        <xsl:with-param name="location" select="$location"/>
+                        <xsl:with-param name="certainty" select="100"/>
+                    </xsl:call-template>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="transform">
+                            <xsl:text>translate(</xsl:text>
+                            <xsl:value-of select="$Ox"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $rightBoardThickness"/>
+                            <xsl:text>) scale(1,-1)</xsl:text>
+                            <xsl:text>translate(</xsl:text>
+                            <xsl:value-of select="$Ox"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="- $bookblockThickness - $leftBoardThickness"/>
+                            <xsl:text>)</xsl:text>
+                        </xsl:attribute>
+                        <xsl:call-template name="boardCrossSection">
+                            <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
+                            <xsl:with-param name="location" select="$location"/>
+                            <xsl:with-param name="certainty" select="100"/>
+                        </xsl:call-template>
+                    </g>
+                </xsl:when>
+                <xsl:when test="ancestor::book/boards/descendant::boards[not(board[2])]">
+                    <xsl:choose>
+                        <xsl:when
+                            test="ancestor::book/boards/descendant::board/location[left | right]">
+                            <xsl:variable name="boardThickness"
+                                select="if (ancestor::book/boards/descendant::board/location/right) then $rightBoardThickness else $leftBoardThickness"/>
+                            <xsl:variable name="location">
+                                <xsl:value-of
+                                    select="ancestor::book/boards/descendant::board/location/node()/name()"
+                                />
+                            </xsl:variable>
+                            <xsl:variable name="locationCopied">
+                                <xsl:value-of
+                                    select="concat('Board not pesent, diagram copied from', $location)"
+                                />
+                            </xsl:variable>
+                            <xsl:call-template name="boardCrossSection">
+                                <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                                <xsl:with-param name="location"
+                                    select="if (ancestor::book/boards/descendant::board/location/right) then $location else $locationCopied"/>
+                                <xsl:with-param name="certainty"
+                                    select="if (ancestor::book/boards/descendant::board/location/right) then xs:integer(100) else xs:integer(40)"
+                                />
+                            </xsl:call-template>
+                            <g xmlns="http://www.w3.org/2000/svg">
+                                <xsl:attribute name="transform">
+                                    <xsl:text>translate(</xsl:text>
+                                    <xsl:value-of select="$Ox"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="$Oy + $boardThickness"/>
+                                    <xsl:text>) scale(1,-1)</xsl:text>
+                                    <xsl:text>translate(</xsl:text>
+                                    <xsl:value-of select="$Ox"/>
+                                    <xsl:text>,</xsl:text>
+                                    <xsl:value-of select="- $bookblockThickness - $boardThickness"/>
+                                    <xsl:text>)</xsl:text>
+                                </xsl:attribute>
+                                <xsl:call-template name="boardCrossSection">
+                                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                                    <xsl:with-param name="location"
+                                        select="if (ancestor::book/boards/descendant::board/location/left) then $location else $locationCopied"/>
+                                    <xsl:with-param name="certainty"
+                                        select="if (ancestor::book/boards/descendant::board/location/left) then xs:integer(100) else xs:integer(40)"
+                                    />
+                                </xsl:call-template>
+                            </g>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="ancestor::book/boards/no">
+                    <xsl:variable name="location">
+                        <xsl:value-of select="'No boards present'"/>
+                    </xsl:variable>
+                    <xsl:call-template name="boardCrossSection">
+                        <xsl:with-param name="boardThickness" select="$rightBoardThickness"/>
+                        <xsl:with-param name="location" select="$location"/>
+                        <xsl:with-param name="certainty" select="xs:integer(40)"/>
+                    </xsl:call-template>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                        <xsl:attribute name="transform">
+                            <xsl:text>translate(</xsl:text>
+                            <xsl:value-of select="$Ox"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="$Oy + $rightBoardThickness"/>
+                            <xsl:text>) scale(1,-1)</xsl:text>
+                            <xsl:text>translate(</xsl:text>
+                            <xsl:value-of select="$Ox"/>
+                            <xsl:text>,</xsl:text>
+                            <xsl:value-of select="- $bookblockThickness - $leftBoardThickness"/>
+                            <xsl:text>)</xsl:text>
+                        </xsl:attribute>
+                        <xsl:call-template name="boardCrossSection">
+                            <xsl:with-param name="boardThickness" select="$leftBoardThickness"/>
+                            <xsl:with-param name="location" select="$location"/>
+                            <xsl:with-param name="certainty" select="xs:integer(40)"/>
+                        </xsl:call-template>
+                    </g>
+                </xsl:when>
+            </xsl:choose>
+        </g>
+    </xsl:template>
+
+    <xsl:template name="boardCrossSection">
+        <xsl:param name="boardThickness"/>
+        <xsl:param name="location"/>
+        <xsl:param name="certainty" as="xs:integer"/>
+        <desc xmlns="http://www.w3.org/2000/svg">
+            <xsl:value-of select="$location"/>
+            <xsl:text>&#32;board</xsl:text>
+        </desc>
+        <mask xmlns="http://www.w3.org/2000/svg" id="fademaskBoards">
+            <path xmlns="http://www.w3.org/2000/svg" fill="url(#fading2)">
+                <xsl:attribute name="d">
+                    <xsl:call-template name="boardPath">
+                        <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                    </xsl:call-template>
+                </xsl:attribute>
+            </path>
+        </mask>
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round"
+            stroke="url(#fading)" stroke-width="2" fill="url(#thicknessCutoutTile)"
+            mask="url(#fademaskBoards)">
+            <!--<xsl:attribute name="class">
+                    <xsl:text>line</xsl:text>
+                </xsl:attribute>-->
+            <!-- TO DO: add uncertainty for NC, NK, other  -->
+            <!-- when NC: some uncertainty; when NK or other: uncertainty -->
+            <!-- TO DO -->
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" select="$certainty"/>
+                <xsl:with-param name="type" select="'2'"/>
+            </xsl:call-template>
+            <xsl:attribute name="d">
+                <xsl:call-template name="boardPath">
+                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                </xsl:call-template>
+            </xsl:attribute>
+        </path>
+        <path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round"
+            stroke-opacity="0" fill-opacity="0.1" fill="url(#fading)">
+            <!--<xsl:attribute name="class">
+                <xsl:text>line</xsl:text>
+            </xsl:attribute>-->
+            <!-- TO DO: add uncertainty  -->
+            <!-- when NC: some uncertainty; when NK or other: uncertainty -->
+            <!-- TO DO -->
+            <xsl:attribute name="d">
+                <xsl:call-template name="boardPath">
+                    <xsl:with-param name="boardThickness" select="$boardThickness"/>
+                </xsl:call-template>
+            </xsl:attribute>
+        </path>
+    </xsl:template>
+
+    <xsl:template name="boardPath">
+        <xsl:param name="boardThickness"/>
+        <xsl:text>M</xsl:text>
+        <xsl:value-of select="$Ox"/>
+        <xsl:text>,</xsl:text>
+        <xsl:value-of select="$Oy + $boardThickness"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + $boardLength"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + $boardThickness"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox + $boardLength"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of
+                    select="
+                    if (ancestor::book/boards/descendant::formation/bevels[cushion | peripheralCushion]) 
+                    then $Oy + ($boardThickness div 4) 
+                    else $Oy"
+                />
+        <xsl:choose>
+            <xsl:when test="ancestor::book/boards/descendant::formation/bevels/cushion">
+                <xsl:text>&#32;Q</xsl:text>
+                <xsl:value-of select="$Ox - $boardLength * 0.1"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy + $boardThickness div 4"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="$Ox"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy"/>
+                <xsl:text>z</xsl:text>
+            </xsl:when>
+            <xsl:when test="ancestor::book/boards/descendant::formation/bevels/peripheralCushion">
+                <xsl:text>&#32;Q</xsl:text>
+                <xsl:value-of select="$Ox + $boardLength * .7"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy"/>
+                <xsl:text>&#32;</xsl:text>
+                <xsl:value-of select="$Ox + $boardLength * .6"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy"/>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy"/>
+                <xsl:text>z</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>&#32;L</xsl:text>
+                <xsl:value-of select="$Ox"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy"/>
+                <xsl:text>z</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template name="types">
-        <xsl:param name="P_coordinates"/>
         <desc xmlns="http://www.w3.org/2000/svg">
             <xsl:text>Furniture:</xsl:text>
             <xsl:value-of select="type/node()/name()"/>
@@ -267,15 +571,13 @@
                 </desc>
             </xsl:when>
             <xsl:when test="type/clasp">
-                <xsl:call-template name="claps">
-                    <xsl:with-param name="P_coordinates" select="$P_coordinates"/>
-                </xsl:call-template>
+                <xsl:call-template name="claps"/>
             </xsl:when>
             <xsl:when test="type/catchplate">
                 <!--  -->
             </xsl:when>
-            <xsl:when test="type/pin">
-                <!--  -->
+            <xsl:when test="type/pin">                
+                <xsl:call-template name="pin"/>
             </xsl:when>
             <xsl:when test="type/bosses">
                 <!--  -->
@@ -326,6 +628,23 @@
                 <!--  -->
             </xsl:when>
             <xsl:when test="type/clasp/type/other">
+                <!--  -->
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="pin">
+        <xsl:choose>
+            <xsl:when test="type/pin/type/simplePin">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/pin/type/fastenedPin">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/pin/type[NC | NK]">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/pin/type/other">
                 <!--  -->
             </xsl:when>
         </xsl:choose>

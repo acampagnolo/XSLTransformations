@@ -116,27 +116,6 @@
         <xsl:value-of select="1"/>
     </xsl:variable>
 
-    <xsl:variable name="orderedByMeasurementSewingStations">
-        <xsl:for-each-group select="/book/sewing/stations/station"
-            group-by="name(group/child::node()[2])">
-            <xsl:for-each select="current-group()">
-                <xsl:sort select="measurement" data-type="number" order="ascending"/>
-                <xsl:element name="stations">
-                    <xsl:copy-of select="."/>
-                </xsl:element>
-            </xsl:for-each>
-        </xsl:for-each-group>
-    </xsl:variable>
-
-    <xsl:variable name="sewingStationMeasurements_notKettlestitch">
-        <xsl:for-each
-            select="$orderedByMeasurementSewingStations/stations/station[not(type/unsupported/kettleStitch)]">
-            <value>
-                <xsl:value-of select="./measurement"/>
-            </value>
-        </xsl:for-each>
-    </xsl:variable>
-
     <xsl:template name="main" match="/">
         <xsl:result-document href="{$filename}" method="xml" indent="yes" encoding="utf-8"
             doctype-public="-//W3C//DTD SVG 1.1//EN"

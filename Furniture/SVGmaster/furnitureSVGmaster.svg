@@ -46,7 +46,7 @@
         </linearGradient>
         <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
             patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
-            <path d="M0,0 L5,50" class="line2" fill="none" stroke="#666666" stroke-width="0.1"
+            <path d="M0,0 L5,50" class="line4" fill="none" stroke="#666666" stroke-width="0.1"
                 stroke-linejoin="miter"/>
         </pattern>
     </defs>
