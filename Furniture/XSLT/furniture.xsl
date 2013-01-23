@@ -24,7 +24,7 @@
     <xsl:variable name="gap">
         <xsl:value-of select="20"/>
     </xsl:variable>
-    
+
     <!-- Frame dimension -->
     <xsl:variable name="frameDimension">
         <xsl:value-of select="150"/>
@@ -78,29 +78,23 @@
     <xsl:template match="book/furniture">
         <xsl:choose>
             <xsl:when test="NC | no | NK | other">
-                <xsl:choose>
-                    <xsl:when test="NC">
-                        <desc xmlns="http://www.w3.org/2000/svg">
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:choose>
+                        <xsl:when test="NC">
                             <xsl:text>Presence of furniture not checked</xsl:text>
-                        </desc>
-                    </xsl:when>
-                    <xsl:when test="no">
-                        <desc xmlns="http://www.w3.org/2000/svg">
+                        </xsl:when>
+                        <xsl:when test="no">
                             <xsl:text>No furniture present</xsl:text>
-                        </desc>
-                    </xsl:when>
-                    <xsl:when test="NK">
-                        <desc xmlns="http://www.w3.org/2000/svg">
+                        </xsl:when>
+                        <xsl:when test="NK">
                             <xsl:text>Presence of furniture not known</xsl:text>
-                        </desc>
-                    </xsl:when>
-                    <xsl:when test="other">
-                        <desc xmlns="http://www.w3.org/2000/svg">
+                        </xsl:when>
+                        <xsl:when test="other">
                             <xsl:text>The presence of furniture was not described because: </xsl:text>
                             <xsl:value-of select="."/>
-                        </desc>
-                    </xsl:when>
-                </xsl:choose>
+                        </xsl:when>
+                    </xsl:choose>
+                </desc>
             </xsl:when>
             <xsl:when test="yes">
                 <!--                <xsl:variable name="totalFurnitureTypes">
@@ -121,12 +115,14 @@
                             </xsl:when>
                             <xsl:when test="position() eq 3 or position() eq 7 or position() eq 11">
                                 <my:Px>
-                                    <xsl:value-of select="($Ox + $gap) + ($gap + $frameDimension) * 2"/>
+                                    <xsl:value-of
+                                        select="($Ox + $gap) + ($gap + $frameDimension) * 2"/>
                                 </my:Px>
                             </xsl:when>
                             <xsl:when test="position() eq 4 or position() eq 8 or position() eq 12">
                                 <my:Px>
-                                    <xsl:value-of select="($Ox + $gap) + ($gap + $frameDimension) * 3"/>
+                                    <xsl:value-of
+                                        select="($Ox + $gap) + ($gap + $frameDimension) * 3"/>
                                 </my:Px>
                             </xsl:when>
                         </xsl:choose>
@@ -146,12 +142,12 @@
                             <xsl:when
                                 test="position() eq 9 or position() eq 10 or position() eq 11 or position() eq 12">
                                 <my:Py>
-                                    <xsl:value-of select="($Oy + $gap) + ($gap + $frameDimension) * 2"/>
+                                    <xsl:value-of
+                                        select="($Oy + $gap) + ($gap + $frameDimension) * 2"/>
                                 </my:Py>
                             </xsl:when>
                         </xsl:choose>
                     </xsl:variable>
-                    <!-- call furniture template -->
                     <g xmlns="http://www.w3.org/2000/svg">
                         <xsl:attribute name="x" select="$P_coordinates/my:Px"/>
                         <xsl:attribute name="y" select="$P_coordinates/my:Py"/>
@@ -168,11 +164,11 @@
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$P_coordinates/my:Px + $frameDimension"/>
                                 <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Py"/>                                
+                                <xsl:value-of select="$P_coordinates/my:Py"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$P_coordinates/my:Px + $frameDimension"/>
                                 <xsl:text>&#32;</xsl:text>
-                                <xsl:value-of select="$P_coordinates/my:Py + $frameDimension"/>                                
+                                <xsl:value-of select="$P_coordinates/my:Py + $frameDimension"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of select="$P_coordinates/my:Px"/>
                                 <xsl:text>&#32;</xsl:text>
@@ -180,8 +176,97 @@
                                 <xsl:text>&#32;z</xsl:text>
                             </xsl:attribute>
                         </path>
+                        <!-- call furniture template -->
+                        <xsl:call-template name="types">
+                            <xsl:with-param name="P_coordinates" select="$P_coordinates"/>
+                        </xsl:call-template>
                     </g>
                 </xsl:for-each>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="types">
+        <xsl:param name="P_coordinates"/>
+        <desc xmlns="http://www.w3.org/2000/svg">
+            <xsl:text>Furniture:</xsl:text>
+            <xsl:value-of select="type/node()/name()"/>
+            <xsl:choose>
+                <xsl:when test="type/node()/type">
+                    <xsl:text>-</xsl:text>
+                    <xsl:value-of select="type/node()/type/node()/name()"/>
+                </xsl:when>
+            </xsl:choose>
+        </desc>
+        <xsl:choose>
+            <xsl:when test="type/NC">
+                <!-- It makes little sense to draw something here just for the sake of it. 
+                        Add a note that furniture was detected but the type was not recorded -->                
+                <desc xmlns="http://www.w3.org/2000/svg">
+                    <xsl:text>Furniture was detected but the type was not recorded</xsl:text>
+                </desc>
+            </xsl:when>
+            <xsl:when test="type/clasp">
+                <xsl:call-template name="claps">
+                    <xsl:with-param name="P_coordinates" select="$P_coordinates"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="type/catchplate">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/pin">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/bosses">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/corners">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/plates">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/fullCover">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/straps">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/strapPlates">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/strapCollars">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/ties">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/articulatedMetalSpines">
+                <!--  -->
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="claps">
+        <xsl:param name="P_coordinates"/>
+        <xsl:choose>
+            <xsl:when test="type/clasp/type/stirrupRing">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/clasp/type/simpleHook">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/clasp/type/foldedHook">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/clasp/type/piercedStrap">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/clasp/type[NC | NK]">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/clasp/type/other">
+                <!--  -->
             </xsl:when>
         </xsl:choose>
     </xsl:template>
