@@ -100,7 +100,7 @@
                 <!--                <xsl:variable name="totalFurnitureTypes">
                     <xsl:value-of select="count(./yes/furniture)"/>
                 </xsl:variable>-->
-                <xsl:for-each select="yes/furniture">
+                <!--<xsl:for-each select="yes/furniture">
                     <xsl:variable name="P_coordinates">
                         <xsl:choose>
                             <xsl:when test="position() eq 1 or position() eq 5 or position() eq 9">
@@ -151,7 +151,7 @@
                     <g xmlns="http://www.w3.org/2000/svg">
                         <xsl:attribute name="x" select="$P_coordinates/my:Px"/>
                         <xsl:attribute name="y" select="$P_coordinates/my:Py"/>
-                        <!-- Framework to visualize positioning of various types of furniture present: do not visualize in the final version -->
+                        <!-\- Framework to visualize positioning of various types of furniture present: do not visualize in the final version -\->
                         <path xmlns="http://www.w3.org/2000/svg">
                             <xsl:attribute name="class">
                                 <xsl:text>line</xsl:text>
@@ -176,12 +176,72 @@
                                 <xsl:text>&#32;z</xsl:text>
                             </xsl:attribute>
                         </path>
-                        <!-- call furniture template -->
+                        <!-\- call furniture template -\->
                         <xsl:call-template name="types">
                             <xsl:with-param name="P_coordinates" select="$P_coordinates"/>
                         </xsl:call-template>
                     </g>
-                </xsl:for-each>
+                </xsl:for-each>-->
+                <!--<pippo n="1">
+                <xsl:for-each-group select="yes/furniture[type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]]" group-by="type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]">
+                    <xsl:copy-of select="current-group()"/>
+                </xsl:for-each-group>
+                </pippo>
+                <pippo n="2">
+                    <xsl:for-each-group select="yes/furniture[type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]]" group-by="type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]">
+                    <xsl:copy-of select="current-group()"/>
+                </xsl:for-each-group>
+                </pippo>
+                <pippo n="3">
+                    <xsl:for-each-group select="yes/furniture[type[bosses | corners | plates | ties]]" group-by="type/name()">
+                        <xsl:copy-of select="current-group()"/>
+                    </xsl:for-each-group>
+                </pippo>-->
+                <xsl:choose>
+                    <xsl:when
+                        test="yes/furniture[type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]]">
+                        <pippo1>
+                            <xsl:choose>
+                                <xsl:when
+                                    test="(yes/furniture/type/clasp/type[NK] and yes/furniture[type[pin | straps[type[tripleBraidedStrap | doubleBraidedStrap]]]]) or (yes/furniture/type/straps[type[NK | flat | other]] and yes/furniture[type[pin | clasp[type[stirrupRing]]  | pin ]]) or (yes/furniture[type[clasp[type[stirrupRing]] | pin | straps[type[tripleBraidedStrap | doubleBraidedStrap]]]])">
+                                    <xsl:for-each-group
+                                        select="yes/furniture[type[clasp[type[stirrupRing | NK]] | pin | straps[type[tripleBraidedStrap | NK | doubleBraidedStrap | flat | other]]]]"
+                                        group-by="type">
+                                        <xsl:copy-of select="current-group()"/>
+                                    </xsl:for-each-group>
+                                </xsl:when>
+                            </xsl:choose>
+                        </pippo1>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:choose>
+                    <xsl:when
+                        test="yes/furniture[type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]]">
+                        <pippo2>
+                            <xsl:choose>
+                                <xsl:when
+                                    test="(yes/furniture/type/clasp/type[NK] and yes/furniture[type[catchplate | strapPlates | strapCollars]]) or (yes/furniture/type/straps[type[NK | flat | other]] and yes/furniture[type[catchplate | clasp[type[simpleHook | foldedHook]] | strapPlates | strapCollars]]) or (yes/furniture[type[clasp[type[simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[flat | NK]] | strapPlates | strapCollars]])">
+                                    <xsl:for-each-group
+                                        select="yes/furniture[type[clasp[type[NK | simpleHook | foldedHook]] | catchplate[type[rollerRoundBar | raisedLip | bentAndSlotted | other | NK]] | straps[type[NK | flat | other]] | strapPlates | strapCollars]]"
+                                        group-by="type">
+                                        <xsl:copy-of select="current-group()"/>
+                                    </xsl:for-each-group>
+                                </xsl:when>
+                            </xsl:choose>
+                        </pippo2>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="yes/furniture[type[bosses | corners | plates | ties]]">
+                        <pippo3>
+                            <xsl:for-each-group
+                                select="yes/furniture[type[bosses | corners | plates | ties]]"
+                                group-by="type">
+                                <xsl:copy-of select="current-group()"/>
+                            </xsl:for-each-group>
+                        </pippo3>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -201,7 +261,7 @@
         <xsl:choose>
             <xsl:when test="type/NC">
                 <!-- It makes little sense to draw something here just for the sake of it. 
-                        Add a note that furniture was detected but the type was not recorded -->                
+                        Add a note that furniture was detected but the type was not recorded -->
                 <desc xmlns="http://www.w3.org/2000/svg">
                     <xsl:text>Furniture was detected but the type was not recorded</xsl:text>
                 </desc>
@@ -246,7 +306,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="claps">
         <xsl:param name="P_coordinates"/>
         <xsl:choose>
