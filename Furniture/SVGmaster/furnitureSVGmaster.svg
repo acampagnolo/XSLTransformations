@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../CSS/style.css" type="text/css"?>
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
+    width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="xMinYMin meet"
+    version="1.1">
+    <desc>Furniture SVG Master</desc>
+    <defs>
+        <filter id="f1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0.5"/>
+        </filter>
+        <linearGradient id="fading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="fading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="doubleFading">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="doubleFading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="30%" stop-color="#666666"/>
+            <stop offset="40%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#FFFFFF"/>
+            <stop offset="70%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
+            patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
+            <path d="M0,0 L5,50" class="line4" fill="none" stroke="#666666" stroke-width="0.1"
+                stroke-linejoin="miter"/>
+        </pattern>
+        <mask id="fademaskBoards">
+            <rect  width="70" height="10" x="0" y="0" rx="2" ry="2" fill="url(#fading2)"/>
+        </mask>
+        <g id="boardXsection">
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" stroke="url(#fading)"
+                stroke-width="2" fill="url(#thicknessCutoutTile)" mask="url(#fademaskBoards)"/>
+            <rect  width="70" height="10" x="0" y="0" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0"
+                fill-opacity="0.1" fill="url(#fading)"/>
+        </g>
+        <g id="simplePinX">
+            <path d="M0,0 L0,-1.5 Q2,1 6,-1 A1,1 0,0 1 6,4 Q2,2 0,4.5 L0,3 L-35,1.8 -35,1.2 0,0" stroke="#000000" stroke-width="0.5" fill="#FFFFFF" />
+        </g>
+        <g id="stirrupRingX">
+            <path d="M5,0 L19.5,0 M19.5,3 L5,3" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.2" fill="#FFFFFF"/>
+            <rect  width="5.5" height="3" x="0" y="0" rx="1" ry="1" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+            <rect  width="4" height="3" x="12" y="0" rx="1" ry="1" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+            <rect  width="3" height="3" x="19" y="0" rx="1" ry="1" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+        </g>
+    </defs>
+
+    <!-- Definitions are called here -->
+
+    <g transform="translate(30,30)">
+        <use xlink:href="#boardXsection"/>
+        <use xlink:href="#boardXsection" transform="translate(280,0) scale(-1,1) "
+        />
+    </g>
+    
+    <g transform="translate(137.5,26.5)">
+        <!--<path d="M0,1.5 Q0,4.5 3,4.5 Q7,4 9,2 Q13.5,0 18,0" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        <path d="M0,1.5 Q0,-1.5 3,-1.5 Q7,-1 9,3 Q13.5,4.5 18,4.5 " stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>-->
+        <path d="M0,1.5 Q0,4.5 3,4.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+       <!-- <path d="M3,4.5 L18,4.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        -->
+        <path d="M0,1.5 Q0,-1.5 3,-1.5 Q7,-1 9,1 Q13.5,3 18,3 " stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        <path d="M0,1.5 Q0,4.5 3,4.5 Q7,4 9,2" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        <!-- Line -->
+        <!--<path d="M3,-1.5 L50,-1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        --><!--<path d="M18,4.5 L50,4.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        --><path d="M18,0 Q22,0.5 24,1.5 Q28.5,3 33,3" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        <path d="M18,4.5 Q22,4 24,2" stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="1" fill="#FFFFFF"></path>
+        
+    </g>
+    
+    <use xlink:href="#stirrupRingX" transform="translate(120,26.5)"></use>
+    
+    <use xlink:href="#simplePinX" transform="translate(100,33.5)"></use>
+
+    <!--<g id="boardProfile">
+        <path d="M0,0 L50,0 50,10 0,10z" stroke="url(#fading)" stroke-width="0.5"
+            fill="url(#thicknessCutoutTile)"/>
+        <path d="M0,0 L50,0 50,10 0,10z" stroke-opacity="0" fill-opacity="0.1"
+            fill="url(#fading)"/>
+    </g>
+    
+    <g transform="translate(-10,50) rotate(-90,50,0)">
+        <mask id="fademask1">
+            <path d="M0,0 L50,0 50,10 0,10 z" fill="url(#fading2)"/>
+        </mask>
+        <path d="M0,0 L50,0 50,10 0,10 z" stroke="url(#fading)" stroke-width="0.5"
+            fill="url(#thicknessCutoutTile)" mask="url(#fademask1)"/>
+        <path d="M0,0 L50,0 50,10 0,10z" stroke-opacity="0" fill-opacity="0.1"
+            fill="url(#fading)"/>
+    </g>
+    
+    <line x1="10" x2="90" y1="130" y2="130" stroke="#000000" stroke-width="1"/>
+    
+    <g transform="translate(30,50) rotate(-90,50,0)">
+        <mask id="fademaskPastedToFlyleaf">
+            <path d="M0,0 L50,0 50,10 0,10 z" fill="url(#doubleFading)"/>
+        </mask>
+        <path d="M0,0 L50,0 50,10 0,10 z" stroke="#FFFFFF" stroke-opacity="0" stroke-width="0.5"
+            fill="url(#thicknessCutoutTile)" mask="url(#fademask2)"/>
+    </g>
+    
+    <rect width="100" height="30" x="100" y="100" fill="url(#doubleFading)"/>
+    
+    <path class="line" filter="url(#f3)" d="M0,20 L41,20" stroke-linecap="butt" stroke-dasharray="5 2"/>-->
+
+
+</svg>
