@@ -9,9 +9,9 @@
         doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"/>
 
     <xsl:variable name="shelfmark" select="//bibliographical/shelfmark"/>
-    <xsl:variable name="fileref" select="tokenize($shelfmark, '\.')"/>
+    <xsl:variable name="fileref" select="tokenize(replace($shelfmark, '/', '.'), '\.')"/>
     <xsl:variable name="filenamePath"
-        select="concat('../../Transformations/Bookmarks/SVGoutput/', $fileref[1], '_', 'Bookmarks')"/>
+        select="concat('../../Transformations/Sewing/SVGoutput/', $fileref[1], '/', $fileref[1], '_', 'Bookmarks')"/>
 
     <!-- X and Y reference values of the Origin - i.e. the registration for the whole diagram, changing these values, the whole diagram can be moved  NB: in SVG the origin is the top left corner of the screen area -->
     <xsl:param name="Ox" select="0"/>
@@ -29,7 +29,7 @@
                 method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
                 doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
                 <xsl:processing-instruction name="xml-stylesheet">
-                <xsl:text>href="../../../GitHub/Transformations/Bookmarks/CSS/style.css"&#32;</xsl:text>
+                <xsl:text>href="../../../../GitHub/XSLTransformations/Bookmarks/CSS/style.css"&#32;</xsl:text>
                 <xsl:text>type="text/css"</xsl:text>
             </xsl:processing-instruction>
                 <xsl:text>&#10;</xsl:text>

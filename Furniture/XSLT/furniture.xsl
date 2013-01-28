@@ -101,19 +101,45 @@
                                             <xsl:attribute name="y">
                                                 <xsl:value-of select="$Oy"/>
                                             </xsl:attribute>
+                                            <!-- Board cross sections -->
+                                            <g xmlns="http://www.w3.org/2000/svg">
+                                                <xsl:attribute name="transform">
+                                                  <xsl:text>translate(</xsl:text>
+                                                  <xsl:value-of select="$Px"/>
+                                                  <xsl:text>,</xsl:text>
+                                                  <xsl:value-of select="$Py"/>
+                                                  <xsl:text>)</xsl:text>
+                                                </xsl:attribute>
+                                                <!-- First board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                  xlink:href="#boardXsection"> </use>
+                                                <!-- Second board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                  xlink:href="#boardXsection">
+                                                  <xsl:attribute name="transform">
+                                                  <xsl:text>translate(</xsl:text>
+                                                  <xsl:value-of select="$boardLength *4"/>
+                                                  <xsl:text>,</xsl:text>
+                                                  <xsl:value-of select="$Oy"/>
+                                                  <xsl:text>)&#32;scale(-1,1)</xsl:text>
+                                                  </xsl:attribute>
+                                                </use>
+                                            </g>
+                                            <!-- Boards -->
                                             <g xmlns="http://www.w3.org/2000/svg">
                                                 <xsl:attribute name="transform">
                                                     <xsl:text>translate(</xsl:text>
                                                     <xsl:value-of select="$Px"/>
                                                     <xsl:text>,</xsl:text>
-                                                    <xsl:value-of select="$Py"/>
+                                                    <xsl:value-of select="$Py + 50"/>
                                                     <xsl:text>)</xsl:text>
-                                                </xsl:attribute>                                                
+                                                </xsl:attribute>
                                                 <!-- First board -->
-                                                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#boardXsection">
-                                                </use>
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                    xlink:href="#board"> </use>
                                                 <!-- Second board -->
-                                                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#boardXsection">
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                    xlink:href="#board">
                                                     <xsl:attribute name="transform">
                                                         <xsl:text>translate(</xsl:text>
                                                         <xsl:value-of select="$boardLength *4"/>
@@ -189,26 +215,52 @@
                                             <xsl:attribute name="y">
                                                 <xsl:value-of select="$Oy"/>
                                             </xsl:attribute>
+                                            <!-- Board cross sections -->
+                                            <g xmlns="http://www.w3.org/2000/svg">
+                                                <xsl:attribute name="transform">
+                                                  <xsl:text>translate(</xsl:text>
+                                                  <xsl:value-of select="$Px"/>
+                                                  <xsl:text>,</xsl:text>
+                                                  <xsl:value-of select="$Py"/>
+                                                  <xsl:text>)</xsl:text>
+                                                </xsl:attribute>
+                                                <!-- First board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                  xlink:href="#boardXsection"> </use>
+                                                <!-- Second board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                  xlink:href="#boardXsection"/>
+                                                <xsl:attribute name="transform">
+                                                  <xsl:text>translate(</xsl:text>
+                                                  <xsl:value-of select="$boardLength *4"/>
+                                                  <xsl:text>,</xsl:text>
+                                                  <xsl:value-of select="$Oy"/>
+                                                  <xsl:text>)&#32;scale(-1,1)</xsl:text>
+                                                </xsl:attribute>
+                                            </g>
+                                            <!-- Boards -->
                                             <g xmlns="http://www.w3.org/2000/svg">
                                                 <xsl:attribute name="transform">
                                                     <xsl:text>translate(</xsl:text>
                                                     <xsl:value-of select="$Px"/>
                                                     <xsl:text>,</xsl:text>
-                                                    <xsl:value-of select="$Py"/>
+                                                    <xsl:value-of select="$Py + 50"/>
                                                     <xsl:text>)</xsl:text>
-                                                </xsl:attribute>                                                
-                                                <!-- First board -->
-                                                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#boardXsection">
-                                                </use>
-                                                <!-- Second board -->
-                                                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#boardXsection"/>
-                                                <xsl:attribute name="transform">
-                                                    <xsl:text>translate(</xsl:text>
-                                                    <xsl:value-of select="$boardLength *4"/>
-                                                    <xsl:text>,</xsl:text>
-                                                    <xsl:value-of select="$Oy"/>
-                                                    <xsl:text>)&#32;scale(-1,1)</xsl:text>
                                                 </xsl:attribute>
+                                                <!-- First board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                    xlink:href="#board"> </use>
+                                                <!-- Second board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                    xlink:href="#board">
+                                                    <xsl:attribute name="transform">
+                                                        <xsl:text>translate(</xsl:text>
+                                                        <xsl:value-of select="$boardLength *4"/>
+                                                        <xsl:text>,</xsl:text>
+                                                        <xsl:value-of select="$Oy"/>
+                                                        <xsl:text>)&#32;scale(-1,1)</xsl:text>
+                                                    </xsl:attribute>
+                                                </use>
                                             </g>
                                             <g xmlns="http://www.w3.org/2000/svg">
                                                 <xsl:for-each-group
@@ -272,26 +324,52 @@
                                             <xsl:attribute name="y">
                                                 <xsl:value-of select="$Oy"/>
                                             </xsl:attribute>
+                                            <!-- Board cross sections -->
+                                            <g xmlns="http://www.w3.org/2000/svg">
+                                                <xsl:attribute name="transform">
+                                                  <xsl:text>translate(</xsl:text>
+                                                  <xsl:value-of select="$Px"/>
+                                                  <xsl:text>,</xsl:text>
+                                                  <xsl:value-of select="$Py"/>
+                                                  <xsl:text>)</xsl:text>
+                                                </xsl:attribute>
+                                                <!-- First board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                  xlink:href="#boardXsection"> </use>
+                                                <!-- Second board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                  xlink:href="#boardXsection"/>
+                                                <xsl:attribute name="transform">
+                                                  <xsl:text>translate(</xsl:text>
+                                                  <xsl:value-of select="$boardLength *4"/>
+                                                  <xsl:text>,</xsl:text>
+                                                  <xsl:value-of select="$Oy"/>
+                                                  <xsl:text>)&#32;scale(-1,1)</xsl:text>
+                                                </xsl:attribute>
+                                            </g>
+                                            <!-- Boards -->
                                             <g xmlns="http://www.w3.org/2000/svg">
                                                 <xsl:attribute name="transform">
                                                     <xsl:text>translate(</xsl:text>
                                                     <xsl:value-of select="$Px"/>
                                                     <xsl:text>,</xsl:text>
-                                                    <xsl:value-of select="$Py"/>
+                                                    <xsl:value-of select="$Py + 50"/>
                                                     <xsl:text>)</xsl:text>
-                                                </xsl:attribute>                                                
-                                                <!-- First board -->
-                                                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#boardXsection">
-                                                </use>
-                                                <!-- Second board -->
-                                                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#boardXsection"/>
-                                                <xsl:attribute name="transform">
-                                                    <xsl:text>translate(</xsl:text>
-                                                    <xsl:value-of select="$boardLength *4"/>
-                                                    <xsl:text>,</xsl:text>
-                                                    <xsl:value-of select="$Oy"/>
-                                                    <xsl:text>)&#32;scale(-1,1)</xsl:text>
                                                 </xsl:attribute>
+                                                <!-- First board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                    xlink:href="#board"> </use>
+                                                <!-- Second board -->
+                                                <use xmlns="http://www.w3.org/2000/svg"
+                                                    xlink:href="#board">
+                                                    <xsl:attribute name="transform">
+                                                        <xsl:text>translate(</xsl:text>
+                                                        <xsl:value-of select="$boardLength *4"/>
+                                                        <xsl:text>,</xsl:text>
+                                                        <xsl:value-of select="$Oy"/>
+                                                        <xsl:text>)&#32;scale(-1,1)</xsl:text>
+                                                    </xsl:attribute>
+                                                </use>
                                             </g>
                                             <g xmlns="http://www.w3.org/2000/svg">
                                                 <!-- call furniture template --><!--
@@ -350,7 +428,7 @@
                 <!--  -->
             </xsl:when>
             <xsl:when test="type/straps">
-                <!--  -->
+                <xsl:call-template name="straps"/>
             </xsl:when>
             <xsl:when test="type/strapPlates">
                 <!--  -->
@@ -369,13 +447,22 @@
 
     <xsl:template name="claps">
         <xsl:choose>
-            <xsl:when test="type/clasp/type/stirrupRing">                
-                <use  xmlns="http://www.w3.org/2000/svg" xlink:href="#stirrupRingX">
+            <xsl:when test="type/clasp/type/stirrupRing">
+                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#stirrupRingX">
                     <xsl:attribute name="transform">
                         <xsl:text>translate(</xsl:text>
                         <xsl:value-of select="$Px + $boardLength + 20"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Py + 3.5"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                </use>
+                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#stirrupRing">
+                    <xsl:attribute name="transform">
+                        <xsl:text>translate(</xsl:text>
+                        <xsl:value-of select="$Px + $boardLength + 20"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + 117.5"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </use>
@@ -392,8 +479,9 @@
             <xsl:when test="type/clasp/type[NC | NK]">
                 <!-- When there is a pin then 'stirrupRing', when a chatchplate 'simpleHook' -->
                 <xsl:choose>
-                    <xsl:when test="ancestor::yes[1]/furniture/type[pin | straps/type[tripleBraidedStrap | doubleBraidedStrap]]">
-                        <use  xmlns="http://www.w3.org/2000/svg" xlink:href="#stirrupRingX">
+                    <xsl:when
+                        test="ancestor::yes[1]/furniture/type[pin | straps/type[tripleBraidedStrap | doubleBraidedStrap]]">
+                        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#stirrupRingX">
                             <xsl:attribute name="transform">
                                 <xsl:text>translate(</xsl:text>
                                 <xsl:value-of select="$Px + $boardLength + 20"/>
@@ -401,10 +489,35 @@
                                 <xsl:value-of select="$Py - 3.5"/>
                                 <xsl:text>)</xsl:text>
                             </xsl:attribute>
+                            <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="50"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
+                        </use>
+                        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#stirrupRing">
+                            <xsl:attribute name="transform">
+                                <xsl:text>translate(</xsl:text>
+                                <xsl:value-of select="$Px + $boardLength + 20"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Oy + 117.5"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="50"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
                         </use>
                     </xsl:when>
                     <xsl:when test="ancestor::yes[1]/furniture/type[catchplate]">
-                    <pippoSimpleHook/>
+                        <pippoSimpleHook/>
+                        
+                        <!--
+                                                        <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="50"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
+                        -->
+                        
                     </xsl:when>
                 </xsl:choose>
             </xsl:when>
@@ -416,8 +529,18 @@
 
     <xsl:template name="pin">
         <xsl:choose>
-            <xsl:when test="type/pin/type/simplePin">
-                <use  xmlns="http://www.w3.org/2000/svg" xlink:href="#simplePinX">
+            <xsl:when test="type/pin/type[simplePin | fastenedPin | NC | NK]">
+                <use xmlns="http://www.w3.org/2000/svg">
+                    <xsl:attribute name="xlink:href">
+                        <xsl:choose>
+                            <xsl:when test="type/pin/type/simplePin">
+                                <xsl:text>#simplePinX</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="type/pin/type/fastenedPin">
+                                <xsl:text>#fastenedPinX</xsl:text>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:attribute>
                     <xsl:attribute name="transform">
                         <xsl:text>translate(</xsl:text>
                         <xsl:value-of select="$Px + $boardLength"/>
@@ -425,13 +548,54 @@
                         <xsl:value-of select="$Py + 3.5"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="type/pin/type[NC | NK]">
+                            <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="50"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="100"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </use>
-            </xsl:when>
-            <xsl:when test="type/pin/type/fastenedPin">
-                <!--  -->
-            </xsl:when>
-            <xsl:when test="type/pin/type[NC | NK]">
-                <!--  -->
+                <use xmlns="http://www.w3.org/2000/svg">
+                    <xsl:attribute name="xlink:href">
+                        <xsl:choose>
+                            <xsl:when test="type/pin/type/simplePin">
+                                <xsl:text>#simplePin</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="type/pin/type/fastenedPin">
+                                <xsl:text>#fastenedPin</xsl:text>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:attribute name="transform">
+                        <xsl:text>translate(</xsl:text>
+                        <xsl:value-of select="$Px + $boardLength"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Oy + 116"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="type/pin/type[NC | NK]">
+                            <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="50"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:call-template name="certainty">
+                                <xsl:with-param name="certainty" as="xs:integer" select="100"/>                                
+                                <xsl:with-param name="type" select="'2'"/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </use>
             </xsl:when>
             <xsl:when test="type/pin/type/other">
                 <!--  -->
@@ -439,7 +603,120 @@
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template name="straps">
+        <xsl:choose>
+            <xsl:when test="type/straps/type[tripleBraidedStrap | doubleBraidedStrap]">
+                <xsl:call-template name="straps_pastedownSide"/>
+                <use xmlns="http://www.w3.org/2000/svg" xlink:href="#braidedStrapX">
+                    <xsl:attribute name="transform">
+                        <xsl:text>translate(</xsl:text>
+                        <xsl:value-of select="$Px + $boardLength + 38"/>
+                        <xsl:text>,</xsl:text>
+                        <xsl:value-of select="$Py - 3.5"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                </use>
+                        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#tripleBraidedStrap">
+                            <xsl:attribute name="xlink:href">
+                                <xsl:choose>
+                                    <xsl:when test="type/straps/type/tripleBraidedStrap">
+                                        <xsl:text>#tripleBraidedStrap</xsl:text>
+                                    </xsl:when>
+                                    <xsl:when test="type/straps/type/doubleBraidedStrap">
+                                        <xsl:text>#doubleBraidedStrap</xsl:text>
+                                    </xsl:when>
+                                </xsl:choose>
+                            </xsl:attribute>
+                            <xsl:attribute name="transform">
+                                <xsl:text>translate(</xsl:text>
+                                <xsl:value-of select="$Px + $boardLength + 38"/>
+                                <xsl:text>,</xsl:text>
+                                <xsl:value-of select="$Oy + 117.5"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                        </use>
+            </xsl:when>
+            <xsl:when test="type/straps/type/flat">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/straps/type[NK | NC]">
+                <!--  -->
+            </xsl:when>
+            <xsl:when test="type/straps/type/other">
+                <!--  -->
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
 
+    <xsl:template name="straps_pastedownSide">
+        <xsl:variable name="pastedownSideIDcaller">
+            <xsl:choose>
+                <xsl:when test="type/straps/pastedownSide/under">                    
+                    <xsl:text>#braidedStrapXend_underPastedown</xsl:text>
+                </xsl:when>
+                <xsl:when test="type/straps/pastedownSide[through | NC | NK | other]">                    
+                    <xsl:text>#braidedStrapXend_throughPastedown</xsl:text>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>                
+        <use xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$pastedownSideIDcaller"/>
+            </xsl:attribute>
+            <xsl:attribute name="transform">
+                <xsl:text>translate(</xsl:text>
+                <xsl:value-of select="$Px + $boardLength + 38"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Py - 3.5"/>
+                <xsl:text>)</xsl:text>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" as="xs:integer">
+                    <xsl:choose>
+                        <xsl:when test="type/straps/pastedownSide[under | through]">                        
+                            <xsl:value-of select="100"/>
+                        </xsl:when>
+                        <xsl:when test="type/straps/pastedownSide[other | NC | NK]">                        
+                            <xsl:value-of select="50"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="type" select="'2'"/>
+            </xsl:call-template>
+        </use>
+        <use xmlns="http://www.w3.org/2000/svg" xlink:href="#tripleBraidedStrap">
+            <xsl:attribute name="xlink:href">
+                <xsl:choose>
+                    <xsl:when test="type/straps/type/tripleBraidedStrap">
+                        <xsl:text>#strapEnding_tripleStrap</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="type/straps/type/doubleBraidedStrap">
+                        <xsl:text>#strapEnding_doubleStrap</xsl:text>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="transform">
+                <xsl:text>translate(</xsl:text>
+                <xsl:value-of select="$Ox"/>
+                <xsl:text>,</xsl:text>
+                <xsl:value-of select="$Oy"/>
+                <xsl:text>)</xsl:text>
+            </xsl:attribute>
+            <xsl:call-template name="certainty">
+                <xsl:with-param name="certainty" as="xs:integer">
+                    <xsl:choose>
+                        <xsl:when test="type/straps/pastedownSide[under | through]">                        
+                            <xsl:value-of select="100"/>
+                        </xsl:when>
+                        <xsl:when test="type/straps/pastedownSide[other | NC | NK]">                        
+                            <xsl:value-of select="50"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="type" select="'2'"/>
+            </xsl:call-template>
+        </use>        
+    </xsl:template>
 
     <!-- Uncertainty template -->
     <xsl:template name="certainty">
