@@ -1,0 +1,57 @@
+/* style.css */
+
+/*
+ *    GENERAL   *
+ * 
+ * stroke=#000000; stroke-width=1; fill=none;
+ */
+
+
+.line{
+    stroke:#000000;
+    stroke-width:1;
+    fill:none;
+}
+
+.lineFading{
+    stroke:url(#fading);
+    stroke-width:1;
+    fill:none;
+}
+
+.line2{
+    stroke:#000000;
+    stroke-width:0.5;
+    fill:none;
+}
+
+.line3{
+    stroke:#666666;
+    stroke-width:0.1;
+    fill:none;
+    stroke-linejoin:miter;
+}
+
+.line4{
+    stroke:#000000;
+    stroke-width:0.2;
+    fill:none;
+    stroke-linejoin:miter;
+    stroke-opacity:1;
+}
+
+.nolineFilledWhite{
+    stroke:#FFFFFF;
+    stroke-opacity:0;
+    stroke-width:1;
+    fill:#FFFFFF;
+    fill-opacity:1;
+}
+
+.nolineFilled{
+    stroke:#FFFFFF;
+    stroke-opacity:0;
+    stroke-width:1;
+    fill:url(#thicknessCutoutTile);
+}
+

@@ -80,12 +80,7 @@
         </g>
         <g id="fastenedPinX" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
             <use xlink:href="#simplePinX"/>
-<<<<<<< HEAD
-            <path
-                d="M-15,-3.5 L-11,-3.5 L-11,-2.5 L-14.5,-2 L-15,4.5 L-15.5,-2 L-19.5,-2.5 L-19.5,-3.5z"/>
-=======
             <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,4.5 L-15.5,-2 L-15.8,-3.5z"/>
->>>>>>> origin/branch1
             <path d="M-16.3,0.5 L-16.3,2.5 M-13.6,0.5 L-13.6,2.5"/>
         </g>
         <g id="simplePin">
@@ -96,17 +91,11 @@
         </g>
         <g id="fastenedPin" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
             <use xlink:href="#simplePin_head"/>
-<<<<<<< HEAD
-            <circle r="4.25" cx="-15" cy="1.5"/>
-=======
             <circle r="1.25" cx="-15" cy="1.5"/>
->>>>>>> origin/branch1
             <g stroke="#000000" stroke-width="0.5" fill="none" stroke-dasharray="2 1">
                 <path d="M0,3 Q-15,6 -35,1.5 Q-15,-3 0,0"/>
                 <circle r="1.35" cx="-15" cy="1.5" stroke-dasharray="0.5 0.5"/>
             </g>
-<<<<<<< HEAD
-=======
         </g>
         <g id="rollerRoundBar_catchplateX" stroke="#000000" stroke-width="0.5" fill="none"
             transform="translate(1,-5)">
@@ -157,7 +146,6 @@
             fill="#FFFFFF">
             <path id="attachment_through" d="M-20,-5 L-20,8"/>
             <use xlink:href="#attachment_through" transform="translate(10,0)"/>
->>>>>>> origin/branch1
         </g>
         <g id="stirrupRingX">
             <path d="M4.5,0 L21.5,0 M21.5,3 L4.5,3" stroke-linecap="round" stroke-linejoin="round"
@@ -171,11 +159,6 @@
         </g>
         <g id="stirrupRing">
             <path
-<<<<<<< HEAD
-                d="M0,0 Q0.5,-1.5 2,-1.5 C3.5,-8 13.5,-8 14,-2 L14,-5.5 Q14,-6.5 15,-7 L22.5,-7.5 Q23.5,-7.5 23.5,-6.5 L23.5,6.5 Q23.5,7.5 22,7.5 L15,7 Q14,6.5 14,5.5 L14,2 C13.5,8 3.5,8 2,1.5 Q0.5,1.5 0,0
-                M16,0 L16,-4.5 Q16,-5.5 18,-5.5 L19.5,-5.5 Q20.5,-5.5 20.5,-4.5 L20.5,4.5 Q20.5,5.5 19.5,5.5 L18,5.5 Q16,5.5 16,4.5 L16,0 M4.5,0 C4.5,-5 11.5,-5 11.5,0 C11.5,5 4.5,5 4.5,0"
-                stroke="#000000" stroke-width="0.5" fill="none"/>
-=======
                 d="M0,0 Q0.5,-1.5 2,-1.5 C3.5,-8 13.5,-8 14,-2 L14,-5.5 Q14,-6.5 15,-7 L22.5,-7.5 Q23.5,-7.5 23.5,-6.5 
                 M23.5,6.5 Q23.5,7.5 22,7.5 L15,7 Q14,6.5 14,5.5 L14,2 C13.5,8 3.5,8 2,1.5 Q0.5,1.5 0,0
                 M16,0 L16,-4.5 Q16,-5.5 18,-5.5 L19.5,-5.5 Q20.5,-5.5 20.5,-4.5 
@@ -231,7 +214,6 @@
             <!-- silhouette -->
             <path d="M0,-5 L-20,-5 L-20,5 L0,5"/>
             <circle r="2.2" cx="-4.5" cy="0"/>
->>>>>>> origin/branch1
         </g>
         <g id="braidingPatternsX">
             <g id="braidingPattern">
@@ -289,8 +271,6 @@
             <use xlink:href="#braidingPattern_end" x="91"
                 transform="rotate(90 120,1) translate(-1,-7.5)"/>
         </g>
-<<<<<<< HEAD
-=======
         <g id="flatStrapX_aroundClasp" stroke-linecap="round" stroke-linejoin="round"
             stroke="#000000" stroke-width="0.5" fill="none">
             <!-- Around clasp -->
@@ -391,7 +371,6 @@
             <path d="M120,2 L123,2 Q126.5,2 126.5,5 L126.5,12 Q126,13.75 130,14.5 L141,14.5"
                 stroke-width="0.3" fill="none"/>
         </g>
->>>>>>> origin/branch1
         <g id="strapEnding_tripleStrapPath">
             <g stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5"
                 fill="none" stroke-dasharray="2 1">
@@ -424,13 +403,10 @@
             <use xlink:href="#strapEnding_doubleStrapPath"
                 transform="scale(1,-1) translate(263,-117.5)"/>
         </g>
-<<<<<<< HEAD
-=======
         <g id="strapEnding_flat" transform="translate(263,117.5)">
             <path d="M0,-5 L20,-8 Q25,0 27,2 L0,5" stroke-linecap="round" stroke-linejoin="round"
                 stroke="#000000" stroke-width="0.5" fill="none" stroke-dasharray="2 1"/>
         </g>
->>>>>>> origin/branch1
         <g id="braidingPatterns">
             <!-- tripleBraided -->
             <path id="pattern_h" d="M26,-2 Q30,-2 33,0 L32,0 L33,0 Q30,2 26,2"/>
@@ -446,14 +422,9 @@
             stroke-width="0.5" fill="#FFFFFF">
             <!-- silhouette -->
             <path
-<<<<<<< HEAD
-                d="M0,0 L0,-5 L116,-12 A2,2 0,0 1 116,-8 L20,-2 L126,-2 A2,2 0,0 1 126,2 L20,2 L116,8 A2,2 0,0 1 116,12 L0,5z"/>
-            <!-- patters -->
-=======
                 d="M20,-6.2 L116,-12 A2,2 0,0 1 116,-8 L20,-2 L126,-2 A2,2 0,0 1 126,2 L20,2 L116,8 A2,2 0,0 1 116,12 L20,6.2"/>
             <path d="M0,0 L0,-5 L20,-6.2 M20,6.2 L0,5 L0,0" fill="none"/>
             <!-- patterns -->
->>>>>>> origin/branch1
             <g>
                 <!-- middle strand -->
                 <use xlink:href="#pattern_h" x="0"/>
@@ -504,14 +475,9 @@
             stroke-width="0.5" fill="#FFFFFF">
             <!-- silhouette -->
             <path
-<<<<<<< HEAD
-                d="M0,0 L0,-5 L126,-8 A2.5,2.5 0,0 1 126,-3 L20,0 L126,3 A2.5,2.5 0,0 1 126,8 L0,5z"/>
-            <!-- patters -->
-=======
                 d="M20,-5.5 L126,-8 A2.5,2.5 0,0 1 126,-3 L20,0 L126,3 A2.5,2.5 0,0 1 126,8 L20,5.5"/>
             <path d="M0,0 L0,-5 L20,-5.5 M20,5.5 L0,5 L0,0" fill="none"/>
             <!-- patterns -->
->>>>>>> origin/branch1
             <g>
                 <!-- upper strand -->
                 <use xlink:href="#pattern_-a2" x="0"/>
@@ -544,8 +510,6 @@
                 <use xlink:href="#pattern_a2" x="84" y="2"/>
                 <use xlink:href="#pattern_a2" x="91" y="2.2"/>
             </g>
-<<<<<<< HEAD
-=======
         </g>
         <g id="flatStrap" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
             stroke-width="0.5">
@@ -557,7 +521,6 @@
             stroke-width="0.5" fill="none">
             <!-- silhouette -->
             <path d="M0,-5 L0,5" stroke-dasharray="2 1"/>
->>>>>>> origin/branch1
         </g>
     </defs>
 
@@ -568,14 +531,6 @@
         <use xlink:href="#boardXsection" transform="translate(280,0) scale(-1,1) "/>
     </g>
 
-<<<<<<< HEAD
-    <use xlink:href="#stirrupRingX" transform="translate(120,26.5)"/>
-
-    <use xlink:href="#fastenedPinX" transform="translate(100,33.5)"/>
-
-    <use xlink:href="#braidedStrapXend_underPastedown" transform="translate(138,26.5)"/>
-    <use xlink:href="#braidedStrapX" transform="translate(138,26.5)"/>
-=======
     <use xlink:href="#foldedHookX" transform="translate(120,26.5)"/>
 
     <use xlink:href="#raisedLip_catchplateX" transform="translate(100,33.5)"/>
@@ -587,7 +542,6 @@
 
     <!--<use xlink:href="#braidedStrapXend_underPastedown" transform="translate(138,26.5)"/>
     <use xlink:href="#braidedStrapX" transform="translate(138,26.5)"/>-->
->>>>>>> origin/branch1
 
 
     <g transform="translate(30,80)">
@@ -595,14 +549,6 @@
         <use xlink:href="#board" transform="translate(280,0) scale(-1,1) "/>
     </g>
 
-<<<<<<< HEAD
-    <use xlink:href="#fastenedPin" transform="translate(100,116)"/>
-
-    <use xlink:href="#stirrupRing" transform="translate(120,117.5)"/>
-
-    <use xlink:href="#strapEnding_tripleStrap"/>
-    <use xlink:href="#tripleBraidedStrap" transform="translate(138,117.5)"/>
-=======
     <use xlink:href="#bentAndSlotted_catchplate" transform="translate(100,116)"/>
 
     <use xlink:href="#simpleORfoldedHook_narrow" transform="translate(120,117.5)"/>
@@ -613,7 +559,6 @@
     <!--
     <use xlink:href="#strapEnding_tripleStrap"/>
     <use xlink:href="#tripleBraidedStrap" transform="translate(138,117.5)"/>-->
->>>>>>> origin/branch1
     <!--
     <use xlink:href="#strapEnding_doubleStrap"/>
     <use xlink:href="#doubleBraidedStrap" transform="translate(138,117.5)"/>-->
