@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <defs>
+        <filter id="emboss">
+            <feConvolveMatrix order="3" kernelMatrix="-2,-1,0,-1,1,1,0,1,2" edgeMode="none"/>
+        </filter>
+    </defs>
+   
+    <g id="stirrupRing" transform="scale(10)translate(50,50)" filter="url(#emboss)">
+        <path
+            d="M0,0 Q0.5,-1.5 2,-1.5 C3.5,-8 13.5,-8 14,-2 L14,-5.5 Q14,-6.5 15,-7 L22.5,-7.5 Q23.5,-7.5 23.5,-6.5 
+            M23.5,6.5 Q23.5,7.5 22,7.5 L15,7 Q14,6.5 14,5.5 L14,2 C13.5,8 3.5,8 2,1.5 Q0.5,1.5 0,0
+            M16,0 L16,-4.5 Q16,-5.5 18,-5.5 L19.5,-5.5 Q20.5,-5.5 20.5,-4.5 
+            M20.5,4.5 Q20.5,5.5 19.5,5.5 L18,5.5 Q16,5.5 16,4.5 L16,0 M4.5,0 C4.5,-5 11.5,-5 11.5,0 C11.5,5 4.5,5 4.5,0"
+            stroke="#000000" stroke-width="0.5px" fill="none"/>
+        <path d="M23.5,-6.5 L23.5,6.5" stroke="#000000" stroke-width="0.5px" fill="none"
+            stroke-dasharray="2 1"/>
+        <circle r="1" cx="24" cy="3"/>
+        <path d="M20.5,-4.5 L20.5,4.5" stroke="#000000" stroke-width="0.5px" fill="none"
+            stroke-dasharray="2 1"/>
+    </g>
+</svg>
+   

@@ -6,9 +6,89 @@
     version="1.1">
     <desc>Boards SVG Master</desc>
     <defs>
+        <filter id="f1" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4" filterUnits="userSpaceOnUse">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
+        </filter>
+        <filter id="f5" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0"/>
+        </filter>
+        <filter id="imprecisionHalo">
+            <feOffset in="SourceAlpha" dx="0" dy="1" result="offset1"/>
+            <feColorMatrix type="matrix" in="offset1" result="col1"
+                values="1 0 0 .2 0 0 1 0 .2 0 0 0 1 1 0 0 0 0 1 0"/>
+            <feGaussianBlur in="col1" stdDeviation="0.5" result="blurred1"/>
+            <feBlend in="SourceGraphic" in2="blurred1" mode="normal" result="blend1"/>
+            <feOffset in="SourceAlpha" dx="0" dy="-1" result="offset2"/>
+            <feColorMatrix type="matrix" in="offset2" result="col2"
+                values="1 0 0 .2 0 0 1 0 .2 0 0 0 1 1 0 0 0 0 1 0"/>
+            <feGaussianBlur in="col2" stdDeviation="0.5" result="blurred2"/>
+            <feBlend in="SourceGraphic" in2="blurred2" mode="normal" result="blend2"/>
+            <feOffset in="SourceAlpha" dx="1" dy="0" result="offset3"/>
+            <feColorMatrix type="matrix" in="offset3" result="col3"
+                values="1 0 0 .2 0 0 1 0 .2 0 0 0 1 1 0 0 0 0 1 0"/>
+            <feGaussianBlur in="col3" stdDeviation="0.5" result="blurred3"/>
+            <feBlend in="SourceGraphic" in2="blurred3" mode="normal" result="blend3"/>
+            <feOffset in="SourceAlpha" dx="-1" dy="0" result="offset4"/>
+            <feColorMatrix type="matrix" in="offset4" result="col4"
+                values="1 0 0 .2 0 0 1 0 .2 0 0 0 1 1 0 0 0 0 1 0"/>
+            <feGaussianBlur in="col4" stdDeviation="0.5" result="blurred4"/>
+            <feBlend in="SourceGraphic" in2="blurred4" mode="normal" result="blend4"/>
+            <feMerge result="resultImage">
+                <feMergeNode in="SourceGraphic"/>
+                <feMergeNode in="blend1"/>
+                <feMergeNode in="blend2"/>
+                <feMergeNode in="blend3"/>
+                <feMergeNode in="blend4"/>
+            </feMerge>
+        </filter>
+        <linearGradient id="fading">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="60%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="fading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="80%" stop-color="#666666"/>
+            <stop offset="98%" stop-color="#FFFFFF"/>
+        </linearGradient>
         <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
             patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
-            <path d="M0,0 L5,100" class="line3" />
+            <path d="M0,0 L5,50" class="line3"/>
         </pattern>
     </defs>
 

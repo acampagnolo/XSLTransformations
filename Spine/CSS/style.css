@@ -6,6 +6,23 @@
  * stroke=#000000; stroke-width=1; fill=none;
  */
 
+.titleText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;
+}
+
+.descText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;
+}
 
 .line{
     stroke:#000000;

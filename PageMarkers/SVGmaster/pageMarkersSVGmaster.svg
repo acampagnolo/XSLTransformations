@@ -6,19 +6,195 @@
     version="1.1">
     <desc>Page Markers SVG Master</desc>
     <defs>
-        <filter id="f1">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        <ellipse id="r_small" cx="50%" cy="50%" rx="100" ry="300" style="fill:url(#bg)"/>
+        <ellipse id="r_big" cx="50%" cy="50%" rx="250" ry="300" style="fill:url(#bg)"/>
+        <rect id="r_2" width="150%" height="110%" fill="url(#bg)"/>
+        <linearGradient id="bg">
+            <stop offset="0.000" stop-color="#00ff00"/>
+            <stop offset="0.010" stop-color="#808000"/>
+            <stop offset="0.020" stop-color="#ff0000"/>
+            <stop offset="0.030" stop-color="#00ff00"/>
+            <stop offset="0.040" stop-color="#808000"/>
+            <stop offset="0.050" stop-color="#ff0000"/>
+            <stop offset="0.060" stop-color="#00ff00"/>
+            <stop offset="0.070" stop-color="#808000"/>
+            <stop offset="0.080" stop-color="#ff0000"/>
+            <stop offset="0.090" stop-color="#00ff00"/>
+            <stop offset="0.100" stop-color="#808000"/>
+            <stop offset="0.110" stop-color="#ff0000"/>
+            <stop offset="0.120" stop-color="#00ff00"/>
+            <stop offset="0.130" stop-color="#808000"/>
+            <stop offset="0.140" stop-color="#ff0000"/>
+            <stop offset="0.150" stop-color="#00ff00"/>
+            <stop offset="0.160" stop-color="#808000"/>
+            <stop offset="0.170" stop-color="#ff0000"/>
+            <stop offset="0.180" stop-color="#00ff00"/>
+            <stop offset="0.190" stop-color="#808000"/>
+            <stop offset="0.200" stop-color="#ff0000"/>
+            <stop offset="0.210" stop-color="#00ff00"/>
+            <stop offset="0.220" stop-color="#808000"/>
+            <stop offset="0.230" stop-color="#ff0000"/>
+            <stop offset="0.240" stop-color="#00ff00"/>
+            <stop offset="0.250" stop-color="#808000"/>
+            <stop offset="0.260" stop-color="#ff0000"/>
+            <stop offset="0.270" stop-color="#00ff00"/>
+            <stop offset="0.280" stop-color="#808000"/>
+            <stop offset="0.290" stop-color="#ff0000"/>
+            <stop offset="0.300" stop-color="#00ff00"/>
+            <stop offset="0.310" stop-color="#808000"/>
+            <stop offset="0.320" stop-color="#ff0000"/>
+            <stop offset="0.330" stop-color="#00ff00"/>
+            <stop offset="0.340" stop-color="#808000"/>
+            <stop offset="0.350" stop-color="#ff0000"/>
+            <stop offset="0.360" stop-color="#00ff00"/>
+            <stop offset="0.370" stop-color="#808000"/>
+            <stop offset="0.380" stop-color="#ff0000"/>
+            <stop offset="0.390" stop-color="#00ff00"/>
+            <stop offset="0.400" stop-color="#808000"/>
+            <stop offset="0.410" stop-color="#ff0000"/>
+            <stop offset="0.420" stop-color="#00ff00"/>
+            <stop offset="0.430" stop-color="#808000"/>
+            <stop offset="0.440" stop-color="#ff0000"/>
+            <stop offset="0.450" stop-color="#00ff00"/>
+            <stop offset="0.460" stop-color="#808000"/>
+            <stop offset="0.470" stop-color="#ff0000"/>
+            <stop offset="0.480" stop-color="#00ff00"/>
+            <stop offset="0.490" stop-color="#808000"/>
+            <stop offset="0.500" stop-color="#ff0000"/>
+            <stop offset="0.510" stop-color="#00ff00"/>
+            <stop offset="0.520" stop-color="#808000"/>
+            <stop offset="0.530" stop-color="#ff0000"/>
+            <stop offset="0.540" stop-color="#00ff00"/>
+            <stop offset="0.550" stop-color="#808000"/>
+            <stop offset="0.560" stop-color="#ff0000"/>
+            <stop offset="0.570" stop-color="#00ff00"/>
+            <stop offset="0.580" stop-color="#808000"/>
+            <stop offset="0.590" stop-color="#ff0000"/>
+            <stop offset="0.600" stop-color="#00ff00"/>
+            <stop offset="0.610" stop-color="#808000"/>
+            <stop offset="0.620" stop-color="#ff0000"/>
+            <stop offset="0.630" stop-color="#00ff00"/>
+            <stop offset="0.640" stop-color="#808000"/>
+            <stop offset="0.650" stop-color="#ff0000"/>
+            <stop offset="0.660" stop-color="#00ff00"/>
+            <stop offset="0.670" stop-color="#808000"/>
+            <stop offset="0.680" stop-color="#ff0000"/>
+            <stop offset="0.690" stop-color="#00ff00"/>
+            <stop offset="0.700" stop-color="#808000"/>
+            <stop offset="0.710" stop-color="#ff0000"/>
+            <stop offset="0.720" stop-color="#00ff00"/>
+            <stop offset="0.730" stop-color="#808000"/>
+            <stop offset="0.740" stop-color="#ff0000"/>
+            <stop offset="0.750" stop-color="#00ff00"/>
+            <stop offset="0.760" stop-color="#808000"/>
+            <stop offset="0.770" stop-color="#ff0000"/>
+            <stop offset="0.780" stop-color="#00ff00"/>
+            <stop offset="0.790" stop-color="#808000"/>
+            <stop offset="0.800" stop-color="#ff0000"/>
+            <stop offset="0.810" stop-color="#00ff00"/>
+            <stop offset="0.820" stop-color="#808000"/>
+            <stop offset="0.830" stop-color="#ff0000"/>
+            <stop offset="0.840" stop-color="#00ff00"/>
+            <stop offset="0.850" stop-color="#808000"/>
+            <stop offset="0.860" stop-color="#ff0000"/>
+            <stop offset="0.870" stop-color="#00ff00"/>
+            <stop offset="0.880" stop-color="#808000"/>
+            <stop offset="0.890" stop-color="#ff0000"/>
+            <stop offset="0.900" stop-color="#00ff00"/>
+            <stop offset="0.910" stop-color="#808000"/>
+            <stop offset="0.920" stop-color="#ff0000"/>
+            <stop offset="0.930" stop-color="#00ff00"/>
+            <stop offset="0.940" stop-color="#808000"/>
+            <stop offset="0.950" stop-color="#ff0000"/>
+            <stop offset="0.960" stop-color="#00ff00"/>
+            <stop offset="0.970" stop-color="#808000"/>
+            <stop offset="0.980" stop-color="#ff0000"/>
+            <stop offset="0.990" stop-color="#00ff00"/>
+            <stop offset="1.000" stop-color="#808000"/>
+        </linearGradient>
+        <filter id="warp_small">
+            <feImage xlink:href="#r_small" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.5"
+                in="SourceGraphic" in2="grad"/>
         </filter>
-        <filter id="f2">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        <filter id="warp_big">
+            <feImage xlink:href="#r_big" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.5"
+                in="SourceGraphic" in2="grad"/>
         </filter>
-        <filter id="f3">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        <filter id="warp_2" filterUnits="objectBoundingBox">
+            <feImage xlink:href="#r_2" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.7"
+                in="SourceGraphic" in2="grad" result="unblurred"/>
+            <!--        
+            <feGaussianBlur in="unblurred" stdDeviation="0.5 0.1"/>-->
+        </filter>
+        <filter id="f1" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4" filterUnits="userSpaceOnUse">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
         </filter>
         <linearGradient id="fading">
             <stop offset="0%" stop-color="#FFFFFF"/>
             <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
         </linearGradient>
+        <linearGradient id="fading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="doubleFading">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="doubleFading2">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#000000"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="fadingDownGrey" xlink:href="#fading2" x1="0%" y1="0%" x2="0%" y2="100%"/>
+        <linearGradient id="doubleFadingVertical" xlink:href="#doubleFading2" x1="0%" y1="0%"
+            x2="0%" y2="100%"/>
+        <linearGradient id="fadingUpGrey" xlink:href="#fading" x1="0%" y1="0%" x2="0%" y2="100%"/>
+        <radialGradient id="radialFading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </radialGradient>
         <pattern id="gluedPattern" patternUnits="userSpaceOnUse" viewBox="0 0 3 5" x="0" y="0"
             width="3" height="5">
             <desc>Glue pattern</desc>
@@ -37,19 +213,23 @@
             <use xlink:href="#turkKnot_element"
                 transform=" translate(1,-7.5) rotate(266, 42.5, 2.5) scale(0.8,1)"/>
         </g>
-        <g id="foldedKnotted_above" stroke-linejoin="bevel" stroke-linecap="round" flood-opacity="1">
-            <path d="M0,0 L20,0 Q30,0 40,4 M39.5,8 Q30,12 20,12 L0,12 0,0"/>
-            <path d="M40,5 Q41,3 41.5,2"/>
-            <path d="M40,5 Q38,9 43,11"/>
-            <path d="M45,11 Q43,12 43,10 Q44,8 44,6"/>
-            <path d="M44,6 Q44,4 41,2"/>
-            <path d="M41,2 Q43.5,0 45,1.5"/>
-            <path d="M43,10 Q49,13 49,5"/>
-            <path d="M44,8 Q46.5,8.5 46.5,6"/>
-            <path d="M46.5,6 Q47.5,5 49,5"/>
-            <path d="M46.5,6 Q47.5,4 45.5,2"/>
-            <path d="M45.5,2 Q46,1 47.5,1.5"/>
-            <path d="M47.5,1.5 Q49.5,3 49.3,5"/>
+        <g id="foldedKnotted_above" stroke-linejoin="bevel" stroke-linecap="round"
+            fill-opacity="0.8" filter="url(#warp_big)">
+            <g id="foldedKnotted_full" class="sketchyLine">
+                <path d="M0,0 L20,0 Q30,0 40,4 Q39,6 39.5,8 Q30,12 20,12 L0,12 0,0"/>
+                <path d="M40,5 Q41,3 41.5,2"/>
+                <path d="M40,5 Q38,9 43,11"/>
+                <path d="M45,11 Q43,12 43,10 Q44,8 44,6"/>
+                <path d="M44,6 Q44,4 41,2"/>
+                <path d="M41,2 Q43.5,0 45,1.5"/>
+                <path d="M43,10 Q49,13 49,5"/>
+                <path d="M44,8 Q46.5,8.5 46.5,6"/>
+                <path d="M46.5,6 Q47.5,5 49,5"/>
+                <path d="M46.5,6 Q47.5,4 45.5,2"/>
+                <path d="M45.5,2 Q46,1 47.5,1.5"/>
+                <path d="M47.5,1.5 Q49.5,3 49.3,5"/>
+            </g>            
+            <use xlink:href="#foldedKnotted_full" stroke-width="0.1" stroke-dasharray="1 2"/>
         </g>
         <g id="foldedKnotted_above-90">
             <use xlink:href="#foldedKnotted_above" transform="rotate(-90, 0, 0)"/>
@@ -66,8 +246,9 @@
             <path d="M0,0 L20,0 42.5,0"/>
         </g>
         <g id="foldedStraight_above" stroke-linejoin="round" stroke-linecap="round"
-            flood-opacity="1">
-            <path d="M0,0 L20,0 40,0 40,12 20,12 L0,12z"/>
+            flood-opacity="0.8" filter="url(#warp_big)">
+            <path id="foldedStraight_full" d="M0,0 L20,0 40,0 40,12 20,12 L0,12z" class="sketchyLine"/>            
+            <use xlink:href="#foldedStraight_full" stroke-width="0.1" stroke-dasharray="1 2"/>
         </g>
         <g id="foldedStraight_above-90">
             <use xlink:href="#foldedStraight_above" transform="rotate(-90, 0, 0)"/>
@@ -78,20 +259,32 @@
         <g id="pageProfile">
             <path d="M0,0.1 L41,0" stroke-width="2" stroke="url(#fading)" fill="none"/>
         </g>
-        <g id="pageOutline">
-            <path d="M0,0 L90,0 90,120 0,120z"/>
+        <mask id="fademaskPage">
+            <rect width="180" height="100" x="-10" y="-10" fill="url(#radialFading)"/>
+        </mask>
+        <g id="page">
+            <rect width="100" height="100" x="-30" y="-20" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#FFFFFF" stroke-opacity="0" fill="#999999"
+                mask="url(#fademaskPage)"/>
+            <path d="M70,-10 L70.0001,80" stroke-linecap="round" stroke-linejoin="round"
+                stroke="#000000" mask="url(#fademaskPage)"/>
         </g>
-        <g id="pageOutline_head-foredge">
-            <path d="M40,0 L90,0 90,1" stroke="url(#fading)"/>
-            <g transform="rotate(-90, 90,0)">
-                <path d="M30,0 L90,0.001" stroke="url(#fading)"/>
-            </g>
+        <g id="pageOutline_head">
+            <path d="M0,0 L87,0.00001" stroke="url(#doubleFading2)" stroke-linecap="round"/>
+            <!--<path d="M90,0  L90.00001,120" stroke="url(#doubleFadingVertical)"
+                stroke-linecap="round"/>-->
+            <use xlink:href="#page" transform="rotate(-90,0,0) translate(-70,5)"/>
+        </g>
+        <g id="pageOutline_foredge" transform="translate(0,-60)">
+            <path d="M90,20  L90.00001,107" stroke="url(#doubleFadingVertical)"
+                stroke-linecap="round"/>
+            <use xlink:href="#page" transform="translate(20,25)"/>
         </g>
         <g id="pageOutline_tail">
-            <path d="M40,0 L90,0 90,-1" stroke="url(#fading)"/>
-            <g transform="rotate(90, 90,0)">
-                <path d="M30,0 L90,0.001" stroke="url(#fading)"/>
-            </g>
+            <path d="M90,120 0,120.00001" stroke="url(#doubleFading2)" stroke-linecap="round" transform="translate(0,-103)"/>
+            <!--<path d="M90,0  L90.00001,120" stroke="url(#doubleFadingVertical)"
+                stroke-linecap="round"/>-->
+            <use xlink:href="#page" transform="rotate(-270,0,0) translate(-53,-83)"/>
         </g>
         <g id="gluedAttachment">
             <rect width="20" height="1.3" fill="url(#gluedPattern)" stroke-opacity="0.0" x="0"
@@ -100,15 +293,30 @@
                 y="3.5"/>
         </g>
         <g id="sewnAttachment" stroke-linecap="round">
-            <path d="M6,6 L6,-1 18,-1 18,6 6,6"/>
+            <g class="line3_white">
+                <path d="M6,6 L6,-1 M18,-1 L18,6"/>
+                <path d="M6,-1 18,-1 M18,6 L6,6"/>
+            </g>
+            <g class="line3">
+                <path d="M6,6 L6,-1 M18,-1 L18,6" stroke-dasharray="1 1"/>
+                <path d="M6,-1 18,-1 M18,6 L6,6"/>
+            </g>
         </g>
         <g id="sewnAttachment2" stroke-linecap="round">
-            <path d="M6,4.2 L6,-1 18,-1 18,4.2 6,4.2"/>
+            <g class="line3_white">
+                <path d="M6,4.2 L6,-1 M18,-1 L18,4.2"/>
+                <path d="M6,-1 L18,-1 M18,4.2 L 6,4.2"/>
+            </g>
+            <g class="line3">
+                <path d="M6,4.2 L6,-1 M18,-1 L18,4.2" stroke-dasharray="1 1"/>
+                <path d="M6,-1 L18,-1 M18,4.2 L 6,4.2"/>
+            </g>
+        </g>
+        <g id="sewnAttachment_above" class="line2" stroke-linecap="round">
+            <path d="M4,2.5 L16,2.5 M4,9.5 L16,9.5"/>
         </g>
     </defs>
 
     <!-- Definitions are called here -->
-
-    <use xlink:href="#pageOutline_tail" x="120" y="120" fill="none"/>
 
 </svg>

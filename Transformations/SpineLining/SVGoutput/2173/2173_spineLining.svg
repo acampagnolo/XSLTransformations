@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml-stylesheet href="../../../../GitHub/XSLTransformations/SpineLining/CSS/style.css" type="text/css"?>
+<!--SVG file generated on: 18 January 2014 at 16:04:01 using SAXON version PE 9.5.1.2-->
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:my="www.my.my"
+     version="1.1"
+     x="0"
+     y="0"
+     width="1189mm"
+     height="841mm"
+     viewBox="0 0 1189 841"
+     preserveAspectRatio="xMidYMid meet">
+   <title>Spine lining of book: 2173.1478</title>
+   <defs>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f1"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f2"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f3"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f4"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0.5"/>
+        </filter>
+        <linearGradient xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="fading"
+                      xlink:type="simple"
+                      xlink:show="other"
+                      xlink:actuate="onLoad">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="fading2"
+                      xlink:type="simple"
+                      xlink:show="other"
+                      xlink:actuate="onLoad">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="doubleFading"
+                      xlink:type="simple"
+                      xlink:show="other"
+                      xlink:actuate="onLoad">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="doubleFading2"
+                      xlink:type="simple"
+                      xlink:show="other"
+                      xlink:actuate="onLoad">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="30%" stop-color="#666666"/>
+            <stop offset="40%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#FFFFFF"/>
+            <stop offset="70%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <pattern xmlns:xlink="http://www.w3.org/1999/xlink"
+               id="thicknessCutoutTile"
+               patternUnits="userSpaceOnUse"
+               patternContentUnits="userSpaceOnUse"
+               x="0"
+               y="0"
+               width="2"
+               height="50"
+               xlink:type="simple"
+               xlink:show="other"
+               xlink:actuate="onLoad"
+               preserveAspectRatio="xMidYMid meet">
+            <path d="M0,0 L5,50"
+               class="line2"
+               fill="none"
+               stroke="#666666"
+               stroke-width="0.1"
+               stroke-linejoin="miter"/>
+        </pattern>
+    </defs>
+   <desc>Spine lining of book: 2173.1478</desc>
+   <svg x="0" y="0">
+      <g transform="translate(40,50) rotate(-90,50,0)">
+         <path stroke-linecap="round"
+               stroke="url(#fading)"
+               stroke-width="0.3"
+               stroke-linejoin="round"
+               stroke-opacity="1"
+               fill-opacity="0.1"
+               fill="none"
+               d="M0,4.550000000000001 L42.5,4.550000000000001 Q50,4.550000000000001 50,0"/>
+         <g transform="translate(0,4.550000000000001) scale(1,-1)translate(0,-60.45)">
+            <path stroke-linecap="round"
+                  stroke="url(#fading)"
+                  stroke-width="0.3"
+                  stroke-linejoin="round"
+                  stroke-opacity="1"
+                  fill-opacity="0.1"
+                  fill="none"
+                  d="M0,4.550000000000001 L42.5,4.550000000000001 Q50,4.550000000000001 50,0"/>
+         </g>
+         <path fill="none"
+               stroke="#000000"
+               stroke-opacity="1"
+               class="line4"
+               d="M50,0 Q58.385,0 58.385,23.183333333333337 L58.385,32.5"/>
+         <path stroke-linecap="round"
+               stroke="url(#fading)"
+               stroke-width="0.3"
+               stroke-linejoin="round"
+               stroke-opacity="1"
+               fill-opacity="0.1"
+               fill="none"
+               d="M0,4.550000000000001 L42.5,4.550000000000001 Q50,4.550000000000001 50,0"/>
+         <path fill="none"
+               stroke="#000000"
+               stroke-opacity="1"
+               stroke-linecap="round"
+               class="line"
+               d="M50,-2 L52,-2 Q60.385,0 60.385,23.183333333333337 L60.385,32.5"/>
+         <desc>Lining: other </desc>M0,4.550000000000001 L44.5,2.5500000000000007 Q52,2.5500000000000007 50,0<g transform="translate(0,4.550000000000001) scale(1,-1)translate(0,-60.45)">
+            <path fill="none"
+                  stroke="#000000"
+                  stroke-opacity="1"
+                  class="line4"
+                  d="M50,0 Q58.385,0 58.385,23.183333333333337 L58.385,32.5"/>
+            <path stroke-linecap="round"
+                  stroke="url(#fading)"
+                  stroke-width="0.3"
+                  stroke-linejoin="round"
+                  stroke-opacity="1"
+                  fill-opacity="0.1"
+                  fill="none"
+                  d="M0,4.550000000000001 L42.5,4.550000000000001 Q50,4.550000000000001 50,0"/>
+            <path fill="none"
+                  stroke="#000000"
+                  stroke-opacity="1"
+                  stroke-linecap="round"
+                  class="line"
+                  d="M50,-2 L52,-2 Q60.385,0 60.385,23.183333333333337 L60.385,32.5"/>
+            <desc>Lining: other </desc>M0,4.550000000000001 L44.5,2.5500000000000007 Q52,2.5500000000000007 50,0</g>
+      </g>
+      <mask id="fademaskAboveSilouette">
+         <rect fill="url(#doubleFading2)"
+               x="8"
+               y="120"
+               width="229"
+               height="374"/>
+      </mask>
+      <path mask="url(#fademaskAboveSilouette)"
+            stroke-dasharray="0 0"
+            class="line4"
+            d="M10,130 L90,130 L90,484 L10,484 M235,130 L155,130 L155,484 L235,484"/>
+      <path mask="url(#fademaskAboveSilouette)"
+            stroke-dasharray="0 0"
+            class="line4"
+            d=" M90,130 L155,130 M90,484 L155,484"/>
+      <desc>Lining number:1</desc>

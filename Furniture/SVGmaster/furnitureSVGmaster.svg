@@ -6,18 +6,162 @@
     width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="xMinYMin meet"
     version="1.1">
     <desc>Furniture SVG Master</desc>
-    <defs>
-        <filter id="f1">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+    <defs>        
+        <ellipse id="r_small" cx="50%" cy="50%" rx="100" ry="300" style="fill:url(#bg)"/>
+        <ellipse id="r_big" cx="50%" cy="50%" rx="250" ry="300" style="fill:url(#bg)"/>
+        <rect id="r_2" width="150%" height="110%" fill="url(#bg)"/>
+        <linearGradient id="bg">
+            <stop offset="0.000" stop-color="#00ff00"/>
+            <stop offset="0.010" stop-color="#808000"/>
+            <stop offset="0.020" stop-color="#ff0000"/>
+            <stop offset="0.030" stop-color="#00ff00"/>
+            <stop offset="0.040" stop-color="#808000"/>
+            <stop offset="0.050" stop-color="#ff0000"/>
+            <stop offset="0.060" stop-color="#00ff00"/>
+            <stop offset="0.070" stop-color="#808000"/>
+            <stop offset="0.080" stop-color="#ff0000"/>
+            <stop offset="0.090" stop-color="#00ff00"/>
+            <stop offset="0.100" stop-color="#808000"/>
+            <stop offset="0.110" stop-color="#ff0000"/>
+            <stop offset="0.120" stop-color="#00ff00"/>
+            <stop offset="0.130" stop-color="#808000"/>
+            <stop offset="0.140" stop-color="#ff0000"/>
+            <stop offset="0.150" stop-color="#00ff00"/>
+            <stop offset="0.160" stop-color="#808000"/>
+            <stop offset="0.170" stop-color="#ff0000"/>
+            <stop offset="0.180" stop-color="#00ff00"/>
+            <stop offset="0.190" stop-color="#808000"/>
+            <stop offset="0.200" stop-color="#ff0000"/>
+            <stop offset="0.210" stop-color="#00ff00"/>
+            <stop offset="0.220" stop-color="#808000"/>
+            <stop offset="0.230" stop-color="#ff0000"/>
+            <stop offset="0.240" stop-color="#00ff00"/>
+            <stop offset="0.250" stop-color="#808000"/>
+            <stop offset="0.260" stop-color="#ff0000"/>
+            <stop offset="0.270" stop-color="#00ff00"/>
+            <stop offset="0.280" stop-color="#808000"/>
+            <stop offset="0.290" stop-color="#ff0000"/>
+            <stop offset="0.300" stop-color="#00ff00"/>
+            <stop offset="0.310" stop-color="#808000"/>
+            <stop offset="0.320" stop-color="#ff0000"/>
+            <stop offset="0.330" stop-color="#00ff00"/>
+            <stop offset="0.340" stop-color="#808000"/>
+            <stop offset="0.350" stop-color="#ff0000"/>
+            <stop offset="0.360" stop-color="#00ff00"/>
+            <stop offset="0.370" stop-color="#808000"/>
+            <stop offset="0.380" stop-color="#ff0000"/>
+            <stop offset="0.390" stop-color="#00ff00"/>
+            <stop offset="0.400" stop-color="#808000"/>
+            <stop offset="0.410" stop-color="#ff0000"/>
+            <stop offset="0.420" stop-color="#00ff00"/>
+            <stop offset="0.430" stop-color="#808000"/>
+            <stop offset="0.440" stop-color="#ff0000"/>
+            <stop offset="0.450" stop-color="#00ff00"/>
+            <stop offset="0.460" stop-color="#808000"/>
+            <stop offset="0.470" stop-color="#ff0000"/>
+            <stop offset="0.480" stop-color="#00ff00"/>
+            <stop offset="0.490" stop-color="#808000"/>
+            <stop offset="0.500" stop-color="#ff0000"/>
+            <stop offset="0.510" stop-color="#00ff00"/>
+            <stop offset="0.520" stop-color="#808000"/>
+            <stop offset="0.530" stop-color="#ff0000"/>
+            <stop offset="0.540" stop-color="#00ff00"/>
+            <stop offset="0.550" stop-color="#808000"/>
+            <stop offset="0.560" stop-color="#ff0000"/>
+            <stop offset="0.570" stop-color="#00ff00"/>
+            <stop offset="0.580" stop-color="#808000"/>
+            <stop offset="0.590" stop-color="#ff0000"/>
+            <stop offset="0.600" stop-color="#00ff00"/>
+            <stop offset="0.610" stop-color="#808000"/>
+            <stop offset="0.620" stop-color="#ff0000"/>
+            <stop offset="0.630" stop-color="#00ff00"/>
+            <stop offset="0.640" stop-color="#808000"/>
+            <stop offset="0.650" stop-color="#ff0000"/>
+            <stop offset="0.660" stop-color="#00ff00"/>
+            <stop offset="0.670" stop-color="#808000"/>
+            <stop offset="0.680" stop-color="#ff0000"/>
+            <stop offset="0.690" stop-color="#00ff00"/>
+            <stop offset="0.700" stop-color="#808000"/>
+            <stop offset="0.710" stop-color="#ff0000"/>
+            <stop offset="0.720" stop-color="#00ff00"/>
+            <stop offset="0.730" stop-color="#808000"/>
+            <stop offset="0.740" stop-color="#ff0000"/>
+            <stop offset="0.750" stop-color="#00ff00"/>
+            <stop offset="0.760" stop-color="#808000"/>
+            <stop offset="0.770" stop-color="#ff0000"/>
+            <stop offset="0.780" stop-color="#00ff00"/>
+            <stop offset="0.790" stop-color="#808000"/>
+            <stop offset="0.800" stop-color="#ff0000"/>
+            <stop offset="0.810" stop-color="#00ff00"/>
+            <stop offset="0.820" stop-color="#808000"/>
+            <stop offset="0.830" stop-color="#ff0000"/>
+            <stop offset="0.840" stop-color="#00ff00"/>
+            <stop offset="0.850" stop-color="#808000"/>
+            <stop offset="0.860" stop-color="#ff0000"/>
+            <stop offset="0.870" stop-color="#00ff00"/>
+            <stop offset="0.880" stop-color="#808000"/>
+            <stop offset="0.890" stop-color="#ff0000"/>
+            <stop offset="0.900" stop-color="#00ff00"/>
+            <stop offset="0.910" stop-color="#808000"/>
+            <stop offset="0.920" stop-color="#ff0000"/>
+            <stop offset="0.930" stop-color="#00ff00"/>
+            <stop offset="0.940" stop-color="#808000"/>
+            <stop offset="0.950" stop-color="#ff0000"/>
+            <stop offset="0.960" stop-color="#00ff00"/>
+            <stop offset="0.970" stop-color="#808000"/>
+            <stop offset="0.980" stop-color="#ff0000"/>
+            <stop offset="0.990" stop-color="#00ff00"/>
+            <stop offset="1.000" stop-color="#808000"/>
+        </linearGradient>
+        <filter id="warp_small">
+            <feImage xlink:href="#r_small" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.5"
+                in="SourceGraphic" in2="grad"/>
         </filter>
-        <filter id="f2">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        <filter id="warp_big">
+            <feImage xlink:href="#r_big" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.5"
+                in="SourceGraphic" in2="grad"/>
         </filter>
-        <filter id="f3">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        <filter id="warp_2" filterUnits="objectBoundingBox">
+            <feImage xlink:href="#r_2" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.7"
+                in="SourceGraphic" in2="grad" result="unblurred"/>
+            <!--        
+            <feGaussianBlur in="unblurred" stdDeviation="0.5 0.1"/>-->
         </filter>
-        <filter id="f4">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0.5"/>
+        <filter id="f1" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4" filterUnits="userSpaceOnUse">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
         </filter>
         <linearGradient id="fading">
             <stop offset="0%" stop-color="#FFFFFF"/>
@@ -44,16 +188,635 @@
             <stop offset="70%" stop-color="#666666"/>
             <stop offset="100%" stop-color="#000000"/>
         </linearGradient>
+        <linearGradient id="fadingBothEnds">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="20%" stop-color="#666666"/>
+            <stop offset="40%" stop-color="#000000"/>
+            <stop offset="60%" stop-color="#000000"/>
+            <stop offset="80%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="fadingBothEnds_2">
+            <stop offset="0%" stop-color="#333333"/>
+            <stop offset="10%" stop-color="#666666"/>
+            <stop offset="15%" stop-color="#999999"/>
+            <stop offset="30%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="70%" stop-color="#FFFFFF"/>
+            <stop offset="85%" stop-color="#999999"/>
+            <stop offset="90%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#333333"/>
+        </linearGradient>
+        <radialGradient id="radialFading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </radialGradient>
+        <radialGradient id="radialFading2">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#999999"/>
+            <stop offset="100%" stop-color="#333333"/>
+        </radialGradient>
         <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
             patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
             <path d="M0,0 L5,50" class="line4" fill="none" stroke="#666666" stroke-width="0.1"
                 stroke-linejoin="miter"/>
         </pattern>
+        <mask id="fademaskBoardsX">
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" fill="url(#fading2)"/>
+        </mask>
+        <mask id="fademaskBoards">
+            <rect width="180" height="100" x="-10" y="-10" fill="url(#radialFading)"/>
+        </mask>
+        <g id="boardXsection">
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" stroke-linecap="round"
+                stroke-linejoin="round" stroke="url(#fading)" stroke-width="2"
+                fill="url(#thicknessCutoutTile)" mask="url(#fademaskBoardsX)"/>
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" stroke-linecap="round"
+                stroke-linejoin="round" stroke-opacity="0" fill-opacity="0.1" fill="url(#fading)"/>
+        </g>
+        <g id="board">
+            <rect width="100" height="100" x="-30" y="-20" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#FFFFFF" stroke-opacity="0" fill="#999999"
+                mask="url(#fademaskBoards)"/>
+            <path d="M70,-10 L70.0001,80" stroke-linecap="round" stroke-linejoin="round"
+                stroke="#000000" mask="url(#fademaskBoards)"/>
+        </g>
+        <g id="simplePinX">
+            <path d="M0,0 L0,-1 M0,3 L-35,1.8 -35,1.2 0,0"
+                stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>  
+            <use xlink:href="#simplePin_head"/>
+        </g>
+        <g id="simplePinXSide" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePin_head" transform="rotate(-90,0,1.5) translate(5,-10)"/>
+            <path d="M0,0 L-10,1.5 L 0,3" transform="rotate(-90,0,1.5) translate(5,-9.8)"/>
+        </g>
+        <g id="simplePinXSide_2" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePin_head" transform="rotate(-90,0,1.5) translate(5,-10)"/>
+            <path d="M0,0 L-12,1.5 L 0,3 M-12,1.5 L-11,1 L-11,1"
+                transform="rotate(-90,0,1.5) translate(5,-9.8)"/>
+        </g>
+        <g id="fastenedPinX" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePinX"/>
+            <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,4.5 L-15.5,-2 L-15.8,-3.5z"/>
+            <path d="M-16.3,0.5 L-16.3,2.5 M-13.6,0.5 L-13.6,2.5"/>
+        </g>
+        <g id="fastenedPinX_2" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePinX"/>
+            <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,8 L-15.5,-2 L-15.8,-3.5z"/>
+            <path d="M-16.3,0.5 L-16.3,2.5 M-13.6,0.5 L-13.6,2.5"/>
+        </g>
+        <g id="fastenedPinXSide" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePin_head" transform="rotate(-90,0,1.5) translate(5,-10)"/>
+            <path d="M0,0 L-10,1.5 L 0,3" transform="rotate(-90,0,1.5) translate(5,-9.8)"/>
+            <g transform="rotate(90,-15,8) translate(-6.5,1.5)">
+                <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,8 L-15.5,-2 L-15.8,-3.5z"
+                    transform="translate(0,-5)"/>
+                <path d="M-16.3,0.5 L-16.3,2.5 M-13.6,0.5 L-13.6,2"/>
+            </g>
+        </g>
+        <g id="fastenedPinXSide_2" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePin_head" transform="rotate(-90,0,1.5) translate(5,-10)"/>
+            <path d="M0,0 L-12,1.5 L 0,3 M-12,1.5 L-11,1 L-11,1"
+                transform="rotate(-90,0,1.5) translate(5,-9.8)"/>
+            <g transform="rotate(90,-15,8) translate(-6.5,1.5)">
+                <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,8 L-15.5,-2 L-15.8,-3.5z"
+                    transform="translate(0,-5)"/>
+                <path d="M-16.3,0.5 L-16.3,2.5 M-13.6,0.5 L-13.6,2"/>
+            </g>
+        </g>
+        <g id="simplePin">
+            <path id="simplePin_head" d="M0,0 L0,-1 Q2,0 6,-1 A1,1 0,0 1 6,4 Q2,3 0,4.5 L0,3"
+                stroke="#000000" stroke-width="0.2" fill="#FFFFFF" filter="url(#warp_2)"/>
+            <path d="M0,3 L-35,1.8 -35,1.2 0,0" stroke="#000000" stroke-width="0.2" fill="none"
+                stroke-dasharray="2 1"/>
+        </g>
+        <g id="fastenedPin" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simplePin_head"/>
+            <circle r="1.15" cx="-15" cy="1.5"/>
+            <g stroke="#000000" stroke-width="0.5" fill="none" stroke-dasharray="2 1">
+                <path d="M0,3.25 Q-15,3.3 -35,1.5 Q-15,-0.7 0,-0.25"/>
+                <circle r="1.15" cx="-15" cy="1.5" stroke-dasharray="0.5 0.5"/>
+            </g>
+        </g>
+        <g id="simplePinSide" stroke="#000000">
+            <circle id="pindHeadSideAbove" r="3" cx="-10" cy="1.5" fill="url(#radialFading2)"
+                stroke-width="0.1"/>
+        </g>
+        <g id="fastenedPinSide" stroke="#000000">
+            <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,8 L-15.5,-2 L-15.8,-3.5z"
+                transform="rotate(90,-15,8) translate(-6.5,-3.5)" fill="#FFFFFF" stroke-width="0.5"/>
+            <use xlink:href="#pindHeadSideAbove"/>
+            <path d="M-15,-3.5 L-14.2,-3.5 L-14.5,-2 L-15,8 L-15.5,-2 L-15.8,-3.5z"
+                transform="rotate(90,-15,8) translate(-6.5,-3.5)" fill="none" stroke-width="0.1"
+                stroke-dasharray="0.5 0.5"/>
+        </g>
+        <g id="rollerRoundBar_catchplateX" stroke="#000000" stroke-width="0.5" fill="none"
+            transform="translate(1,-5)">
+            <path d="M-30,0 L3,0 A3,3 1,1 1 0,1.7 A2,2 0,0 1 1.5,1.5 L2.2,1.5 L-30,1.5z"/>
+            <circle r="1.5" cx="2.7" cy="3"/>
+            <circle r="0.8" cx="2.7" cy="3" fill="#666666" stroke-width="0.2"/>
+        </g>
+        <g id="rollerRoundBar_catchplate" transform="translate(0,1.5)">
+            <path d="M5.5,-2 L5.5,-5 L-30,-5 L-30,5 L5.5,5 L5.5,2 L2,2 L2,-2 L5.5,-2 "
+                stroke="#000000" fill="#FFFFFF"  stroke-width="0.2" filter="url(#warp_small)"/>            
+            <path d="M5.5,-2 L5.5,-5 L-30,-5 L-30,5 L5.5,5 L5.5,2 L2,2 L2,-2 L5.5,-2 "
+                stroke="#000000" fill="#FFFFFF"  stroke-width="0.5" stroke-opacity="0.1" stroke-dasharray="0.5 0.5" filter="url(#warp_big)"/>
+            <path d="M3.75,2 L3.74,-2" stroke="#000000" stroke-width="1" fill="#FFFFFF"
+                stroke-linecap="round"/>
+            <path d="M3.74,5 L3.75,2 M3.74,-2 L3.74,-5" stroke="#000000" stroke-width="1"
+                fill="#FFFFFF" stroke-dasharray="0.5 0.5"/>
+            <circle r="0.7" cx="-19.5" cy="0"/>
+            <circle r="0.7" cx="-9.5" cy="0"/>
+        </g>
+        <g id="raisedLip_catchplateX" stroke="#000000" stroke-width="0.5" fill="none"
+            transform="translate(0,-3.5) scale(-1,-1)">
+            <g id="raisedLipX_profile" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <path stroke="#000000" stroke-width="2"
+                    d="M33,0.5 L6,0.5 L2.7,0.5 A1,1 0,0 0 2.7,4 A1,1 0,0 0 3.5,2.2"/>
+                <path stroke="#FFFFFF" stroke-width="1"
+                    d="M33,0.5 L6,0.5 L2.7,0.5 A1,1 0,0 0 2.7,4 A1,1 0,0 0 3.5,2.2"/>
+            </g>
+        </g>
+        <g id="raisedLip_catchplate" transform="translate(0,1.5)">
+            <path d="M0,-5 L-30,-5 L-30,5 L0,5 L0,-5" stroke="#000000" stroke-width="0.2"
+                fill="#FFFFFF" filter="url(#warp_small)"/>
+            <path d="M0,-5 L-30,-5 L-30,5 L0,5 L0,-5" stroke="#000000" stroke-width="0.1" stroke-dasharray="0.5 0.5"
+                fill="#FFFFFF" filter="url(#warp_small)"/>
+            <path d="M-3,-5 L-3,5" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+        </g>
+        <g id="bentAndSlotted_catchplateX" fill="none" transform="translate(-3,-5)">
+            <g transform="translate(4,0)">
+                <path d="M-8,7 L-1.5,7 L-1.5,2 L-8,2z" fill="#FFFFFF" stroke="#FFFFFF"
+                    stroke-width="1.3" stroke-linejoin="round"/>
+                <path d="M-9,2 L-8,2 L-8,7 L-1.5,7 L-1.5,8" fill="none" stroke="#000000"
+                    stroke-width="1" stroke-linejoin="round" stroke-linecap="round"/>
+            </g>
+            <!--<path d="M-30,0 L1,0 L1,1 L-30,1z M2,2.5 L0.5,7 A0.5,0.5 0,0 1 -0.5,6.5 L1,2 L2,2.5"/>-->
+            <path d="M-25,1 L-1,1 M2.5,3.5 L2.5,5" stroke-width="2" stroke-linecap="round"
+                stroke="#000000"/>
+            <path d="M-25,1 L-1,1 M2.5,3.5 L2.5,5" stroke-width="1" stroke-linecap="round"
+                stroke="#FFFFFF"/>
+            <path d="M-1,1 Q2.5,1 2.5,3.5" stroke-width="2" stroke="#000000" stroke-linecap="butt"/>
+            <path d="M-1,1 Q2.5,1 2.5,3.5" stroke-width="1.5" stroke="#FFFFFF" stroke-linecap="butt"/>
+            <path d="M-1.5,0 L-1,2 M1.5,3.5 L3.3,3 L3.3,3.5" stroke-width="0.5" stroke="#000000"
+                stroke-linecap="butt" stroke-linejoin="bevel"/>
+        </g>
+        <g id="bentAndSlotted_catchplate" transform="translate(-5.5,1.5)">
+            <path d="M5.5,-5 L5.5,5 L-24,5 L-24,-5z" stroke-width="0.1" stroke="#000000" stroke-opacity="0" fill="#FFFFFF" fill-opacity="0.8"/>
+            <path d="M5.5,-2 L5.5,-5 L-24,-5 L-24,5 L5.5,5 L5.5,2 L4,2 L4,-2 L5.5,-2 "
+                stroke="#000000" stroke-width="0.2" fill="#FFFFFF" filter="url(#warp_small)"/>
+            <path d="M5.5,-2 L5.5,-5 L-24,-5 L-24,5 L5.5,5 L5.5,2 L4,2 L4,-2 L5.5,-2 "
+                stroke="#000000" stroke-width="0.1" fill="#FFFFFF" stroke-dasharray="0.5 0.5" filter="url(#warp_small)"/>
+            <path d="M5.5,-3 L5.5,3" stroke="#000000" stroke-width="0.4" fill="#FFFFFF"/>
+        </g>
+        <g id="pastedown_underPastedown_first" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path d="M-70,8.5 Q-20,8 -3,8.5" stroke="url(#fading)"/>
+        </g>
+        <g id="pastedown_throughPastedown_first" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path d="M-70,7.5 Q-20,7 -3,7.5" stroke="url(#fading)"/>
+        </g>
+        <g id="firstBoard_elementAttachments_under" stroke="#000000" stroke-width="1" fill="#FFFFFF"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path id="attachment_under" d="M-20.7,-5 L-19.3,-5 M-20,-5 L-20,6.5 L-20.7,6 L-20,6"/>
+            <use xlink:href="#attachment_under" transform="translate(10,0)"/>
+        </g>
+        <g id="firstBoard_elementAttachments_through" stroke="#000000" stroke-width="1"
+            fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+            <path id="attachment_through" d="M-20.7,-5 L-19.3,-5 M-20,-5 L-20,8 L-20.7,7.5 L-20,7.5"/>
+            <use xlink:href="#attachment_through" transform="translate(10,0)"/>
+        </g>
+        <g id="stirrupRingX">
+            <path d="M4.5,0 L21.5,0 M21.5,3 L4.5,3" stroke-linecap="round" stroke-linejoin="round"
+                stroke="#000000" stroke-width="0.2" fill="#FFFFFF"/>
+            <rect width="5" height="3" x="0" y="0" rx="1" ry="1" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+            <rect width="5" height="3" x="12" y="0" rx="1" ry="1" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+            <rect width="3.5" height="3" x="20" y="0" rx="1" ry="1" stroke-linecap="round"
+                stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF"/>
+        </g>
+        <g id="stirrupRing" filter="url(#warp_small)">
+            <path
+                d="M0,0 Q0.5,-1.5 2,-1.5 C3.5,-8 13.5,-8 14,-2 L14,-5.5 Q14,-6.5 15,-7 L22.5,-7.5 Q23.5,-7.5 23.5,-6.5 
+                M23.5,6.5 Q23.5,7.5 22,7.5 L15,7 Q14,6.5 14,5.5 L14,2 C13.5,8 3.5,8 2,1.5 Q0.5,1.5 0,0
+                M16,0 L16,-4.5 Q16,-5.5 18,-5.5 L19.5,-5.5 Q20.5,-5.5 20.5,-4.5 
+                M20.5,4.5 Q20.5,5.5 19.5,5.5 L18,5.5 Q16,5.5 16,4.5 L16,0 M4.5,0 C4.5,-5 11.5,-5 11.5,0 C11.5,5 4.5,5 4.5,0"
+                stroke="#000000" stroke-width="0.2" fill="none"/>
+            <path d="M23.5,-6.5 L23.5,6.5" stroke="#000000" stroke-width="0.5" fill="none"
+                stroke-dasharray="2 1"/>
+            <path d="M20.5,-4.5 L20.5,4.5" stroke="#000000" stroke-width="0.5" fill="none"
+                stroke-dasharray="2 1"/>
+        </g>
+        <g id="simpleHookX_profile" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path stroke="#000000" stroke-width="2" d="M33,0.5 L6,0.5 L2.7,0.5 A1,1 0,0 0 2.7,5"/>
+            <path stroke="#FFFFFF" stroke-width="1" d="M33,0.5 L6,0.5 L2.7,0.5 A1,1 0,0 0 2.7,5"/>
+        </g>
+        <path id="rivet" d="M22.5,0 L24,0 M23,0 L23,6.5 L23.5,6.5 L23.5,0z M22.5,6.5 L24,6.5"/>
+        <g id="simpleHookX" transform="translate(0,-2)" stroke-linecap="round"
+            stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#simpleHookX_profile" transform="translate(0,1)"/>
+            <!-- rivet line -->
+            <use xlink:href="#rivet"/>
+            <use xlink:href="#rivet" transform="translate(6,0)"/>
+            <path d="M21.5,6 L31,6"/>
+        </g>
+        <g id="simpleORfoldedHook_narrow" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" fill="none">
+            <path d="M0,0 L0,-2 L5,-2 5,-5 L33,-5 L33,5 L5,5 L5,2 0,2z" stroke-width="0.1" filter="url(#warp_small)"/>            
+            <path d="M0,0 L0,-2 L5,-2 5,-5 L33,-5 L33,5 L5,5 L5,2 0,2z"  stroke-width="0.1" stroke-dasharray="0.5 0.5" stroke-opacity="0.1" filter="url(#warp_small)"/>
+            <circle r="0.5" cx="23.25" cy="0"/>
+            <circle r="0.5" cx="29.25" cy="0"/>
+        </g>
+        <g id="simpleORfoldedHook_wide" stroke-linejoin="round"
+            stroke="#000000"  fill="none">
+            <path d="M0,0 L0,-5 L33,-5 L33,5 L0,5z" stroke-width="0.2" filter="url(#warp_big)"/>            
+            <path d="M0,0 L0,-5 L33,-5 L33,5 L0,5z" stroke-width="0.5" stroke-dasharray="0.5 0.5" stroke-opacity="0.1" filter="url(#warp_big)"/>
+            <circle r="0.5" cx="23.25" cy="0"/>
+            <circle r="0.5" cx="29.25" cy="0"/>
+        </g>
+        <g id="foldedHookX" transform="translate(0,0.5)" stroke-linecap="round"
+            stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="none">
+            <path
+                d="M33,0 L33,-0.5 L6,-0.5 L2.7,-0.5 A1,1 0,0 0 2.7,9 A1,1 0,0 0 2.7,6 A0.7,0.7 0,0 1 2.7,2.2 L8,2.2 L18,3.5 L33,3.5 L33,3"/>
+            <path d="M18,2.2 L8,0.85 " stroke-width="0.2"/>
+            <path d="M18,0.7 L2.7,0.85 A0.7,0.7 0,0 0 2.7,7.6" stroke-width="0.2"/>
+            <!-- rivet line -->
+            <path id="rivet2" d="M22.5,0 L24,0 M23,0 L23,5.5 L23.5,5.5 L23.5,0z M22.5,5.5 L24,5.5"
+                transform="translate(0,-1.25)"/>
+            <use xlink:href="#rivet2" transform="translate(6,0)"/>
+        </g>
+        <g id="piercedStrapX" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.6" fill="#FFFFFF" transform="translate(20,0)">
+            <rect width="12" height="2" x="-20" y="1" rx="1" ry="1"/>
+            <path d="M-10,1 L1,1 M-10,3 L1,3" stroke-width="0.2"/>
+        </g>
+        <g id="piercedStrap" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5" fill="#FFFFFF" transform="translate(20,0)">
+            <!-- silhouette -->
+            <path d="M0,-5 L-20,-5 L-20,5 L0,5"/>
+            <circle r="2.2" cx="-4.5" cy="0"/>
+        </g>
+        <g id="braidingPatternsX">
+            <g id="braidingPattern">
+                <path d="M33,1 Q37,1.5 39,2.5 Q40,2.8 40,3"/>
+                <path d="M33,3 Q37,2 38,2"/>
+            </g>
+            <g id="braidingPattern_end">
+                <path d="M33,1 Q37,1.5 39,2.5 Q40,2.8 40,3"/>
+                <path d="M33,3.5 Q37,2 38,2"/>
+            </g>
+        </g>
+        <g id="braidedStrapX" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5" fill="none">
+            <!-- Around clasp -->
+            <path d="M0,1 Q0,4 3,4" stroke-width="0.8"/>
+            <path d="M0,1 Q0,-1 3,-1 Q7,-1 9,1 Q13.5,3 33,3" stroke-width="0.8"/>
+            <path d="M0,1 Q0,4 3,4 Q3,4.2 6,3.5 Q9,2 10,1.5" stroke-width="0.6"/>
+            <path d="M3,4 Q12,3 33,3" stroke-width="0.6"/>
+            <path d="M19,3 L33,3" stroke-width="0.55"/>
+            <!-- Pattern -->
+            <use xlink:href="#braidingPattern" x="-7"/>
+            <use xlink:href="#braidingPattern" x="0"/>
+            <use xlink:href="#braidingPattern" x="7"/>
+            <use xlink:href="#braidingPattern" x="14"/>
+            <use xlink:href="#braidingPattern" x="21"/>
+            <use xlink:href="#braidingPattern" x="28"/>
+            <use xlink:href="#braidingPattern" x="35"/>
+            <use xlink:href="#braidingPattern" x="42"/>
+            <use xlink:href="#braidingPattern" x="49"/>
+            <use xlink:href="#braidingPattern" x="56"/>
+            <use xlink:href="#braidingPattern" x="63"/>
+            <use xlink:href="#braidingPattern" x="70"/>
+            <use xlink:href="#braidingPattern" x="77"/>
+            <use xlink:href="#braidingPattern" x="84"/>
+            <!-- Lines -->
+            <path d="M5,-1 Q12,1 18,1"/>
+            <path d="M18,3 L120,3"/>
+            <path d="M18,1 L108,1"/>
+        </g>
+        <g id="braidedStrapXend_throughPastedown" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path d="M105,14.5 Q130,14 190,14.5" stroke="url(#fading2)"/>
+            <path d="M-106,14.5 Q-71,14 -39,14.5" stroke="url(#fading)"/>
+            <path
+                d="M120,1 L123,1 Q128,1 128,5 L127.5,12 Q127.5,16 130,15 L150,15 Q138,16 135,16 L130,16 Q125,15 125.5,12 L125,5 Q125,3 123,3 Q118.5,3 114,3 M108,1 L120,1"/>
+            <use xlink:href="#braidingPattern_end" x="91"
+                transform="rotate(90 120,1) translate(-1,-7.5)"/>
+        </g>
+        <g id="braidedStrapXend_underPastedown" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path
+                d="M120,1 L123,1 Q128,1 128,5 L127.5,12 Q127.5,14 130,14 L150,14 Q138,15 135,15 L130,15 Q125,14 125.5,12 L125,5 Q125,3 123,3 Q118.5,3 114,3 M108,1 L120,1"/>
+            <path d="M105,15.5 Q130,16 190,15.5" stroke="url(#fading2)"/>
+            <use xlink:href="#braidingPattern_end" x="91"
+                transform="rotate(90 120,1) translate(-1,-7.5)"/>
+        </g>
+        <g id="flatStrapX_aroundClasp" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="none">
+            <!-- Around clasp -->
+            <path d="M0,1 Q0,-1 3,-1 Q7,-1 9,2" stroke-width="1"/>
+            <path d="M0,1 Q0,4 3,4 Q3,4.2 6,3.5 Q6,3.5 9,2" stroke-width="1"/>
+            <path d="M3,4 Q12,3 33,3" stroke-width="0.6"/>
+            <path d="M5,-1 Q12,1 18,1" stroke-width="0.6"/>
+            <path d="M9,2 L120,2" stroke-width="0.3"/>
+        </g>
+        <g id="flatStrapX_underClasp" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="none">
+            <!-- under clasp -->
+            <path d="M18,1 L1,1 A 1,1 0,0 0 1,3 L33,3" stroke-width="0.6"/>
+        </g>
+        <g id="flatStrapX" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5" fill="none">
+            <!-- Lines -->
+            <path d="M33,3 L120,3" stroke-width="0.6"/>
+            <path d="M18,1 L120,1" stroke-width="0.6"/>
+        </g>
+        <g id="flatStrapXend_strapPlatesORstrapCollars" stroke-linecap="round"
+            stroke-linejoin="round" stroke="#000000" stroke-width="0.5" fill="none">
+            <path d="M120,3 L127,3 L127,1 L120,1"/>
+        </g>
+
+        <g id="strapPlateX" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="1" fill="#FFFFFF">
+            <path d="M127.5,0.5 L118,0.5" transform="translate(-7.5,0)"/>
+        </g>
+        <g id="strapPlate" filter="url(#warp_small)" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            fill="#FFFFFF" transform="translate(255.5,117.5)">
+            <path d="M2,-5 L-7.5,-5 L-7.5,5 L2,5z" stroke-width="1" />
+            <circle r="0.5" cx="-2.75" cy="-2.5" stroke-width="0.5"/>
+            <circle r="0.5" cx="-2.75" cy="2.5" stroke-width="0.5"/>
+        </g>
+        <g id="strapCollarsX" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="1" fill="#FFFFFF">
+            <path id="strapCollarX" d="M116,0.5 L112,0.5"/>
+            <use xlink:href="#strapCollarX" transform="translate(8,0)"/>
+        </g>
+        <g id="strapCollars" filter="url(#warp_small)" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="1" fill="#FFFFFF" transform="translate(263,117.5)" fill-opacity="0.8">
+            <path id="strapCollar" d="M-13.5,-8.5 L-13.5,8.5 L-9.5,8.5 L-9.5,-8.5z"/>
+            <use xlink:href="#strapCollar" transform="translate(8,0)"/>
+            <g id="strapCollars_nails" stroke-width="0.5">
+                <circle r="0.5" cx="-11.5" cy="-6.75"/>
+                <circle r="0.5" cx="-11.5" cy="6.75"/>
+            </g>
+            <use xlink:href="#strapCollars_nails" transform="translate(8,0)"/>
+        </g>
+        <g id="pastedown_underPastedown_second" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path d="M105,15.5 Q130,16 190,15.5" stroke="url(#fading2)"/>
+        </g>
+        <g id="pastedown_throughPastedown_second" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path d="M105,14.5 Q130,14 190,14.5" stroke="url(#fading2)"/>
+        </g>
+        <g id="secondBoard_elementAttachments_under_strapCollars" stroke="#000000" stroke-width="1"
+            fill="#FFFFFF" stroke-linejoin="round" stroke-linecap="round">
+            <path id="attachment_under_second_strapCollars"
+                d="M113.3,0 L114.7,0 M114,0 L114,13.5 L113.3,13 L114,13"/>
+            <use xlink:href="#attachment_under_second_strapCollars" transform="translate(8,0)"/>
+        </g>
+        <g id="secondBoard_elementAttachments_through_strapCollars" stroke="#000000"
+            stroke-width="1" fill="#FFFFFF" stroke-linejoin="round" stroke-linecap="round">
+            <path id="attachment_through_second_strapCollars"
+                d="M113.3,2 L114.7,2 M114,2 L114,15.5 L113.3,15 L114,15"/>
+            <use xlink:href="#attachment_through_second_strapCollars" transform="translate(8,0)"/>
+        </g>
+        <g id="secondBoard_elementAttachments_under_strapPlates" stroke="#000000" stroke-width="1"
+            fill="#FFFFFF" stroke-linejoin="round" stroke-linecap="round">
+            <path id="attachment_under_second_strapPlates"
+                d="M122.05,0 L123.45,0 M122.75,0 L122.75,13.5 L122.05,13 L122.75,13"
+                transform="translate(-7.5,0)"/>
+        </g>
+        <g id="secondBoard_elementAttachments_through_strapPlates" stroke="#000000" stroke-width="1"
+            fill="#FFFFFF" stroke-linejoin="round" stroke-linecap="round">
+            <path id="attachment_through_second_strapPlates"
+                d="M122.05,0 L123.45,0 M122.75,0 L122.75,15.5 L122.05,15 L122.75,15"
+                transform="translate(-7.5,0)"/>
+        </g>
+        <g id="flatStrapXend_throughPastedown" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <use xlink:href="#pastedown_throughPastedown_second"/>
+            <path
+                d="M120,1 L123,1 Q128,1 128,5 L127.5,12 Q127.5,16 130,15 L150,15 Q138,16 135,16 L130,16 Q125,15 125.5,12 L125,5 Q125,3 123,3 Q118.5,3 114,3 M108,1 L120,1"
+            />
+        </g>
+        <g id="flatStrapXend_throughPastedown_doubleThickness" stroke-linecap="round"
+            stroke-linejoin="round" stroke="#000000">
+            <path d="M120,2 L123,2 Q126.5,2 126.5,5 L126.5,12 Q126,15 130,15.5 L141,15.5"
+                stroke-width="0.3" fill="none"/>
+        </g>
+        <g id="flatStrapXend_underPastedown" stroke-linecap="round" stroke-linejoin="round"
+            stroke="#000000" stroke-width="0.5" fill="#FFFFFF">
+            <path
+                d="M120,1 L123,1 Q128,1 128,5 L127.5,12 Q127.5,14 130,14 L150,14 Q138,15 135,15 L130,15 Q125,14 125.5,12 L125,5 Q125,3 123,3 Q118.5,3 114,3 M108,1 L120,1"/>
+            <use xlink:href="#pastedown_underPastedown_second"/>
+        </g>
+        <g id="flatStrapXend_underPastedown_doubleThickness" stroke-linecap="round"
+            stroke-linejoin="round" stroke="#000000">
+            <path d="M120,2 L123,2 Q126.5,2 126.5,5 L126.5,12 Q126,13.75 130,14.5 L141,14.5"
+                stroke-width="0.3" fill="none"/>
+        </g>
+        <g id="strapEnding_tripleStrapPath">
+            <g stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5"
+                fill="none" stroke-dasharray="2 1">
+                <path d="M0,-8 Q7,-6 27,-15 Q17,-3 0,-4"/>
+            </g>
+            <g stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5"
+                fill="none" stroke-dasharray="1 1">
+                <path d="M0,-8 Q7,-10 17,-1 Q7,-1 0,-4"/>
+            </g>
+        </g>
+        <g id="strapEnding_tripleStrap">
+            <use xlink:href="#strapEnding_tripleStrapPath" transform="translate(263,123.5)"/>
+            <use xlink:href="#strapEnding_tripleStrapPath"
+                transform="scale(1,-1) translate(253,-121.5)"/>
+            <use xlink:href="#strapEnding_tripleStrapPath"
+                transform="scale(1,-1) translate(253,-101.5) rotate(15)"/>
+        </g>
+        <g id="strapEnding_doubleStrapPath">
+            <g stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5"
+                fill="none" stroke-dasharray="2 1">
+                <path d="M0,-8 Q7,-6 27,-15 Q17,-3 0,-3"/>
+            </g>
+            <g stroke-linecap="round" stroke-linejoin="round" stroke="#000000" stroke-width="0.5"
+                fill="none" stroke-dasharray="1 1">
+                <path d="M0,-8 Q7,-10 17,-1 Q7,-1 0,-3 "/>
+            </g>
+        </g>
+        <g id="strapEnding_doubleStrap">
+            <use xlink:href="#strapEnding_doubleStrapPath" transform="translate(263,117.5)"/>
+            <use xlink:href="#strapEnding_doubleStrapPath"
+                transform="scale(1,-1) translate(263,-117.5)"/>
+        </g>
+        <g id="strapEnding_flat" transform="translate(263,117.5)">
+            <path d="M0,-5 L20,-8 Q25,0 27,2 L0,5" stroke-linecap="round" stroke-linejoin="round"
+                stroke="#000000" stroke-width="0.5" fill="none" stroke-dasharray="2 1"/>
+        </g>
+        <g id="braidingPatterns">
+            <!-- tripleBraided -->
+            <path id="pattern_h" d="M26,-2 Q30,-2 33,0 L32,0 L33,0 Q30,2 26,2"/>
+            <use id="pattern_-a" xlink:href="#pattern_h" x="0" y="-2" transform="rotate(-5.5)"/>
+            <use id="pattern_a" xlink:href="#pattern_h" x="0" y="2" transform="rotate(5.5)"/>
+            <!-- doubleBraided -->
+            <path id="pattern_h2" d="M26,-2.5 Q30,-2.5 33,0 L32,0 L33,0 Q30,2.5 26,2.5"/>
+            <use id="pattern_-a2" xlink:href="#pattern_h2" x="0" y="-3"
+                transform="rotate(-2.5 26,0)"/>
+            <use id="pattern_a2" xlink:href="#pattern_h2" x="0" y="3" transform="rotate(2.5 26,0)"/>
+        </g>
+        <g id="tripleBraidedStrap" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5" fill="#FFFFFF">
+            <!-- silhouette -->
+            <path
+                d="M20,-6.2 L116,-12 A2,2 0,0 1 116,-8 L20,-2 L126,-2 A2,2 0,0 1 126,2 L20,2 L116,8 A2,2 0,0 1 116,12 L20,6.2"/>
+            <path d="M0,0 L0,-5 L20,-6.2 M20,6.2 L0,5 L0,0" fill="none"/>
+            <!-- patterns -->
+            <g>
+                <!-- middle strand -->
+                <use xlink:href="#pattern_h" x="0"/>
+                <use xlink:href="#pattern_h" x="7"/>
+                <use xlink:href="#pattern_h" x="14"/>
+                <use xlink:href="#pattern_h" x="21"/>
+                <use xlink:href="#pattern_h" x="28"/>
+                <use xlink:href="#pattern_h" x="35"/>
+                <use xlink:href="#pattern_h" x="42"/>
+                <use xlink:href="#pattern_h" x="49"/>
+                <use xlink:href="#pattern_h" x="56"/>
+                <use xlink:href="#pattern_h" x="63"/>
+                <use xlink:href="#pattern_h" x="70"/>
+                <use xlink:href="#pattern_h" x="77"/>
+                <use xlink:href="#pattern_h" x="84"/>
+                <use xlink:href="#pattern_h" x="91"/>
+                <!-- upper strand -->
+                <use xlink:href="#pattern_-a" x="0"/>
+                <use xlink:href="#pattern_-a" x="7" y="-0.5"/>
+                <use xlink:href="#pattern_-a" x="14" y="-1"/>
+                <use xlink:href="#pattern_-a" x="21" y="-1.5"/>
+                <use xlink:href="#pattern_-a" x="28" y="-1.7"/>
+                <use xlink:href="#pattern_-a" x="35" y="-2.2"/>
+                <use xlink:href="#pattern_-a" x="42" y="-2.6"/>
+                <use xlink:href="#pattern_-a" x="49" y="-3"/>
+                <use xlink:href="#pattern_-a" x="56" y="-3.5"/>
+                <use xlink:href="#pattern_-a" x="63" y="-3.8"/>
+                <use xlink:href="#pattern_-a" x="70" y="-4.3"/>
+                <use xlink:href="#pattern_-a" x="77" y="-4.8"/>
+                <use xlink:href="#pattern_-a" x="84" y="-5"/>
+                <!-- lower strand -->
+                <use xlink:href="#pattern_a" x="0"/>
+                <use xlink:href="#pattern_a" x="7" y="0.5"/>
+                <use xlink:href="#pattern_a" x="14" y="1"/>
+                <use xlink:href="#pattern_a" x="21" y="1.5"/>
+                <use xlink:href="#pattern_a" x="28" y="1.7"/>
+                <use xlink:href="#pattern_a" x="35" y="2.2"/>
+                <use xlink:href="#pattern_a" x="42" y="2.6"/>
+                <use xlink:href="#pattern_a" x="49" y="3"/>
+                <use xlink:href="#pattern_a" x="56" y="3.5"/>
+                <use xlink:href="#pattern_a" x="63" y="3.8"/>
+                <use xlink:href="#pattern_a" x="70" y="4.3"/>
+                <use xlink:href="#pattern_a" x="77" y="4.8"/>
+                <use xlink:href="#pattern_a" x="84" y="5"/>
+            </g>
+        </g>
+        <g id="doubleBraidedStrap" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5" fill="#FFFFFF">
+            <!-- silhouette -->
+            <path
+                d="M20,-5.5 L126,-8 A2.5,2.5 0,0 1 126,-3 L20,0 L126,3 A2.5,2.5 0,0 1 126,8 L20,5.5"/>
+            <path d="M0,0 L0,-5 L20,-5.5 M20,5.5 L0,5 L0,0" fill="none"/>
+            <!-- patterns -->
+            <g>
+                <!-- upper strand -->
+                <use xlink:href="#pattern_-a2" x="0"/>
+                <use xlink:href="#pattern_-a2" x="7" y="-0.1"/>
+                <use xlink:href="#pattern_-a2" x="14" y="-0.3"/>
+                <use xlink:href="#pattern_-a2" x="21" y="-0.5"/>
+                <use xlink:href="#pattern_-a2" x="28" y="-0.6"/>
+                <use xlink:href="#pattern_-a2" x="35" y="-0.7"/>
+                <use xlink:href="#pattern_-a2" x="42" y="-0.8"/>
+                <use xlink:href="#pattern_-a2" x="49" y="-1"/>
+                <use xlink:href="#pattern_-a2" x="56" y="-1.3"/>
+                <use xlink:href="#pattern_-a2" x="63" y="-1.4"/>
+                <use xlink:href="#pattern_-a2" x="70" y="-1.6"/>
+                <use xlink:href="#pattern_-a2" x="77" y="-1.8"/>
+                <use xlink:href="#pattern_-a2" x="84" y="-2"/>
+                <use xlink:href="#pattern_-a2" x="91" y="-2.2"/>
+                <!-- lower strand -->
+                <use xlink:href="#pattern_a2" x="0"/>
+                <use xlink:href="#pattern_a2" x="7" y="0.1"/>
+                <use xlink:href="#pattern_a2" x="14" y="0.3"/>
+                <use xlink:href="#pattern_a2" x="21" y="0.5"/>
+                <use xlink:href="#pattern_a2" x="28" y="0.6"/>
+                <use xlink:href="#pattern_a2" x="35" y="0.7"/>
+                <use xlink:href="#pattern_a2" x="42" y="0.8"/>
+                <use xlink:href="#pattern_a2" x="49" y="1"/>
+                <use xlink:href="#pattern_a2" x="56" y="1.3"/>
+                <use xlink:href="#pattern_a2" x="63" y="1.4"/>
+                <use xlink:href="#pattern_a2" x="70" y="1.6"/>
+                <use xlink:href="#pattern_a2" x="77" y="1.8"/>
+                <use xlink:href="#pattern_a2" x="84" y="2"/>
+                <use xlink:href="#pattern_a2" x="91" y="2.2"/>
+            </g>
+        </g>
+        <g id="flatStrap" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5">
+            <!-- silhouette -->
+            <path d="M0,-5 L50,-5 M50,5 L0,5" fill="none"/>
+            <path d="M50,-5 L126,-5 Q128.5,0 126,5 L50,5" fill="#FFFFFF"/>
+        </g>
+        <g id="flatStrap_claspEnd" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+            stroke-width="0.5" fill="none">
+            <!-- silhouette -->
+            <path d="M0,-5 L0,5" stroke-dasharray="2 1"/>
+        </g>
+        <mask id="fadingOff">
+            <path d="M0,0 30,0 30,150 0,150z" stroke-width="0.1" stroke="url(#fadingBothEnds)"
+                fill="url(#fadingBothEnds_2)"/>
+        </mask>
+        <rect id="fader" fill="#FFFFFF" stroke="none" width="30" height="150" x="0" y="0"
+            mask="url(#fadingOff)"/>
     </defs>
 
     <!-- Definitions are called here -->
-    
-    <g id="boardProfile">
+
+    <g transform="translate(30,30)">
+        <use xlink:href="#boardXsection"/>
+        <use xlink:href="#boardXsection" transform="translate(280,0) scale(-1,1) "/>
+    </g>
+
+    <use xlink:href="#foldedHookX" transform="translate(120,26.5)"/>
+
+    <use xlink:href="#raisedLip_catchplateX" transform="translate(100,33.5)"/>
+
+    <!--<use xlink:href="#flatStrapXend_underPastedown" transform="translate(138,26.5)"/>-->
+    <use xlink:href="#flatStrapXend_throughPastedown" transform="translate(138,26.5)"/>
+    <use xlink:href="#flatStrapX" transform="translate(138,26.5)"/>
+    <use xlink:href="#flatStrapX_underClasp" transform="translate(138,26.5)"/>
+
+    <!--<use xlink:href="#braidedStrapXend_underPastedown" transform="translate(138,26.5)"/>
+    <use xlink:href="#braidedStrapX" transform="translate(138,26.5)"/>-->
+
+
+    <g transform="translate(30,80)">
+        <use xlink:href="#board"/>
+        <use xlink:href="#board" transform="translate(280,0) scale(-1,1) "/>
+    </g>
+
+    <use xlink:href="#bentAndSlotted_catchplate" transform="translate(100,116)"/>
+
+    <use xlink:href="#simpleORfoldedHook_narrow" transform="translate(120,117.5)"/>
+
+    <use xlink:href="#strapEnding_flat"/>
+    <use xlink:href="#flatStrap" transform="translate(138,117.5)"/>
+    <use xlink:href="#flatStrap_claspEnd" transform="translate(138,117.5)"/>
+    <!--
+    <use xlink:href="#strapEnding_tripleStrap"/>
+    <use xlink:href="#tripleBraidedStrap" transform="translate(138,117.5)"/>-->
+    <!--
+    <use xlink:href="#strapEnding_doubleStrap"/>
+    <use xlink:href="#doubleBraidedStrap" transform="translate(138,117.5)"/>-->
+
+
+    <!--<g id="boardProfile">
         <path d="M0,0 L50,0 50,10 0,10z" stroke="url(#fading)" stroke-width="0.5"
             fill="url(#thicknessCutoutTile)"/>
         <path d="M0,0 L50,0 50,10 0,10z" stroke-opacity="0" fill-opacity="0.1"
@@ -82,7 +845,7 @@
     
     <rect width="100" height="30" x="100" y="100" fill="url(#doubleFading)"/>
     
-    <path class="line" filter="url(#f3)" d="M0,20 L41,20" stroke-linecap="butt" stroke-dasharray="5 2"/>
+    <path class="line" filter="url(#f3)" d="M0,20 L41,20" stroke-linecap="butt" stroke-dasharray="5 2"/>-->
 
 
 </svg>

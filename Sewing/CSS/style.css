@@ -6,21 +6,160 @@
  * stroke=#000000; stroke-width=1; fill=none;
  */
 
+.titleText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 8pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;
+}
+
+.noteText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 2pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;
+    stroke: 0pt;
+}
+
+.noteText2{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 3pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.noteText3left{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 3pt;
+    dominant-baseline: alphabetic;
+    text-anchor: end;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.noteText3right{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 3pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.noteText4{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 2.5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.noteText5{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+.descText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;
+}
+
 .line{
     stroke:#000000;
-    stroke-width:1;
+    stroke-width:0.5pt;
     fill:none;
 }
 
 .line2{
+    stroke:#000000;
+    stroke-width:0.5;
+    fill:none;
+}
+
+.line5{
     stroke:#666666;
     stroke-width:0.3;
     fill:none;
 }
 
+.line6{
+    stroke:#000000;
+    stroke-width:0.3;
+    fill:none;
+}
+
+.line3{
+    stroke:#666666;
+    stroke-width:0.1;
+    fill:none;
+    stroke-linejoin:miter;
+}
+
+.line4{
+    stroke:#000000;
+    stroke-width:0.2;
+    fill:none;
+    stroke-linejoin:miter;
+    stroke-opacity:1;
+}
+
+.line_white{
+    stroke:#FFFFFF;
+    stroke-width:1;
+    fill:none;
+}
+
+.line_white2{
+    stroke:#FFFFFF;
+    stroke-width:0.1;
+}
+
+.line_white3{
+    stroke:#FFFFFF;
+    stroke-width:3;
+    fill:none;
+}
+
+
 .thread{
     stroke:#000000;
-    stroke-width:0.75;
+    stroke-width:0.9pt;
+    fill:none;
+    stroke-linecap:square;
+}
+
+.thread2{
+    stroke:#FFFFFF;
+    stroke-width:0.1pt;
     fill:none;
     stroke-linecap:square;
 }
@@ -28,7 +167,15 @@
 .innerThread{
     stroke:#000000;
     stroke-dasharray:1 2;
-    stroke-width:0.75;
+    stroke-width:0.9pt;
+    fill:none;
+    stroke-linecap:square;
+}
+
+.innerThread2{
+    stroke:#FFFFFF;
+    stroke-dasharray:1 2;
+    stroke-width:0.1pt;
     fill:none;
     stroke-linecap:square;
 }
@@ -50,6 +197,26 @@
     font-variant:normal;
     font-weight:bold;
     font-size:8px;
+    fill:#000000;
+    dominant-baseline:central;
+}
+
+.text_va_previous{
+    font-family:courier, monospace;
+    font-style:italic;
+    font-variant:normal;
+    font-weight:lighter;
+    font-size:5px;
+    fill:#000000;
+    dominant-baseline:central;
+}
+
+.text_va_earlier{
+    font-family:courier, monospace;
+    font-style:italic;
+    font-variant:normal;
+    font-weight:lighter;
+    font-size:3px;
     fill:#000000;
     dominant-baseline:central;
 }

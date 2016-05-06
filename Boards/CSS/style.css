@@ -6,6 +6,47 @@
  * stroke=#000000; stroke-width=1; fill=none;
  */
 
+.titleText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;
+}
+
+.descText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;
+}
+
+.noteText2{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 3pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.noteText3{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 3pt;
+    dominant-baseline: alphabetic;
+    text-anchor: end;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
 
 .line{
     stroke:#000000;
@@ -19,6 +60,11 @@
     fill:none;
 }
 
+.line2fading{
+    stroke-width:0.5;
+    fill:none;
+}
+
 .line3{
     stroke:#666666;
     stroke-width:0.1;
@@ -28,6 +74,12 @@
 
 .line4{
     stroke:#000000;
+    stroke-width:0.2;
+    fill:none;
+    stroke-linejoin:miter;
+}
+
+.line4fading{
     stroke-width:0.2;
     fill:none;
     stroke-linejoin:miter;

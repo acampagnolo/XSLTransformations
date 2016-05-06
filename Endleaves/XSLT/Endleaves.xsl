@@ -201,11 +201,11 @@
     <xsl:template name="leftEndleavesSeparateFlyleaves-Fold">
         <xsl:param name="countComponents"/>
         <xsl:param name="currentComponent"/>
-        <xsl:choose>
+<!--        <xsl:choose>
             <xsl:when test="$countComponents = 1">
-                <!-- TODO -->
-                <!-- TODO: Call modified folded flyleaves to be as long as outermost gathering -->
-                <!-- TODO  -->
+                <!-\- TODO -\->
+                <!-\- TODO: Call modified folded flyleaves to be as long as outermost gathering -\->
+                <!-\- TODO  -\->
                 <desc xmlns="http://www.w3.org/2000/svg">Folded flyleaves</desc>
             </xsl:when>
             <xsl:when test="$countComponents > 1">
@@ -224,7 +224,7 @@
                     <xsl:with-param name="countComponents" select="$countComponents"/>
                 </xsl:call-template>
             </xsl:when>
-        </xsl:choose>
+        </xsl:choose>-->
     </xsl:template>
 
     <xsl:template name="leftEndleavesSeparatePastedown">

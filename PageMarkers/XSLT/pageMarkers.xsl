@@ -22,17 +22,20 @@
     <xsl:variable name="Ay" select="$Oy + 50"/>
 
     <xsl:template name="main" match="/">
-        <xsl:for-each select="book/markers/yes/marker/pageMarker">
-            <xsl:result-document
-                href="{if (last() = 1) then concat($filenamePath, '.svg') else concat($filenamePath, '_',position(), '.svg')}"
-                method="xml" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD SVG 1.1//EN"
-                doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-                <xsl:processing-instruction name="xml-stylesheet">
+        <xsl:choose>
+            <xsl:when test="book/markers/yes/marker/pageMarker">
+                <xsl:for-each select="book/markers/yes/marker/pageMarker">
+                    <xsl:result-document
+                        href="{if (last() = 1) then concat($filenamePath, '.svg') else concat($filenamePath, '_',position(), '.svg')}"
+                        method="xml" indent="yes" encoding="utf-8"
+                        doctype-public="-//W3C//DTD SVG 1.1//EN"
+                        doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                        <xsl:processing-instruction name="xml-stylesheet">
                 <xsl:text>href="../../../../GitHub/XSLTransformations/PageMarkers/CSS/style.css"&#32;</xsl:text>
                 <xsl:text>type="text/css"</xsl:text>
             </xsl:processing-instruction>
-                <xsl:text>&#10;</xsl:text>
-                <xsl:comment>
+                        <xsl:text>&#10;</xsl:text>
+                        <xsl:comment>
                     <xsl:text>SVG file generated on: </xsl:text>
                     <xsl:value-of select="format-dateTime(current-dateTime(), '[D] [MNn] [Y] at [H]:[m]:[s]')"/>
                     <xsl:text> using </xsl:text>
@@ -40,28 +43,43 @@
                     <xsl:text> version </xsl:text>
                     <xsl:value-of select="system-property('xsl:product-version')"/>
                 </xsl:comment>
-                <xsl:text>&#10;</xsl:text>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                    version="1.1" x="0" y="0" width="297mm" height="210mm" viewBox="0 0 297 210"
-                    preserveAspectRatio="xMidYMid meet">
-                    <title>Page Markers: <xsl:value-of select="$shelfmark"/></title>
-                    <!-- The following copies the definitions from the Master SVG file for sewing paths -->
-                    <xsl:copy-of
-                        select="document('../SVGmaster/pageMarkersSVGmaster.svg')/svg:svg/svg:defs"
-                        xpath-default-namespace="http://www.w3.org/2000/svg" copy-namespaces="no"/>
-                    <desc xmlns="http://www.w3.org/2000/svg">Page Markers</desc>
-                    <svg>
-                        <xsl:attribute name="x">
-                            <xsl:value-of select="$Ox"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="y">
-                            <xsl:value-of select="$Oy"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="type"/>
-                    </svg>
+                        <xsl:text>&#10;</xsl:text>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0" y="0"
+                            width="297mm" height="420mm" viewBox="0 0 297 420"
+                            preserveAspectRatio="xMidYMid meet">
+                            <title>Page Markers: <xsl:value-of select="$shelfmark"/></title>
+                            <!-- The following copies the definitions from the Master SVG file for sewing paths -->
+                            <xsl:copy-of
+                                select="document('../SVGmaster/pageMarkersSVGmaster.svg')/svg:svg/svg:defs"
+                                xpath-default-namespace="http://www.w3.org/2000/svg"
+                                copy-namespaces="no"/>
+                            <desc xmlns="http://www.w3.org/2000/svg">Page Markers</desc>                            
+                            <xsl:call-template name="title">
+                                <xsl:with-param name="detected" select="1"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="description"/>
+                            <svg>
+                                <xsl:attribute name="x">
+                                    <xsl:value-of select="$Ox"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="y">
+                                    <xsl:value-of select="$Oy + 50"/>
+                                </xsl:attribute>
+                                <xsl:apply-templates select="type"/>
+                            </svg>
+                        </svg>
+                    </xsl:result-document>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <svg xmlns="http://www.w3.org/2000/svg">
+                    <xsl:call-template name="title">
+                        <xsl:with-param name="detected" select="0"/>
+                    </xsl:call-template>
                 </svg>
-            </xsl:result-document>
-        </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- Template to mute all unwanted nodes -->
@@ -240,10 +258,12 @@
         <use xmlns="http://www.w3.org/2000/svg">
             <xsl:attribute name="xlink:href">
                 <xsl:choose>
-                    <xsl:when test="following-sibling::locations/locationSet[head | foredge | NC]">
-                        <xsl:text>#pageOutline_head-foredge</xsl:text>
+                    <xsl:when test="following-sibling::locations/locationSet/head">
+                        <xsl:text>#pageOutline_head</xsl:text>
                     </xsl:when>
-                    <!-- NB check that coordinates are correct -->
+                    <xsl:when test="following-sibling::locations/locationSet/foredge">
+                        <xsl:text>#pageOutline_foredge</xsl:text>
+                    </xsl:when>
                     <xsl:when test="following-sibling::locations/locationSet/tail">
                         <xsl:text>#pageOutline_tail</xsl:text>
                     </xsl:when>
@@ -261,12 +281,14 @@
         </use>
         <xsl:for-each select="following-sibling::locations/locationSet">
             <xsl:variable name="Bx">
-                <xsl:value-of select="($Ax + 160) - (21 * position())"/>
+                <xsl:value-of
+                    select="($Ax + (if ((head | tail)) then 130 else 160 )) - (21 * position())"/>
             </xsl:variable>
             <xsl:variable name="By">
-                <xsl:value-of
-                    select="if (head | foredge | NC) then $Ay + (21 * position()) else ($Ay + 120) - (21 * position())"
-                />
+                <!--<xsl:value-of
+                    select="if (head | NC) then $Ay + (if (head) then (21 * position()) else 0) else (if (foredge) then ($Ay + 60) else ($Ay + 120) - (21 * position()))"
+                />-->
+                <xsl:value-of select="$Ay + (21 * position()) - (if (foredge | tail) then 25 else 0)"/>
             </xsl:variable>
             <use xmlns="http://www.w3.org/2000/svg">
                 <xsl:variable name="diagramSelection">
@@ -334,14 +356,60 @@
                     <xsl:text>above</xsl:text>
                 </xsl:attribute>
             </use>
-            <xsl:call-template name="numberOfTabs">
+            <!--<xsl:call-template name="numberOfTabs">
+                <xsl:with-param name="Bx" select="$Bx"/>
+                <xsl:with-param name="By" select="$By"/>
+            </xsl:call-template>-->
+            <xsl:call-template name="attachmentAbove">
                 <xsl:with-param name="Bx" select="$Bx"/>
                 <xsl:with-param name="By" select="$By"/>
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="numberOfTabs">
+    <xsl:template name="attachmentAbove">
+        <xsl:param name="Bx"/>
+        <xsl:param name="By"/>
+        <xsl:choose>
+            <xsl:when test="../preceding-sibling::attachment/sewn">
+                <use xmlns="http://www.w3.org/2000/svg">
+                    <xsl:attribute name="xlink:href">
+                        <xsl:text>#sewnAttachment_above</xsl:text>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="head">
+                            <xsl:attribute name="transform">
+                                <xsl:text>rotate(-90,</xsl:text>
+                                <xsl:value-of select="$Bx"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="$By"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:when test="tail">
+                            <xsl:attribute name="transform">
+                                <xsl:attribute name="transform">
+                                    <xsl:text>rotate(90,</xsl:text>
+                                    <xsl:value-of select="$Bx"/>
+                                    <xsl:text>, </xsl:text>
+                                    <xsl:value-of select="$By"/>
+                                    <xsl:text>) translate(0,-12)</xsl:text>
+                                </xsl:attribute>
+                            </xsl:attribute>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:attribute name="x">
+                        <xsl:value-of select="$Bx"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="y">
+                        <xsl:value-of select="$By"/>
+                    </xsl:attribute>
+                </use>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+    <!--<xsl:template name="numberOfTabs">
         <xsl:param name="Bx" select="1"/>
         <xsl:param name="By" select="1"/>
         <xsl:variable name="Tx" select="($Ax + 160) - (21 * position()) + 6"/>
@@ -380,6 +448,66 @@
                 </xsl:otherwise>
             </xsl:choose>
         </text>
+    </xsl:template>
+-->
+
+    <!-- Titling -->
+    <xsl:template name="title">
+        <xsl:param name="detected" select="0"/>
+        <text xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="class">
+                <xsl:text>titleText</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="x">
+                <xsl:value-of select="$Ox + 150"/>
+            </xsl:attribute>
+            <xsl:attribute name="y">
+                <xsl:value-of select="$Oy + 20"/>
+            </xsl:attribute>
+            <xsl:value-of select="$shelfmark"/>
+            <xsl:text> - </xsl:text>
+            <xsl:text>Page markers</xsl:text>
+            <xsl:choose>
+                <xsl:when test="$detected eq 0">
+                    <xsl:text> not detected</xsl:text>
+                </xsl:when>
+            </xsl:choose>
+        </text>
+    </xsl:template>
+
+    <!-- Description -->
+    <xsl:template name="description">
+        <g xmlns="http://www.w3.org/2000/svg">
+            <xsl:attribute name="class">
+                <xsl:text>descText</xsl:text>
+            </xsl:attribute>
+            <text xmlns="http://www.w3.org/2000/svg" x="{$Ox + 35}" y="{$Oy + 40}">
+                <xsl:text>Type: </xsl:text>
+                <tspan xmlns="http://www.w3.org/2000/svg" x="{$Ox + 75}">
+                    <xsl:value-of
+                        select="if (type/other) then concat(type/node()[2]/name(), ': ', type/other/child::text()) else type/node()[2]/name()"
+                    />
+                </tspan>
+                <tspan xmlns="http://www.w3.org/2000/svg" dy="6.5" x="{$Ox + 35}">
+                    <xsl:text>Attachment: </xsl:text>
+                    <tspan xmlns="http://www.w3.org/2000/svg" x="{$Ox + 75}">
+                        <xsl:value-of
+                            select="if (attachment/other) then concat(attachment/child::node()[2]/name(), ': ', attachment/other/child::text()) else attachment/child::node()[2]/name()"
+                        />
+                    </tspan>
+                </tspan>
+                <xsl:for-each select="locations/locationSet">
+                    <tspan xmlns="http://www.w3.org/2000/svg" dy="6.5" x="{$Ox + 35}">
+                        <xsl:text>Location: </xsl:text>
+                        <tspan xmlns="http://www.w3.org/2000/svg" x="{$Ox + 75}">
+                            <xsl:value-of
+                                select="if (other) then concat(./child::node()[2]/name(), ': ', other/child::text()) else ./child::node()[2]/name()"
+                            />
+                        </tspan>
+                    </tspan>
+                </xsl:for-each>
+            </text>
+        </g>
     </xsl:template>
 
     <xsl:template name="certainty">

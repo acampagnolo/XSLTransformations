@@ -1,0 +1,99 @@
+/* style.css */
+
+/*
+ *    GENERAL   *
+ * 
+ * stroke=#000000; stroke-width=1; fill=none;
+ */
+
+
+.titleText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;
+}
+
+.descText{
+    font-family: 'SimonciniGaramond LT', garamond, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;
+} 
+
+.noteText{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: start;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.noteText2{
+    font-family: 'GaramSimonSB-RomanSC', garamond, serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 5pt;
+    dominant-baseline: alphabetic;
+    text-anchor: middle;    
+    stroke-width: 0.05pt;
+    fill: #000000;
+    opacity: 1;
+}
+
+.line{
+    stroke:#000000;
+    stroke-width:1;
+    fill:none;
+}
+
+.lineFading{
+    stroke:url(#fading);
+    stroke-width:1;
+    fill:none;
+}
+
+.line2{
+    stroke:#000000;
+    stroke-width:0.5;
+    fill:none;
+}
+
+.line3{
+    stroke:#666666;
+    stroke-width:0.1;
+    fill:none;
+    stroke-linejoin:miter;
+}
+
+.line4{
+    stroke:#000000;
+    stroke-width:0.2;
+    fill:none;
+    stroke-linejoin:miter;
+    stroke-opacity:1;
+}
+
+.nolineFilledWhite{
+    stroke:#FFFFFF;
+    stroke-opacity:0;
+    stroke-width:1;
+    fill:#FFFFFF;
+    fill-opacity:1;
+}
+
+.nolineFilled{
+    stroke:#FFFFFF;
+    stroke-opacity:0;
+    stroke-width:1;
+    fill:url(#thicknessCutoutTile);
+}
+
