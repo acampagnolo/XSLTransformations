@@ -6,46 +6,103 @@
     x="0" y="0" width="297mm" height="210mm" viewBox="0 0 297 210"
     preserveAspectRatio="xMinYMin meet">
     <defs>
-        <filter id="f1">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+        <filter id="f1" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
         </filter>
-        <g id="outermostGL" fill="none" stroke="#000000" stroke-width="1">
+        <filter id="f2" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4" filterUnits="userSpaceOnUse">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
+        </filter>
+        <linearGradient id="fading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="fading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <radialGradient id="radialFading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </radialGradient>
+        <g id="outermostGL">
             <desc>Outermost gathering Left</desc>
             <path d="M 140,0 L 10,0 A 10,10 0 0,0 10,20 L 140,20 z"/>
         </g>
-        <pattern id="gluedPattern" patternUnits="userSpaceOnUse" x="2" y="0" width="5"
-            height="10"
-            viewBox="0 0 10 10"
-            xlink:type="simple"
-            xlink:show="other"
-            xlink:actuate="onLoad"
+        <pattern id="gluedPattern" patternUnits="userSpaceOnUse" x="2" y="0" width="5" height="10"
+            viewBox="0 0 10 10" xlink:type="simple" xlink:show="other" xlink:actuate="onLoad"
             preserveAspectRatio="xMidYMid meet">
             <desc>Glue pattern</desc>
             <path d="M 0,5 L 3,0 " class="glued"/>
         </pattern>
-        <pattern id="gluedPattern2" patternUnits="userSpaceOnUse" x="0" y="4.1" width="4"
+        <!--<pattern id="gluedPattern2" patternUnits="userSpaceOnUse"
+            patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
+            <path d="M0,0 L5,50" class="line3"/>
+        </pattern>-->
+        <!--<pattern id="gluedPattern2" patternUnits="userSpaceOnUse" x="0" y="4.1" width="4"
             height="4.1">
             <desc>Glue pattern</desc>
             <path d="M 0,5 L 3,0 " class="glued"/>
+        </pattern>-->
+        <pattern id="gluedPattern2" patternUnits="userSpaceOnUse" x="0" y="0" width="8" height="8">
+            <g fill="none" class="glued" stroke-linecap="round">
+                <g stroke="#888888" stroke-width="0.5">
+                    <path d="M0,0 L8,8"/>
+                    <path d="M2,0 L8,6"/>
+                    <path d="M4,0 L8,4"/>
+                    <path d="M6,0 L8,2"/>
+                    <path d="M8,0 L8,0"/>
+                    <path d="M0,2 L6,8"/>
+                    <path d="M0,4 L4,8"/>
+                    <path d="M0,6 L2,8"/>
+                    <path d="M0,8 L0,8"/>
+                </g>
+            </g>
         </pattern>
-        <g id="pastedown" class="line">
+        <g id="pastedown" class="line"  stroke-linecap="round">
             <desc>pastedown</desc>
             <path d="M 0,0 L 130,0"/>
             <rect width="130" height="5" fill="url(#gluedPattern)" stroke-opacity="0.0"/>
         </g>
+        <rect id="pasted" width="130" height="5" fill="url(#gluedPattern)" stroke-opacity="0.0"/>
         <clipPath id="guardClip">
-            <rect id="rect1"
-                width="32.5" height="10"
-                x="97.5" y="-2"
+            <rect id="rect1" width="32.5" height="10" x="97.5" y="-2"
                 style="stroke: gray; fill: none;"/>
         </clipPath>
         <clipPath id="outsideHookClip">
-            <rect id="rect12"
-                width="16.25" height="10"
-                x="113.75" y="-2"
+            <rect id="rect12" width="16.25" height="10" x="113.75" y="-2"
                 style="stroke: gray; fill: none;"/>
         </clipPath>
-        <g id="flyleaf" class="line" >
+        <g id="flyleaf" class="line">
             <desc>single flyleaf</desc>
             <path d="M 0,0 L 130,0"/>
         </g>
@@ -54,10 +111,10 @@
             <path d="M 140,0 L 10,0 A 5,5 0 0,0 10,10 L 140,10"/>
         </g>
     </defs>
-    
+
     <!-- Call the definitions above inside the groups below by <use  xlink:href="[#+ID here]", use the X and Y attributes of the use element to move the components around -->
-    
+
     <use xlink:href="#pastedown" x="10" y="14" clip-path="url(#guardClip)"/>
 
-    
+
 </svg>

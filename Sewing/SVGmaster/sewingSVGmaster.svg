@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="../CSS/style.css" type="text/css"?>
 <!DOCTYPE svg
   PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
@@ -7,14 +6,38 @@
     version="1.1">
     <desc>Sewing pattern SVG Master</desc>
     <defs>
-        <filter id="f1">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        <filter id="f1" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
         </filter>
-        <filter id="f2">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        <filter id="f2" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
         </filter>
-        <filter id="f3">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        <filter id="f3" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4" filterUnits="userSpaceOnUse">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
         </filter>
         <pattern id="fillDottedPattern" patternUnits="userSpaceOnUse" x="0" y="0" width="1"
             height="1" viewBox="0 0 6 6" preserveAspectRatio="xMidYMid meet">
@@ -32,6 +55,9 @@
         <g id="sewingSupportRound" class="sewingSupport">
             <circle r="2.1" cx="0" cy="0" fill="url(#fillDottedPattern)"/>
         </g>
+        <g id="sewingSupportSquared" class="sewingSupport">
+            <rect height="4.2" width="4.2" x="-2.1" y="-1.5" rx="1" ry="1" fill="url(#fillDottedPattern)"/>
+        </g>
         <g id="sewingSupportRound_front">
             <path d="M1,0 L1,6 5.2,7 5.2,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
             <path d="M1,0 L1,6 M5.2,7 L5.2,1" class="sewingSupport" stroke-linecap="square"/>
@@ -48,113 +74,218 @@
             <path d="M1,0 L1,6 M3,7 L3,1" class="sewingSupport" stroke-linecap="square"/>
         </g>
         <g id="sewingSupportFlat" class="sewingSupport">
-            <rect width="12" height="2.5" x="0" y="0" rx="0.5" ry="0.5"/>
+            <rect width="12" height="2.5" x="0" y="1" rx="0.5" ry="0.5"/>
+        </g>
+        <g id="sewingSupportFlat-2" class="sewingSupport">
+            <rect width="6" height="2.5" x="3" y="0" rx="0.5" ry="0.5"/>
         </g>
         <g id="sewingSupportFlat_front">
             <path d="M1,0 L1,6 13,7 13,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
             <path d="M1,0 L1,6 M13,7 L13,1" class="sewingSupport" stroke-linecap="square"/>
+        </g>        
+        <g id="sewingSupportFlat-2_front">
+            <path d="M3,0 L3,6 10,7 10,1z" fill-opacity="1" fill="#FFFFFF" stroke-opacity="0"/>
+            <path d="M3,0 L3,6 M10,7 L10,1" class="sewingSupport" stroke-linecap="square"/>
         </g>
-        <g id="loop" stroke-linejoin="miter">
-            <!--<path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
+        <g id="loop" stroke-linejoin="miter"><!--
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
             <g marker-end="url(#arrowSymbol)" class="thread">
-                <path d="M10,11 Q 14,8 14,6"/>
+                <!--<path d="M10,11 Q 14,8 14,6"/>
                 <path d="M 14,6 A 4,4 0 0,0 6,6"/>
-                <path d="M 6,6 Q 6,8 10,11"/>
-            </g>
-            <!--<path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
+                <path d="M 6,6 Q 6,8 10,11"/>-->
+                <path d="M10,11 Q 14,8 14,6 A 4,4 0 0,0 10,2"/>
+                <path d="M10,2 A4,4 0 0,0 6,6 Q 6,8 10,11"/>
+            </g><!--
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
         </g>
-        <g id="loop_unsupported" stroke-linejoin="miter">
-            <!--<path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
+        <g id="loop_thin" stroke-linejoin="miter">
+            <g marker-end="url(#arrowSymbol)" class="thread2">
+                <path d="M10,11 Q 14,8 14,6 A 4,4 0 0,0 10,2"/>
+                <path d="M10,2 A4,4 0 0,0 6,6 Q 6,8 10,11"/>
+            </g>
+        </g>
+        <g id="loop_unsupported" stroke-linejoin="miter"><!--
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
             <g class="thread">
                 <use xlink:href="#link-stitch_front" x="0" y="0" stroke="#000000" stroke-width="1"
                     fill="none" transform="rotate(180, 10,11)"/>
-            </g>
-            <!--<path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
+            </g><!--
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
         </g>
-        <g id="loop_front" stroke-linejoin="bevel">
+        <g id="loop_unsupported_thin" stroke-linejoin="miter">
+            <g class="thread2">
+                <use xlink:href="#link-stitch_front" x="0" y="0" stroke="#000000" stroke-width="1"
+                    fill="none" transform="rotate(180, 10,11)"/>
+            </g>
+        </g>
+        <g id="loop_front" stroke-linejoin="bevel" class="thread">
             <path d="M2,0 L1.5,0 Q1.5,1 4.1,1 Q6.7,1 6.7,0 L6.2,0"/>
         </g>
-        <g id="loop_front2" stroke-linejoin="bevel">
+        <g id="loop_front_thin" stroke-linejoin="bevel" class="thread2">
+            <path d="M2,0 L1.5,0 Q1.5,1 4.1,1 Q6.7,1 6.7,0 L6.2,0"/>
+        </g>
+        <g id="loop_front2" stroke-linejoin="bevel" class="thread">
             <path d="M2,0 L1.5,0 Q1.5,1 5.25,1 Q8.3,1 8.3,0 L7.5,0"/>
         </g>
-        <g id="loop_frontLinked" stroke-linejoin="round">
+        <g id="loop_front2_thin" stroke-linejoin="bevel" class="thread2">
+            <path d="M2,0 L1.5,0 Q1.5,1 5.25,1 Q8.3,1 8.3,0 L7.5,0"/>
+        </g>
+        <g id="loop_frontLinked" stroke-linejoin="round" class="thread">
+            <path d="M2,7 L1.5,7 L8.3,0 L8,0.3"/>
+            <path d="M8,0.3 L8.3,0 L15.3,7 14.8,7"/>
+        </g>
+        <g id="loop_frontLinked_thin" stroke-linejoin="round" class="thread2">
             <path d="M2,7 L1.5,7 L8.3,0 L8,0.3"/>
             <path d="M8,0.3 L8.3,0 L15.3,7 14.8,7"/>
         </g>
         <g id="sewingArch_raised" stroke-linejoin="miter" stroke-linecap="square"
-            marker-end="url(#arrowSymbol)">
-            <!--<path d="M1,14 Q5.5,14 6,11" class="innerThread"/>-->
+            marker-end="url(#arrowSymbol)"><!--
+            <path d="M1,14 Q5.5,14 6,11" class="innerThread"/>-->
             <g class="thread">
                 <path d="M6,11 L6,6"/>
                 <path d="M 6,6 A 4,4 0 0,1 14,6"/>
                 <path d="M14,6 L14,11"/>
-            </g>
-            <!--<path d="M14,11 Q14.5,14 19,14" class="innerThread"/>-->
+            </g><!--
+            <path d="M14,11 Q14.5,14 19,14" class="innerThread"/>-->
         </g>
-        <g id="sewingArch_recessed" stroke-linejoin="miter" stroke-linecap="square">
-            <!--<path d="M1,14 Q1.25,14 7.5,11" class="innerThread"/>-->
+        <g id="sewingArch_raised_thin" stroke-linejoin="miter" stroke-linecap="square"
+            marker-end="url(#arrowSymbol)">
+            <g class="thread2">
+                <path d="M6,11 L6,6"/>
+                <path d="M 6,6 A 4,4 0 0,1 14,6"/>
+                <path d="M14,6 L14,11"/>
+            </g>
+        </g>
+        <g id="sewingArch_recessed" stroke-linejoin="miter" stroke-linecap="square"><!--
+            <path d="M1,14 Q1.25,14 7.5,11" class="innerThread"/>-->
             <g marker-end="url(#arrowSymbol)" class="thread">
                 <path d="M7.5,11 Q10,9 12.5,11"/>
-            </g>
-            <!--<path d="M12.5,11 Q17.75,14 19,14" class="innerThread"/>-->
+            </g><!--
+            <path d="M12.5,11 Q17.75,14 19,14" class="innerThread"/>-->
         </g>
-        <g id="sewingArch_recessedFront" stroke-linejoin="bevel">
+        <g id="sewingArch_recessed_thin" stroke-linejoin="miter" stroke-linecap="square">
+            <g marker-end="url(#arrowSymbol)" class="thread2">
+                <path d="M7.5,11 Q10,9 12.5,11"/>
+            </g>
+        </g>
+        <g id="sewingArch_recessedFront" stroke-linejoin="bevel" class="thread">
             <path d="M2,0 L1.5,0 Q1.5,1 3,1 Q4.5,1 4.5,0 L4,0"/>
         </g>
-        <g id="loop_flat" stroke-linejoin="bevel">
-            <!--<path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
+        <g id="sewingArch_recessedFront_thin" stroke-linejoin="bevel" class="thread2">
+            <path d="M2,0 L1.5,0 Q1.5,1 3,1 Q4.5,1 4.5,0 L4,0"/>
+        </g>
+        <g id="loop_flat" stroke-linejoin="bevel"><!--
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
             <g marker-end="url(#arrowSymbol)" class="thread">
                 <path d="M10,11 Q 12,10 16,9.5 A 18,6 0 0,0 17.5,7"/>
                 <path d="M 17.5,7 A 18,6 0 0,0 16,5 Q 13,4.5 10,4.5"/>
                 <path d="M 10,4.5 Q 7,4.5 4,5 A 18,6 0 0,0 2.5,7"/>
                 <path d="M 2.5,7 A 18,6 0 0,0 4,9.5 Q 8,10 10,11"/>
-            </g>
-            <!--<path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
+            </g><!--
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
         </g>
-        <g id="loop_flatFront" stroke-linejoin="bevel">
+        <g id="loop_flat_thin" stroke-linejoin="bevel">
+            <g marker-end="url(#arrowSymbol)" class="thread2">
+                <path d="M10,11 Q 12,10 16,9.5 A 18,6 0 0,0 17.5,7"/>
+                <path d="M 17.5,7 A 18,6 0 0,0 16,5 Q 13,4.5 10,4.5"/>
+                <path d="M 10,4.5 Q 7,4.5 4,5 A 18,6 0 0,0 2.5,7"/>
+                <path d="M 2.5,7 A 18,6 0 0,0 4,9.5 Q 8,10 10,11"/>
+            </g>
+        </g>
+        <g id="loop_flat-2" stroke-linejoin="bevel"><!--
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
+            <g marker-end="url(#arrowSymbol)" class="thread">
+                <path d="M10,11 Q 12,10 14,9.5 A 16,6 0 0,0 15.5,7"/>
+                <path d="M 15.5,7 A 16,6 0 0,0 14,5 Q 13,4.5 10,4.5"/>
+                <path d="M 10,4.5 Q 7,4.5 6,5 A 16,6 0 0,0 4.5,7"/>
+                <path d="M 4.5,7 A 16,6 0 0,0 6,9.5 Q 8,10 10,11"/>
+            </g><!--
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
+        </g>
+        <g id="loop_flat-2_thin" stroke-linejoin="bevel">
+            <g marker-end="url(#arrowSymbol)" class="thread2">
+                <path d="M10,11 Q 12,10 14,9.5 A 16,6 0 0,0 15.5,7"/>
+                <path d="M 15.5,7 A 16,6 0 0,0 14,5 Q 13,4.5 10,4.5"/>
+                <path d="M 10,4.5 Q 7,4.5 6,5 A 16,6 0 0,0 4.5,7"/>
+                <path d="M 4.5,7 A 16,6 0 0,0 6,9.5 Q 8,10 10,11"/>
+            </g>
+        </g>
+        <g id="loop_flatFront" stroke-linejoin="bevel" class="thread">
             <path d="M2,0 L1.5,0 Q1.5,1 8,1 Q14.5,1 14.5,0 L13.8,0"/>
         </g>
-        <g id="sewingArch_flat" stroke-linejoin="bevel" marker-end="url(#arrowSymbol)">
-            <!--<path d="M1,14 Q1.5,14 2,11" class="innerThread"/>-->
+        <g id="loop_flatFront_thin" stroke-linejoin="bevel" class="thread2">
+            <path d="M2,0 L1.5,0 Q1.5,1 8,1 Q14.5,1 14.5,0 L13.8,0"/>
+        </g>
+        <g id="loop_flatFront-2" stroke-linejoin="bevel" class="thread">
+            <path d="M3.8,0 L2.5,0 Q3,1 8,1 Q12.5,1 12.5,0 L11.8,0"/>
+        </g>
+        <g id="loop_flatFront-2_thin" stroke-linejoin="bevel" class="thread2">
+            <path d="M3.8,0 L2.5,0 Q3,1 8,1 Q12.5,1 12.5,0 L11.8,0"/>
+        </g>
+        <g id="sewingArch_flat" stroke-linejoin="bevel" marker-end="url(#arrowSymbol)"><!--
+            <path d="M1,14 Q1.5,14 2,11" class="innerThread"/>-->
             <g class="thread">
                 <path d="M2,11 Q2,9 2.5,7"/>
                 <path d="M2.5,7 A18,6 0 0,1 4,5 Q7,4.5 10,4.5"/>
                 <path d="M10,4.5 Q13,4.5 16,5 A18,6 0 0,1 17.5,7"/>
                 <path d="M17.5,7 Q18,9 18,11"/>
-            </g>
-            <!--<path d="M18,11 Q18.5,14 19,14" class="innerThread"/>-->
+            </g><!--
+            <path d="M18,11 Q18.5,14 19,14" class="innerThread"/>-->
         </g>
-        <g id="doubleLoop" stroke-linejoin="miter">
-            <!--<path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
+        <g id="sewingArch_flat_thin" stroke-linejoin="bevel" marker-end="url(#arrowSymbol)">
+            <g class="thread2">
+                <path d="M2,11 Q2,9 2.5,7"/>
+                <path d="M2.5,7 A18,6 0 0,1 4,5 Q7,4.5 10,4.5"/>
+                <path d="M10,4.5 Q13,4.5 16,5 A18,6 0 0,1 17.5,7"/>
+                <path d="M17.5,7 Q18,9 18,11"/>
+            </g>
+        </g>
+        <g id="sewingArch_flat-2" stroke-linejoin="bevel"><!--
+            <path d="M17,11 Q18,9 17.5,7" class="line_white3"/>
+            <path d="M2,10 L2,12" class="line_white3"/>-->
             <g class="thread">
-                <path d="M10,11 Q10.5,8 10.5,6 A4,4 0 0,1 14.5,2.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M14,2.5 A4,4 0 0,1 18,6" marker-end="url(#arrowSymbol)"/>
+                <path d="M17,11 Q18,9 17.5,7"/>                
+                <path d="M17.5,7 A18,6 0 0,0 16,5 Q13,4.5 10,4.5" marker-end="url(#arrowSymbol)"/>
+                <path d="M10,4.5 Q7,4.5 4,5 A18,6 0 0,0 2.5,7"/>
+                <path d="M2.5,7 Q2,9 2,11"/>
+            </g>
+            <path d="M2,11 Q2,16 10,16" class="innerThread" marker-end="url(#arrowSymbol)"/>       
+            <path d="M10,16 Q18,16 18,15" class="innerThread"/>    
+            <path d="M18,15 Q18.5,14 19,14" class="innerThread"/> 
+        </g>
+        <g id="sewingArch_flat-2_thin" stroke-linejoin="bevel">
+            <g class="thread2">
+                <path d="M17,11 Q18,9 17.5,7"/>                
+                <path d="M17.5,7 A18,6 0 0,0 16,5 Q13,4.5 10,4.5" marker-end="url(#arrowSymbol)"/>
+                <path d="M10,4.5 Q7,4.5 4,5 A18,6 0 0,0 2.5,7"/>
+                <path d="M2.5,7 Q2,9 2,11"/>
+            </g>
+            <path d="M2,11 Q2,16 10,16" class="innerThread2" marker-end="url(#arrowSymbol)"/>       
+            <path d="M10,16 Q18,16 18,15" class="innerThread2"/>    
+            <path d="M18,15 Q18.5,14 19,14" class="innerThread2"/> 
+        </g>
+        <g id="doubleLoop" stroke-linejoin="miter"><!--
+            <path d="M 1,14 Q 7,13 10,11" class="innerThread"/>-->
+            <g class="thread">
+                <path d="M10.5,11 Q10.5,8 10.5,6 A4,4 0 0,1 14.5,2.5" marker-end="url(#arrowSymbol)"/>
+                <path d="M14,2.5 A4,4 0 0,1 18,6"/>
                 <path d="M18,6 A4,4 0 0,1 14,9.5" marker-end="url(#arrowSymbol)"/>
                 <path d="M14,9.5 L6,9.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M6,9.5 A4,4 0 0,1 2,6" marker-end="url(#arrowSymbol)"/>
+                <path d="M6,9.5 A4,4 0 0,1 2,6"/>
                 <path d="M2,6 A4,4 0 0,1 6,2.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M6,2.5 A4,4 0 0,1 9.5,6 Q9.5,8 10,11"/>
-            </g>
-            <!--<path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
+                <path d="M6,2.5 A4,4 0 0,1 9.5,6 Q9.5,8 9.5,11"/>
+            </g><!--
+            <path d="M10,11 Q 13,13 19,14" class="innerThread"/>-->
         </g>
-        <g id="doubleLoop-B" stroke-linejoin="miter">
-            <g class="thread">
-                <path d="M6,11 Q10,8 10.5,6 A4,4 0 0,1 14.5,2.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M14,2.5 A4,4 0 0,1 18,6" marker-end="url(#arrowSymbol)"/>
+        <g id="doubleLoop_thin" stroke-linejoin="miter">
+            <g class="thread2">
+                <path d="M10.5,11 Q10.5,8 10.5,6 A4,4 0 0,1 14.5,2.5" marker-end="url(#arrowSymbol)"/>
+                <path d="M14,2.5 A4,4 0 0,1 18,6"/>
                 <path d="M18,6 A4,4 0 0,1 14,9.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M14,9.5 Q10,8 9.5,6" marker-end="url(#arrowSymbol)"/>
-                <path d="M9.5,6 A4,4 0 0,0 6,2.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M6,2.5 A4,4 0 0,0 2,6" marker-end="url(#arrowSymbol)"/>
-                <path d="M2,6 Q1,7 6,11"/>
-            </g>
-        </g>
-        <g id="doubleLoop-C" stroke-linejoin="miter">
-            <g class="thread">
-                <path d="M10,11 Q10.5,10 14,9.5 A4,4 0 0,0 18,6" marker-end="url(#arrowSymbol)"/>
-                <path d="M18,6 A4,4 0 0,0 14,2.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M14,2.5 L6,2.5" marker-end="url(#arrowSymbol)"/>
-                <path d="M6,2.5 A4,4 0 0,0 2,6" marker-end="url(#arrowSymbol)"/>
-                <path d="M2,6 A4,4 0 0,0 6,9.5 Q10,10 10,11"/>
+                <path d="M14,9.5 L6,9.5" marker-end="url(#arrowSymbol)"/>
+                <path d="M6,9.5 A4,4 0 0,1 2,6"/>
+                <path d="M2,6 A4,4 0 0,1 6,2.5" marker-end="url(#arrowSymbol)"/>
+                <path d="M6,2.5 A4,4 0 0,1 9.5,6 Q9.5,8 9.5,11"/>
             </g>
         </g>
         <clipPath id="interlink1">
@@ -207,13 +338,26 @@
                 d="M10,11.2 Q7.5,14 7.5,16 A2.5,2.5 0 0,0 10,19 A2.5,2.5 0 0,0 12.5,16 Q12.5,14 10,11.2"
             />
         </g>
+        <g id="link-stitch_front_thin" class="thread2" stroke-linecap="round">
+            <path
+                d="M10,11.2 Q7.5,14 7.5,16 A2.5,2.5 0 0,0 10,19 A2.5,2.5 0 0,0 12.5,16 Q12.5,14 10,11.2"
+            />
+        </g>
         <g id="link-stitch_front_180" class="thread" stroke-linecap="round">
+            <use xlink:href="#link-stitch_front" x="0" y="0"
+                transform="rotate(180, 10,11)  translate(0,-7)"/>
+        </g>
+        <g id="link-stitch_front_180_thin" class="thread2" stroke-linecap="round">
             <use xlink:href="#link-stitch_front" x="0" y="0"
                 transform="rotate(180, 10,11)  translate(0,-7)"/>
         </g>
         <g id="link-stitch_front_doubleSequenceLink">
             <path id="bottom" d="M10,11.2 Q8,12 8,13 A2.5,2.5 0 0,0 10,16 A2.5,2.5 0 0,0 12,13 Q12,12 10,11.2" clip-path="url(#interlink3)"/>
             <use xlink:href="#bottom" transform="rotate(180, 10,11)"/>
+        </g>
+        <g id="link-stitch_front_doubleSequenceLink_thin" class="thread2">
+            <path id="bottom2" d="M10,11.2 Q8,12 8,13 A2.5,2.5 0 0,0 10,16 A2.5,2.5 0 0,0 12,13 Q12,12 10,11.2" clip-path="url(#interlink3)"/>
+            <use xlink:href="#bottom2" transform="rotate(180, 10,11)"/>
         </g>
         <!-- First section should have: stroke="url(#grad1)" clip-path="url(#interlink2_first)" -->
         <!-- Other section should have: stroke="#000000" clip-path="url(#interlink2)" -->
@@ -246,32 +390,4 @@
 
     <!-- Definitions are called here -->
     
-    <use xlink:href="#loop" x="50" y="20"/>
-    <use xlink:href="#sewingArch_raised" x="50" y="170"/>
-    <use xlink:href="#loop_unsupported" x="50" y="50"/>
-    <use xlink:href="#loop_flat" x="50" y="80"/>
-    <use xlink:href="#doubleLoop" x="50" y="110"/>
-    <use xlink:href="#sewingSupportRound" x="55.8" y="116"/>
-    <use xlink:href="#sewingSupportRound" x="64.2" y="116"/>
-    
-    <use xlink:href="#doubleLoop-B" x="80" y="110"/>
-    <use xlink:href="#sewingSupportRound" x="85.8" y="116"/>
-    <use xlink:href="#sewingSupportRound" x="94.2" y="116"/>
-    
-    <use xlink:href="#doubleLoop-C" x="110" y="110"/>
-    <use xlink:href="#sewingSupportRound" x="115.8" y="116"/>
-    <use xlink:href="#sewingSupportRound" x="124.2" y="116"/>
-    
-    <use xlink:href="#sewingArch_recessed" x="50" y="140"/>
-    
-    <circle r="2" cx="100" cy="60" fill="#000000" stroke="#000000" stroke-width="1"/>
-    <text x="100" y="60" fill="#FFFFFF" font-family="serif" font-weight="bold" font-size="3" text-anchor="middle" dominant-baseline="central">10</text>
-    
-    <use xlink:href="#loop_front2" x="60" y="60" class="line"/>
-    
-    <use xlink:href="#sewingSupportRound_front" x="50" y="50"/>
-    <use xlink:href="#sewingSupportRound_front2" x="50" y="60"/>
-    
-    
-  
 </svg>

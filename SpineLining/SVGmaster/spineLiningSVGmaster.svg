@@ -7,17 +7,161 @@
     version="1.1">
     <desc>Spine SVG Master</desc>
     <defs>
-        <filter id="f1">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        <ellipse id="r_small" cx="50%" cy="50%" rx="100" ry="300" style="fill:url(#bg)"/>
+        <ellipse id="r_big" cx="50%" cy="50%" rx="250" ry="300" style="fill:url(#bg)"/>
+        <rect id="r_2" width="150%" height="110%" fill="url(#bg)"/>
+        <linearGradient id="bg">
+            <stop offset="0.000" stop-color="#00ff00"/>
+            <stop offset="0.010" stop-color="#808000"/>
+            <stop offset="0.020" stop-color="#ff0000"/>
+            <stop offset="0.030" stop-color="#00ff00"/>
+            <stop offset="0.040" stop-color="#808000"/>
+            <stop offset="0.050" stop-color="#ff0000"/>
+            <stop offset="0.060" stop-color="#00ff00"/>
+            <stop offset="0.070" stop-color="#808000"/>
+            <stop offset="0.080" stop-color="#ff0000"/>
+            <stop offset="0.090" stop-color="#00ff00"/>
+            <stop offset="0.100" stop-color="#808000"/>
+            <stop offset="0.110" stop-color="#ff0000"/>
+            <stop offset="0.120" stop-color="#00ff00"/>
+            <stop offset="0.130" stop-color="#808000"/>
+            <stop offset="0.140" stop-color="#ff0000"/>
+            <stop offset="0.150" stop-color="#00ff00"/>
+            <stop offset="0.160" stop-color="#808000"/>
+            <stop offset="0.170" stop-color="#ff0000"/>
+            <stop offset="0.180" stop-color="#00ff00"/>
+            <stop offset="0.190" stop-color="#808000"/>
+            <stop offset="0.200" stop-color="#ff0000"/>
+            <stop offset="0.210" stop-color="#00ff00"/>
+            <stop offset="0.220" stop-color="#808000"/>
+            <stop offset="0.230" stop-color="#ff0000"/>
+            <stop offset="0.240" stop-color="#00ff00"/>
+            <stop offset="0.250" stop-color="#808000"/>
+            <stop offset="0.260" stop-color="#ff0000"/>
+            <stop offset="0.270" stop-color="#00ff00"/>
+            <stop offset="0.280" stop-color="#808000"/>
+            <stop offset="0.290" stop-color="#ff0000"/>
+            <stop offset="0.300" stop-color="#00ff00"/>
+            <stop offset="0.310" stop-color="#808000"/>
+            <stop offset="0.320" stop-color="#ff0000"/>
+            <stop offset="0.330" stop-color="#00ff00"/>
+            <stop offset="0.340" stop-color="#808000"/>
+            <stop offset="0.350" stop-color="#ff0000"/>
+            <stop offset="0.360" stop-color="#00ff00"/>
+            <stop offset="0.370" stop-color="#808000"/>
+            <stop offset="0.380" stop-color="#ff0000"/>
+            <stop offset="0.390" stop-color="#00ff00"/>
+            <stop offset="0.400" stop-color="#808000"/>
+            <stop offset="0.410" stop-color="#ff0000"/>
+            <stop offset="0.420" stop-color="#00ff00"/>
+            <stop offset="0.430" stop-color="#808000"/>
+            <stop offset="0.440" stop-color="#ff0000"/>
+            <stop offset="0.450" stop-color="#00ff00"/>
+            <stop offset="0.460" stop-color="#808000"/>
+            <stop offset="0.470" stop-color="#ff0000"/>
+            <stop offset="0.480" stop-color="#00ff00"/>
+            <stop offset="0.490" stop-color="#808000"/>
+            <stop offset="0.500" stop-color="#ff0000"/>
+            <stop offset="0.510" stop-color="#00ff00"/>
+            <stop offset="0.520" stop-color="#808000"/>
+            <stop offset="0.530" stop-color="#ff0000"/>
+            <stop offset="0.540" stop-color="#00ff00"/>
+            <stop offset="0.550" stop-color="#808000"/>
+            <stop offset="0.560" stop-color="#ff0000"/>
+            <stop offset="0.570" stop-color="#00ff00"/>
+            <stop offset="0.580" stop-color="#808000"/>
+            <stop offset="0.590" stop-color="#ff0000"/>
+            <stop offset="0.600" stop-color="#00ff00"/>
+            <stop offset="0.610" stop-color="#808000"/>
+            <stop offset="0.620" stop-color="#ff0000"/>
+            <stop offset="0.630" stop-color="#00ff00"/>
+            <stop offset="0.640" stop-color="#808000"/>
+            <stop offset="0.650" stop-color="#ff0000"/>
+            <stop offset="0.660" stop-color="#00ff00"/>
+            <stop offset="0.670" stop-color="#808000"/>
+            <stop offset="0.680" stop-color="#ff0000"/>
+            <stop offset="0.690" stop-color="#00ff00"/>
+            <stop offset="0.700" stop-color="#808000"/>
+            <stop offset="0.710" stop-color="#ff0000"/>
+            <stop offset="0.720" stop-color="#00ff00"/>
+            <stop offset="0.730" stop-color="#808000"/>
+            <stop offset="0.740" stop-color="#ff0000"/>
+            <stop offset="0.750" stop-color="#00ff00"/>
+            <stop offset="0.760" stop-color="#808000"/>
+            <stop offset="0.770" stop-color="#ff0000"/>
+            <stop offset="0.780" stop-color="#00ff00"/>
+            <stop offset="0.790" stop-color="#808000"/>
+            <stop offset="0.800" stop-color="#ff0000"/>
+            <stop offset="0.810" stop-color="#00ff00"/>
+            <stop offset="0.820" stop-color="#808000"/>
+            <stop offset="0.830" stop-color="#ff0000"/>
+            <stop offset="0.840" stop-color="#00ff00"/>
+            <stop offset="0.850" stop-color="#808000"/>
+            <stop offset="0.860" stop-color="#ff0000"/>
+            <stop offset="0.870" stop-color="#00ff00"/>
+            <stop offset="0.880" stop-color="#808000"/>
+            <stop offset="0.890" stop-color="#ff0000"/>
+            <stop offset="0.900" stop-color="#00ff00"/>
+            <stop offset="0.910" stop-color="#808000"/>
+            <stop offset="0.920" stop-color="#ff0000"/>
+            <stop offset="0.930" stop-color="#00ff00"/>
+            <stop offset="0.940" stop-color="#808000"/>
+            <stop offset="0.950" stop-color="#ff0000"/>
+            <stop offset="0.960" stop-color="#00ff00"/>
+            <stop offset="0.970" stop-color="#808000"/>
+            <stop offset="0.980" stop-color="#ff0000"/>
+            <stop offset="0.990" stop-color="#00ff00"/>
+            <stop offset="1.000" stop-color="#808000"/>
+        </linearGradient>
+        <filter id="warp_small">
+            <feImage xlink:href="#r_small" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.5"
+                in="SourceGraphic" in2="grad"/>
         </filter>
-        <filter id="f2">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        <filter id="warp_big">
+            <feImage xlink:href="#r_big" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.5"
+                in="SourceGraphic" in2="grad"/>
         </filter>
-        <filter id="f3">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        <filter id="warp_2" filterUnits="objectBoundingBox">
+            <feImage xlink:href="#r_2" result="grad"/>
+            <feDisplacementMap xChannelSelector="G" yChannelSelector="R" scale="0.7"
+                in="SourceGraphic" in2="grad" result="unblurred"/>
+            <!--        
+            <feGaussianBlur in="unblurred" stdDeviation="0.5 0.1"/>-->
         </filter>
-        <filter id="f4">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0.5"/>
+        <filter id="f1" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3" filterUnits="userSpaceOnUse">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4" filterUnits="userSpaceOnUse">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
         </filter>
         <linearGradient id="fading">
             <stop offset="0%" stop-color="#FFFFFF"/>
@@ -37,11 +181,11 @@
             <stop offset="100%" stop-color="#000000"/>
         </linearGradient>
         <linearGradient id="doubleFading2">
-            <stop offset="0%" stop-color="#000000"/>
-            <stop offset="30%" stop-color="#666666"/>
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="30%" stop-color="#FFFFFF"/>
             <stop offset="40%" stop-color="#FFFFFF"/>
             <stop offset="60%" stop-color="#FFFFFF"/>
-            <stop offset="70%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
             <stop offset="100%" stop-color="#000000"/>
         </linearGradient>
         <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"

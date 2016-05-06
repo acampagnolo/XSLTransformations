@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../CSS/style.css" type="text/css"?>
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
+    width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="xMinYMin meet"
+    version="1.1">
+    <desc>Furniture SVG Master</desc>
+    <defs>
+        <filter id="f1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.6 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter id="f2">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter id="f3">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0.5"/>
+        </filter>
+        <filter id="f4">
+            <!--<feColorMatrix in = "SourceGraphic" type = "saturate" values = "0.1" result="desaturated"/>-->
+            <feColorMatrix in="SourceGraphic" type="matrix" values="
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.0 0.0
+                0.0 0.0 0.0 0.65 0.0"/>
+            <feGaussianBlur stdDeviation="0 0.5"/>
+        </filter>
+        <filter id="imprecisionHalo" filterUnits="userSpaceOnUse">
+            <feOffset in="SourceAlpha" dx="0" dy="1" result="offset1"/>
+            <feColorMatrix type="matrix" in="offset1" result="col1"
+                values="
+                1 0 0 .6 0
+                0 1 0 .6 0
+                0 0 1 1 0
+                0 0 0 1 0"/>
+            <feGaussianBlur in="col1" stdDeviation="0.5" result="blurred1"/>
+            <feBlend in="SourceGraphic" in2="blurred1" mode="normal" result="blend1"/>
+            <feOffset in="SourceAlpha" dx="0" dy="-1" result="offset2"/>
+            <feColorMatrix type="matrix" in="offset2" result="col2"
+                values="
+                1 0 0 .6 0
+                0 1 0 .6 0
+                0 0 1 1 0
+                0 0 0 1 0"/>
+            <feGaussianBlur in="col2" stdDeviation="0.5" result="blurred2"/>
+            <feBlend in="SourceGraphic" in2="blurred2" mode="normal" result="blend2"/>
+            <feOffset in="SourceAlpha" dx="1" dy="0" result="offset3"/>
+            <feColorMatrix type="matrix" in="offset3" result="col3"
+                values="
+                1 0 0 .6 0
+                0 1 0 .6 0
+                0 0 1 1 0
+                0 0 0 1 0"/>
+            <feGaussianBlur in="col3" stdDeviation="0.5" result="blurred3"/>
+            <feBlend in="SourceGraphic" in2="blurred3" mode="normal" result="blend3"/>
+            <feOffset in="SourceAlpha" dx="-1" dy="0" result="offset4"/>
+            <feColorMatrix type="matrix" in="offset4" result="col4"
+                values="
+                1 0 0 .6 0
+                0 1 0 .6 0
+                0 0 1 1 0
+                0 0 0 1 0"/>
+            <feGaussianBlur in="col4" stdDeviation="0.5" result="blurred4"/>
+            <feBlend in="SourceGraphic" in2="blurred4" mode="normal" result="blend4"/>
+            <feMerge result="resultImage">
+                <feMergeNode in="SourceGraphic"/>
+                <feMergeNode in="blend1"/>
+                <feMergeNode in="blend2"/>
+                <feMergeNode in="blend3"/>
+                <feMergeNode in="blend4"/>
+            </feMerge>
+        </filter>
+        <linearGradient id="fading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="fading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="fading3">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="5%" stop-color="#666666"/>
+            <stop offset="30%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="fading4">
+            <stop offset="40%" stop-color="#FFFFFF"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="fading5">
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="55%" stop-color="#666666"/>
+            <stop offset="80%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="doubleFading">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="doubleFading2">
+            <stop offset="0%" stop-color="#000000"/>
+            <stop offset="30%" stop-color="#666666"/>
+            <stop offset="40%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#FFFFFF"/>
+            <stop offset="70%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="doubleFading3">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="25%" stop-color="#666666"/>
+            <stop offset="50%" stop-color="#000000"/>
+            <stop offset="75%" stop-color="#666666"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="doubleFading4">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+            <stop offset="15%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+            <stop offset="35%" stop-color="#FFFFFF" stop-opacity="1"/>
+            <stop offset="65%" stop-color="#FFFFFF" stop-opacity="1"/>
+            <stop offset="85%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="doubleFading_grey">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="25%" stop-color="#F0F0F0"/>
+            <stop offset="50%" stop-color="#BEBEBE"/>
+            <stop offset="75%" stop-color="#F0F0F0"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="yellowFading">
+            <stop offset="60%" stop-color="#CCCCCC"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="yellowFading2">
+            <stop offset="10%" stop-color="#CCCCCC"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="yellowFading3">
+            <stop offset="30%" stop-color="#FFFFFF"/>
+            <stop offset="80%" stop-color="#CCCCCC"/>
+        </linearGradient>
+        <linearGradient id="blackFading2">
+            <stop offset="10%" stop-color="#000000"/>
+            <stop offset="50%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        <linearGradient id="blackFading3">
+            <stop offset="30%" stop-color="#FFFFFF"/>
+            <stop offset="80%" stop-color="#000000"/>
+        </linearGradient>
+        <linearGradient id="fadingDownYellow" xlink:href="#yellowFading" x1="0%" y1="0%" x2="0%"
+            y2="100%"/>
+        <linearGradient id="fadingDownGrey" xlink:href="#fading2" x1="0%" y1="0%" x2="0%" y2="100%"/>
+        <linearGradient id="fadingDownGrey2" xlink:href="#fading3" x1="0%" y1="0%" x2="0%" y2="100%"/>
+        <linearGradient id="fade">
+            <stop offset="0%" style="stop-color: white; stop-opacity: 1.0;"/>
+            <stop offset="85%" style="stop-color: white; stop-opacity: 0.5;"/>
+            <stop offset="100%" style="stop-color: white; stop-opacity: 0.0;"/>
+        </linearGradient>
+        <radialGradient id="radialFading">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </radialGradient>
+        <pattern id="thicknessCutoutTile" patternUnits="userSpaceOnUse"
+            patternContentUnits="userSpaceOnUse" x="0" y="0" width="2" height="50">
+            <path d="M0,0 L5,50" class="line4" fill="none" stroke="#666666" stroke-width="0.1"
+                stroke-linejoin="miter"/>
+        </pattern>
+        <g>
+            <!-- pattern 1 -->
+            <pattern id="endband_pattern1" x="0" y="0" width="10" height="10"
+                patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse">
+                <path d="M0,0 L0,10" stroke="#000000" stroke-width="0.3"/>
+                <path d="M2,0 L2,10" stroke="#000000" stroke-width="0.2"/>
+                <path d="M4,0 L4,10" stroke="#000000" stroke-width="0.25"/>
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="0.21"/>
+                <path d="M8,0 L8,10" stroke="#000000" stroke-width="0.2"/>
+                <path d="M10,0 L10,10" stroke="#000000" stroke-width="0.22"/>
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="0.23"/>
+                <path d="M14,0 L14,10" stroke="#000000" stroke-width="0.2"/>
+                <path d="M16,0 L16,10" stroke="#000000" stroke-width="0.21"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="0.2"/>
+            </pattern>
+            <!-- pattern 2 front -->
+            <pattern id="endband_pattern2" x="0" y="0" width="10" height="10"
+                patternUnits="userSpaceOnUse">
+                <path d="M0,2 L2,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M0,4 L4,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M0,6 L6,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M0,8 L8,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M0,10 L10,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M2,10 L12,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M4,10 L14,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M6,10 L16,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M8,10 L18,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M10,10 L20,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M12,10 L20,2" stroke="#000000" stroke-width="0.2"/>
+                <path d="M14,10 L20,4" stroke="#000000" stroke-width="0.2"/>
+                <path d="M18,10 L20,8" stroke="#000000" stroke-width="0.2"/>
+            </pattern>
+            <!-- pattern 3 -->
+            <pattern id="endband_pattern3" x="-1" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse">
+                <path d="M0,0 L0,10" stroke="#000000" stroke-width="1"/>
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="1"/>
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="1"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="1"/>
+                <path d="M24,0 L24,10" stroke="#000000" stroke-width="1"/>
+            </pattern>
+            <pattern id="endband_pattern3_dashed" x="-1" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse" stroke-dasharray="1 1">
+                <path d="M0,0 L0,10" stroke="#000000" stroke-width="1"/>
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="1"/>
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="1"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="1"/>
+                <path d="M24,0 L24,10" stroke="#000000" stroke-width="1"/>
+            </pattern>
+            <pattern id="endband_pattern3_backBead" x="-1" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse" stroke-dasharray="1 1" stroke-linecap="round">
+                <path d="M0,0 L0,10" stroke="#000000" stroke-width="2.5"/>
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="2.5"/>
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="2.5"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="2.5"/>
+                <path d="M24,0 L24,10" stroke="#000000" stroke-width="2.5"/>
+            </pattern>
+            <!-- pattern 3: frequent -->
+            <pattern id="endband_pattern3_frequent" x="-7" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse">
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="1"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="1"/>
+            </pattern>
+            <pattern id="endband_pattern3_frequent_dashed" x="-7" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse" stroke-dasharray="1 1">
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="1"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="1"/>
+            </pattern>
+            <pattern id="endband_pattern3_frequent_backBead" x="-7" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse" stroke-dasharray="1 1" stroke-linecap="round">
+                <path d="M6,0 L6,10" stroke="#000000" stroke-width="2.5"/>
+                <path d="M18,0 L18,10" stroke="#000000" stroke-width="2.5"/>
+            </pattern>
+            <!-- pattern 3: infrequent -->
+            <pattern id="endband_pattern3_infrequent" x="-1" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse">
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="1"/>
+            </pattern>
+            <pattern id="endband_pattern3_infrequent_dashed" x="-1" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse" stroke-dasharray="1 1">
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="1"/>
+            </pattern>
+            <pattern id="endband_pattern3_infrequent_backBead" x="-1" y="0" width="24" height="10"
+                patternUnits="userSpaceOnUse" stroke-dasharray="1 1" stroke-linecap="round">
+                <path d="M12,0 L12,10" stroke="#000000" stroke-width="2.5"/>
+            </pattern>
+            <!-- pattern 4 front -->
+            <pattern id="endband_pattern4" x="0" y="0" width="24" height="2"
+                patternUnits="userSpaceOnUse">
+                <path d="M0,2 L6,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M6,2 L12,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M12,2 L18,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M18,2 L24,0" stroke="#000000" stroke-width="0.2"/>
+            </pattern>
+            <!-- pattern 5 -->
+            <pattern id="endband_pattern5" x="0" y="0" width="18" height="1"
+                patternUnits="userSpaceOnUse">
+                <path d="M0,1 L3,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M3,1 L6,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M6,1 L9,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M9,1 L12,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M12,1 L15,0" stroke="#000000" stroke-width="0.2"/>
+                <path d="M15,1 L18,0" stroke="#000000" stroke-width="0.2"/>
+            </pattern>
+            <!-- ending for pattern 2 left -->
+            <g id="endband_pattern2_endingLeft" transform="translate(0,100)">
+                <path d="M48,60 L40,60 L40,52 L48,52" stroke="#000000" stroke-width="0.2"
+                    fill="#FFFFFF"/>
+                <g>
+                    <path d="M40,52 L40,60" stroke="#000000" stroke-width="0.3"/>
+                    <path d="M42,52 L42,60" stroke="#000000" stroke-width="0.2"/>
+                    <path d="M44,52 L44,60" stroke="#000000" stroke-width="0.25"/>
+                    <path d="M46,52 L46,60" stroke="#000000" stroke-width="0.21"/>
+                </g>
+                <g>
+                    <path d="M40,60 L48,52 L48,60z" stroke-opacity="0" fill="#FFFFFF"/>
+                    <path d="M40,60 L48,52 L48,60z" stroke-opacity="0" fill="url(#endband_pattern2)"
+                        stroke-width="0.1"/>
+                    <path d="M48,52 L40,60 L48,60" stroke="#000000" stroke-width="0.2" fill="none"/>
+                </g>
+            </g>
+            <!-- ending for pattern 2 right -->
+            <g id="endband_pattern2_endingRight" transform="translate(0,100)">
+                <path d="M40,52 L48,52 L48,60 40,60" stroke="#000000" stroke-width="0.2"
+                    fill="#FFFFFF"/>
+                <g>
+                    <path d="M42,52 L42,60" stroke="#000000" stroke-width="0.2"/>
+                    <path d="M44,52 L44,60" stroke="#000000" stroke-width="0.25"/>
+                    <path d="M46,52 L46,60" stroke="#000000" stroke-width="0.21"/>
+                    <path d="M48,52 L48,60" stroke="#000000" stroke-width="0.2"/>
+                </g>
+                <g>
+                    <path d="M48,52 L40,52 L40,60z" stroke-opacity="0" fill="#FFFFFF"/>
+                    <path d="M48,52 L40,52 L40,60z" stroke-opacity="0" fill="url(#endband_pattern2)"
+                        stroke-width="0.1"/>
+                    <path d="M40,52 L48,52 L40,60" stroke="#000000" stroke-width="0.2" fill="none"/>
+                </g>
+            </g>
+        </g>
+        <mask id="fademaskBoardsX">
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" fill="url(#fading2)"/>
+        </mask>
+        <mask id="fademaskBoards">
+            <rect width="180" height="100" x="-10" y="-10" fill="url(#radialFading)"/>
+        </mask>
+        <marker id="arrowSymbol" viewBox="0 0 10 10" refX="0" refY="4" markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3" orient="auto" preserveAspectRatio="xMidYMid meet">
+            <path d="M 0,0 L 8,4 L 0,8 z"/>
+        </marker>
+        <marker id="arrowSymbol_180" viewBox="0 0 10 10" refX="0" refY="4" markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3" orient="180" preserveAspectRatio="xMidYMid meet">
+            <path d="M 0,0 L 8,4 L 0,8 z"/>
+        </marker>
+        <marker id="arrowSymbol_-90" viewBox="0 0 10 10" refX="0" refY="4" markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3" orient="-90" preserveAspectRatio="xMidYMid meet">
+            <path d="M 0,0 L 8,4 L 0,8 z"/>
+        </marker>
+        <marker id="arrowSymbol_90" viewBox="0 0 10 10" refX="0" refY="4" markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3" orient="90" preserveAspectRatio="xMidYMid meet">
+            <path d="M 0,0 L 8,4 L 0,8 z"/>
+        </marker>
+        <g id="boardXsection">
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" stroke-linecap="round"
+                stroke-linejoin="round" stroke="url(#fading)" stroke-width="2"
+                fill="url(#thicknessCutoutTile)" mask="url(#fademaskBoardsX)"/>
+            <rect width="70" height="10" x="0" y="0" rx="2" ry="2" stroke-linecap="round"
+                stroke-linejoin="round" stroke-opacity="0" fill-opacity="0.1" fill="url(#fading)"/>
+        </g>
+        <g id="coreX">
+            <circle r="6" cx="0" cy="0" class="line2"/>
+        </g>
+        <g id="coreX_stuckOn">
+            <circle r="2" cx="0" cy="0" class="line2"/>
+        </g>
+        <g id="coreX-2">
+            <circle r="5.5" cx="0" cy="0" class="line2"/>
+        </g>
+        <g id="crowningCoreX">
+            <circle r="2.5" cx="-2" cy="0" class="line2"/>
+        </g>        
+        <g id="crowningCoreX_stuckOn">
+            <circle r="1" cx="-2" cy="0" class="line2"/>
+        </g>
+        <g id="crowningCoreX_secondary">
+            <circle r="2.5" cx="-1.5" cy="0" stroke="#BEBEBE" stroke-width="0.2" fill="none"/>
+        </g>
+        <g id="core_1_detail" stroke-width="0.5" fill="none" stroke="url(#doubleFading3)">
+            <path d="M70,74 L100,74.0001 M100,58 L70,58.0001"/>
+            <path d="M105,74 L135,74.0001 M135,58 L105,58.0001"/>
+        </g>
+        <g id="core_2_detail" stroke-width="0.5" fill="none" stroke="url(#doubleFading3)">
+            <path d="M70,74 L100,74.0001 M100,58 L70,58.0001"/>
+            <path d="M105,74 L135,74.0001 M135,58 L105,58.0001"/>
+        </g>
+        <g id="crowningCore_detail" stroke-width="0.5" fill="none" stroke="url(#doubleFading3)">
+            <path d="M70,69 L100,69.0001 M100,64 L70,64.0001"/>
+            <path d="M105,69 L135,69.0001 M135,64 L105,64.0001"/>
+        </g>
+        <g id="crowningCore_detail_secondary" stroke-width="0.2" fill="none"
+            stroke="url(#doubleFading_grey)">
+            <path d="M70,69 L100,69.0001 M100,64 L70,64.0001"/>
+            <path d="M105,69 L135,69.0001 M135,64 L105,64.0001"/>
+        </g>
+        <g id="bookblockX" transform="translate(0,40)">
+            <!--<path d="M40,40 L140,40.0001" transform="rotate(90 40,40)" stroke="url(#fading2)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>-->
+            <path d="M40,40 L70,40.0001" stroke="url(#fading2)" stroke-width="0.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M40,60 L40,40 L60,40" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+            <path d="M40,60 L40,40 L60,40" class="line2" filter="url(#f3)"/>
+        </g>
+        <g id="board" transform="translate(0,40)">
+            <path d="M40,40 L160,40.0001" stroke="url(#fading2)" stroke-width="0.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g id="noBeadX_1" stroke-linecap="round">
+            <path class="line" d="M39,66 Q40,75 48,75"/>
+            <path class="line" d="M48,75 Q57,76 58,80"/>
+            <g>
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q38,76 48,75"/>
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,75 Q57,74 57,66"/>
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M57,66 A4,4 1,1 039,66"/>
+            </g>
+            <g>
+                <path class="line" d="M37,80 Q38,76 48,75"/>
+                <path class="line" marker-end="url(#arrowSymbol)" d="M48,75 Q57,74 57,66"/>
+                <path class="line" marker-end="url(#arrowSymbol_90)" d="M57,66 A4,4 1,1 039,66"/>
+            </g>
+        </g>
+        <g>
+            <path id="p1" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M76.5,75 L76.5,57 Q78,56 79.5,57 L79.5,75 Q78,76 76.5,75"/>
+            <g id="p1T">
+                <path id="p1T_1" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                    d="M76.5,75 L76.5,57 Q78,56 79.5,57 L79.5,75 M76.5,75"/>
+                <g>
+                    <path id="p1T_2" stroke="none" stroke-width="0.2" fill="url(#fadingDownYellow)"
+                        d="M76.5,82 L76.5,57 Q78,56 79.5,57 L79.5,82 M76.5,82"/>
+                    <path id="p1T_3" stroke="url(#fadingDownGrey)" stroke-width="0.2" fill="none"
+                        stroke-dasharray="1 1" d="M76.5,75 L76.5,152 Q78,153 79.5,152 L79.5,75"/>
+                </g>
+            </g>
+            <g id="p1T_back">
+                <use xlink:href="#p1T_1"/>
+                <g>
+                    <use xlink:href="#p1T_2"/>
+                    <path stroke="url(#fadingDownGrey)" stroke-width="0.2" fill="none"
+                        d="M76.5,75 L76.5,152 Q78,153 79.5,152 L79.5,75"/>
+                </g>
+            </g>
+            <g id="noBead_1_detail">
+                <use xlink:href="#p1T"/>
+                <use xlink:href="#p1" x="3"/>
+                <use xlink:href="#p1T" x="6"/>
+                <use xlink:href="#p1" x="9"/>
+                <use xlink:href="#p1T" x="12"/>
+            </g>
+            <g id="noBead_1_detail_back">
+                <use xlink:href="#p1"/>
+                <use xlink:href="#p1T_back" x="3"/>
+                <use xlink:href="#p1" x="6"/>
+                <use xlink:href="#p1T_back" x="9"/>
+                <use xlink:href="#p1" x="12"/>
+            </g>
+        </g>
+        <g id="noBeadX_2_even" stroke-linecap="round">
+            <path class="line" d="M57,46 Q57,54 48,57"/>
+            <path class="line" marker-end="url(#arrowSymbol)" d="M39,46 A4,4 1,1 1 57,46"/>
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M57,66 Q57,59 48,57 Q39,54 39,46"/>
+            <path class="line" marker-end="url(#arrowSymbol_90)" marker-start="url(#arrowSymbol)"
+                d="M57,66 Q57,59 48,57 Q39,54 39,46"/>
+            <path class="line" d="M57,66 L56.95,67"/>
+        </g>
+        <g id="noBeadX_2_odd" stroke-linecap="round" transform="scale(-1,1)translate(-96,0)">
+            <path class="line" d="M57,46 Q57,54 48,57"/>
+            <path class="line" marker-end="url(#arrowSymbol_90)" d="M39,46 A4,4 1,1 1 57,46"/>
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M57,66 Q57,59 48,57 Q39,54 39,46"/>
+            <path class="line" marker-end="url(#arrowSymbol)" marker-start="url(#arrowSymbol)"
+                d="M57,66 Q57,59 48,57 Q39,54 39,46"/>
+            <path class="line" d="M57,66 L56.95,67"/>
+        </g>
+        <g id="noBead_2_detail">
+            <path id="p3" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M78,57 L78,37 Q79.5,36 81,37 L81,57 Q79.5,58 78,57"/>
+            <use xlink:href="#p3" x="3"/>
+            <use xlink:href="#p3" x="6"/>
+            <use xlink:href="#p3" x="9"/>
+            <use xlink:href="#p3" x="12"/>
+        </g>
+        <g id="crowningCoreX_sewnWithPrimary_odd" stroke-linecap="round">
+            <path class="line" d="M51,51.5 Q50,57 48,57"/>
+            <path class="line" marker-end="url(#arrowSymbol)" d="M41,51.5 A2,2 1,1 1 51,51.5"/>
+            <path stroke="#FFFFFF" stroke-width="2" fill="none"
+                d="M41,51.5 Q41,57 48,57 Q57,58 57,66"/>
+            <path class="line" marker-end="url(#arrowSymbol)" marker-start="url(#arrowSymbol)"
+                d="M57,66 Q57,58 48,57 Q41,57 41,51.5"/>
+            <path class="line" d="M57,66 L56.95,67"/>
+        </g>
+        <g id="crowningCoreX_sewnWithPrimary_even" stroke-linecap="round">
+            <path class="line" d="M41,51.5 Q41,57 48,57"/>
+            <path class="line" marker-end="url(#arrowSymbol)" d="M41,51.5 A2,2 1,1 1 51,51.5"/>
+            <path stroke="#FFFFFF" stroke-width="2" fill="none"
+                d="M39,66 Q39,58 48,57 Q51,56 51,51.5"/>
+            <path class="line" marker-end="url(#arrowSymbol)" marker-start="url(#arrowSymbol)"
+                d="M39,66 Q39,58 48,57 Q51,56 51,51.5"/>
+            <path class="line" d="M39,66 L38.95,67"/>
+        </g>
+        <g id="crowningCoreX_sewnWithPrimary_detail" transform="translate(1.5,0)">
+            <path id="p2" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M75,57 L75,46 Q76.5,45 78,46 L78,57 Q76.5,58 75,57"/>
+            <use xlink:href="#p2" x="3"/>
+            <use xlink:href="#p2" x="6"/>
+            <use xlink:href="#p2" x="9"/>
+            <use xlink:href="#p2" x="12"/>
+        </g>
+        <g id="reversingTwistX_1" stroke-linecap="round">
+            <path class="line" d="M42,75 Q42,77 48,77"/>
+            <path class="line" d="M48,77 Q57,77 58,80"/>
+            <g>
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q41,76 45.5,75"/>
+            </g>
+            <path class="line" marker-end="url(#arrowSymbol_90)" d="M39,66 A4,4 1,1 1 57,66"/>
+            <path class="line" d="M57,66 Q57,74 48,74"/>
+            <g>
+                <path class="line" d="M37,80 Q41,76 45.5,75"/>
+                <path class="line" marker-end="url(#arrowSymbol)"
+                    d="M45.5,75 Q43,73 40,70.5 Q38.5,69 39,66"/>
+
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,74 Q42,74 42,75"/>
+                <path class="line" d="M48,74 Q42,74 42,75"/>
+                <path class="line" d="M49,74 L48,74"/><!--
+                <path class="line" d="M42,75 L38.7,76"/>-->
+            </g>
+        </g>
+        <g id="reversingTwist_1_detail_back">
+            <use xlink:href="#p1"/>
+            <use xlink:href="#p1T_back" x="3"/>
+            <use xlink:href="#p1" x="6"/>
+            <use xlink:href="#p1T_back" x="9"/>
+            <use xlink:href="#p1" x="12"/>
+            <path id="p4" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M79.5,78 L82.5,78 Q83.5,76.5 82.5,75 L79.5,75 Q78.5,76.5 79.5,78"/>
+            <use xlink:href="#p4" x="6"/>
+        </g>
+        <g id="noFrontBeadX_1" stroke-linecap="round">
+            <path class="line" d="M38,75 Q38,77 48,77"/>
+            <path class="line" d="M48,77 Q57,77 58,80"/>
+            <g>
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q41,76 41.5,75"/>
+            </g>
+            <path class="line" marker-end="url(#arrowSymbol_90)" d="M39,66 A4,4 1,1 1 57,66"/>
+            <path class="line" d="M57,66 Q57,74 48,74"/>
+            <g filter="url(#f3)">
+                <path class="line" d="M37,80 Q41,76 41.5,75"/>
+                <path class="line" marker-end="url(#arrowSymbol)"
+                    d="M41.5,75 Q43,73 40,70.5 Q38.5,69 39,66"/>
+
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,74 Q38,74 38,75"/>
+                <path class="line" d="M48,74 Q38,74 38,75"/>
+                <path class="line" d="M49,74 L48,74"/>
+                <path class="line" d="M38,75 L38.7,76"/>
+            </g>
+        </g>
+        <g id="noFrontBead_1_detail_back">
+            <use xlink:href="#p1"/>
+            <use xlink:href="#p1T_back" x="3"/>
+            <use xlink:href="#p1" x="6"/>
+            <use xlink:href="#p1T_back" x="9"/>
+            <use xlink:href="#p1" x="12"/>
+            <path id="p19" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M79.5,78 L82.5,78 Q83.5,76.5 82.5,75 L79.5,75 Q78.5,76.5 79.5,78"/>
+            <use xlink:href="#p19" x="6"/>
+        </g>
+        <g id="frontBeadX_1" stroke-linecap="round">
+            <path class="line" d="M54,75 Q53,75 48,75 Q40,75 35,70" marker-end="url(#arrowSymbol)"/>
+            <g>
+                <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q39,69 39,66"/>
+            </g>
+            <g>
+                <path class="line" d="M37,80 Q39,69 39,66" marker-end="url(#arrowSymbol)"/>
+                <path class="line" d="M55,78 Q65,77 65,77" marker-end="url(#arrowSymbol)"/>
+            </g>
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M58,80 Q58,75 54,75"/>
+            <path class="line" d="M58,80 Q58,75 54,75"/>
+            <g>
+                <path stroke="#FFFFFF" stroke-width="2.3" fill="none" d="M57,66 Q55,73 52,75"/>
+                <path stroke="#FFFFFF" stroke-width="2.3" fill="none" d="M52,75 Q49,78 55,78"/>
+                <path class="line" d="M57,66 Q55,73 52,75"/>
+                <path class="line" d="M52,75 Q49,78 55,78"/>
+                <path class="line" d="M55,78 L56,77.9"/>
+            </g>
+            <path class="line" marker-end="url(#arrowSymbol_90)" d="M39,66 A4,4 1,1 1 57,66"/>
+        </g>
+        <g>
+            <g id="frontBead_1_detail">
+                <use xlink:href="#p1"/>
+                <use xlink:href="#p1" x="3"/>
+                <use xlink:href="#p1" x="6"/>
+                <use xlink:href="#p1T" x="9"/>
+                <use xlink:href="#p1" x="12"/>
+                <!--
+                <path id="p9" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                    d="M76,73.25 L84.5,72.5 Q85.5,73.25 84.5,75.5 L76,76.25 Q75,74 76,73.25"/>-->
+                <g id="p9">
+                    <path stroke="#000000" stroke-width="3" fill="#000000"
+                        stroke-linecap="round" d="M76,77.25 L81.5,73.5 "/>
+                    <path stroke="CCCCCC" stroke-width="2.5" fill="#CCCCCC"
+                            stroke-linecap="round" d="M76,77.25 L81.5,73.5 "/>
+                </g>
+                <use xlink:href="#p9" x="5"/>
+                <use xlink:href="#p9" x="10"/>
+            </g>
+            <g id="frontBead_1_detail_back">
+                <use xlink:href="#p1T_back"/>
+                <use xlink:href="#p1" x="3"/>
+                <use xlink:href="#p1" x="6"/>
+                <use xlink:href="#p1" x="9"/>
+                <use xlink:href="#p1T_back" x="12"/>
+            </g>
+        </g>
+        <g id="greekSingleCoreX" stroke-linecap="round">
+            <!-- 9 -->
+            <path class="line" d="M36,66 Q37,76 48,76"/>
+            <!-- 10 -->
+            <path class="line" d="M48,76 Q57,77 58,80"/>
+            <!-- 7w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,75 Q37,73 48,74 Q57,74 57,66"/>
+            <!-- 7 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M37,75 Q37,73 48,74 Q57,74 57,66"/>
+            <!-- 8 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M57,66 A4,4 1,1 0 36,66"/>
+            <!-- 5w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M58,77 Q58,79 48,79"/>
+            <!-- 4w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M39,66 Q39,74 48,74 Q60,75 60,77"/>
+            <!-- 5 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M58,77 Q58,79 48,79"/>
+            <!-- 4 -->
+            <path class="line" d="M39,66 Q39,74 48,74 Q56,75 58,77"/>
+            <!-- 3w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M60,66 A4,4 1,1 0 39,66"/>
+            <!-- 1w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q38,77 48,76"/>
+            <!-- 2w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,76 Q60,75 60,66"/>
+            <!-- 1 -->
+            <path class="line" d="M37,80 Q38,77 48,76"/>
+            <!-- 2 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M48,76 Q60,75 60,66"/>
+            <!-- 3 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M60,66 A4,4 1,1 0 39,66"/>
+            <!-- 6w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,79 Q37,77 37,75"/>
+            <!-- 6 -->
+            <path class="line" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)"
+                d="M48,79 Q37,77 37,75"/>
+            <!-- 6 patch -->
+            <path class="line" d="M48,79 L49,78.9"/>
+        </g>
+        <g id="greekSingleCore_detail">
+            <use xlink:href="#p1T"/>
+            <use xlink:href="#p1" x="3"/>
+            <use xlink:href="#p1T" x="6"/>
+            <use xlink:href="#p1" x="9"/>
+            <use xlink:href="#p1T" x="12"/>
+            <path id="p5" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M76,81 L92,74.5 Q93,73 92,71.5 L76,77.5 Q75,78.5 76,81"/>
+            <path id="p5_2" stroke="url(#blackFading2)" stroke-width="0.2" fill="url(#yellowFading2)"
+                d="M76,81 L92,74.5 Q93,73 92,71.5 L76,77.5 Q75,78.5 76,81" transform="translate(9,0)"/>
+            <path id="p5_3" stroke="url(#blackFading3)" stroke-width="0.2" fill="url(#yellowFading3)"
+                d="M76,81 L92,74.5 Q93,73 92,71.5 L76,77.5 Q75,78.5 76,81" transform="translate(-9,0)"/>
+        </g>
+        <g id="greekSingleCore_detail_back">
+            <use xlink:href="#p1"/>
+            <use xlink:href="#p1T_back" x="3"/>
+            <use xlink:href="#p1" x="6"/>
+            <use xlink:href="#p1T_back" x="9"/>
+            <use xlink:href="#p1" x="12"/>
+            <use xlink:href="#p5"/>
+            <use xlink:href="#p5_2"/>
+            <use xlink:href="#p5_3"/>
+        </g>
+        <g id="greekDoubleCoreX_2cores" stroke-linecap="round">
+            <!-- 9 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M36,46 A4,3.3 1,1 1 57,46"/>
+            <!-- 10 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M57,46 Q58,52 48,54 Q39,56 39,66"/>
+            <!-- 11 -->
+            <path class="line" d="M39,66 Q40,75 48,75"/>
+            <!-- 12 -->
+            <path class="line" d="M48,75 Q57,76 58,80"/>
+            <!-- 8w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M60,66 Q60,60 48,58 Q36,56 36,46"/>
+            <!-- 8 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M60,66 Q60,60 48,58 Q36,56 36,46"/>
+            <!-- 5w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M60,46 Q60,56 48,58 Q36,60 36,66"/>
+            <!-- 5 -->
+            <path class="line" d="M60,46 Q60,56 48,58 Q36,60 36,66"/>
+            <!-- 1w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q38,76 48,75"/>
+            <!-- 2w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,75 Q57,74 57,66"/>
+            <!-- 3w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M57,66 Q58,56 48,54 Q39,52 39,46"/>
+            <!-- 4w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M39,46 A4,3.3 1,1 1 60,46"/>
+            <!-- 1 -->
+            <path class="line" d="M37,80 Q38,76 48,75"/>
+            <!-- 2 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M48,75 Q57,74 57,66"/>
+            <!-- 3 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M57,66 Q58,56 48,54 Q39,52 39,46"/>
+            <!-- 4 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M39,46 A4,3.3 1,1 1 60,46"/>
+            <!-- 6w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M36,66 Q36,77 48,77.5"/>
+            <!-- 7w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,77.5 Q60,77 60,66"/>
+            <!-- 6 -->
+            <path class="line" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)"
+                d="M36,66 Q36,77 48,77.5"/>
+            <!-- 6 patch -->
+            <path class="line" d="M36,66 L36.125,65"/>
+            <!-- 7 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M48,77.5 Q60,77 60,66"/>
+        </g>
+        <g id="greekDoubleCore_2cores_detail">
+            <use xlink:href="#p1T"/>
+            <use xlink:href="#p1" x="3"/>
+            <use xlink:href="#p1" x="6"/>
+            <use xlink:href="#p1" x="9"/>
+            <use xlink:href="#p1" x="12"/>
+            <use xlink:href="#p1T" x="15"/>
+            <use xlink:href="#p3" x="-3"/>
+            <use xlink:href="#p3"/>
+            <use xlink:href="#p3" x="3"/>
+            <use xlink:href="#p3" x="6"/>
+            <use xlink:href="#p3" x="9"/>
+            <use xlink:href="#p3" x="12"/>
+            <use xlink:href="#p3" x="15"/>
+            <path id="p6" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                d="M93,52 Q81.5,69 75.5,72 Q75.5,75 77,75 Q86,69 94,55 Q94.5,53.5 93,52"/>
+        </g>
+        <g id="greekDoubleCore_2cores_detail_back">
+            <use xlink:href="#p1"/>
+            <use xlink:href="#p1" x="3"/>
+            <use xlink:href="#p1" x="6"/>
+            <use xlink:href="#p1" x="9"/>
+            <use xlink:href="#p1T_back" x="12"/>
+            <use xlink:href="#p1" x="15"/>
+            <use xlink:href="#p3" x="-3"/>
+            <use xlink:href="#p3"/>
+            <use xlink:href="#p3" x="3"/>
+            <use xlink:href="#p3" x="6"/>
+            <use xlink:href="#p3" x="9"/>
+            <use xlink:href="#p3" x="12"/>
+            <use xlink:href="#p3" x="15"/>
+            <use xlink:href="#p6" transform="scale(-1,1) translate(-171,0)"/>
+        </g>
+        <g id="greekDoubleCoreX_1core1crowningCore" stroke-linecap="round">
+            <!-- 9 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M39,51.5 A2,1.3 1,1 1 54,51.5"/>
+            <!-- 10 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M54,51.5 Q54,54 48,56 Q39,58 39,66"/>
+            <!-- 11 -->
+            <path class="line" d="M39,66 Q40,75 48,75"/>
+            <!-- 12 -->
+            <path class="line" d="M48,75 Q57,76 58,80"/>
+            <!-- 8w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none"
+                d="M60,66 Q60,62 48,58.5 Q37,57 39,51.5"/>
+            <!-- 8 -->
+            <path class="line" marker-end="url(#arrowSymbol)"
+                d="M60,66 Q60,62 48,58.5 Q37,57 39,51.5"/>
+            <!-- 5w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none"
+                d="M57,51.5 Q59,57 48,58.5 Q36,62 36,66"/>
+            <!-- 5 -->
+            <path class="line" d="M57,51.5 Q59,57 48,58.5 Q36,62 36,66"/>
+            <!-- 1w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M37,80 Q38,76 48,75"/>
+            <!-- 2w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,75 Q57,74 57,66"/>
+            <!-- 3w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none"
+                d="M57,66 Q58,58 48,56 Q42,54 42,51.5"/>
+            <!-- 4w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M42,51.5 A2,1.3 1,1 1 57,51.5"/>
+            <!-- 1 -->
+            <path class="line" d="M37,80 Q38,76 48,75"/>
+            <!-- 2 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M48,75 Q57,74 57,66"/>
+            <!-- 3 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M57,66 Q58,58 48,56 Q42,54 42,51.5"/>
+            <!-- 4 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M42,51.5 A2,1.3 1,1 1 57,51.5"/>
+            <!-- 7w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M48,77.5 Q60,77 60,66"/>
+            <!-- 7 -->
+            <path class="line" marker-end="url(#arrowSymbol)" d="M48,77.5 Q60,77 60,66"/>
+            <!-- 6w -->
+            <path stroke="#FFFFFF" stroke-width="2" fill="none" d="M36,66 Q36,77 48,77.5"/>
+            <!-- 6 -->
+            <path class="line" marker-start="url(#arrowSymbol)" marker-end="url(#arrowSymbol)"
+                d="M36,66 Q36,77 48,77.5"/>
+            <!-- 6 patch -->
+            <path class="line" d="M36,66 L36.2,65"/>
+        </g>
+        <g>
+            <g id="greekDoubleCore_1core1crowningCore_detail">
+                <use xlink:href="#p1T"/>
+                <use xlink:href="#p1" x="3"/>
+                <use xlink:href="#p1" x="6"/>
+                <use xlink:href="#p1" x="9"/>
+                <use xlink:href="#p1" x="12"/>
+                <use xlink:href="#p1T" x="15"/>
+                <use xlink:href="#p2"/>
+                <use xlink:href="#p2" x="3"/>
+                <use xlink:href="#p2" x="6"/>
+                <use xlink:href="#p2" x="9"/>
+                <use xlink:href="#p2" x="12"/>
+                <use xlink:href="#p2" x="15"/>
+                <use xlink:href="#p2" x="18"/>
+                <path id="p7" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                    d="M93,54 Q81.5,69 75.5,72 Q75.5,75 77,75 Q86,69 94,57 Q94.5,55.5 93,54"/>
+            </g>
+            <g id="greekDoubleCore_1core1crowningCore_detail_back">
+                <use xlink:href="#p1"/>
+                <use xlink:href="#p1" x="3"/>
+                <use xlink:href="#p1" x="6"/>
+                <use xlink:href="#p1" x="9"/>
+                <use xlink:href="#p1T_back" x="12"/>
+                <use xlink:href="#p1" x="15"/>
+                <use xlink:href="#p2"/>
+                <use xlink:href="#p2" x="3"/>
+                <use xlink:href="#p2" x="6"/>
+                <use xlink:href="#p2" x="9"/>
+                <use xlink:href="#p2" x="12"/>
+                <use xlink:href="#p2" x="15"/>
+                <use xlink:href="#p2" x="18"/>
+                <use xlink:href="#p7" transform="scale(-1,1) translate(-171,0)"/>
+            </g>
+        </g>
+        <g id="warpsOnlyX_core" stroke-linecap="round">
+            <g>
+                <path class="line" d="M37,80 Q37,69 38,66" marker-end="url(#arrowSymbol)"/>
+                <path class="line" marker-end="url(#arrowSymbol_90)" d="M38,66 A4,3.5 1,1 1 58,66"/>
+                <path class="line" d="M58,66, Q58,78 58,80"/>
+            </g>
+        </g>
+        <g>
+            <g id="p13T">
+                <path id="p13T_1" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                    d="M76.5,75 L76.5,57 Q78,56 79.5,57 L79.5,75 M76.5,75"/>
+                <g>
+                    <path id="p13T_2" stroke="none" stroke-width="0.2" fill="url(#fadingDownYellow)"
+                        d="M76.5,82 L76.5,57 Q78,56 79.5,57 L79.5,82 M76.5,82"/>
+                    <path id="p13T_3" stroke="url(#fadingDownGrey)" stroke-width="0.2" fill="none"
+                        stroke-dasharray="1 1" d="M76.5,75 L76.5,152 Q78,153 79.5,152 L79.5,75"/>
+                </g>
+            </g>
+            <g id="warpsOnly_core_detail">
+                <use xlink:href="#p13T" x="-2.5"/>
+                <use xlink:href="#p13T" x="7.5"/>
+                <use xlink:href="#p13T" x="17.5"/>
+            </g>
+        </g>
+        <g>
+            <g id="p11T_back">
+                <g id="p11T_a_back">
+                    <path id="p11T_1" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                        d="M78,75 L76.3,57 Q78,56 79.7,57 L81,75"/>
+                    <path id="p11T_2" stroke="none" stroke-width="0.2" fill="url(#fadingDownYellow)"
+                        d="M78.8,82 L76.3,57 Q78,56 79.7,57 L81.3,82"/>
+                </g>
+                <path id="p11T_3_back" stroke="url(#fadingDownGrey)" stroke-width="0.2" fill="none"
+                    d="M68,75 L76.5,152 78,153 79.5,152 L71,75"/>
+            </g>
+            <g id="warpsOnly_core_detail_back">
+                <use xlink:href="#p11T_a_back" x="-2.5"/>
+                <use xlink:href="#p11T_a_back" x="7.5"/>
+                <use xlink:href="#p11T_a_back" x="17.5"/>
+                <use xlink:href="#p11T_3_back" x="7.5"/>
+                <use xlink:href="#p11T_3_back" x="17.5"/>
+                <use xlink:href="#p11T_3_back" x="27.5"/>
+            </g>
+        </g>
+        <g id="warpsOnlyX_noCore" stroke-linecap="round">
+            <g>
+                <path class="line" d="M37,80 Q37,76 48,76" marker-end="url(#arrowSymbol)"/>
+                <path class="line" d="M48,76, Q58,76 58,80"/>
+            </g>
+        </g>
+        <g id="warpsOnly_noCore_detail">
+            <g id="bookblock_detail" stroke-width="0.5" fill="none" stroke="url(#doubleFading3)">
+                <path d="M70,80 L100,80.0001"/>
+                <path d="M105,80 L135,80.0001"/>
+            </g>
+            <g id="p8T">
+                <path id="p8T_1" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                    d="M74,80 L74,78 Q75.5,77 77,78 L77,80 M74,80"/>
+                <g>
+                    <path id="p8T_2" stroke="none" stroke-width="0.2" fill="url(#fadingDownYellow)"
+                        d="M74,92 L74,78 Q75.5,77 77,78 L77,92 M74,92"/>
+                    <path id="p8T_3" stroke="url(#fadingDownGrey)" stroke-width="0.2" fill="none"
+                        stroke-dasharray="1 1" d="M74,80 L74,152 Q75.5,153 77,152 L77,80"/>
+                </g>
+            </g>
+            <use xlink:href="#p8T" x="10"/>
+            <use xlink:href="#p8T" x="20"/>
+        </g>
+        <g>
+            <g id="p12T_back">
+                <g id="p12T_a_back">
+                    <path id="p12T_1" stroke="#000000" stroke-width="0.2" fill="#CCCCCC"
+                        d="M75,80 L74.7,78 Q76,77 77.7,78 L78,80"/>
+                    <path id="p12T_2" stroke="none" stroke-width="0.2" fill="url(#fadingDownYellow)"
+                        d="M76.5,92 L74.7,78 Q76,77 77.7,78 L79.5,92"/>
+                </g>
+                <path id="p12T_3_back" stroke="url(#fadingDownGrey)" stroke-width="0.2" fill="none"
+                    d="M65,80 L73.5,152 75,153 76.5,152 L68,80"/>
+            </g>
+            <g id="warpsOnly_noCore_detail_back">
+                <use xlink:href="#p12T_a_back"/>
+                <use xlink:href="#p12T_a_back" x="10"/>
+                <use xlink:href="#p12T_a_back" x="20"/>
+                <use xlink:href="#p12T_3_back" x="10"/>
+                <use xlink:href="#p12T_3_back" x="20"/>
+                <use xlink:href="#p12T_3_back" x="30"/>
+            </g>
+        </g>
+        <!-- Quire view from above -->
+        <path id="quire_above" stroke="url(#fadingDownGrey)" fill="none"
+            stroke-width="0.1" d="M0,20 L0,0 A3,3 1,1 1 6,0 L6,20"/>
+    </defs>
+
+    <!-- Definitions are called here -->
+
+    <circle r="2" cx="100" cy="100" class="line4"/>
+
+
+    <use xlink:href="#quire_above" x="150" y="150"/>
+
+    <!--    <use xlink:href="#greekSingleCore_detail"/>-->
+
+    <use xlink:href="#greekDoubleCoreX_2cores"/>
+
+    <use xlink:href="#frontBead_1_detail"/>
+    <!--
+    <use xlink:href="#noBead_2_detail"/>-->
+    <use xlink:href="#crowningCoreX_sewnWithPrimary_detail" transform="translate(0,-40)"/>
+
+    <use xlink:href="#warpsOnly_noCore_detail_back" x="35"/>
+
+
+    <!--    <use xlink:href="#reversingTwistX_1"/>-->
+    <!--
+    <use xlink:href="#noBeadX_2_even"/>-->
+
+    <!--        <use xlink:href="#crowningCoreX_sewnWithPrimary_even" y="-20"/>-->
+
+
+
+    <pattern id="tile" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+        <!--
+        <path d="M0,0 L0,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M2,0 L2,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>        
+        <path d="M4,0 L4,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M6,0 L6,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>        
+        <path d="M8,0 L8,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M10,0 10,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        
+        <path d="M0,0 L10,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,2 L10,2" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        <path d="M0,4 L10,4" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,6 L10,6" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        <path d="M0,8 L10,8" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,10 L10,10" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>-->
+        <path d="M0,1 L1,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,2 L2,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        <path d="M0,3 L3,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,4 L4,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        <path d="M0,5 L5,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,6 L6,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        <path d="M0,7 L7,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,8 L8,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+        <path d="M0,9 L9,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="1"/>
+        <path d="M0,10 L10,0" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0"/>
+    </pattern>
+
+
+
+
+    <path d="M40,40 L110,40 L110,50 L40,50z" stroke="#000000" stroke-width="0.2"
+        transform="translate(0,100)" fill="url(#endband_pattern1)"/>
+
+    <path d="M40,40 L110,40 L110,41 L40,41z" stroke="#000000" stroke-width="0.2"
+        transform="translate(0,110)" fill="url(#endband_pattern4)"/>
+
+    <!--<path d="M40,40 L110,40 L110,41 L40,41z" stroke="#000000" stroke-width="0.2"
+        transform="translate(0,109)" fill="#FFFFFF"/>-->
+    <!--
+    <path d="M40,40 L110,40 L110,41 L40,41z" stroke="#000000" stroke-width="0.2"
+        transform="translate(0,109)" fill="url(#endband_pattern5)"/>-->
+    <!--
+    <path d="M40,40 L110,40 L110,50 L40,50z" stroke="#000000" stroke-width="0.2"
+        transform="translate(0,110)" fill="url(#endband_pattern2)"/>-->
+
+
+
+    <path d="M0,1 L1,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,2 L2,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,3 L3,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,4 L4,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,5 L5,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,6 L6,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,7 L7,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,8 L8,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,9 L9,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M0,10 L10,0" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,1 L1,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,2 L2,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,3 L3,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,4 L4,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,5 L5,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,6 L6,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,7 L7,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,8 L8,10" stroke="#000000" stroke-width="0.2"/>
+    <path d="M10,9 L9,10" stroke="#000000" stroke-width="0.2"/>
+
+    <use xlink:href="#bookblockX"/>
+    <use xlink:href="#coreX" x="48" y="66"/>
+
+    <use xlink:href="#coreX" x="48" y="46"/>
+
+    <use xlink:href="#crowningCoreX" x="48" y="32"/>
+
+    <!--    <use xlink:href="#crowningCoreX" x="50" y="51.5"/>-->
+
+
+    <!--    <path class="line2" d="M70,52 L100,52 M100,40.5 L70,40.5"/>-->
+
+    <!--    <path class="line2" d="M70,34.5 L100,34.5 M100,29.5 L70,29.5"/>-->
+
+
+
+    <g>
+        <path class="line4" d="M200,58 L276,58 M276,74 L200,74"/>
+    </g>
+    <g transform="translate(0,4)">
+        <path class="line4" d="M200,38.5 L276,38.5 M276,53.5 L200,53.5"/>
+    </g>
+    <g transform="translate(0,8)">
+        <path class="line4" d="M200,29 L276,29 M276,34 L200,34"/>
+    </g>
+
+
+
+
+
+</svg>

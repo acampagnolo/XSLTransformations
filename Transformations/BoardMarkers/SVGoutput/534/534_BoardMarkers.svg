@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../../../GitHub/XSLTransformations/BoardMarkers/CSS/style.css" type="text/css"?>
+<!--SVG file generated on: 8 January 2014 at 15:59:11 using SAXON version PE 9.5.1.2-->
+<!DOCTYPE svg
+  PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+     version="1.1"
+     x="0"
+     y="0"
+     width="297mm"
+     height="210mm"
+     viewBox="0 0 297 210"
+     preserveAspectRatio="xMidYMid meet">
+   <title>Board Markers: 534.71</title>
+   <defs>
+        <ellipse id="r_small"
+               cx="50%"
+               cy="50%"
+               rx="100"
+               ry="300"
+               style="fill:url(#bg)"/>
+        <ellipse id="r_big"
+               cx="50%"
+               cy="50%"
+               rx="250"
+               ry="300"
+               style="fill:url(#bg)"/>
+        <rect id="r_2" width="150%" height="110%" fill="url(#bg)"/>
+        <linearGradient xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="bg"
+                      xlink:type="simple"
+                      xlink:show="other"
+                      xlink:actuate="onLoad">            
+            <stop offset="0.000" stop-color="#00ff00"/>
+            <stop offset="0.010" stop-color="#808000"/>
+            <stop offset="0.020" stop-color="#ff0000"/>
+            <stop offset="0.030" stop-color="#00ff00"/>
+            <stop offset="0.040" stop-color="#808000"/>
+            <stop offset="0.050" stop-color="#ff0000"/>
+            <stop offset="0.060" stop-color="#00ff00"/>
+            <stop offset="0.070" stop-color="#808000"/>
+            <stop offset="0.080" stop-color="#ff0000"/>
+            <stop offset="0.090" stop-color="#00ff00"/>
+            <stop offset="0.100" stop-color="#808000"/>
+            <stop offset="0.110" stop-color="#ff0000"/>
+            <stop offset="0.120" stop-color="#00ff00"/>
+            <stop offset="0.130" stop-color="#808000"/>
+            <stop offset="0.140" stop-color="#ff0000"/>
+            <stop offset="0.150" stop-color="#00ff00"/>
+            <stop offset="0.160" stop-color="#808000"/>
+            <stop offset="0.170" stop-color="#ff0000"/>
+            <stop offset="0.180" stop-color="#00ff00"/>
+            <stop offset="0.190" stop-color="#808000"/>
+            <stop offset="0.200" stop-color="#ff0000"/>
+            <stop offset="0.210" stop-color="#00ff00"/>
+            <stop offset="0.220" stop-color="#808000"/>
+            <stop offset="0.230" stop-color="#ff0000"/>
+            <stop offset="0.240" stop-color="#00ff00"/>
+            <stop offset="0.250" stop-color="#808000"/>
+            <stop offset="0.260" stop-color="#ff0000"/>
+            <stop offset="0.270" stop-color="#00ff00"/>
+            <stop offset="0.280" stop-color="#808000"/>
+            <stop offset="0.290" stop-color="#ff0000"/>
+            <stop offset="0.300" stop-color="#00ff00"/>
+            <stop offset="0.310" stop-color="#808000"/>
+            <stop offset="0.320" stop-color="#ff0000"/>
+            <stop offset="0.330" stop-color="#00ff00"/>
+            <stop offset="0.340" stop-color="#808000"/>
+            <stop offset="0.350" stop-color="#ff0000"/>
+            <stop offset="0.360" stop-color="#00ff00"/>
+            <stop offset="0.370" stop-color="#808000"/>
+            <stop offset="0.380" stop-color="#ff0000"/>
+            <stop offset="0.390" stop-color="#00ff00"/>
+            <stop offset="0.400" stop-color="#808000"/>
+            <stop offset="0.410" stop-color="#ff0000"/>
+            <stop offset="0.420" stop-color="#00ff00"/>
+            <stop offset="0.430" stop-color="#808000"/>
+            <stop offset="0.440" stop-color="#ff0000"/>
+            <stop offset="0.450" stop-color="#00ff00"/>
+            <stop offset="0.460" stop-color="#808000"/>
+            <stop offset="0.470" stop-color="#ff0000"/>
+            <stop offset="0.480" stop-color="#00ff00"/>
+            <stop offset="0.490" stop-color="#808000"/>
+            <stop offset="0.500" stop-color="#ff0000"/>
+            <stop offset="0.510" stop-color="#00ff00"/>
+            <stop offset="0.520" stop-color="#808000"/>
+            <stop offset="0.530" stop-color="#ff0000"/>
+            <stop offset="0.540" stop-color="#00ff00"/>
+            <stop offset="0.550" stop-color="#808000"/>
+            <stop offset="0.560" stop-color="#ff0000"/>
+            <stop offset="0.570" stop-color="#00ff00"/>
+            <stop offset="0.580" stop-color="#808000"/>
+            <stop offset="0.590" stop-color="#ff0000"/>
+            <stop offset="0.600" stop-color="#00ff00"/>
+            <stop offset="0.610" stop-color="#808000"/>
+            <stop offset="0.620" stop-color="#ff0000"/>
+            <stop offset="0.630" stop-color="#00ff00"/>
+            <stop offset="0.640" stop-color="#808000"/>
+            <stop offset="0.650" stop-color="#ff0000"/>
+            <stop offset="0.660" stop-color="#00ff00"/>
+            <stop offset="0.670" stop-color="#808000"/>
+            <stop offset="0.680" stop-color="#ff0000"/>
+            <stop offset="0.690" stop-color="#00ff00"/>
+            <stop offset="0.700" stop-color="#808000"/>
+            <stop offset="0.710" stop-color="#ff0000"/>
+            <stop offset="0.720" stop-color="#00ff00"/>
+            <stop offset="0.730" stop-color="#808000"/>
+            <stop offset="0.740" stop-color="#ff0000"/>
+            <stop offset="0.750" stop-color="#00ff00"/>
+            <stop offset="0.760" stop-color="#808000"/>
+            <stop offset="0.770" stop-color="#ff0000"/>
+            <stop offset="0.780" stop-color="#00ff00"/>
+            <stop offset="0.790" stop-color="#808000"/>
+            <stop offset="0.800" stop-color="#ff0000"/>
+            <stop offset="0.810" stop-color="#00ff00"/>
+            <stop offset="0.820" stop-color="#808000"/>
+            <stop offset="0.830" stop-color="#ff0000"/>
+            <stop offset="0.840" stop-color="#00ff00"/>
+            <stop offset="0.850" stop-color="#808000"/>
+            <stop offset="0.860" stop-color="#ff0000"/>
+            <stop offset="0.870" stop-color="#00ff00"/>
+            <stop offset="0.880" stop-color="#808000"/>
+            <stop offset="0.890" stop-color="#ff0000"/>
+            <stop offset="0.900" stop-color="#00ff00"/>
+            <stop offset="0.910" stop-color="#808000"/>
+            <stop offset="0.920" stop-color="#ff0000"/>
+            <stop offset="0.930" stop-color="#00ff00"/>
+            <stop offset="0.940" stop-color="#808000"/>
+            <stop offset="0.950" stop-color="#ff0000"/>
+            <stop offset="0.960" stop-color="#00ff00"/>
+            <stop offset="0.970" stop-color="#808000"/>
+            <stop offset="0.980" stop-color="#ff0000"/>
+            <stop offset="0.990" stop-color="#00ff00"/>
+            <stop offset="1.000" stop-color="#808000"/>
+        </linearGradient>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="warp_small"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feImage xlink:href="#r_small"
+                  result="grad"
+                  xlink:type="simple"
+                  xlink:show="embed"
+                  xlink:actuate="onLoad"
+                  preserveAspectRatio="xMidYMid meet"/>
+            <feDisplacementMap xChannelSelector="G"
+                            yChannelSelector="R"
+                            scale="0.5"
+                            in="SourceGraphic"
+                            in2="grad"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="warp_big"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feImage xlink:href="#r_big"
+                  result="grad"
+                  xlink:type="simple"
+                  xlink:show="embed"
+                  xlink:actuate="onLoad"
+                  preserveAspectRatio="xMidYMid meet"/>
+            <feDisplacementMap xChannelSelector="G"
+                            yChannelSelector="R"
+                            scale="0.5"
+                            in="SourceGraphic"
+                            in2="grad"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="warp_2"
+              filterUnits="objectBoundingBox"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feImage xlink:href="#r_2"
+                  result="grad"
+                  xlink:type="simple"
+                  xlink:show="embed"
+                  xlink:actuate="onLoad"
+                  preserveAspectRatio="xMidYMid meet"/>
+            <feDisplacementMap xChannelSelector="G"
+                            yChannelSelector="R"
+                            scale="0.7"
+                            in="SourceGraphic"
+                            in2="grad"
+                            result="unblurred"/>    
+         <!--        
+            <feGaussianBlur in="unblurred" stdDeviation="0.5 0.1"/>-->
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f1"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.1"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f2"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5 0.3"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f3"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+        </filter>
+        <filter xmlns:xlink="http://www.w3.org/1999/xlink"
+              id="f4"
+              xlink:type="simple"
+              xlink:show="other"
+              xlink:actuate="onLoad">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0.5"/>
+        </filter>
+        <linearGradient xmlns:xlink="http://www.w3.org/1999/xlink"
+                      id="fading"
+                      xlink:type="simple"
+                      xlink:show="other"
+                      xlink:actuate="onLoad">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="50%" stop-color="#666666"/>
+            <stop offset="90%" stop-color="#000000"/>
+        </linearGradient>
+        <pattern xmlns:xlink="http://www.w3.org/1999/xlink"
+               id="gluedPattern"
+               patternUnits="userSpaceOnUse"
+               viewBox="0 0 3 5"
+               x="0"
+               y="0"
+               width="3"
+               height="5"
+               xlink:type="simple"
+               xlink:show="other"
+               xlink:actuate="onLoad"
+               preserveAspectRatio="xMidYMid meet">
+            <desc>Glue pattern</desc>
+            <path d="M 0,5 L 3,0 "
+               class="glued"
+               stroke="#666666"
+               stroke-width="0.5"/>
+        </pattern>
+        <pattern xmlns:xlink="http://www.w3.org/1999/xlink"
+               id="thicknessCutoutTile"
+               patternUnits="userSpaceOnUse"
+               patternContentUnits="userSpaceOnUse"
+               x="0"
+               y="0"
+               width="2"
+               height="50"
+               xlink:type="simple"
+               xlink:show="other"
+               xlink:actuate="onLoad"
+               preserveAspectRatio="xMidYMid meet">
+            <path d="M0,0 L5,50"
+               class="line2"
+               fill="none"
+               stroke="#666666"
+               stroke-width="0.1"
+               stroke-linejoin="miter"/>
+        </pattern>
+        <g id="boardProfile">
+            <path d="M0,0 L50,0 50,10 0,10z"
+               stroke="url(#fading)"
+               stroke-width="0.5"
+               fill="url(#thicknessCutoutTile)"/>
+            <path d="M0,0 L50,0 50,10 0,10z"
+               stroke-opacity="0"
+               fill-opacity="0.1"
+               fill="url(#fading)"/>
+        </g>
+        <g id="boardMarker">
+            <rect x="0"
+               y="0"
+               width="80"
+               height="2"
+               rx="0.5"
+               ry="0.5"
+               stroke="#000000"
+               stroke-width="0.5"
+               fill="#FFFFFF"
+               fill-opacity="1"/>
+        </g>
+        <!--<g id="boardMarker_above">
+            <path
+                d="M0,0 L0,-2 A5,5 0 0,1 4,-4 L76,-8 A5,5 0 0,1 80,-2 L80,0 80,2 A5,5 0 0,1 76,8 L4,4 A5,5 0 0,1 0,2z"
+                stroke="#000000" stroke-width="1" stroke-dasharray="0.1 1.5" stroke-linecap="round"
+                fill="#FFFFFF"/>
+        </g>-->
+        <g id="boardMarker_above">
+            <path d="M0,0 L0,-2 A5,5 0 0,1 4,-4 L76,-8 A5,5 0 0,1 80,-2 L80,0 80,2 A5,5 0 0,1 76,8 L4,4 A5,5 0 0,1 0,2z"
+               stroke="#000000"
+               stroke-width="1"
+               stroke-linecap="round"
+               fill="#FFFFFF"
+               filter="url(#warp_2)"/>
+        </g>
+        <g id="turnin">
+            <path d="M0,0 L38,0 A5,5 0 0,1 42,4 L42,14 A5,5 0 0,1 38,18"
+               stroke="#000000"
+               stroke-width="1.5"
+               fill="none"
+               stroke-linecap="round"/>
+            <path d="M38,18 L-10,18.1" stroke="url(#fading)" stroke-width="1.5"/>
+        </g>
+        <g id="nail">
+            <path d="M0,0 L3,0 Q2,0 2,1 L1.5,15 1.5,15 1,1 Q1,0 0,0 "
+               stroke="#999999"
+               stroke-width="0.5"
+               fill="#999999"
+               fill-opacity="1"/>
+        </g>
+        <g id="nail_above">
+            <circle r="1.5"
+                 cx="0"
+                 cy="0"
+                 stroke="#999999"
+                 stroke-width="0.5"
+                 fill="#999999"
+                 fill-opacity="1"/>
+        </g>
+        <g id="gluedAttachment">
+            <rect width="30"
+               height="1.3"
+               fill="url(#gluedPattern)"
+               stroke-opacity="0.0"
+               x="0"
+               y="0.5"/>
+        </g>
+        <g id="boardOutline">
+            <g id="edges">
+                <path id="edge1" d="M0,0 L45,0.1" stroke="url(#fading)"/>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xlink:href="#edge1"
+                 transform="rotate(-90, 45, 0) translate(0.4, -0.4)"
+                 xlink:type="simple"
+                 xlink:show="embed"
+                 xlink:actuate="onLoad"/>
+            </g>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="#edges"
+              transform="translate(-25, 25)"
+              xlink:type="simple"
+              xlink:show="embed"
+              xlink:actuate="onLoad"/>
+        </g>
+        <g id="turninOpacity">
+            <rect width="24"
+               height="24"
+               x="0"
+               y="0"
+               stroke="#FFFFFF"
+               stroke-opacity="0"
+               fill="#FFFFFF"
+               fill-opacity="0.8"/>
+        </g>
+    </defs>
+   <desc>Board Markers</desc>
+   <svg x="0" y="0">
+      <desc>Board marker location: </desc>
+      <desc>Board marker attachment: </desc>
+      <desc>Board marker material: </desc>
+      <desc>Board marker attachment position: </desc>
+   </svg>
+</svg>
