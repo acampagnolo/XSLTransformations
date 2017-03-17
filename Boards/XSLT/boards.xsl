@@ -1277,7 +1277,7 @@
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of
-                                    select="if (parent::location/following-sibling::formation/corners/spine/backCorner) then $Cx + $boardWidth - ($boardWidth div 84) else $Cy + $boardThickness"
+                                    select="if (parent::location/following-sibling::formation/corners/spine/backCorner) then $Cx + $boardWidth - ($boardWidth div 84) else $Cy + $boardWidth"
                                 />
                             </xsl:otherwise>
                         </xsl:choose>
