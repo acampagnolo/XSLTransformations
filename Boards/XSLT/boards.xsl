@@ -2027,13 +2027,13 @@
                                 <xsl:value-of select="$Dy + ($boardHeight div 6)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of
-                                    select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                                    select="$Dx + ($boardThickness div 3)"/>
                                 <xsl:text>,</xsl:text>
                                 <xsl:value-of
                                     select="$Dy + ($boardHeight div 6) + ($boardWidth div 16)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of
-                                    select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                                    select="$Dx + ($boardThickness div 3)"/>
                                 <xsl:text>,</xsl:text>
                                 <xsl:value-of
                                     select="$Dy + ($boardHeight div 6) + ($boardWidth div 16) + ($boardHeight div 32)"/>
@@ -2049,13 +2049,13 @@
                                     select="$Dy + $boardHeight - ($boardHeight div 6) - 2 * ($boardWidth div 16) - ($boardHeight div 32)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of
-                                    select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                                    select="$Dx + ($boardThickness div 3)"/>
                                 <xsl:text>,</xsl:text>
                                 <xsl:value-of
                                     select="$Dy + $boardHeight - ($boardHeight div 6) - ($boardWidth div 16) - ($boardHeight div 32)"/>
                                 <xsl:text>&#32;L</xsl:text>
                                 <xsl:value-of
-                                    select="$Dx + $boardThickness - ($boardThickness div 3)"/>
+                                    select="$Dx + ($boardThickness div 3)"/>
                                 <xsl:text>,</xsl:text>
                                 <xsl:value-of
                                     select="$Dy + $boardHeight - ($boardHeight div 6) - ($boardWidth div 16)"/>
