@@ -4201,7 +4201,7 @@
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Fy"/>
                         <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Fx + $boardThickness - $edgeBoardThickness"/>
+                        <xsl:value-of select="$Fx + $boardThickness - ($boardThickness div 3)"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Fy"/>
                         <xsl:text>&#32;M</xsl:text>
@@ -4209,7 +4209,7 @@
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Fy + $boardHeight"/>
                         <xsl:text>&#32;L</xsl:text>
-                        <xsl:value-of select="$Fx + $boardThickness - $edgeBoardThickness"/>
+                        <xsl:value-of select="$Fx + $boardThickness - ($boardThickness div 3)"/>
                         <xsl:text>,</xsl:text>
                         <xsl:value-of select="$Fy + $boardHeight"/>
                     </xsl:when>
